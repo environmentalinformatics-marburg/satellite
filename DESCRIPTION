@@ -1,0 +1,9 @@
+Package: mocRS
+Type: Package
+Title: Various functions usefull for MOC learning assignments
+Version: 0.1.0
+Date: 2015-02-18
+Author: Thomas Nauss
+Maintainer: Environmental Informatics <admin@environmentalinformatics-marburg.de>
+Description: The package provides a variety of functions which are usefull for learning log assignments as part of the MSC Environmental Geography course on remote sensing at <www.moc.environmentalinformatics-marburg.de>.
+License: GNU GPL v3.0
