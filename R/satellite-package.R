@@ -11,6 +11,7 @@
 #' \cr
 #' \emph{Maintainer:} Environmental Informatics \email{admin@@environmentalinformatics-marburg.de}
 #'
+#' @references Some functions are taken and/or addopted from Sarah C. Goslee (2011). Analyzing Remote Sensing Data in R: The landsat Package. Journal of Statistical Software,43(4), 1-25. URL \url{http://www.jstatsoft.org/v43/i04/}.
 #' @keywords package
 #'
 NULL

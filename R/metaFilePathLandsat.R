@@ -6,15 +6,15 @@
 #'
 #' @param filepath path and filename to the landsat band file (not the metadata)
 #'
-#' @return vector containing band as character [1] and metadata filepath [2]
+#' @return Vector containing band as character [1] and metadata filepath [2]
 #'
-#' @export getInfoFromLevel1Name
+#' @export metaFilePathLandsat
 #'
 #' @examples
 #' not run:
-#' getInfoFromLevel1Name(filepath = "Name_of_Landsat_Band")
+#' metaFilePathLandsat(filepath = "Name_of_Landsat_Band")
 
-getInfoFromLevel1Name <- function(filepath){
+metaFilePathLandsat <- function(filepath){
   pos <- gregexpr(pattern ='_B', 
                   sub("(.+)[.][^.]+$", "\\1", 
                       basename(filepath)))[[1]][1]
@@ -23,7 +23,7 @@ getInfoFromLevel1Name <- function(filepath){
   meta.filepath <- paste0(dirname(filepath), "/", 
                           substr(basename(filepath), 1, pos), 
                           "MTL.txt")
-  result <- c(band, meta.filepath)
-  attr(result, "Info") <- c("Band", "MetaFile")
+  result <- c(meta.filepath, band)
+  attr(result, "Info") <- c("MetaFile", "Band")
   return(result)
 }
