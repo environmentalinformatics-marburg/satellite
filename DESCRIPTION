@@ -1,9 +1,9 @@
-Package: mocRS
+Package: satellite
 Type: Package
-Title: Various functions usefull for MOC learning assignments
+Title: Various functions for handling and manipulating remote sensing data.
 Version: 0.1.0
 Date: 2015-02-18
-Author: Thomas Nauss
+Author: Hanna Meyer, Thomas Nauss
 Maintainer: Environmental Informatics <admin@environmentalinformatics-marburg.de>
-Description: The package provides a variety of functions which are usefull for learning log assignments as part of the MSC Environmental Geography course on remote sensing at <www.moc.environmentalinformatics-marburg.de>.
+Description: The package provides a variety of functions which are usefull for handling, manipulating and visualizing remote sensing data.
 License: GNU GPL v3.0
