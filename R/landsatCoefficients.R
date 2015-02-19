@@ -16,32 +16,34 @@
 #'
 #' @examples
 #' not run:
-#' landsatCoefficients(filepath = "Name_of_Landsat_Metadata_File", band = 5)
+#' landsatCoefficients(filepath = "Name_of_Landsat_Metadata_File")
 
 landsatCoefficients <- function(filepath){
-  cal.data <- read.table(filepath, header = FALSE, sep = "=", fill = TRUE)
+  
+  
+  metadata <- read.table(filepath, header = FALSE, sep = "=", fill = TRUE)
   
   metainformation <- lapply(seq(1:11), function(x){
-    search_term_add_ref <- paste0("REFLECTANCE_ADD_BAND_", x)
-    search_term_mult_ref <- paste0("REFLECTANCE_MULT_BAND_", x)
     search_term_add_rad <- paste0("RADIANCE_ADD_BAND_", x)
     search_term_mult_rad <- paste0("RADIANCE_MULT_BAND_", x)
+    search_term_add_ref <- paste0("REFLECTANCE_ADD_BAND_", x)
+    search_term_mult_ref <- paste0("REFLECTANCE_MULT_BAND_", x)
     search_term_BTK1 <- paste0("K1_CONSTANT_BAND_", x)
     search_term_BTK2 <- paste0("K2_CONSTANT_BAND_", x)
     
     
-    cal_add_ref <- as.numeric(as.character(
-      (subset(cal.data$V2, gsub("\\s","", cal.data$V1) == search_term_add_ref))))
-    cal_mult_ref <- as.numeric(as.character(
-      (subset(cal.data$V2, gsub("\\s","", cal.data$V1) == search_term_mult_ref))))
     cal_add_rad <- as.numeric(as.character(
-      (subset(cal.data$V2, gsub("\\s","", cal.data$V1) == search_term_add_rad))))
+      (subset(metadata$V2, gsub("\\s","", metadata$V1) == search_term_add_rad))))
     cal_mult_rad <- as.numeric(as.character(
-      (subset(cal.data$V2, gsub("\\s","", cal.data$V1) == search_term_mult_rad))))
+      (subset(metadata$V2, gsub("\\s","", metadata$V1) == search_term_mult_rad))))
+    cal_add_ref <- as.numeric(as.character(
+      (subset(metadata$V2, gsub("\\s","", metadata$V1) == search_term_add_ref))))
+    cal_mult_ref <- as.numeric(as.character(
+      (subset(metadata$V2, gsub("\\s","", metadata$V1) == search_term_mult_ref))))
     cal_BTK1 <- as.numeric(as.character(
-      (subset(cal.data$V2, gsub("\\s","", cal.data$V1) == search_term_BTK1))))
+      (subset(metadata$V2, gsub("\\s","", metadata$V1) == search_term_BTK1))))
     cal_BTK2 <- as.numeric(as.character(
-      (subset(cal.data$V2, gsub("\\s","", cal.data$V1) == search_term_BTK2))))
+      (subset(metadata$V2, gsub("\\s","", metadata$V1) == search_term_BTK2))))
     
     solar = TRUE
     if(length(cal_add_ref) == 0){
@@ -55,16 +57,16 @@ landsatCoefficients <- function(filepath){
     }
     
     selv <- as.numeric(as.character(
-      subset(cal.data$V2, gsub("\\s","", cal.data$V1) == "SUN_ELEVATION")))
+      subset(metadata$V2, gsub("\\s","", metadata$V1) == "SUN_ELEVATION")))
     sazm <- as.numeric(as.character(
-      subset(cal.data$V2, gsub("\\s","", cal.data$V1) == "SUN_AZIMUTH")))
+      subset(metadata$V2, gsub("\\s","", metadata$V1) == "SUN_AZIMUTH")))
     szen <- 90.0 - selv
     result <- data.frame(BAND = x,
-                         Solar = solar,
-                         REFA = cal_add_ref,
-                         REFM = cal_mult_ref,
+                         SOLAR = solar,
                          RADA = cal_add_rad,
                          RADM = cal_mult_rad,
+                         REFA = cal_add_ref,
+                         REFM = cal_mult_ref,
                          BTK1 = cal_BTK1,
                          BTK2 = cal_BTK2,
                          SUNZEN = szen,

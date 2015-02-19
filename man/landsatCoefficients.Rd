@@ -10,7 +10,7 @@ landsatCoefficients(filepath)
 \item{filepath}{path and filename to the landsat metadata file}
 }
 \value{
-dataframe containing addtition and multiplication coefficients for
+Dataframe containing addtition and multiplication coefficients for
 reflectance (REFA, REFM) and radiance (RADA, RADM), brightness temperature
 correction parameters (BTK1, BTK2), sun elevation angle (SELEV),
 sun zenith angle (SZEN) and sun azimuth angle (SAZM).
@@ -22,6 +22,6 @@ coefficients are for reflectance or radiance.
 }
 \examples{
 not run:
-landsatCoefficients(filepath = "Name_of_Landsat_Metadata_File", band = 5)
+landsatCoefficients(filepath = "Name_of_Landsat_Metadata_File")
 }
 

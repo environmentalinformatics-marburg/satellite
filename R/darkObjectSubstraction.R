@@ -13,6 +13,19 @@
 #'
 #' @export darkObjectSubstraction
 #' 
+#' @details The dark object substraction approach by Chavez Jr PS (1988) is
+#' based on an approximation of the atmospheric path radiance (i.e. upwelling
+#' radiation which is scatter into the sensors field of view, aka haze) using 
+#' the reflectance of a dark object (i.e. reflectance ~1%). This object is 
+#' identified in one band and the corresponding haze value is computed and 
+#' then approximated for all other bands using a relative radiance model.
+#' 
+#' The relative radiance model follows a wavelength dependent scattering which
+#' ranges from -4 power over -2, -1, -0.7 to -0.5 power for very clear over
+#' clear, moderate, hazy to very hazy conditions. The relative factors are
+#' computed individually for each 1/1000 wavelength within each band range
+#' and subsequently averaged over the band.
+#' 
 #' @references This function is an extended version of the DOS function from 
 #' Sarah C. Goslee (2011). Analyzing Remote Sensing Data in R: The landsat 
 #' Package. Journal of Statistical Software,43(4), 1-25. URL 
@@ -28,7 +41,85 @@
 #' not run:
 #' darkObjectSubstraction(red, nir, swir, level=.99)
 
-darkObjectSubstraction <-
+darkObjectSubstraction <- function(DNmin, date, bnbr, coefs, 
+                                   scat_coefs = c(-4.0, -2.0, -1.0, -0.7, -0.5),
+                                   dos_adjust = 0.01){
+  
+  # Define band wavelengths and solar constant
+  if(sensor == "Landsat 5"){
+    bands <- data.frame(
+      lmin <- c(0.45, 0.52, 0.63, 0.76, 1.55, 2.08),
+      lmax <- c(0.52, 0.60, 0.69, 0.90, 1.75, 2.35))
+    rownames(bands) <- c("1", "2", "3", "4", "5", "7")
+    Esun <- c(198.3, 179.6, 153.6, 103.1, 22, 8.34)
+  } else if(sensor == "Landsat 7"){
+    bands <- data.frame(
+      lmin <- c(0.45, 0.52, 0.63, 0.76, 1.55, 2.08),
+      lmax <- c(0.52, 0.60, 0.69, 0.90, 1.75, 2.35))
+    rownames(bands) <- c("1", "2", "3", "4", "5", "7")
+    Esun <- c(198.3, 179.6, 153.6, 103.1, 22, 8.34)
+  } else if(sensor == "Landsat 8"){
+    bands <- data.frame(
+      lmin <- c(0.45, 0.52, 0.63, 0.76, 1.55, 2.08),
+      lmax <- c(0.52, 0.60, 0.69, 0.90, 1.75, 2.35))
+    rownames(bands) <- c("1", "2", "3", "4", "5", "7")
+    Esun <- c(198.3, 179.6, 153.6, 103.1, 22, 8.34)
+  } else {
+    stop("The satellite you have provided is not implemented.")  
+  }
+  
+  # Define relative scattering model
+  scattering_model <- matrix(NA, nrow = nrow(bands), ncol = length(scat_coefs))
+  rownames(scattering_model) <- rownames(bands)
+  colnames(scattering_model) <- paste0("coef", scat_coefs)
+  for(i in 1:nrow(bands)) {
+    act_band <- seq(bands[i, 1], bands[i, 2], by=0.001)
+    for(j in 1:length(scat_coefs)){
+      scattering_model[i, j] <- mean(act_band ^ scat_coefs[j])
+    }
+  }
+  
+  # Define multiplication factors to predict the scattering in other bands
+  basline_factor <- scattering_model[bnbr, ]
+  scattering_predictors <- sweep(scattering_model, 2, basline_factor, "/")
+  
+  # Define normalized multiplication factors for radiance conversion
+  normalized_radm <- coefs$RADM / coefs$RADM[bnbr]
+  
+  # Compute cosine of the solar zenith angle
+  cos_szen <- cos(coefs$SUNZEN[1] * pi / 180.0)
+  
+  # Compute TOA solar constant based on actual earth sun distance
+  E0 <- Esun[bnbr] / ESdist(date)^2
+  
+  # Correct for not absolutely dark object
+  Tv <- 1.0
+  Tz <- cos_szen
+  Edown <- 0.0
+  DNp <- DNmin - (dos_adjust * (E0 * cos_szen * Tz + Edown) * Tv/pi) / coefs$RADM[bnbr]
+  
+  #   DNmin * coefs$RADM[bnbr] + coefs$RADA[bnbr]
+  #   -6.200 * coefs$RADM[bnbr] + coefs$RADA[bnbr]
+  
+  #   LMAX <- 191.600
+  #   LMIN <- -6.200
+  #   QMAX <- 255
+  #   QMIN <- 1
+  #   DN <- 62
+  #   ((LMAX - LMIN) / (QMAX - QMIN)) * (DN-QMIN)+LMIN
+  #   DN * 0.779 + (-6.97874)
+  #   t - (-6.97874) 
+  #   48.298 / 0.779
+  #   
+  #   DN * coefs$RADM[bnbr] + coefs$RADA[bnbr]
+  
+  DNp <- DNp - coefs$RADA[bnbr]
+  
+  DNp_final <- SHV * scattering_predictors 
+  DNp_final <- sweep(DNp_final, 1, normalized_radm, "*")
+  DNp_final <- sweep(DNp_final, 1, coefs$RADA[bnbr], "+")
+  
+}
   function(sat=5, scattering.coef=c(-4, -2, -1, -.7, -.5), SHV, SHV.band, gain, offset, Grescale, Brescale, sunelev, edist, Esun=c(198.3, 179.6, 153.6, 103.1, 22, 8.34), blackadjust = 0.01)
   {
     

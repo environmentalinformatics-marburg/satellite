@@ -2,5 +2,6 @@
 
 export(darkObjectSubstraction)
 export(invariantFeatures)
+export(landsatCalibration)
 export(landsatCoefficients)
 export(metaFilePathLandsat)

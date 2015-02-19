@@ -6,7 +6,7 @@
 #'
 #' @param filepath path and filename to the landsat band file (not the metadata)
 #'
-#' @return Vector containing band as character [1] and metadata filepath [2]
+#' @return List containing metadata filepath [[1]] and band number [[2]]
 #'
 #' @export metaFilePathLandsat
 #'
@@ -23,7 +23,7 @@ metaFilePathLandsat <- function(filepath){
   meta.filepath <- paste0(dirname(filepath), "/", 
                           substr(basename(filepath), 1, pos), 
                           "MTL.txt")
-  result <- c(meta.filepath, band)
-  attr(result, "Info") <- c("MetaFile", "Band")
+  result <- list(meta.filepath, as.numeric(band))
+  attr(result, "Info") <- c("MetaFile", "Bandnumber")
   return(result)
 }
