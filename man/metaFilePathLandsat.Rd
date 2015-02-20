@@ -10,7 +10,7 @@ metaFilePathLandsat(filepath)
 \item{filepath}{path and filename to the landsat band file (not the metadata)}
 }
 \value{
-Vector containing band as character [1] and metadata filepath [2]
+List containing metadata filepath [[1]] and band number [[2]]
 }
 \description{
 The function builds the metadata filename  based on standard level 1B/T

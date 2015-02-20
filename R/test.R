@@ -11,7 +11,7 @@ inpath_l8 <-
 files_l8 <- list.files(inpath_l8, pattern = glob2rx("*.TIF"), full.names = TRUE)
 files_l8 <- files_l8[-12]
 
-l <- 7
+l <- 8
 if(l == 8){
   files <- files_l8
   data <- stack(paste0(inpath_l8, "l8_2013-07-07_30m_crop.tif"))
@@ -20,7 +20,7 @@ if(l == 8){
   data <- stack(paste0(inpath_l7, "l7_2001-07-30_30m_crop.tif"))
 }
 act_file <- files[1]
-act_data <- data[[1]]
+act_data <- data[[2]]
 
 
 # Test metaFilePathLandsat()
@@ -30,7 +30,13 @@ for(i in seq(length(files))){
 
 # Test landsatCoefficients()
 test <- metaFilePathLandsat(files[3])
-landsatCoefficients(test[[1]])
+coefs <- landsatCoefficients(test[[1]])
+
+# coefs$RADA[1:9] <- c(-6.97874, -7.19882, -5.62165, -6.06929, -1.12622, 
+#                      -0.06709, 3.16280, -0.39390, -5.67559)
+# coefs$RADM[1:9] <- c(0.779, 0.799, 0.622, 0.969, 0.126, 0.067, 0.037, 
+#                      0.044, 0.976)
+
 
 # Test landsatCalibration()
 for(i in seq(length(files))){
@@ -49,3 +55,11 @@ for(i in seq(length(files))){
     print(result)
   }
 }
+UNITS: W.M-2.nm-1
+
+toa <- read.table("D:/active/moc/am-remote-sensing/examples/data/AllMODEtr_mod.csv",
+                  header = TRUE, sep = ";")
+
+head(toa)
+
+colMeans(toa[toa$nm >= 545.0 & toa$nm <= 555.0,]) * 1000

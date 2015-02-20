@@ -1,9 +1,9 @@
-#' Convert digital numbers to radiances corrected by a dark object substraction
+#' Compute path radiance based on dark object method
 #'
 #' @description
-#' Perform a dark object substraction in order to roughly correct for 
-#' atmospheric scattering and convert the band's digital numbers to radiance
-#' or reflectance values.
+#' Compute an estimaed path radiance for all sensor bands using a dark object 
+#' method which can be used to roughly correct the radiance values for 
+#' atmospheric scattering.
 #'
 #' @param red a raster of the sensor's red band
 #' @param nir a raster of the sensor's nir band
@@ -11,7 +11,7 @@
 #'
 #' @return raster object with invariant pixels marked with 1, 0 otherwise
 #'
-#' @export darkObjectSubstraction
+#' @export pathRadianceDOS
 #' 
 #' @details The dark object substraction approach is based on an approximation 
 #' of the atmospheric path radiance (i.e. upwelling radiation which is 
@@ -47,31 +47,34 @@
 #' 
 #' @examples
 #' not run:
-#' darkObjectSubstraction(red, nir, swir, level=.99)
+#' pathRadianceDOS(red, nir, swir, level=.99)
 
-darkObjectSubstraction <- function(sensor = "Landsat 8", DNmin = 69, bnbr = 1, coefs, date, 
+pathRadianceDOS <- function(sensor = "Landsat 8", DNmin = 69, bnbr = 1, coefs, date, 
                                    scat_coefs = c(-4.0, -2.0, -1.0, -0.7, -0.5),
                                    dos_adjust = 0.01){
   
-  # Define band wavelengths and solar constant
-  if(sensor == "Landsat 5"){
+  # Define band wavelengths and solar constant. Bandwith data taken from
+  # http://landsat.usgs.gov/band_designations_landsat_satellites.php
+  if(sensor == "Landsat 4" | sensor == "Landsat 5"){
     bands <- data.frame(
-      lmin <- c(0.45, 0.52, 0.63, 0.76, 1.55, 2.08),
-      lmax <- c(0.52, 0.60, 0.69, 0.90, 1.75, 2.35))
-    rownames(bands) <- c("1", "2", "3", "4", "5", "7")
+      lmin <- c(0.45, 0.52, 0.63, 0.76, 1.55, 10.40, 2.08),
+      lmax <- c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 2.35))
+    rownames(bands) <- seq(7)
     Esun <- c(198.3, 179.6, 153.6, 103.1, 22, 8.34)
   } else if(sensor == "Landsat 7"){
     bands <- data.frame(
-      lmin <- c(0.45, 0.52, 0.63, 0.76, 1.55, 2.08),
-      lmax <- c(0.52, 0.60, 0.69, 0.90, 1.75, 2.35))
-    rownames(bands) <- c("1", "2", "3", "4", "5", "7")
-    Esun <- c(198.3, 179.6, 153.6, 103.1, 22, 8.34)
+      lmin <- c(0.45, 0.52, 0.63, 0.77, 1.55, 10.40, 2.09, 0.52),
+      lmax <- c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 2.35, 0.90))
+    rownames(bands) <- seq(8)
+    Esun <- c(1970, 1842, 1547, 1044, 225.7, 0.00, 82.06, 1396)
   } else if(sensor == "Landsat 8"){
     bands <- data.frame(
-      lmin <- c(0.45, 0.52, 0.63, 0.76, 1.55, 2.08),
-      lmax <- c(0.52, 0.60, 0.69, 0.90, 1.75, 2.35))
-    rownames(bands) <- c("1", "2", "3", "4", "5", "7")
-    Esun <- c(198.3, 179.6, 153.6, 103.1, 22, 8.34)
+      lmin <- c(0.43, 0.45, 0.53, 0.64, 0.85, 1.57, 2.11, 0.50, 1.36, 10.60, 
+                11.50),
+      lmax <- c(0.45, 0.51, 0.59, 0.67, 0.88, 1.65, 2.29, 0.68, 1.38, 11.19, 
+                12.51))
+    rownames(bands) <- seq(11)
+    Esun <- c(0.0, 1970, 1842, 1547, 1044, 225.7, 225.7, 1396, 225.7, 0.00, 0.00)
   } else {
     stop("The satellite you have provided is not implemented.")  
   }
@@ -104,14 +107,14 @@ darkObjectSubstraction <- function(sensor = "Landsat 8", DNmin = 69, bnbr = 1, c
   # Compute first estimate of path radiance for all bands based on the values of
   # the band used to derive the dark object properties
   Lp_min <- coefs$RADM[bnbr] * DNmin + coefs$RADA[bnbr]
-  Lp_min_bands <- DNmin_rad * scattering_factors
+  Lp_min_bands <- Lp_min * scattering_factors
   # DN way
   # DNmin_basis <- DNmin - coefs$RADA[bnbr]
   # DNmin_bands <- DNmin_basis * scattering_factors
   # DNmin_bands_radm <- DNmin_bands * normalized_radm[1:6]
   # DNmin_bands_rad <- DNmin_bands_radm + coefs$RADA[1:6]
   # coefs$RADM[1:6] * DNmin_bands_rad + coefs$RADA[1:6]
-
+  
   # Compute a correction term for the path radiance values to consider a minimum
   # surface reflection wich one can always expect.
   E0 <- Esun[bnbr] / ESdist(date)^2
@@ -120,7 +123,7 @@ darkObjectSubstraction <- function(sensor = "Landsat 8", DNmin = 69, bnbr = 1, c
   Tz <- cos_szen
   Edown <- 0.0
   Lp_adj <- dos_adjust * (E0 * cos_szen * Tz + Edown) * Tv / pi
-
+  
   # Compute final path radiance estimate for all bands
   Lp <- Lp_min_bands - Lp_adj
 }
