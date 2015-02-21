@@ -7,3 +7,5 @@ Author: Hanna Meyer, Thomas Nauss
 Maintainer: Environmental Informatics <admin@environmentalinformatics-marburg.de>
 Description: The package provides a variety of functions which are usefull for handling, manipulating and visualizing remote sensing data.
 License: GNU GPL v3.0
+Suggests: testthat
+LazyData: true 

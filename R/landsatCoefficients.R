@@ -20,7 +20,6 @@
 
 landsatCoefficients <- function(filepath){
   
-  
   metadata <- read.table(filepath, header = FALSE, sep = "=", fill = TRUE)
   
   metainformation <- lapply(seq(1:11), function(x){

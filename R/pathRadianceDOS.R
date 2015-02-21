@@ -33,15 +33,15 @@
 #' and subsequently averaged over the band.
 #' 
 #' @references This function is an extended version of the DOS function from 
-#' Sarah C. Goslee (2011). Analyzing Remote Sensing Data in R: The landsat 
-#' Package. Journal of Statistical Software,43(4), 1-25. URL 
+#' Sarah C. Goslee (2011) Analyzing Remote Sensing Data in R: The landsat 
+#' Package. Journal of Statistical Software,43/4, 1-25. URL 
 #' \url{http://www.jstatsoft.org/v43/i04/}.
 #' 
 #' The underlaying theory has been published by Chavez Jr PS (1988) An improved 
 #' dark-object subtraction technique for atmospheric scattering correction of 
 #' multispectral data. Remote Sensing of Environment 24/3, 
 #' doi:10.1016/0034-4257(88)90019-3, available online at
-#'  \url{http://www.sciencedirect.com/science/article/pii/0034425788900193}
+#'  \url{http://www.sciencedirect.com/science/article/pii/0034425788900193}.
 #'
 #' If you refer to Sawyer and Stephen 2014, please note that eq. 5 is wrong.
 #' 

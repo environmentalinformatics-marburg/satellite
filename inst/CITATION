@@ -1,0 +1,19 @@
+citHeader("To cite satellite in publications use:")
+
+citEntry(entry = "Article",
+  title        = "Manipulating satellite data with {satellite}",
+  author       = personList(as.person("Hanna Meyer"),
+                   as.person("Thomas Nauss")),
+  journal      = "unpublished",
+  year         = "2015",
+  volume       = "na",
+  number       = "na",
+  pages        = "na--na",
+  url          = "www.environmentalinformatics-marburg.de",
+
+  textVersion  =
+  paste("Hanna Meyer, Thomas Nauss (2015).",
+        "Manipulating satellite data with satellite.",
+        "unpublished, na(na), na-na.",
+        "URL http://www.environmentalinformatics-marburg.de.")
+)
