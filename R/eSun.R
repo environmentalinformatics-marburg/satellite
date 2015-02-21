@@ -11,7 +11,8 @@
 #' approach discribed above.
 #'
 #' @param sensor sensor name ("Landsat 8/7/5/4")
-#' @param tab use tabulated values (TRUE) or compute values based on rsr (FALSE)
+#' @param tab use tabulated or measured (Landsat 8) values (TRUE) or compute 
+#' values based on rsr (FALSE)
 #' @param normalize normalize ESun to mean earth sun distance
 #' @param date date of the sensor overpath (YYYY-MM-DD or POSIX* object), only 
 #' relevant if normalize = FALSE
@@ -22,34 +23,33 @@
 #'
 #' @export eSun
 #' 
-#' @details If eSun should be corrected for the actual earth sun distance, an
-#' approximation of this distance is computed based on the day of by
-#' \code{\link{earthSun}}. For Landsat 8, the respective earth sun distance is
-#' taken from the metadata of the scene.
+#' @details 
+#' Tabulated values of ESun are taken from the official reference handbooks or 
+#' peer-review publications using function \code{\link{toaIrradianceTable}}. 
 #' 
 #' Instead of returning tabulated values for Landsat 8 which are not available
 #' in the official handbook, \code{\link{toaIrradianceRadRef}} is used to 
-#' compute the actual eSun value based on the scene's metadata. By default, 
-#' the resulting actual ESun will be normalized to a mean earth sun distance 
-#' which is also taken from the scene's metadata.
+#' compute the actual eSun value based on the scene's metadata. 
 #' 
 #' If ESun should be computed (all sensors), \code{\link{toaIrradianceModel}} 
 #' will be called by this function.
 #' 
-#' @references Tabulated values of ESun are taken from
+#' If eSun should be corrected for the actual earth sun distance, an
+#' approximation of this distance is computed based on the day of by
+#' \code{\link{earthSun}}. For Landsat 8, the respective earth sun distance is
+#' taken from the metadata of the scene.
 #' 
-#' Landsat 7: Landsat7 handbook, tab 11.3 (Thuillier spectrum), URL 
-#' \url{http://landsathandbook.gsfc.nasa.gov/pdfs/Landsat7_Handbook.pdf}.
-#' 
-#' Landsat 4, 5: Chander G, Markham B (2003) Revised Landsat-5 TM radiometric 
-#' calibration procedures and postcalibration dynamic ranges.  IEEE Transaction 
-#' on Geoscience and Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285, URL
-#' \url{http://landsathandbook.gsfc.nasa.gov/pdfs/L5TMLUTIEEE2003.pdf}.
+#' @references For references of the data sources, please refer to the 
+#' documentation of the respective functions given in details or see also.
 #'  
-#' @seealso This function can be used as a wrapper for 
-#' \code{\link{toaIrradianceModel}} for computing ESun based on tabulated and 
-#' \code{\link{toaIrradianceRadRef}} for computing ESun based on band data.
-#' 
+#' @seealso This function is a wrapper for 
+#' \code{\link{toaIrradianceTable}} which is used to get readily published 
+#' values of ESun, \code{\link{toaIrradianceRadRef}} which computes ESun based 
+#' on the actual radiance and reflectance in the scene and for 
+#' \code{\link{toaIrradianceModel}} which computes ESun based on  
+#' look-up tables for the sensor's relative spectral resonse and solar 
+#' irradiation spectral data.
+#'  
 #' @examples
 #' landsat8_metadatafile <-   system.file("extdata", 
 #' "LC81950252013188LGN00_MTL.txt", package = "satellite")
@@ -63,22 +63,27 @@ eSun <- function(sensor, tab = TRUE, normalize = TRUE, coefs, date){
         stop("Variable coefs is missing.")
       }
       eSun <- toaIrradianceModel(sensor = sensor, normalize = normalize)
-    } else if(sensor == "Landsat 7") {
-      eSun <- lut$l7_esun
-    } else if(sensor == "Landsat 5") {
-      eSun <- lut$l5_esun
-    } else if(sensor == "Landsat 4") {
-      eSun <- lut$l4_esun
+    } else {
+      if(normalize == TRUE){
+        eSun <- toaIrradianceTable(sensor = sensor, normalize = normalize)  
+      } else {
+        if(missing(date)){
+          stop("Variable date is missing.")
+        }
+        eSun <- toaIrradianceTable(sensor = sensor, normalize = normalize,
+                                   date = date)  
+      }
     }
   } else {
-    eSun <- toaIrradianceModel(sensor = sensor, normalize = normalize)
-  }
-  if(normalize == FALSE & tab == TRUE & sensor != "Landsat 8"){
-    if(missing(date)){
-      stop("Variable date is missing.")
+    if(normalize == TRUE){
+      eSun <- toaIrradianceModel(sensor = sensor, normalize = normalize) 
+    } else {
+      if(missing(date)){
+        stop("Variable date is missing.")
+      }
+      eSun <- toaIrradianceModel(sensor = sensor, normalize = normalize,
+                                 date = date)  
     }
-    esd <- earthSun(date)
-    eSun <- esd * ESun
   }
   return(eSun)
 }

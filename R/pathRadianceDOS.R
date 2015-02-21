@@ -49,8 +49,8 @@
 #'   landsat8_metadatafile <-   system.file("extdata", 
 #'   "LC81950252013188LGN00_MTL.txt", package = "satellite")
 #'   coefs8 <- landsatCoefficients(landsat8_metadatafile)
-#'   pathRadianceDOS(sensor = "Landsat 8", DNmin = min(getValues(l8)), bnbr = 1,
-#'   coefs = coefs8, date = "2013-07-30")
+#'   pathRadianceDOS(sensor = "Landsat 8", DNmin = min(raster::getValues(l8)), 
+#'   bnbr = 1, coefs = coefs8, date = "2013-07-30")
 #'   
 pathRadianceDOS <- function(sensor = "Landsat 8", DNmin = 69, bnbr = 1, coefs, date, 
                                    scat_coefs = c(-4.0, -2.0, -1.0, -0.7, -0.5),

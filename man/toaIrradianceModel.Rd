@@ -2,7 +2,7 @@
 % Please edit documentation in R/toaIrradianceModel.R
 \name{toaIrradianceModel}
 \alias{toaIrradianceModel}
-\title{Compute extraterrestrial solar irradiance (ESun) for satellite bands}
+\title{Compute extraterrestrial solar irradiance (ESun) based on RSR}
 \usage{
 toaIrradianceModel(sensor, model = "MNewKur", normalize = TRUE, date)
 }

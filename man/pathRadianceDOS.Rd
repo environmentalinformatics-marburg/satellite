@@ -46,8 +46,8 @@ and subsequently averaged over the band.
 landsat8_metadatafile <-   system.file("extdata",
   "LC81950252013188LGN00_MTL.txt", package = "satellite")
   coefs8 <- landsatCoefficients(landsat8_metadatafile)
-  pathRadianceDOS(sensor = "Landsat 8", DNmin = min(getValues(l8)), bnbr = 1,
-  coefs = coefs8, date = "2013-07-30")
+  pathRadianceDOS(sensor = "Landsat 8", DNmin = min(raster::getValues(l8)),
+  bnbr = 1, coefs = coefs8, date = "2013-07-30")
 }
 \references{
 This function is an extended version of the DOS function from

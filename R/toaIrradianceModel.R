@@ -1,4 +1,4 @@
-#' Compute extraterrestrial solar irradiance (ESun) for satellite bands
+#' Compute extraterrestrial solar irradiance (ESun) based on RSR
 #'
 #' @description
 #' Compute mean extraterrestrial solar irradiance (ESun) using tabulated mean
@@ -38,9 +38,13 @@
 #' 
 toaIrradianceModel <- function(sensor, model = "MNewKur", 
                                normalize = TRUE, date){
-  if(sensor == "Landsat 8"){rsr <- lut$l8_rsr}
-  else if(sensor == "Landsat 7"){rsr <- lut$l7_rsr}
-  else{stop("Only Landsat 7 and 8 are implemented, yet.")}
+  if(sensor == "Landsat 8"){
+    rsr <- lut$l8_rsr
+  } else if(sensor == "Landsat 7"){
+    rsr <- lut$l7_rsr
+  } else{
+    stop("Only Landsat 7 and 8 are implemented, yet.")
+  }
   
   toa <- lut$solar
   toa$Wavelength <- round(toa$Wavelength, 0)
@@ -60,7 +64,7 @@ toaIrradianceModel <- function(sensor, model = "MNewKur",
       stop("Variable date is missing.")
     }
     esd <- earthSun(date)
-    eSun <- esd * ESun
+    eSun <- esd * eSun
   }
   
   return(eSun)
