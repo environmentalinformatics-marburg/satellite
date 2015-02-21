@@ -33,9 +33,10 @@
 #' alternative derivation of ESun.
 #' 
 #' @examples
-#' earthSun("2015-01-01", formula = "Spencer")
+#' earthSun(date = "2015-01-01", formula = "Spencer")
+#' 
 earthSun <- function(date, formula = "Spencer"){
-  day <- strftime(date, format = "%j")
+  day <- as.numeric(strftime(date, format = "%j"))
   if(formula == "Spencer"){
     T <- 2 * pi * (day - 1) / 365
     1.000110 + 0.034221 * cos(T) + 0.001280 * sin(T) + 0.000719 * 

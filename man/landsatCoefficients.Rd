@@ -21,7 +21,8 @@ solar geometry information. Depending on the user selection, the calibration
 coefficients are for reflectance or radiance.
 }
 \examples{
-not run:
-landsatCoefficients(filepath = "Name_of_Landsat_Metadata_File")
+landsat8_metadatafile <-   system.file("extdata",
+"LC81950252013188LGN00_MTL.txt", package = "satellite")
+landsatCoefficients(landsat8_metadatafile)
 }
 

@@ -46,27 +46,37 @@
 #' If you refer to Sawyer and Stephen 2014, please note that eq. 5 is wrong.
 #' 
 #' @examples
-#' not run:
-#' pathRadianceDOS(red, nir, swir, level=.99)
-
+#'   landsat8_metadatafile <-   system.file("extdata", 
+#'   "LC81950252013188LGN00_MTL.txt", package = "satellite")
+#'   coefs8 <- landsatCoefficients(landsat8_metadatafile)
+#'   pathRadianceDOS(sensor = "Landsat 8", DNmin = min(getValues(l8)), bnbr = 1,
+#'   coefs = coefs8, date = "2013-07-30")
+#'   
 pathRadianceDOS <- function(sensor = "Landsat 8", DNmin = 69, bnbr = 1, coefs, date, 
                                    scat_coefs = c(-4.0, -2.0, -1.0, -0.7, -0.5),
                                    dos_adjust = 0.01){
   
   # Define band wavelengths and solar constant. Bandwith data taken from
   # http://landsat.usgs.gov/band_designations_landsat_satellites.php
-  if(sensor == "Landsat 4" | sensor == "Landsat 5"){
+  if(sensor == "Landsat 5"){
     bands <- data.frame(
       lmin <- c(0.45, 0.52, 0.63, 0.76, 1.55, 10.40, 2.08),
       lmax <- c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 2.35))
     rownames(bands) <- seq(7)
-    Esun <- c(198.3, 179.6, 153.6, 103.1, 22, 8.34)
-  } else if(sensor == "Landsat 7"){
+    Esun <- eSun(sensor = "Landsat 4", tab = TRUE)
+  } else if(sensor == "Landsat 5"){
+    bands <- data.frame(
+      lmin <- c(0.45, 0.52, 0.63, 0.76, 1.55, 10.40, 2.08),
+      lmax <- c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 2.35))
+    rownames(bands) <- seq(7)
+    Esun <- eSun(sensor = "Landsat 5", tab = TRUE)
+  }
+  else if(sensor == "Landsat 7"){
     bands <- data.frame(
       lmin <- c(0.45, 0.52, 0.63, 0.77, 1.55, 10.40, 2.09, 0.52),
       lmax <- c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 2.35, 0.90))
     rownames(bands) <- seq(8)
-    Esun <- c(1970, 1842, 1547, 1044, 225.7, 0.00, 82.06, 1396)
+    Esun <- eSun(sensor = "Landsat 7", tab = TRUE)
   } else if(sensor == "Landsat 8"){
     bands <- data.frame(
       lmin <- c(0.43, 0.45, 0.53, 0.64, 0.85, 1.57, 2.11, 0.50, 1.36, 10.60, 
@@ -74,7 +84,7 @@ pathRadianceDOS <- function(sensor = "Landsat 8", DNmin = 69, bnbr = 1, coefs, d
       lmax <- c(0.45, 0.51, 0.59, 0.67, 0.88, 1.65, 2.29, 0.68, 1.38, 11.19, 
                 12.51))
     rownames(bands) <- seq(11)
-    Esun <- c(0.0, 1970, 1842, 1547, 1044, 225.7, 225.7, 1396, 225.7, 0.00, 0.00)
+    Esun <- eSun(sensor = "Landsat 8", tab = TRUE, coefs = coefs)
   } else {
     stop("The satellite you have provided is not implemented.")  
   }
@@ -117,7 +127,7 @@ pathRadianceDOS <- function(sensor = "Landsat 8", DNmin = 69, bnbr = 1, coefs, d
   
   # Compute a correction term for the path radiance values to consider a minimum
   # surface reflection wich one can always expect.
-  E0 <- Esun[bnbr] / ESdist(date)^2
+  E0 <- Esun / earthSun(date)^2
   cos_szen <- cos(coefs$SUNZEN[1] * pi / 180.0)
   Tv <- 1.0
   Tz <- cos_szen
@@ -126,4 +136,5 @@ pathRadianceDOS <- function(sensor = "Landsat 8", DNmin = 69, bnbr = 1, coefs, d
   
   # Compute final path radiance estimate for all bands
   Lp <- Lp_min_bands - Lp_adj
+  return(Lp)
 }
