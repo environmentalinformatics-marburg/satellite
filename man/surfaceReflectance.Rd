@@ -10,7 +10,7 @@ surfaceReflectance(bands_rad, coefs, ESun, Lp, model = "DOS2")
 \item{coefs}{metadata from \code{\link{landsatMetadata}}}
 
 \item{model}{to be used (DOS2, DOS4; must be the same as used by \
-code{\ling{pathRadiance}})}
+code{\link{pathRadiance}})}
 
 \item{sensor}{satellite sensor (Landsat 8/7/5/4)}
 

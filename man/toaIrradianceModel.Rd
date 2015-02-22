@@ -4,10 +4,10 @@
 \alias{toaIrradianceModel}
 \title{Compute extraterrestrial solar irradiance (ESun) based on RSR}
 \usage{
-toaIrradianceModel(sensor, model = "MNewKur", normalize = TRUE, date)
+toaIrradianceModel(rsr, model = "MNewKur", normalize = TRUE, date)
 }
 \arguments{
-\item{sensor}{sensor name ("Landsat 8/7")}
+\item{rsr}{relative spectral response function (see details for structure)}
 
 \item{model}{tabulated solar radiation model to be used}
 
@@ -17,7 +17,7 @@ toaIrradianceModel(sensor, model = "MNewKur", normalize = TRUE, date)
 only required if ESun should be corrected to the actual earth sun distance)}
 }
 \value{
-vector object containing ESun for each band
+Vector object containing ESun for each band
 }
 \description{
 Compute mean extraterrestrial solar irradiance (ESun) using tabulated mean
@@ -25,27 +25,47 @@ solar spectral data and the band specifiv relative spectral response
 functions (rsr).
 }
 \details{
-Computation of ESun is taken from Updike and Comp (2011). Sun-earth
-distance is computed using \code{\link{earthSun}}.
+Computation of ESun is taken from Updike and Comp (2011).
+
+Tabulated values for mean earth sun distance are taken from the
+data sources mentionend in the references.
+
+If results should not be normalized to a mean earth sun distance, the
+actual earth sun distance is approximated by the day of the year using
+\code{\link{earthSun}}.
+
+Relative spectral response values have to be supplied as a as a data frame
+which has at least these a column "Wavelength" for the wavelength data in nm
+(must not be rounded to full nm) and a column "RSR" for the response
+information [0...1].
 }
 \examples{
-toaIrradianceModel(sensor = "Landsat 7", model = "MNewKur")
+toaIrradianceModel(lutInfo()$l8_rsr, model = "MNewKur")
 }
 \references{
-Computation of ESun is taken from Updike T, Comp C (2011)
-Radiometric use of WorldView-2 imagery. Technical Note, URL
+Updike T, Comp C (2011) Radiometric use of WorldView-2 imagery.
+Technical Note, URL
 \url{https://www.digitalglobe.com/sites/default/files/Radiometric_Use_of_WorldView-2_Imagery(1).pdf}.
 
-Tabulated relative spectral response functions (nm-1) are taken from the USGS
-at \url{http://landsat.usgs.gov/instructions.php}.
+Tabulated relative spectral response functions (nm-1) are taken from taken from the
+\href{http://landsat.usgs.gov/instructions.php}{spectral viewer}
+of the USGS Landsat FAQ.
 
-Tabulated solar irradiance (W m-2 nm-1) are taken from the National Renewable
-Energy Laboratory at \url{http://rredc.nrel.gov/solar/spectra/am0/modtran.html}.
+Tabulated solar irradiance (W m-2 nm-1) is taken from taken from the
+\href{http://rredc.nrel.gov/solar/spectra/am0/modtran.html}{National Renewable
+Energy Laboratory}.
 }
 \seealso{
-\code{\link{eSun}} for wrapping this function and alternative
-derivation of ESun and \code{\link{earthSun}} for calculating the sun-earth
+\code{\link{toaIrradianceTable}} for tabulated solar irradiance
+values from the literature or \code{\link{toaIrradianceRadRef}} for the
+computation of the solar irradiance based on maximum radiation and reflection
+values of the dataset.
+
+See \code{\link{earthSun}} for calculating the sun-earth
 distance based on the day of the year which is called by this function if
 ESun should be corrected for actual earth sun distance.
+
+See \code{\link{eSun}} which can be used as a wrapper function for the
+satellite sensors already included in this package.
 }
 

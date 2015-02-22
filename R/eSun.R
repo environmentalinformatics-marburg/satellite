@@ -16,8 +16,7 @@
 #' @param normalize normalize ESun to mean earth sun distance
 #' @param date date of the sensor overpath (YYYY-MM-DD or POSIX* object), only 
 #' relevant if normalize = FALSE
-#' @param coefs Landsat 8 metadata from \code{\link{landsatMetadata}}
-#' (Landsat 8 only, see details)
+#' @param rsr Landsat 8 rsr (see \code{\link{toaIrradianceModel}} for details)
 #'
 #' @return vector object containing ESun for each band
 #'
@@ -54,16 +53,16 @@
 #' landsat8_metadatafile <-   system.file("extdata", 
 #' "LC81950252013188LGN00_MTL.txt", package = "satellite")
 #' coefs8 <- landsatMetadata(landsat8_metadatafile)
-#' eSun(sensor = "Landsat 8", tab = TRUE, coefs = coefs8)
+#' eSun(sensor = "Landsat 8", tab = TRUE, rsr = lut$l8_rsr)
 #' 
-eSun <- function(sensor, tab = TRUE, normalize = TRUE, coefs, date){
+eSun <- function(sensor, tab = TRUE, normalize = TRUE, rsr, date){
   if(tab == TRUE){
     if(sensor == "Landsat 8"){
-      if(missing(coefs)){
-        stop("Variable coefs is missing.")
+      if(missing(rsr)){
+        stop("Variable rsr is missing.")
       }
       # todo: replace by toaIrradianceRadRef
-      eSun <- toaIrradianceModel(sensor = sensor, normalize = normalize)
+      eSun <- toaIrradianceModel(rsr, normalize = normalize)
     } else {
       if(normalize == TRUE){
         eSun <- toaIrradianceTable(sensor = sensor, normalize = normalize)  
@@ -77,12 +76,12 @@ eSun <- function(sensor, tab = TRUE, normalize = TRUE, coefs, date){
     }
   } else {
     if(normalize == TRUE){
-      eSun <- toaIrradianceModel(sensor = sensor, normalize = normalize) 
+      eSun <- toaIrradianceModel(rsr, normalize = normalize) 
     } else {
       if(missing(date)){
         stop("Variable date is missing.")
       }
-      eSun <- toaIrradianceModel(sensor = sensor, normalize = normalize,
+      eSun <- toaIrradianceModel(rsr, normalize = normalize,
                                  date = date)  
     }
   }

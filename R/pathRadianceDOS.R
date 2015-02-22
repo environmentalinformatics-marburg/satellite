@@ -10,7 +10,7 @@
 #' @param band_wls band wavelengths for which correction should be made
 #' @param coefs metadata from \code{\link{landsatMetadata}}
 #' @param model to be used to correct for 1% scattering (DOS2, DOS4; must be the
-#' same as used by \code{\ling{radiometricCorrection}})
+#' same as used by \code{\link{radiometricCorrection}})
 #' @param ESun normalized extraterrestrial solar irradiance for all band_wls
 #' (W m-2 micrometer -1) which can be computed by  \code{\link{eSun}})
 #' @param scat_coef scattering coefficient (-4.0, -2.0, -1.0, -0.7, -0.5)
@@ -129,7 +129,7 @@ pathRadianceDOS <- function(DNmin, bnbr, band_wls, coefs, model = "DOS2",
   
   # Compute a correction term for the path radiance values to consider a minimum
   # surface reflection wich one can always expect.
-  E0 <- Esun / earthSun(coefs$DATE)^2
+  E0 <- ESun / earthSun(coefs$DATE)^2
   cos_szen <- cos(coefs$SUNZEN[1] * pi / 180.0)
   Tv <- 1.0
   Tz <- cos_szen

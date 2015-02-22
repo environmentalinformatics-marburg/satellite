@@ -14,7 +14,7 @@ atmosphericCorrection()
 \item{date}{date of the satellite overpath}
 
 \item{model}{to be used (DOS2, DOS4; must be the same as used by \
-code{\ling{pathRadiance}})}
+code{\link{pathRadiance}})}
 }
 \value{
 Raster object containing converted data.

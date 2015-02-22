@@ -12,33 +12,29 @@ test_that("pathRadianceDOS works as expected", {
   coefs8 <- landsatMetadata(landsat8_metadatafile)
   
   t1 <- pathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
-                        bnbr = 2, band_wls = l8_band_wl, coefs = coefs8,
-                        eSun(sensor = "Landsat 8", tab = TRUE, coefs = coefs8), 
-                        scat_coef = -4)
+                        bnbr = 2, band_wls = lut$l8_band_wl, coefs = coefs8,
+                        ESun = eSun(sensor = "Landsat 8", tab = TRUE, 
+                                    rsr = lut$l8_rsr), scat_coef = -4)
   
-  t2 <- pathRadianceDOS(sensor = "Landsat 8", 
-                        DNmin = min(raster::getValues(l8[[2]])), 
-                        bnbr = 2, band_wls = l8_band_wl, coefs = coefs8,
-                        eSun(sensor = "Landsat 8", tab = TRUE, coefs = coefs8), 
-                        scat_coef = -2)
+  t2 <- pathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
+                        bnbr = 2, band_wls = lut$l8_band_wl, coefs = coefs8,
+                        ESun = eSun(sensor = "Landsat 8", tab = TRUE, 
+                                    rsr = lut$l8_rsr), scat_coef = -2)
 
-  t3 <- pathRadianceDOS(sensor = "Landsat 8", 
-                        DNmin = min(raster::getValues(l8[[2]])), 
-                        bnbr = 2, band_wls = l8_band_wl, coefs = coefs8,
-                        eSun(sensor = "Landsat 8", tab = TRUE, coefs = coefs8), 
-                        scat_coef = -1)
+  t3 <- pathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
+                        bnbr = 2, band_wls = lut$l8_band_wl, coefs = coefs8,
+                        ESun =  eSun(sensor = "Landsat 8", tab = TRUE, 
+                                     rsr = lut$l8_rsr), scat_coef = -1)
   
-  t4 <- pathRadianceDOS(sensor = "Landsat 8", 
-                        DNmin = min(raster::getValues(l8[[2]])), 
-                        bnbr = 2, band_wls = l8_band_wl, coefs = coefs8,
-                        eSun(sensor = "Landsat 8", tab = TRUE, coefs = coefs8), 
-                        scat_coef = -0.7)
+  t4 <- pathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
+                        bnbr = 2, band_wls = lut$l8_band_wl, coefs = coefs8,
+                        ESun = eSun(sensor = "Landsat 8", tab = TRUE, 
+                                    rsr = lut$l8_rsr), scat_coef = -0.7)
   
-  t5 <- pathRadianceDOS(sensor = "Landsat 8", 
-                        DNmin = min(raster::getValues(l8[[2]])), 
-                        bnbr = 2, band_wls = l8_band_wl, coefs = coefs8,
-                        eSun(sensor = "Landsat 8", tab = TRUE, coefs = coefs8), 
-                        scat_coef = -0.5)
+  t5 <- pathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
+                        bnbr = 2, band_wls = lut$l8_band_wl, coefs = coefs8,
+                        ESun = eSun(sensor = "Landsat 8", tab = TRUE, 
+                                    rsr = lut$l8_rsr), scat_coef = -0.5)
   expect_equal(round(t1[1],4), c(Band_1 = round(59.8861832583,4)))
   expect_equal(round(t2[3],4), c(Band_3 = round(29.24265456,4)))
   expect_equal(round(t3[4],4), c(Band_4 = round(29.856403,4)))

@@ -11,7 +11,7 @@
 #' @param coefs metadata from \code{\link{landsatMetadata}}
 #' @param date date of the satellite overpath
 #' @param model to be used (DOS2, DOS4; must be the same as used by \
-#' code{\ling{pathRadiance}})
+#' code{\link{pathRadiance}})
 #'
 #' @return Raster or RasterStack object containing surface reflectance data.
 #'
