@@ -17,7 +17,7 @@ The function builds the metadata filename  based on standard level 1B/T
 Landsat filenames.
 }
 \examples{
-not run:
-metaFilePathLandsat(filepath = "Name_of_Landsat_Band")
+landsat8_filepath <- "LC81950252013188LGN00_B2.TIF"
+metaFilePathLandsat(filepath = landsat8_filepath)
 }
 

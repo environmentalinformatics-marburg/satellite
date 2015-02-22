@@ -11,8 +11,8 @@
 #' @export metaFilePathLandsat
 #'
 #' @examples
-#' not run:
-#' metaFilePathLandsat(filepath = "Name_of_Landsat_Band")
+#' landsat8_filepath <- "LC81950252013188LGN00_B2.TIF"
+#' metaFilePathLandsat(filepath = landsat8_filepath)
 
 metaFilePathLandsat <- function(filepath){
   pos <- gregexpr(pattern ='_B', 

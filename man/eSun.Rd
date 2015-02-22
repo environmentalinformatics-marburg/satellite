@@ -14,7 +14,7 @@ values based on rsr (FALSE)}
 
 \item{normalize}{normalize ESun to mean earth sun distance}
 
-\item{coefs}{Landsat 8 metadata from \code{\link{landsatCoefficients}}
+\item{coefs}{Landsat 8 metadata from \code{\link{landsatMetadata}}
 (Landsat 8 only, see details)}
 
 \item{date}{date of the sensor overpath (YYYY-MM-DD or POSIX* object), only
@@ -52,7 +52,7 @@ taken from the metadata of the scene.
 \examples{
 landsat8_metadatafile <-   system.file("extdata",
 "LC81950252013188LGN00_MTL.txt", package = "satellite")
-coefs8 <- landsatCoefficients(landsat8_metadatafile)
+coefs8 <- landsatMetadata(landsat8_metadatafile)
 eSun(sensor = "Landsat 8", tab = TRUE, coefs = coefs8)
 }
 \references{

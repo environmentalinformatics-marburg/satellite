@@ -20,7 +20,7 @@
 #' 
 #' @references Computation of ESun is taken from Updike T, Comp C (2011) 
 #' Radiometric use of WorldView-2 imagery. Technical Note, URL 
-#' \URL{https://www.digitalglobe.com/sites/default/files/Radiometric_Use_of_WorldView-2_Imagery(1).pdf}.
+#' \url{https://www.digitalglobe.com/sites/default/files/Radiometric_Use_of_WorldView-2_Imagery(1).pdf}.
 #' 
 #' Tabulated relative spectral response functions (nm-1) are taken from the USGS
 #' at \url{http://landsat.usgs.gov/instructions.php}.

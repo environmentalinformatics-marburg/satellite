@@ -8,7 +8,7 @@
 #'
 #' @param band raster object of the Landsat band
 #' @param bnbr number of the Landsat band
-#' @param coefs coefficients data frame resulting from landsatCoefficients()
+#' @param coefs coefficients data frame resulting from landsatMetadata()
 #' @param conv conversion type (one of "rad", "ref", "refsun", "bt")
 #'
 #' @return Raster object with converted values
@@ -18,20 +18,31 @@
 #' @references The conversion functions are taken from USGS' Landsat 8 manual
 #' which is available online at 
 #' \url{http://landsat.usgs.gov/Landsat8_Using_Product.php}
+
+#' @seealso \code{\link{radiometricCorrection}} for converions of the DNs 
+#' including scene-based atmospheric correction.
 #'
 #' @examples
-#' not run:
 #' landsatCalibration(band, bnbr, coefs, conv = "rad")
 
 landsatCalibration <- function(band, bnbr, coefs, conv = "rad"){
   if(conv == "rad"){
     result <- coefs$RADM[bnbr] * band + coefs$RADA[bnbr]
   } else if(conv == "ref"){
+    if(is.na(coefs$REFM[bnbr])){
+      stop(paste0("Missing reflectence correction factors for band ", str(bnbr)))
+    }
     result <- coefs$REFM[bnbr] * band + coefs$REFA[bnbr]
   } else if(conv == "refsun"){
+    if(is.na(coefs$REFM[bnbr])){
+      stop(paste0("Missing reflectence correction factors for band ", str(bnbr)))
+    }
     result <- (coefs$REFM[bnbr] * band + coefs$REFA[bnbr]) / 
       cos(coefs$SUNZEN[bnbr] * pi / 180.0)
   } else {
+    if(is.na(coefs$BTK2[bnbr])){
+      stop(paste0("Missing temperature correction factors for band ", str(bnbr)))
+    }
     result <- coefs$BTK2[bnbr] / 
       log(coefs$BTK1[bnbr] / (coefs$RADM[bnbr] * band + coefs$RADA[bnbr]) + 1)
   }

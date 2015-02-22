@@ -1,15 +1,23 @@
 #' Compute path radiance based on dark object method
 #'
 #' @description
-#' Compute an estimaed path radiance for all sensor bands using a dark object 
+#' Compute an estimaed path radiance for all sensor band_wls using a dark object 
 #' method which can be used to roughly correct the radiance values for 
 #' atmospheric scattering.
 #'
-#' @param red a raster of the sensor's red band
-#' @param nir a raster of the sensor's nir band
-#' @param swir a raster of the sensor's swir band
-#'
-#' @return raster object with invariant pixels marked with 1, 0 otherwise
+#' @param DNmin digital number of dark object in band bnbr
+#' @param bnbr band number for which DNmin is valid
+#' @param band_wls band wavelengths for which correction should be made
+#' @param coefs metadata from \code{\link{landsatMetadata}}
+#' @param model to be used to correct for 1% scattering (DOS2, DOS4; must be the
+#' same as used by \code{\ling{radiometricCorrection}})
+#' @param ESun normalized extraterrestrial solar irradiance for all band_wls
+#' (W m-2 micrometer -1) which can be computed by  \code{\link{eSun}})
+#' @param scat_coef scattering coefficient (-4.0, -2.0, -1.0, -0.7, -0.5)
+#' @param dos_adjust dark object adjustment assuming a reflexion of e.g. 0.01
+#'  
+#' @return Vector object with path radiance values for each band 
+#' (W m-2 micrometer-1)
 #'
 #' @export pathRadianceDOS
 #' 
@@ -18,123 +26,117 @@
 #' scatter into the sensors field of view, aka haze) using the reflectance of a 
 #' dark object (i.e. reflectance ~1%). 
 #' 
-#' Chavez Jr PS (1988) proposed a method which uses the dark object reflectance
-#' in one band ot predict the corresponding path radiances in all other bands 
+#' Chavez (1988) proposed a method which uses the dark object reflectance
+#' in one band to predict the corresponding path radiances in all other band_wls 
 #' using a relative radiance model which depends on the wavlelength and overall
 #' atmospheric optical thickness (which is estimated based on the dark object's
 #' DN value). This has the advantage that the path radiance is actually 
-#' correlated across different sensor bands and not computed individuall for 
-#' each band using independent dark objects.
+#' correlated across different sensor band_wls and not computed individuall for 
+#' each band using independent dark objects. He proposed a relative radiance 
+#' model which follows a wavelength dependent scattering that ranges from a
+#' power of -4 over -2, -1, -0.7 to -0.5 for very clear over clear, moderate, 
+#' hazy to very hazy conditions. The relative factors are computed individually
+#' for each 1/1000 wavelength within each band range and subsequently averaged 
+#' over the band as proposed by Goslee (2011).
 #' 
-#' The relative radiance model follows a wavelength dependent scattering which
-#' ranges from -4 power over -2, -1, -0.7 to -0.5 power for very clear over
-#' clear, moderate, hazy to very hazy conditions. The relative factors are
-#' computed individually for each 1/1000 wavelength within each band range
-#' and subsequently averaged over the band.
+#' The atmospheric transmittance towards the sensor (Tv) is approximated by 
+#' 1.0 (DOS2, Chavez 1996) or rayleigh scattering (DOS4, Moran et al. 1992)
 #' 
-#' @references This function is an extended version of the DOS function from 
-#' Sarah C. Goslee (2011) Analyzing Remote Sensing Data in R: The landsat 
+#' The atmospheric transmittance from the sun (Tz) is approximated by the 
+#' cosine of the sun zenith angle (DOS2, Chavez 1996) or again using rayleigh
+#' scattering (DOS4, Moran et al. 1992).
+#' 
+#' The downwelling diffuse irradiance is approximated by 0.0 (DOS2, Chavez 1996)
+#' or the hemispherical integral of the path radiance (DOS4, Moran et al. 1992).
+#' 
+#' Equations for the path radiance are taken from Song et al. (2001).
+#' 
+#' @references Chavez Jr PS (1988) An improved dark-object subtraction technique 
+#' for atmospheric scattering correction of multispectral data. Remote Sensing 
+#' of Environment 24/3, doi:10.1016/0034-4257(88)90019-3, available online at
+#'  \url{http://www.sciencedirect.com/science/article/pii/0034425788900193}
+#'  
+#' Chavez Jr PS (1996) Image-based atmospheric corrections revisited and
+#' improved. Photogrammetric Engineering and Remote Sensing 62/9,
+#' available online at 
+#' \url{http://www.asprs.org/PE-RS-Journals-1996/PE-RS-September-1996.html}
+#'  
+#' Goslee SC (2011) Analyzing Remote Sensing Data in R: The landsat 
 #' Package. Journal of Statistical Software,43/4, 1-25. URL 
 #' \url{http://www.jstatsoft.org/v43/i04/}.
 #' 
-#' The underlaying theory has been published by Chavez Jr PS (1988) An improved 
-#' dark-object subtraction technique for atmospheric scattering correction of 
-#' multispectral data. Remote Sensing of Environment 24/3, 
-#' doi:10.1016/0034-4257(88)90019-3, available online at
-#'  \url{http://www.sciencedirect.com/science/article/pii/0034425788900193}.
+#' Moran MS, Jackson RD, Slater PN, Teillet PM (1992) Evlauation of simplified
+#' procedures for rretrieval of land surface reflectane factors from satellite
+#' sensor output.Remote Sensing of Environment 41/2-3, 169-184, 
+#' doi:10.1016/0034-4257(92)90076-V, 
+#' URL \url{http://www.sciencedirect.com/science/article/pii/003442579290076V}.
+#' 
+#' Song C, Woodcock CE, Seto KC, Lenney MP, Macomber SA (2001) Classification 
+#' and Change Detection Using Landsat TM Data: When and How to Correct 
+#' Atmospheric Effects? Remote Sensing of Environment 75/2, 
+#' doi:10.1016/S0034-4257(00)00169-3, URL
+#' \url{http://www.sciencedirect.com/science/article/pii/S0034425700001693}
 #'
 #' If you refer to Sawyer and Stephen 2014, please note that eq. 5 is wrong.
 #' 
+#' @seealso This function is used by \code{\link{radiometricCorrection}} to 
+#' compute the path radiance.
+#' 
 #' @examples
+#'   #Example for Landat 8
 #'   landsat8_metadatafile <-   system.file("extdata", 
 #'   "LC81950252013188LGN00_MTL.txt", package = "satellite")
-#'   coefs8 <- landsatCoefficients(landsat8_metadatafile)
-#'   pathRadianceDOS(sensor = "Landsat 8", DNmin = min(raster::getValues(l8)), 
-#'   bnbr = 1, coefs = coefs8, date = "2013-07-30")
+#'   coefs8 <- landsatMetadata(landsat8_metadatafile)
 #'   
-pathRadianceDOS <- function(sensor = "Landsat 8", DNmin = 69, bnbr = 1, coefs, date, 
-                                   scat_coefs = c(-4.0, -2.0, -1.0, -0.7, -0.5),
-                                   dos_adjust = 0.01){
-  
-  # Define band wavelengths and solar constant. Bandwith data taken from
-  # http://landsat.usgs.gov/band_designations_landsat_satellites.php
-  if(sensor == "Landsat 5"){
-    bands <- data.frame(
-      lmin <- c(0.45, 0.52, 0.63, 0.76, 1.55, 10.40, 2.08),
-      lmax <- c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 2.35))
-    rownames(bands) <- seq(7)
-    Esun <- eSun(sensor = "Landsat 4", tab = TRUE)
-  } else if(sensor == "Landsat 5"){
-    bands <- data.frame(
-      lmin <- c(0.45, 0.52, 0.63, 0.76, 1.55, 10.40, 2.08),
-      lmax <- c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 2.35))
-    rownames(bands) <- seq(7)
-    Esun <- eSun(sensor = "Landsat 5", tab = TRUE)
-  }
-  else if(sensor == "Landsat 7"){
-    bands <- data.frame(
-      lmin <- c(0.45, 0.52, 0.63, 0.77, 1.55, 10.40, 2.09, 0.52),
-      lmax <- c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 2.35, 0.90))
-    rownames(bands) <- seq(8)
-    Esun <- eSun(sensor = "Landsat 7", tab = TRUE)
-  } else if(sensor == "Landsat 8"){
-    bands <- data.frame(
-      lmin <- c(0.43, 0.45, 0.53, 0.64, 0.85, 1.57, 2.11, 0.50, 1.36, 10.60, 
-                11.50),
-      lmax <- c(0.45, 0.51, 0.59, 0.67, 0.88, 1.65, 2.29, 0.68, 1.38, 11.19, 
-                12.51))
-    rownames(bands) <- seq(11)
-    Esun <- eSun(sensor = "Landsat 8", tab = TRUE, coefs = coefs)
-  } else {
-    stop("The satellite you have provided is not implemented.")  
-  }
+#'   pathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
+#'   bnbr = 2, band_wls = l8_band_wl, coefs = coefs8,
+#'   eSun(sensor = "Landsat 8", tab = TRUE, coefs = coefs8), 
+#'   scat_coef = -4)
+#'   
+pathRadianceDOS <- function(DNmin, bnbr, band_wls, coefs, model = "DOS2", 
+                            ESun, scat_coef = -4.0, dos_adjust = 0.01){
   
   # Define relative scattering model based on wavelength dependent scattering
   # processes and different atmospheric optical thiknesses. Resulting 
   # coefficients are the band wavelength to the power of the respective 
   # scattering coefficients defined for the model.
-  scattering_model <- matrix(NA, nrow = nrow(bands), ncol = length(scat_coefs))
-  rownames(scattering_model) <- rownames(bands)
-  colnames(scattering_model) <- paste0("coef", scat_coefs)
-  for(i in 1:nrow(bands)) {
-    act_band <- seq(bands[i, 1], bands[i, 2], by=0.001)
-    for(j in 1:length(scat_coefs)){
-      scattering_model[i, j] <- mean(act_band ^ scat_coefs[j])
-    }
-  }
+  scattering_model <- sapply(seq(nrow(band_wls)), function(x){
+    act_band <- seq(band_wls[x, 1], band_wls[x, 2], by=0.001)
+    mean(act_band ^ scat_coef)
+  })
   
   # Compute multiplication factors which relate the scattering model coefficents
-  # between the individual bands and the one band which has been used for the
+  # between the individual band_wls and the one band which has been used for the
   # extraction of the dark object radiation.
-  basline_factor <- scattering_model[bnbr, ]
-  scattering_factors <- sweep(scattering_model, 2, basline_factor, "/")
+  basline_factor <- scattering_model[bnbr]
+  scattering_factors <- scattering_model / basline_factor
   
   # Compute radiation multiplication factors for radiance conversion (i.e.
   # RADM) and normalize the factors to the multiplication factor of the band
   # that has been used for the dark object extraction.
   normalized_radm <- coefs$RADM / coefs$RADM[bnbr]
   
-  # Compute first estimate of path radiance for all bands based on the values of
+  # Compute first estimate of path radiance for all band_wls based on the values
   # the band used to derive the dark object properties
   Lp_min <- coefs$RADM[bnbr] * DNmin + coefs$RADA[bnbr]
-  Lp_min_bands <- Lp_min * scattering_factors
+  Lp_min_band_wls <- Lp_min * scattering_factors
   # DN way
   # DNmin_basis <- DNmin - coefs$RADA[bnbr]
-  # DNmin_bands <- DNmin_basis * scattering_factors
-  # DNmin_bands_radm <- DNmin_bands * normalized_radm[1:6]
-  # DNmin_bands_rad <- DNmin_bands_radm + coefs$RADA[1:6]
-  # coefs$RADM[1:6] * DNmin_bands_rad + coefs$RADA[1:6]
+  # DNmin_band_wls <- DNmin_basis * scattering_factors
+  # DNmin_band_wls_radm <- DNmin_band_wls * normalized_radm[1:6]
+  # DNmin_band_wls_rad <- DNmin_band_wls_radm + coefs$RADA[1:6]
+  # coefs$RADM[1:6] * DNmin_band_wls_rad + coefs$RADA[1:6]
   
   # Compute a correction term for the path radiance values to consider a minimum
   # surface reflection wich one can always expect.
-  E0 <- Esun / earthSun(date)^2
+  E0 <- Esun / earthSun(coefs$DATE)^2
   cos_szen <- cos(coefs$SUNZEN[1] * pi / 180.0)
   Tv <- 1.0
   Tz <- cos_szen
   Edown <- 0.0
   Lp_adj <- dos_adjust * (E0 * cos_szen * Tz + Edown) * Tv / pi
   
-  # Compute final path radiance estimate for all bands
-  Lp <- Lp_min_bands - Lp_adj
+  # Compute final path radiance estimate for all band_wls
+  Lp <- Lp_min_band_wls - Lp_adj
   return(Lp)
 }

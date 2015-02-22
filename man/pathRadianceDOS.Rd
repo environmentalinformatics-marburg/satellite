@@ -4,18 +4,31 @@
 \alias{pathRadianceDOS}
 \title{Compute path radiance based on dark object method}
 \usage{
-pathRadianceDOS(sensor = "Landsat 8", DNmin = 69, bnbr = 1, coefs, date,
-  scat_coefs = c(-4, -2, -1, -0.7, -0.5), dos_adjust = 0.01)
+pathRadianceDOS(DNmin, bnbr, sensor = "Landsat 8", coefs, model = "DOS2",
+  ESun, scat_coef = -4, dos_adjust = 0.01)
 }
 \arguments{
-\item{red}{a raster of the sensor's red band}
+\item{DNmin}{digital number of dark object in band bnbr}
 
-\item{nir}{a raster of the sensor's nir band}
+\item{bnbr}{band number for which DNmin is valid}
 
-\item{swir}{a raster of the sensor's swir band}
+\item{sensor}{satellite sensor (Landsat 8/7/5/4)}
+
+\item{coefs}{metadata from \code{\link{landsatMetadata}}}
+
+\item{model}{to be used to correct for 1% scattering (DOS2, DOS4; must be the
+same as used by \code{\ling{radiometricCorrection}})}
+
+\item{ESun}{normalized extraterrestrial solar irradiance for all bands
+(W m-2 micrometer -1) which can be computed by  \code{\link{eSun}})}
+
+\item{scat_coef}{scattering coefficient (-4.0, -2.0, -1.0, -0.7, -0.5)}
+
+\item{dos_adjust}{dark object adjustment assuming a reflexion of e.g. 0.01}
 }
 \value{
-raster object with invariant pixels marked with 1, 0 otherwise
+Vector object with path radiance values for each band
+(W m-2 micrometer-1)
 }
 \description{
 Compute an estimaed path radiance for all sensor bands using a dark object
@@ -28,39 +41,69 @@ of the atmospheric path radiance (i.e. upwelling radiation which is
 scatter into the sensors field of view, aka haze) using the reflectance of a
 dark object (i.e. reflectance ~1%).
 
-Chavez Jr PS (1988) proposed a method which uses the dark object reflectance
-in one band ot predict the corresponding path radiances in all other bands
+Chavez (1988) proposed a method which uses the dark object reflectance
+in one band to predict the corresponding path radiances in all other bands
 using a relative radiance model which depends on the wavlelength and overall
 atmospheric optical thickness (which is estimated based on the dark object's
 DN value). This has the advantage that the path radiance is actually
 correlated across different sensor bands and not computed individuall for
-each band using independent dark objects.
+each band using independent dark objects. He proposed a relative radiance
+model which follows a wavelength dependent scattering that ranges from a
+power of -4 over -2, -1, -0.7 to -0.5 for very clear over clear, moderate,
+hazy to very hazy conditions. The relative factors are computed individually
+for each 1/1000 wavelength within each band range and subsequently averaged
+over the band as proposed by Goslee (2011).
 
-The relative radiance model follows a wavelength dependent scattering which
-ranges from -4 power over -2, -1, -0.7 to -0.5 power for very clear over
-clear, moderate, hazy to very hazy conditions. The relative factors are
-computed individually for each 1/1000 wavelength within each band range
-and subsequently averaged over the band.
+The atmospheric transmittance towards the sensor (Tv) is approximated by
+1.0 (DOS2, Chavez 1996) or rayleigh scattering (DOS4, Moran et al. 1992)
+
+The atmospheric transmittance from the sun (Tz) is approximated by the
+cosine of the sun zenith angle (DOS2, Chavez 1996) or again using rayleigh
+scattering (DOS4, Moran et al. 1992).
+
+The downwelling diffuse irradiance is approximated by 0.0 (DOS2, Chavez 1996)
+or the hemispherical integral of the path radiance (DOS4, Moran et al. 1992).
+
+Equations for the path radiance are taken from Song et al. (2001).
 }
 \examples{
 landsat8_metadatafile <-   system.file("extdata",
   "LC81950252013188LGN00_MTL.txt", package = "satellite")
-  coefs8 <- landsatCoefficients(landsat8_metadatafile)
+  coefs8 <- landsatMetadata(landsat8_metadatafile)
   pathRadianceDOS(sensor = "Landsat 8", DNmin = min(raster::getValues(l8)),
-  bnbr = 1, coefs = coefs8, date = "2013-07-30")
+  bnbr = 1, coefs = coefs8)
 }
 \references{
-This function is an extended version of the DOS function from
-Sarah C. Goslee (2011) Analyzing Remote Sensing Data in R: The landsat
+Chavez Jr PS (1988) An improved dark-object subtraction technique
+for atmospheric scattering correction of multispectral data. Remote Sensing
+of Environment 24/3, doi:10.1016/0034-4257(88)90019-3, available online at
+ \url{http://www.sciencedirect.com/science/article/pii/0034425788900193}
+
+Chavez Jr PS (1996) Image-based atmospheric corrections revisited and
+improved. Photogrammetric Engineering and Remote Sensing 62/9,
+available online at
+\url{http://www.asprs.org/PE-RS-Journals-1996/PE-RS-September-1996.html}
+
+Goslee SC (2011) Analyzing Remote Sensing Data in R: The landsat
 Package. Journal of Statistical Software,43/4, 1-25. URL
 \url{http://www.jstatsoft.org/v43/i04/}.
 
-The underlaying theory has been published by Chavez Jr PS (1988) An improved
-dark-object subtraction technique for atmospheric scattering correction of
-multispectral data. Remote Sensing of Environment 24/3,
-doi:10.1016/0034-4257(88)90019-3, available online at
- \url{http://www.sciencedirect.com/science/article/pii/0034425788900193}.
+Moran MS, Jackson RD, Slater PN, Teillet PM (1992) Evlauation of simplified
+procedures for rretrieval of land surface reflectane factors from satellite
+sensor output.Remote Sensing of Environment 41/2-3, 169-184,
+doi:10.1016/0034-4257(92)90076-V,
+URL \url{http://www.sciencedirect.com/science/article/pii/003442579290076V}.
+
+Song C, Woodcock CE, Seto KC, Lenney MP, Macomber SA (2001) Classification
+and Change Detection Using Landsat TM Data: When and How to Correct
+Atmospheric Effects? Remote Sensing of Environment 75/2,
+doi:10.1016/S0034-4257(00)00169-3, URL
+\url{http://www.sciencedirect.com/science/article/pii/S0034425700001693}
 
 If you refer to Sawyer and Stephen 2014, please note that eq. 5 is wrong.
+}
+\seealso{
+This function is used by \code{\link{radiometricCorrection}} to
+compute the path radiance.
 }
 

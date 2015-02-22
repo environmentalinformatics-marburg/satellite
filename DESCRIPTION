@@ -1,14 +1,15 @@
 Package: satellite
 Type: Package
 Title: Various functions for handling and manipulating remote sensing data.
-Version: 0.1.0
+Version: 0.0.0.9010
 Date: 2015-02-18
-Author: Hanna Meyer, Thomas Nauss
+Author: Thomas Nauss, Hanna Meyer
 Maintainer: Environmental Informatics <admin@environmentalinformatics-marburg.de>
 Description: The package provides a variety of functions which are usefull for handling, manipulating and visualizing remote sensing data.
 Imports:
-    raster,
-    sp
-License: GNU GPL v3.0
-Suggests: testthat
-LazyData: true 
+  raster,
+  sp
+License: GPL-3
+Suggests: 
+  testthat
+LazyData: true

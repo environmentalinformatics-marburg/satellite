@@ -1,5 +1,3 @@
-library(raster)
+l7 <- raster::stack("data-raw/l7_2001-07-30_30m_crop_R_satellite.tif")
 
-l7 <- stack("data-raw/l7_2001-07-30_30m_crop_R_satellite.tif")
-
-devtools::use_data(l7)
+devtools::use_data(l7, overwrite = TRUE)

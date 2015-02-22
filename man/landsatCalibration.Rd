@@ -11,7 +11,7 @@ landsatCalibration(band, bnbr, coefs, conv = "rad")
 
 \item{bnbr}{number of the Landsat band}
 
-\item{coefs}{coefficients data frame resulting from landsatCoefficients()}
+\item{coefs}{coefficients data frame resulting from landsatMetadata()}
 
 \item{conv}{conversion type (one of "rad", "ref", "refsun", "bt")}
 }
@@ -25,12 +25,15 @@ the calibration coefficients from the metadata file. The reflectance
 conversion can additionaly be include a sun zenith correction.
 }
 \examples{
-not run:
 landsatCalibration(band, bnbr, coefs, conv = "rad")
 }
 \references{
 The conversion functions are taken from USGS' Landsat 8 manual
 which is available online at
 \url{http://landsat.usgs.gov/Landsat8_Using_Product.php}
+}
+\seealso{
+\code{\link{radiometricCorrection}} for converions of the DNs
+including scene-based atmospheric correction.
 }
 

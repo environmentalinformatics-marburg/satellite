@@ -13,7 +13,7 @@ The package provides a variety of functions which are usefull for
 handling, manipulating and visualizing remote sensing data.
 }
 \author{
-Hanna Meyer, Thomas Nauss\cr
+Thomas Nauss, Hanna Meyer\cr
 \cr
 \emph{Maintainer:} Environmental Informatics \email{admin@environmentalinformatics-marburg.de}
 }

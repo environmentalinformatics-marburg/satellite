@@ -7,7 +7,7 @@
 #' @aliases satellite
 #' @docType package
 #' @title Smorgasboard for remote sensing functions
-#' @author Hanna Meyer, Thomas Nauss\cr
+#' @author Thomas Nauss, Hanna Meyer\cr
 #' \cr
 #' \emph{Maintainer:} Environmental Informatics \email{admin@@environmentalinformatics-marburg.de}
 #'

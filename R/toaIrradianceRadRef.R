@@ -6,7 +6,7 @@
 #' 
 #' @param sensor sensor name ("Landsat 8/7/5/4")
 #' @param coefs metadata containing sensor informatino e.g. from 
-#' \code{\link{landsatCoefficients}}
+#' \code{\link{landsatMetadata}}
 #' @param normalize normalize ESun to mean earth sun distance
 #'
 #' @return vector object containing ESun for each band
@@ -14,8 +14,8 @@
 #' @export toaIrradianceRadRef
 #' 
 #' @details The actual solar irradiance is compute using the following formula 
-#' taken from GRASS' \href{http://grass.osgeo.org/grass65/manuals/i.landsat.toar.html}
-#' {i.landsat.toar module}
+#' taken from GRASS' 
+#' \href{http://grass.osgeo.org/grass65/manuals/i.landsat.toar.html}{i.landsat.toar module}
 #' \deqn{ESun = (pi d^2) RADIANCE_MAXIMUM / REFLECTANCE_MAXIMUM}
 #' where d is the sun-earth distance in astronomical units and RADIANCE_MAXIMUM,
 #' REFLECTANCE_MAXIMUM are the maximum radiance and reflection values of the
@@ -32,9 +32,8 @@
 #' @examples
 #' toaIrradianceRadRef(sensor = "Landsat 8", coefs = coefs)
 toaIrradianceRadRef <- function(sensor, coefs, normalize = TRUE){
-    # esd <- earthSun(date)
-    eSun <- pi * esd * coefs$RAD_MAX / coefs$REF_MAX
+    eSun <- pi * coefs$ESD * coefs$RAD_MAX / coefs$REF_MAX
     if(normalize == TRUE){
-      eSun <- 1/coefs$ESD * ESun
+      eSun <- 1/coefs$ESD * eSun
     }
 }

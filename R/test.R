@@ -30,10 +30,10 @@
 #   }
 # }
 # 
-# # Test landsatCoefficients()
+# # Test landsatMetadata()
 # test_landsatCoefficients <- function(...){
 #   test <- metaFilePathLandsat(files[3])
-#   coefs <- landsatCoefficients(test[[1]])
+#   coefs <- landsatMetadata(test[[1]])
 #   # coefs$RADA[1:9] <- c(-6.97874, -7.19882, -5.62165, -6.06929, -1.12622, 
 #   #                      -0.06709, 3.16280, -0.39390, -5.67559)
 #   # coefs$RADM[1:9] <- c(0.779, 0.799, 0.622, 0.969, 0.126, 0.067, 0.037, 
@@ -45,7 +45,7 @@
 # test_landsatCalibration <- function(...){
 #   for(i in seq(length(files))){
 #     test <- metaFilePathLandsat(files[i])
-#     coefs <- landsatCoefficients(test[[1]])
+#     coefs <- landsatMetadata(test[[1]])
 #     print(test[[2]])
 #     result <- landsatCalibration(data[[1]], test[[2]], coefs, conv = "rad")  
 #     print(result)
@@ -69,7 +69,7 @@
 # 
 # test_metaFilePathLandsat()
 # 
-# test_landsatCoefficients()
+# test_landsatMetadata()
 # 
 # test_landsatCalibration()
 # 

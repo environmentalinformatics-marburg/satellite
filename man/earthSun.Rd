@@ -19,7 +19,7 @@ Earth-sun distance is computed by one of several empirical formulas.
 }
 \details{
 Computation of ESun is taken from Updike and Comp (2011). Sun-earth
-distance is computed using \code{\link{sunEarth}}.
+distance is computed using \code{\link{earthSun}}.
 }
 \examples{
 earthSun(date = "2015-01-01", formula = "Spencer")
@@ -41,7 +41,7 @@ An Introduction. Wiley, ISBN: 978-0-470-02101-9,
 ESA: ESA Earth Observation Quality Control: Landsat frequently asked questions.
 }
 \seealso{
-\code{\link{sunEarth}} for calculating the sun-earth distance based
+\code{\link{earthSun}} for calculating the sun-earth distance based
 on the day of the year and \code{\link{eSun}} for wrapping this function and
 alternative derivation of ESun.
 }

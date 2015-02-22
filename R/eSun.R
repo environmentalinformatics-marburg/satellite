@@ -16,7 +16,7 @@
 #' @param normalize normalize ESun to mean earth sun distance
 #' @param date date of the sensor overpath (YYYY-MM-DD or POSIX* object), only 
 #' relevant if normalize = FALSE
-#' @param coefs Landsat 8 metadata from \code{\link{landsatCoefficients}}
+#' @param coefs Landsat 8 metadata from \code{\link{landsatMetadata}}
 #' (Landsat 8 only, see details)
 #'
 #' @return vector object containing ESun for each band
@@ -53,7 +53,7 @@
 #' @examples
 #' landsat8_metadatafile <-   system.file("extdata", 
 #' "LC81950252013188LGN00_MTL.txt", package = "satellite")
-#' coefs8 <- landsatCoefficients(landsat8_metadatafile)
+#' coefs8 <- landsatMetadata(landsat8_metadatafile)
 #' eSun(sensor = "Landsat 8", tab = TRUE, coefs = coefs8)
 #' 
 eSun <- function(sensor, tab = TRUE, normalize = TRUE, coefs, date){
@@ -62,6 +62,7 @@ eSun <- function(sensor, tab = TRUE, normalize = TRUE, coefs, date){
       if(missing(coefs)){
         stop("Variable coefs is missing.")
       }
+      # todo: replace by toaIrradianceRadRef
       eSun <- toaIrradianceModel(sensor = sensor, normalize = normalize)
     } else {
       if(normalize == TRUE){

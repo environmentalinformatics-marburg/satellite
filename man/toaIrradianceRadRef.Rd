@@ -10,7 +10,7 @@ toaIrradianceRadRef(sensor, coefs, normalize = TRUE)
 \item{sensor}{sensor name ("Landsat 8/7/5/4")}
 
 \item{coefs}{metadata containing sensor informatino e.g. from
-\code{\link{landsatCoefficients}}}
+\code{\link{landsatMetadata}}}
 
 \item{normalize}{normalize ESun to mean earth sun distance}
 }
@@ -23,8 +23,8 @@ maximum radiation and reflection values within each band.
 }
 \details{
 The actual solar irradiance is compute using the following formula
-taken from GRASS' \href{http://grass.osgeo.org/grass65/manuals/i.landsat.toar.html}
-{i.landsat.toar module}
+taken from GRASS'
+\href{http://grass.osgeo.org/grass65/manuals/i.landsat.toar.html}{i.landsat.toar module}
 \deqn{ESun = (pi d^2) RADIANCE_MAXIMUM / REFLECTANCE_MAXIMUM}
 where d is the sun-earth distance in astronomical units and RADIANCE_MAXIMUM,
 REFLECTANCE_MAXIMUM are the maximum radiance and reflection values of the
