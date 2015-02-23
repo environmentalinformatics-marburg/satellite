@@ -35,9 +35,10 @@ actual earth sun distance is approximated by the day of the year using
 \code{\link{earthSun}}.
 
 Relative spectral response values have to be supplied as a as a data frame
-which has at least these a column "Wavelength" for the wavelength data in nm
-(must not be rounded to full nm) and a column "RSR" for the response
-information [0...1].
+which has at least these three columns: (i) a column "Band" for the sensor
+band number (i.e. 1, 2, etc.), (ii) a column "Wavelength" for the wavelength
+data in full nm steps, and (iii) a column "RSR" for the
+response information [0...1].
 }
 \examples{
 toaIrradianceModel(lutInfo()$l8_rsr, model = "MNewKur")

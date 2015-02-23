@@ -4,7 +4,7 @@
 \alias{eSun}
 \title{Get extraterrestrial solar irradiance (ESun) for satellite bands}
 \usage{
-eSun(sensor, tab = TRUE, normalize = TRUE, coefs, date)
+eSun(sensor, tab = TRUE, normalize = TRUE, rsr, date)
 }
 \arguments{
 \item{sensor}{sensor name ("Landsat 8/7/5/4")}
@@ -14,8 +14,7 @@ values based on rsr (FALSE)}
 
 \item{normalize}{normalize ESun to mean earth sun distance}
 
-\item{coefs}{Landsat 8 metadata from \code{\link{landsatMetadata}}
-(Landsat 8 only, see details)}
+\item{rsr}{Landsat 8 rsr (see \code{\link{toaIrradianceModel}} for details)}
 
 \item{date}{date of the sensor overpath (YYYY-MM-DD or POSIX* object), only
 relevant if normalize = FALSE}
@@ -53,7 +52,7 @@ taken from the metadata of the scene.
 landsat8_metadatafile <-   system.file("extdata",
 "LC81950252013188LGN00_MTL.txt", package = "satellite")
 coefs8 <- landsatMetadata(landsat8_metadatafile)
-eSun(sensor = "Landsat 8", tab = TRUE, coefs = coefs8)
+eSun(sensor = "Landsat 8", tab = TRUE, rsr = lut$l8_rsr)
 }
 \references{
 For references of the data sources, please refer to the

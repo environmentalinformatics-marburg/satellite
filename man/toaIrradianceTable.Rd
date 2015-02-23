@@ -31,8 +31,8 @@ actual earth sun distance is approximated by the day of the year using
 toaIrradianceTable(sensor = "Landsat 7", normalize = FALSE, "2015-01-01")
 }
 \references{
-Tabulated values of the solar irradiance for Landsat 4 and 5 are taken
-from Chander G, Markham B (2003) Revised Landsat-5 TM radiometric
+Tabulated values of the solar irradiance for Landsat 4 and 5 are
+taken from Chander G, Markham B (2003) Revised Landsat-5 TM radiometric
 calibration procedures and postcalibration dynamic ranges.  IEEE Transaction
 on Geoscience and Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285, URL
 \url{http://landsathandbook.gsfc.nasa.gov/pdfs/L5TMLUTIEEE2003.pdf}.
