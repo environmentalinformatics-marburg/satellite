@@ -2,8 +2,8 @@
 % Please edit documentation in R/satellite-package.R
 \docType{package}
 \name{satellite-package}
-\alias{satellite}
 \alias{satellite-package}
+\alias{satellitepackage}
 \title{Smorgasboard for remote sensing functions}
 \description{
 Smorgasboard for remote sensing functions
