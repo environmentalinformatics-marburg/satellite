@@ -6,9 +6,9 @@
 #' @slot file filename inkl. extension of the data file
 #' @slot extension extension of the data file
 #' 
-#' @exportClass SatelliteFilepath
+#' @exportClass SatelliteInfo
 #' 
-setClass("SatelliteFilepath", 
+setClass("SatelliteInfo", 
          representation(
            name ="character",
            filepath = "character",
@@ -28,8 +28,7 @@ setClass("SatelliteFilepath",
 setClass("SatelliteData",
          representation(
            data = "RasterStack"
-         ),
-         contains = "SatelliteFilepath"
+         )
 )
 
 
@@ -42,8 +41,7 @@ setClass("SatelliteData",
 setClass("SatelliteMetaData",
          representation(
            meta = "data.frame"
-         ),
-         contains = "SatelliteFilepath"
+         )
 )
 
 
@@ -52,7 +50,7 @@ setClass("SatelliteMetaData",
 #' @exportClass Satellite
 #' 
 setClass("Satellite", 
-         contains = c("SatelliteFilepath", "SatelliteData", "SatelliteMetaData")
+         contains = c("SatelliteMetaData", "SatelliteData")
 )         
 
 

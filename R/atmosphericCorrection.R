@@ -8,7 +8,7 @@
 #' - DOS4: a dark object substratcion model by Moran et al. (1992)
 #'
 #' @param sensor satellite sensor (Landsat 8/7/5/4)
-#' @param coefs metadata from \code{\link{landsatMetadata}}
+#' @param coefs metadata from \code{\link{collectLandsat8Metadata}}
 #' @param date date of the satellite overpath
 #' @param model to be used (DOS2, DOS4; must be the same as used by \
 #' code{\link{pathRadiance}})

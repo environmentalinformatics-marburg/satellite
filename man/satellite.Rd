@@ -6,7 +6,7 @@
 \alias{satellite,character-method}
 \title{Create a Satellite object}
 \usage{
-\S4method{satellite}{character}(filepath)
+\S4method{satellite}{character}(files)
 }
 \arguments{
 \item{filepath}{full path and name of the satellite data file}

@@ -1,15 +1,13 @@
 context("pathRadianceDOS")
 
 test_that("pathRadianceDOS works as expected", {
-#   landsat7_metadatafile <- system.file("extdata", 
-#                                        "LE71950252001211EDC00_MTL.txt", 
-#                                        package = "satellite")
-  landsat8_metadatafile <-   system.file("extdata", 
-                                         "LC81950252013188LGN00_MTL.txt", 
-                                         package = "satellite")
+  path <- system.file("extdata", 
+                      package = "satellite")
+  filesl8 <- list.files(path, 
+                        pattern = glob2rx("LC8*.tif"), 
+                        full.names = TRUE)
   
-  # coefs7 <- landsatMetadata(landsat7_metadatafile)
-  coefs8 <- landsatMetadata(landsat8_metadatafile)
+  coefs8 <- collectLandsat8Metadata(filesl8)
   
   t1 <- pathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
                         bnbr = 2, band_wls = lut$l8_band_wl, coefs = coefs8,

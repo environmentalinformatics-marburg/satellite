@@ -1,5 +1,9 @@
 # Create sysdata.rda
 
+# Sensor names
+sensors <- c(LC4 = "Landsat 4", LC5 = "Landsat 5", LC7 = "Landsat 7", 
+             LC8 = "Landsat 8")
+
 # Landat 7 relative spectral response (units: nm-1)
 l7_rsr <- read.table("data-raw/landsat_7_relative_spectral_response.csv",
                      header = TRUE, sep = ";")
@@ -43,7 +47,8 @@ names(l5_esun) <- paste0("Band_", seq(length(l5_esun)))
 l4_esun <- c(1957, 1826, 1554, 1036, 215, NA, 80.67)
 names(l4_esun) <- paste0("Band_", seq(length(l4_esun)))
 
-meta <- list(l4_band_wl = "Minimum/maximum wavelength for Landsat 4 bands",
+meta <- list(sensors = "Sensor ids and names",
+             l4_band_wl = "Minimum/maximum wavelength for Landsat 4 bands",
              l5_band_wl = "Minimum/maximum wavelength for Landsat 5 bands",
              l7_band_wl = "Minimum/maximum wavelength for Landsat 7 bands",
              l8_band_wl = "Minimum/maximum wavelength for Landsat 8 bands",
@@ -56,7 +61,8 @@ meta <- list(l4_band_wl = "Minimum/maximum wavelength for Landsat 4 bands",
 
 
 # Create sysdata.rda
-lut <- list(l4_band_wl = l4_band_wl, l5_band_wl = l5_band_wl, 
+lut <- list(sensors = sensors, 
+            l4_band_wl = l4_band_wl, l5_band_wl = l5_band_wl, 
             l7_band_wl = l7_band_wl, l8_band_wl = l8_band_wl,
             l7_rsr = l7_rsr, l8_rsr = l8_rsr, solar = solar, 
             l4_esun = l4_esun, l5_esun = l5_esun, l7_esun = l7_esun,

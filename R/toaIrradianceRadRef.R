@@ -6,7 +6,7 @@
 #' 
 #' @param sensor sensor name ("Landsat 8/7/5/4")
 #' @param coefs metadata containing sensor informatino e.g. from 
-#' \code{\link{landsatMetadata}}
+#' \code{\link{collectLandsat8Metadata}}
 #' @param normalize normalize ESun to mean earth sun distance
 #'
 #' @return vector object containing ESun for each band

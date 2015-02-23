@@ -8,7 +8,7 @@
 #' @param DNmin digital number of dark object in band bnbr
 #' @param bnbr band number for which DNmin is valid
 #' @param band_wls band wavelengths for which correction should be made
-#' @param coefs metadata from \code{\link{landsatMetadata}}
+#' @param coefs metadata from \code{\link{collectLandsat8Metadata}}
 #' @param model to be used to correct for 1% scattering (DOS2, DOS4; must be the
 #' same as used by \code{\link{radiometricCorrection}})
 #' @param ESun normalized extraterrestrial solar irradiance for all band_wls
@@ -86,7 +86,7 @@
 #'   #Example for Landat 8
 #'   landsat8_metadatafile <-   system.file("extdata", 
 #'   "LC81950252013188LGN00_MTL.txt", package = "satellite")
-#'   coefs8 <- landsatMetadata(landsat8_metadatafile)
+#'   coefs8 <- collectLandsat8Metadata(landsat8_metadatafile)
 #'   
 #'   pathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
 #'   bnbr = 2, band_wls = l8_band_wl, coefs = coefs8,

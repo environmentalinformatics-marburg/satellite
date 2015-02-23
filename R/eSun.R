@@ -52,7 +52,7 @@
 #' @examples
 #' landsat8_metadatafile <-   system.file("extdata", 
 #' "LC81950252013188LGN00_MTL.txt", package = "satellite")
-#' coefs8 <- landsatMetadata(landsat8_metadatafile)
+#' coefs8 <- collectLandsat8Metadata(landsat8_metadatafile)
 #' eSun(sensor = "Landsat 8", tab = TRUE, rsr = lut$l8_rsr)
 #' 
 eSun <- function(sensor, tab = TRUE, normalize = TRUE, rsr, date){

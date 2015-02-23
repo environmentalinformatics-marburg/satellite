@@ -8,7 +8,7 @@
 #'
 #' @param band raster object of the Landsat band
 #' @param bnbr number of the Landsat band
-#' @param coefs coefficients data frame resulting from landsatMetadata()
+#' @param coefs coefficients data frame resulting from collectLandsat8Metadata()
 #' @param conv conversion type (one of "rad", "ref", "refsun", "bt")
 #'
 #' @return Raster object with converted values

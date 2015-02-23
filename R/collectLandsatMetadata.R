@@ -12,21 +12,24 @@
 #' correction parameters (BTK1, BTK2), sun elevation angle (SELEV), 
 #' sun zenith angle (SZEN) and sun azimuth angle (SAZM).
 #'
-#' @export landsatMetadata
+#' @export collectLandsat8Metadata
 #'
 #' @examples
 #' landsat8_metadatafile <-   system.file("extdata", 
 #' "LC81950252013188LGN00_MTL.txt", package = "satellite")
-#' landsatMetadata(landsat8_metadatafile)
+#' collectLandsat8Metadata(landsat8_metadatafile)
 #' 
-landsatMetadata <- function(filepath){
+collectLandsat8Metadata <- function(files){
   
-  metadata <- read.table(filepath, header = FALSE, sep = "=", fill = TRUE)
+  datafiles <- compileFilePathLandsat(files)
+  
+  metadata <- read.table(as.character(datafiles$METAFILE[1]), header = FALSE, 
+                         sep = "=", fill = TRUE)
   
   search_term_date <- "DATE_ACQUIRED"
   search_term_earthSun <- "EARTH_SUN_DISTANCE"
   
-  metainformation <- lapply(seq(1:11), function(x){
+  metainformation <- lapply(seq(nrow(datafiles)), function(x){
     search_term_rad_max <- paste0("RADIANCE_MAXIMUM_BAND_", x)
     search_term_rad_min <- paste0("RADIANCE_MINIMUM_BAND_", x)
     search_term_ref_max <- paste0("REFLECTANCE_MAXIMUM_BAND_", x)
@@ -61,17 +64,29 @@ landsatMetadata <- function(filepath){
     cal_BTK2 <- as.numeric(as.character(
       (subset(metadata$V2, gsub("\\s","", metadata$V1) == search_term_BTK2))))
     
-    solar = TRUE
     if(length(cal_add_ref) == 0){
       cal_ref_max = NA
       cal_ref_min = NA
       cal_add_ref = NA
       cal_mult_ref = NA
       solar = FALSE
-    }
-    if(solar == TRUE){
+      thermal = TRUE
+    } else {
       cal_BTK1 = NA
       cal_BTK2 = NA
+      solar = TRUE
+      thermal = FALSE
+    }
+    # Handle quality band
+    if(length(cal_add_rad) == 0){
+      cal_rad_max = NA
+      cal_rad_min = NA
+      cal_add_rad = NA
+      cal_mult_rad = NA
+      cal_BTK1 = NA
+      cal_BTK2 = NA
+      solar = FALSE
+      thermal = FALSE
     }
 
     date <- strftime(as.character(
@@ -84,8 +99,10 @@ landsatMetadata <- function(filepath){
       subset(metadata$V2, gsub("\\s","", metadata$V1) == "SUN_AZIMUTH")))
     szen <- 90.0 - selv
     result <- data.frame(DATE = date, 
-                         BAND = x,
+                         SENSOR = datafiles$SENSOR[x],
+                         BAND = datafiles$BAND[x],
                          SOLAR = solar,
+                         THERMAL = thermal,
                          RADA = cal_add_rad,
                          RADM = cal_mult_rad,
                          REFA = cal_add_ref,
@@ -99,7 +116,9 @@ landsatMetadata <- function(filepath){
                          RADMAX = cal_rad_max,
                          RADMIN = cal_rad_min,
                          REFMAX = cal_ref_max,
-                         REFMIN = cal_ref_min)
+                         REFMIN = cal_ref_min,
+                         datafiles[x, c(-which("SENSOR" == colnames(datafiles)),
+                                    -which("BAND" == colnames(datafiles)))])
   })
   metainformation <- do.call("rbind", metainformation)
   return(metainformation)

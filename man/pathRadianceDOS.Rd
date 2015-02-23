@@ -14,7 +14,7 @@ pathRadianceDOS(DNmin, bnbr, band_wls, coefs, model = "DOS2", ESun,
 
 \item{band_wls}{band wavelengths for which correction should be made}
 
-\item{coefs}{metadata from \code{\link{landsatMetadata}}}
+\item{coefs}{metadata from \code{\link{collectLandsat8Metadata}}}
 
 \item{model}{to be used to correct for 1% scattering (DOS2, DOS4; must be the
 same as used by \code{\link{radiometricCorrection}})}
@@ -70,7 +70,7 @@ Equations for the path radiance are taken from Song et al. (2001).
 #Example for Landat 8
   landsat8_metadatafile <-   system.file("extdata",
   "LC81950252013188LGN00_MTL.txt", package = "satellite")
-  coefs8 <- landsatMetadata(landsat8_metadatafile)
+  coefs8 <- collectLandsat8Metadata(landsat8_metadatafile)
 
   pathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])),
   bnbr = 2, band_wls = l8_band_wl, coefs = coefs8,

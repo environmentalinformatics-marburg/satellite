@@ -1,5 +1,5 @@
 if ( !isGeneric("satellite") ) {
-  setGeneric("satellite", function(filepath, ...)
+  setGeneric("satellite", function(files, ...)
     standardGeneric("satellite"))
 }
 
@@ -46,8 +46,19 @@ NULL
 #' @param filepath full path and name of the satellite data file
 #'
 #' @rdname satellite
+#' 
 setMethod("satellite", 
-          signature(filepath = "character"), 
-          function(filepath){
-            return(new("Satellite", filepath = filepath))
+          signature(files = "character"), 
+          function(files){
+            return(new("Satellite", meta =  collectLandsat8Metadata(files[1]), 
+                       data = raster::stack(filepath)))
           })
+
+#             satfp <- new("SatelliteFilepath", 
+#                          name = tools::file_path_sans_ext(basename(filepath)),
+#                          filepath = filepath,
+#                          path = dirname(filepath),
+#                          file = basename(filepath),
+#                          extension = tools::file_ext(filepath)
+#             )
+

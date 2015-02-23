@@ -11,7 +11,7 @@ landsatCalibration(band, bnbr, coefs, conv = "rad")
 
 \item{bnbr}{number of the Landsat band}
 
-\item{coefs}{coefficients data frame resulting from landsatMetadata()}
+\item{coefs}{coefficients data frame resulting from collectLandsat8Metadata()}
 
 \item{conv}{conversion type (one of "rad", "ref", "refsun", "bt")}
 }

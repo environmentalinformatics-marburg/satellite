@@ -10,7 +10,7 @@ toaIrradianceRadRef(sensor, coefs, normalize = TRUE)
 \item{sensor}{sensor name ("Landsat 8/7/5/4")}
 
 \item{coefs}{metadata containing sensor informatino e.g. from
-\code{\link{landsatMetadata}}}
+\code{\link{collectLandsat8Metadata}}}
 
 \item{normalize}{normalize ESun to mean earth sun distance}
 }

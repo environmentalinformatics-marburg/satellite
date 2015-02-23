@@ -1,15 +1,13 @@
 context("surfaceReflectance")
 
 test_that("surfaceReflectance works as expected", {
-  #   landsat7_metadatafile <- system.file("extdata", 
-  #                                        "LE71950252001211EDC00_MTL.txt", 
-  #                                        package = "satellite")
-  landsat8_metadatafile <-   system.file("extdata", 
-                                         "LC81950252013188LGN00_MTL.txt", 
-                                         package = "satellite")
+  path <- system.file("extdata", 
+                      package = "satellite")
+  filesl8 <- list.files(path, 
+                        pattern = glob2rx("LC8*.tif"), 
+                        full.names = TRUE)
   
-  # coefs7 <- landsatMetadata(landsat7_metadatafile)
-  coefs8 <- landsatMetadata(landsat8_metadatafile)
+  coefs8 <- collectLandsat8Metadata(filesl8)
   
   ESun <-  eSun(sensor = "Landsat 8", tab = TRUE, rsr = lut$l8_rsr)
   Lp <- pathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 

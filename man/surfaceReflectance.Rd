@@ -7,7 +7,7 @@
 surfaceReflectance(bands_rad, coefs, ESun, Lp, model = "DOS2")
 }
 \arguments{
-\item{coefs}{metadata from \code{\link{landsatMetadata}}}
+\item{coefs}{metadata from \code{\link{collectLandsat8Metadata}}}
 
 \item{model}{to be used (DOS2, DOS4; must be the same as used by \
 code{\link{pathRadiance}})}
