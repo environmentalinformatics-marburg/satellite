@@ -10,19 +10,26 @@ collectLandsat8Metadata(files)
 \item{filepath}{path and filename to the landsat metadata file}
 }
 \value{
-Dataframe containing addtition and multiplication coefficients for
-reflectance (REFA, REFM) and radiance (RADA, RADM), brightness temperature
-correction parameters (BTK1, BTK2), sun elevation angle (SELEV),
-sun zenith angle (SZEN) and sun azimuth angle (SAZM).
+Dataframe containing the following information for each band
+\itemize{
+  \item Date (DATE), sensor (SENSOR) and band number (BNBR)
+  \item addtition and multiplication coefficients for reflectance
+  (REFA, REFM) and radiance (RADA, RADM)
+  \item brightness temperature correction parameters (BTK1, BTK2)
+  \item sun elevation angle (SELEV), sun zenith angle (SZEN) and sun azimuth
+  angle (SAZM).
+  \item Radiance/reflectance maximum and minimum values (RADMAX, RADMIN,
+  REFMAX, REFMIN)
+  \item Filepath (FILE) of the sensor data and metadata file (METAFILE)
+}
 }
 \description{
-The function scans a Lansat 8 metadata file for calibration coefficients and
-solar geometry information. Depending on the user selection, the calibration
-coefficients are for reflectance or radiance.
+The function scans a Lansat metadata file for various calibration
+and orbit coefficients as well as some sensor specific data.
 }
 \examples{
-landsat8_metadatafile <-   system.file("extdata",
-"LC81950252013188LGN00_MTL.txt", package = "satellite")
-collectLandsat8Metadata(landsat8_metadatafile)
+path <- system.file("extdata", package = "satellite")
+files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+collectLandsat8Metadata(files)
 }
 

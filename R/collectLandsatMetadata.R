@@ -1,35 +1,45 @@
 #' Get calibration information from Landsat 8 standard level 1B/T filename.
 #'
 #' @description
-#' The function scans a Lansat 8 metadata file for calibration coefficients and 
-#' solar geometry information. Depending on the user selection, the calibration
-#' coefficients are for reflectance or radiance.
+#' The function scans a Lansat metadata file for various calibration 
+#' and orbit coefficients as well as some sensor specific data.
 #'
 #' @param filepath path and filename to the landsat metadata file
 #'
-#' @return Dataframe containing addtition and multiplication coefficients for 
-#' reflectance (REFA, REFM) and radiance (RADA, RADM), brightness temperature
-#' correction parameters (BTK1, BTK2), sun elevation angle (SELEV), 
-#' sun zenith angle (SZEN) and sun azimuth angle (SAZM).
-#'
+#' @return Dataframe containing the following information for each band
+#' \itemize{
+#'   \item Date (DATE), sensor (SENSOR) and band number (BNBR)
+#'   \item addtition and multiplication coefficients for reflectance 
+#'   (REFA, REFM) and radiance (RADA, RADM)
+#'   \item brightness temperature correction parameters (BTK1, BTK2)
+#'   \item sun elevation angle (SELEV), sun zenith angle (SZEN) and sun azimuth 
+#'   angle (SAZM).
+#'   \item Radiance/reflectance maximum and minimum values (RADMAX, RADMIN, 
+#'   REFMAX, REFMIN)
+#'   \item Filepath (FILE) of the sensor data and metadata file (METAFILE)
+#' }
+#' 
 #' @export collectLandsat8Metadata
 #'
 #' @examples
-#' landsat8_metadatafile <-   system.file("extdata", 
-#' "LC81950252013188LGN00_MTL.txt", package = "satellite")
-#' collectLandsat8Metadata(landsat8_metadatafile)
+#' path <- system.file("extdata", package = "satellite")
+#' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+#' collectLandsat8Metadata(files)
 #' 
 collectLandsat8Metadata <- function(files){
   
   datafiles <- compileFilePathLandsat(files)
   
-  metadata <- read.table(as.character(datafiles$METAFILE[1]), header = FALSE, 
+  bandinfo <- lutInfoBandsFromSID(datafiles$SID[1])
+  bandinfo <- merge(bandinfo, datafiles, by = "BCDE")
+  
+  metadata <- read.table(as.character(bandinfo$METAFILE[1]), header = FALSE, 
                          sep = "=", fill = TRUE)
   
   search_term_date <- "DATE_ACQUIRED"
   search_term_earthSun <- "EARTH_SUN_DISTANCE"
   
-  metainformation <- lapply(seq(nrow(datafiles)), function(x){
+  metainformation <- lapply(seq(nrow(bandinfo)), function(x){
     search_term_rad_max <- paste0("RADIANCE_MAXIMUM_BAND_", x)
     search_term_rad_min <- paste0("RADIANCE_MINIMUM_BAND_", x)
     search_term_ref_max <- paste0("REFLECTANCE_MAXIMUM_BAND_", x)
@@ -64,31 +74,6 @@ collectLandsat8Metadata <- function(files){
     cal_BTK2 <- as.numeric(as.character(
       (subset(metadata$V2, gsub("\\s","", metadata$V1) == search_term_BTK2))))
     
-    if(length(cal_add_ref) == 0){
-      cal_ref_max = NA
-      cal_ref_min = NA
-      cal_add_ref = NA
-      cal_mult_ref = NA
-      solar = FALSE
-      thermal = TRUE
-    } else {
-      cal_BTK1 = NA
-      cal_BTK2 = NA
-      solar = TRUE
-      thermal = FALSE
-    }
-    # Handle quality band
-    if(length(cal_add_rad) == 0){
-      cal_rad_max = NA
-      cal_rad_min = NA
-      cal_add_rad = NA
-      cal_mult_rad = NA
-      cal_BTK1 = NA
-      cal_BTK2 = NA
-      solar = FALSE
-      thermal = FALSE
-    }
-
     date <- strftime(as.character(
       (subset(metadata$V2, gsub("\\s","", metadata$V1) == search_term_date))))
     earthSun <- as.numeric(as.character(
@@ -98,11 +83,25 @@ collectLandsat8Metadata <- function(files){
     sazm <- as.numeric(as.character(
       subset(metadata$V2, gsub("\\s","", metadata$V1) == "SUN_AZIMUTH")))
     szen <- 90.0 - selv
+
+    if(length(cal_rad_max) == 0){cal_rad_max = NA}
+    if(length(cal_rad_min) == 0){cal_rad_min = NA}
+    if(length(cal_ref_max) == 0){cal_ref_max = NA}
+    if(length(cal_ref_min) == 0){cal_ref_min = NA}
+    if(length(cal_add_rad) == 0){cal_add_rad = NA}
+    if(length(cal_mult_rad) == 0){cal_mult_rad = NA}
+    if(length(cal_add_ref) == 0){cal_add_ref = NA}
+    if(length(cal_mult_ref) == 0){cal_mult_ref = NA}
+    if(length(cal_BTK1) == 0){cal_BTK1 = NA}
+    if(length(cal_BTK2) == 0){cal_BTK2 = NA}
+    if(length(earthSun) == 0){earthSun = NA}
+    
     result <- data.frame(DATE = date, 
-                         SENSOR = datafiles$SENSOR[x],
-                         BAND = datafiles$BAND[x],
-                         SOLAR = solar,
-                         THERMAL = thermal,
+                         SENSOR = bandinfo$SENSOR[x],
+                         BIDS = bandinfo$BIDS.x[x],
+                         BCDE = bandinfo$BCDE[x],
+                         TYPE = bandinfo$TYPE[x],
+                         SPECTRUM = bandinfo$SPECTRUM[x],
                          RADA = cal_add_rad,
                          RADM = cal_mult_rad,
                          REFA = cal_add_ref,
@@ -117,8 +116,8 @@ collectLandsat8Metadata <- function(files){
                          RADMIN = cal_rad_min,
                          REFMAX = cal_ref_max,
                          REFMIN = cal_ref_min,
-                         datafiles[x, c(-which("SENSOR" == colnames(datafiles)),
-                                    -which("BAND" == colnames(datafiles)))])
+                         FILE = bandinfo$FILE[x],
+                         FILE = bandinfo$METAFILE[x])
   })
   metainformation <- do.call("rbind", metainformation)
   return(metainformation)

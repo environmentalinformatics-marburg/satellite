@@ -2,9 +2,25 @@
 % Please edit documentation in R/lutInfo.R
 \name{lutInfo}
 \alias{lutInfo}
+\alias{lutInfoBCDEFromBIDS}
+\alias{lutInfoBandsFromSID}
+\alias{lutInfoSensorFromSID}
 \title{Get internal LUT values used by various functions}
 \usage{
 lutInfo(...)
+
+lutInfoBandsFromSID(sid)
+
+lutInfoSensorFromSID(sid)
+
+lutInfoBCDEFromBIDS(bids, sid)
+}
+\arguments{
+\item{sid}{sensor-id as in lut$sensor}
+
+\item{sid}{sensor-id as in lut$sensor}
+
+\item{sid}{sensor-id as in lut$sensor}
 }
 \value{
 List containing several data frames with LUT values
@@ -14,6 +30,14 @@ Get internal LUT values from sysdata.rda which have been compiled using
 data-raw/lut_data.R. Metadata is stored in lut$meta.
 }
 \details{
+The functions above return the following information:
+\itemize{
+  \item \code{\link{lutInfoBandsFromSID}} returns the band info block
+  \item \code{\link{lutInfoSensorFromSID}} returns the sensor name
+  \item \code{\link{lutInfoBCDEFromBIDS}} returns the band code
+
+}
+
 The LUT contains the following information:
 \describe{
   \item{l4_band_wl}{Minimum/maximum wavelength for Landsat 4 bands taken from the
@@ -52,6 +76,14 @@ and postcalibration dynamic ranges.  IEEE Transaction on Geoscience and
 Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285}}
 }
 }
+\section{Functions}{
+\itemize{
+\item \code{lutInfoBandsFromSID}: 
+
+\item \code{lutInfoSensorFromSID}: 
+
+\item \code{lutInfoBCDEFromBIDS}: 
+}}
 \examples{
 lutInfo()
 }

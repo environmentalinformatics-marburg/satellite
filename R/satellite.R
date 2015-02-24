@@ -50,15 +50,17 @@ NULL
 setMethod("satellite", 
           signature(files = "character"), 
           function(files){
-            return(new("Satellite", meta =  collectLandsat8Metadata(files[1]), 
-                       data = raster::stack(filepath)))
+            meta <- collectLandsat8Metadata(files)
+            data <- list()
+            return(new("Satellite", meta =  collectLandsat8Metadata(files), 
+                       data = list(raster::stack(files))))
           })
 
 #             satfp <- new("SatelliteFilepath", 
-#                          name = tools::file_path_sans_ext(basename(filepath)),
-#                          filepath = filepath,
-#                          path = dirname(filepath),
-#                          file = basename(filepath),
-#                          extension = tools::file_ext(filepath)
+#                          name = tools::file_path_sans_ext(basename(files)),
+#                          filepath = files,
+#                          path = dirname(files),
+#                          file = basename(files),
+#                          extension = tools::file_ext(files)
 #             )
 

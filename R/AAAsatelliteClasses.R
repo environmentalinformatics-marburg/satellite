@@ -27,7 +27,7 @@ setClass("SatelliteInfo",
 #' 
 setClass("SatelliteData",
          representation(
-           data = "RasterStack"
+           data = "list"
          )
 )
 

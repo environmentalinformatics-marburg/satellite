@@ -8,7 +8,15 @@
 #'
 #' @export lutInfo
 #' 
-#' @details The LUT contains the following information:
+#' @details The functions above return the following information:
+#' \itemize{
+#'   \item \code{\link{lutInfoBandsFromSID}} returns the band info block
+#'   \item \code{\link{lutInfoSensorFromSID}} returns the sensor name
+#'   \item \code{\link{lutInfoBCDEFromBIDS}} returns the band code
+#'   
+#' }
+#' 
+#' The LUT contains the following information:
 #' \describe{
 #'   \item{l4_band_wl}{Minimum/maximum wavelength for Landsat 4 bands taken from the
 #' \href{http://landsat.usgs.gov/band_designations_landsat_satellites.php}{band info}
@@ -52,3 +60,41 @@
 lutInfo <- function(...){
   return(lut)
 }
+
+# Return band information block ------------------------------------------------
+#' @param sid sensor-id as in lut$sensor
+#' 
+#' @export lutInfoBandsFromSID
+#'
+#' @describeIn lutInfo
+#' 
+lutInfoBandsFromSID <- function(sid){
+  return(
+    lut[which(names(lut) == (lut$BANDS[which(names(lut$BANDS) == sid)]))][[1]])
+}
+
+
+# Return sensor ----------------------------------------------------------------
+#' @param sid sensor-id as in lut$sensor
+#' 
+#' @export lutInfoSensorFromSID
+#'
+#' @describeIn lutInfo
+#' 
+lutInfoSensorFromSID <- function(sid){
+  return(lut$SENSORS[which(names(lut$SENSORS) == sid)])
+}
+
+
+# Return band code -------------------------------------------------------------
+#' @param sid sensor-id as in lut$sensor
+#' 
+#' @export lutInfoBCDEFromBIDS
+#'
+#' @describeIn lutInfo
+#' 
+lutInfoBCDEFromBIDS <- function(bids, sid){
+  act_bands <- lutInfoBandsFromSID(sid)
+  return(act_bands$BCDE[act_bands$BIDS == bids])
+}
+

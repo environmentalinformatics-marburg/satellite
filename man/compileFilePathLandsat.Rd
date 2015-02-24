@@ -13,11 +13,12 @@ compileFilePathLandsat(files)
 Data frame containing filepathes, band numbers and metafilepathes
 }
 \description{
-The function builds the metadata filename  based on standard level 1B/T
-Landsat filenames.
+The function compiles the sensor, band, filename and metafilename information
+for standard level 1B/T Landsat filenames.
 }
 \examples{
-compileFilePathLandsat(files = c(inst/extdata/LC81950252013188LGN00_B1.tif,
-inst/extdata/LC81950252013188LGN00_B10.tif))
+path <- system.file("extdata", package = "satellite")
+files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+compileFilePathLandsat(files)
 }
 
