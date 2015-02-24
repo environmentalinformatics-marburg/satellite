@@ -10,9 +10,9 @@ test_that("pathRadianceDOS works as expected", {
   coefs8 <- collectLandsat8Metadata(filesl8)
   
   t1 <- pathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
-                        bnbr = 2, band_wls = lut$l8_band_wl, coefs = coefs8,
+                        bnbr = 2, band_wls = lut$L8_BANDS, coefs = coefs8,
                         ESun = eSun(sensor = "Landsat 8", tab = TRUE, 
-                                    rsr = lut$l8_rsr), scat_coef = -4)
+                                    rsr = lut$L8_RSR), scat_coef = -4)
   
   t2 <- pathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
                         bnbr = 2, band_wls = lut$l8_band_wl, coefs = coefs8,

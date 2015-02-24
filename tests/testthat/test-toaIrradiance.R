@@ -1,9 +1,9 @@
 context("Solar irradiation (ESun)")
 
 test_that("toaIrradianceModel works as expected", {
-  toaIrradianceModel(lut$l8_rsr, model = "MNewKur")
-  toaIrradianceModel(lut$l7_rsr, model = "MNewKur")
-  toaIrradianceModel(lut$l7_rsr, model = "MNewKur", normalize = FALSE, 
+  toaIrradianceModel(lut$L8_RSR, model = "MNewKur")
+  toaIrradianceModel(lut$L7_RSR, model = "MNewKur")
+  toaIrradianceModel(lut$L7_RSR, model = "MNewKur", normalize = FALSE, 
                      date = "2015-01-01")
 })
 

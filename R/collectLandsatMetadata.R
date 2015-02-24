@@ -100,6 +100,7 @@ collectLandsat8Metadata <- function(files){
                          SENSOR = bandinfo$SENSOR[x],
                          BIDS = bandinfo$BIDS.x[x],
                          BCDE = bandinfo$BCDE[x],
+                         SRES = bandinfo$SRES[x],
                          TYPE = bandinfo$TYPE[x],
                          SPECTRUM = bandinfo$SPECTRUM[x],
                          RADA = cal_add_rad,

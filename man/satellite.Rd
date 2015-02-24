@@ -6,10 +6,15 @@
 \alias{satellite,character-method}
 \title{Create a Satellite object}
 \usage{
-\S4method{satellite}{character}(files)
+\S4method{satellite}{character}(files, meta, data)
 }
 \arguments{
-\item{filepath}{full path and name of the satellite data file}
+\item{files}{list of one or more satellite data files (full path and name)}
+
+\item{meta}{optional supply a metadata object (e.g. returned from
+\code{\link{collectLandsat8Metadata}})}
+
+\item{data}{optional supply a list of RasterLayer objects}
 }
 \value{
 Satellite object
@@ -22,7 +27,9 @@ Computation of ESun is taken from Updike and Comp (2011). Sun-earth
 distance is computed using \code{\link{earthSun}}.
 }
 \examples{
-satellite(date = "2015-01-01", formula = "Spencer")
+path <- system.file("extdata", package = "satellite")
+files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+satellite(files)
 }
 \references{
 The formulas are taken from the following sources:

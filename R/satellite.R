@@ -37,23 +37,33 @@ if ( !isGeneric("satellite") ) {
 #' @name satellite
 #' 
 #' @examples
-#' satellite(date = "2015-01-01", formula = "Spencer")
+#' path <- system.file("extdata", package = "satellite")
+#' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+#' satellite(files)
 #' 
 NULL
 
 
 # Function using filepath ------------------------------------------------------
-#' @param filepath full path and name of the satellite data file
+#' @param files list of one or more satellite data files (full path and name)
+#' @param meta optional supply a metadata object (e.g. returned from 
+#' \code{\link{collectLandsat8Metadata}})
+#' @param data optional supply a list of RasterLayer objects
 #'
 #' @rdname satellite
 #' 
 setMethod("satellite", 
           signature(files = "character"), 
-          function(files){
-            meta <- collectLandsat8Metadata(files)
-            data <- list()
-            return(new("Satellite", meta =  collectLandsat8Metadata(files), 
-                       data = list(raster::stack(files))))
+          function(files, meta, data){
+            if(missing(meta)){
+              meta <- collectLandsat8Metadata(files)
+            }
+            if(missing(data)){
+              data <- lapply(as.character(meta$FILE), function(x){
+                raster(x)
+              })
+            }
+            return(new("Satellite", meta = meta, data = data))
           })
 
 #             satfp <- new("SatelliteFilepath", 

@@ -10,6 +10,6 @@ An S4 class to represent satellite data
 \section{Slots}{
 
 \describe{
-\item{\code{data}}{a data.frame object containing the metadata}
+\item{\code{data}}{a list object containing individual RasterLayer objects}
 }}
 

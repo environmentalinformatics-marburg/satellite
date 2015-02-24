@@ -26,7 +26,7 @@
 #' 
 #' Relative spectral response values have to be supplied as a as a data frame
 #' which has at least these three columns: (i) a column "Band" for the sensor
-#' band number (i.e. 1, 2, etc.), (ii) a column "Wavelength" for the wavelength 
+#' band number (i.e. 1, 2, etc.), (ii) a column "WAVELENGTH" for the WAVELENGTH 
 #' data in full nm steps, and (iii) a column "RSR" for the 
 #' response information [0...1].
 #' 
@@ -56,24 +56,25 @@
 #' satellite sensors already included in this package.
 #' 
 #' @examples
-#' toaIrradianceModel(lutInfo()$l8_rsr, model = "MNewKur")
+#' lut <- lutInfo()
+#' toaIrradianceModel(lut$L8_RSR, model = "MNewKur")
 #' 
 toaIrradianceModel <- function(rsr, model = "MNewKur", 
                                normalize = TRUE, date){
-  toa <- lut$solar
-  toa$Wavelength <- round(toa$Wavelength, 0)
-  toa_aggregated <- aggregate(toa, by = list(toa$Wavelength), FUN = "mean")
+  toa <- lut$SOLAR
+  toa$WAVELENGTH <- round(toa$WAVELENGTH, 0)
+  toa_aggregated <- aggregate(toa, by = list(toa$WAVELENGTH), FUN = "mean")
   
-  rsr <- rsr[, c(grep("Band", colnames(rsr)), grep("Wavelength", colnames(rsr)), 
+  rsr <- rsr[, c(grep("BAND", colnames(rsr)), grep("WAVELENGTH", colnames(rsr)), 
                  grep("RSR", colnames(rsr)))]
   
-  eSun <- lapply(unique(rsr$Band), function(x){
-    rsr_solar <- merge(rsr[rsr$Band == x,], toa_aggregated, by = "Wavelength")
+  eSun <- lapply(unique(rsr$BAND), function(x){
+    rsr_solar <- merge(rsr[rsr$BAND == x,], toa_aggregated, by = "WAVELENGTH")
     if(nrow(rsr_solar) > 0){
       act_eSun <- aggregate(rsr_solar$RSR * rsr_solar[,grep(model, names(rsr_solar))], 
-                            by = list(rsr_solar$Band), FUN = "sum") /
-        aggregate(rsr_solar$RSR, by = list(rsr_solar$Band), FUN = "sum") * 1000
-      act_eSun <- unlist(act_eSun[2])
+                            by = list(rsr_solar$BAND), FUN = "sum")[2] /
+        aggregate(rsr_solar$RSR, by = list(rsr_solar$BAND), FUN = "sum")[2] * 1000
+      act_eSun <- unlist(act_eSun)
     } else {
       act_eSun <- c(NA)
     }

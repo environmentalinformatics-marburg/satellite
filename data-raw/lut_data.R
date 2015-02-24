@@ -8,14 +8,6 @@ sensors <- c(LE4 = "Landsat 4", LE5 = "Landsat 5", LE7 = "Landsat 7",
 bands <- c(LE4 = "L4_BANDS", LE5 = "L5_BANDS", LE7 = "L7_BANDS", 
            LC8 = "L8_BANDS")
 
-# Landat 7 relative spectral response (units: nm-1)
-l7_rsr <- read.table("data-raw/landsat_7_relative_spectral_response.csv",
-                     header = TRUE, sep = ";")
-
-# Landat 8 relative spectral response (units: nm-1)
-l8_rsr <- read.table("data-raw/landsat_8_relative_spectral_response.csv",
-                     header = TRUE, sep = ";")
-
 # Band wavelengths, bandwith data taken from
 # http://landsat.usgs.gov/band_designations_landsat_satellites.php
 l4_bands <- data.frame(
@@ -65,19 +57,27 @@ l8_bands <- data.frame(
                "solar", "solar", "thermal", "thermal", NA))
 rownames(l8_bands) <-  paste0("Band_", l8_bands$BIDS)
 
+# Landat 7 relative spectral response (units: nm-1)
+l7_rsr <- read.table("data-raw/landsat_7_relative_spectral_response.csv",
+                     header = TRUE, sep = ";")
+
+# Landat 8 relative spectral response (units: nm-1)
+l8_rsr <- read.table("data-raw/landsat_8_relative_spectral_response.csv",
+                     header = TRUE, sep = ";")
+
 # Solar irradiance (units: W m-2 nm-1)
 solar <- read.table("data-raw/mod_etr_solar_irradiance.csv",
                   header = TRUE, sep = ";")
 
 # Tabulated values of ESun (W m-2 micrometer-1)
 l4_esun <- c(1957, 1826, 1554, 1036, 215, NA, 80.67)
-names(l4_esun) <- rownames(l4_bands)
+names(l4_esun) <- rownames(l4_bands$BIDS)
 
 l5_esun <- c(1957, 1825, 1557, 1033, 214.9, NA, 80.72)
-names(l5_esun) <- rownames(l5_bands)
+names(l5_esun) <- rownames(l5_bands$BIDS)
 
 l7_esun <- c(1997, 1812, 1533, 1039, 230.8, NA, NA, 84.90, 1362)
-names(l7_esun) <- rownames(l7_bands)
+names(l7_esun) <- rownames(l7_bands$BIDS)
 
 meta <- list(SENSORS = "Sensor ids and names",
              BANDS = "Sensor ids and meta names for band information",

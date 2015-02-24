@@ -10,6 +10,6 @@ An S4 class to represent satellite metadata
 \section{Slots}{
 
 \describe{
-\item{\code{meta}}{a  object containing the data}
+\item{\code{meta}}{a data frame object containing the data}
 }}
 

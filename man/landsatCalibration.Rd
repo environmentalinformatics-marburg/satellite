@@ -25,7 +25,10 @@ the calibration coefficients from the metadata file. The reflectance
 conversion can additionaly be include a sun zenith correction.
 }
 \examples{
-landsatCalibration(band, bnbr, coefs, conv = "rad")
+path <- system.file("extdata", package = "satellite")
+filesl8 <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+coefs8 <- collectLandsat8Metadata(filesl8)
+landsatCalibration(l8[[2]], 2, coefs8, conv = "ref")
 }
 \references{
 The conversion functions are taken from USGS' Landsat 8 manual

@@ -19,28 +19,28 @@ setClass("SatelliteInfo",
 )
 
 
-#' An S4 class to represent satellite data
-#'
-#' @slot data a data.frame object containing the metadata
-#' 
-#' @exportClass SatelliteData
-#' 
-setClass("SatelliteData",
-         representation(
-           data = "list"
-         )
-)
-
-
 #' An S4 class to represent satellite metadata
 #'
-#' @slot meta a  object containing the data
+#' @slot meta a data frame object containing the data
 #' 
 #' @exportClass SatelliteMetaData
 #' 
 setClass("SatelliteMetaData",
          representation(
            meta = "data.frame"
+         )
+)
+
+
+#' An S4 class to represent satellite data
+#'
+#' @slot data a list object containing individual RasterLayer objects
+#' 
+#' @exportClass SatelliteData
+#' 
+setClass("SatelliteData",
+         representation(
+           data = "list"
          )
 )
 
@@ -52,27 +52,3 @@ setClass("SatelliteMetaData",
 setClass("Satellite", 
          contains = c("SatelliteMetaData", "SatelliteData")
 )         
-
-
-
-# # 
-# # t <- new("Satellite", data = l8)
-# # 
-# # f <- function(x){
-# #   names(x)
-# # }
-# # 
-# # f1 <- function(x){
-# #   f(x@data)
-# # }
-# # 
-# # 
-# # setGeneric('getNames', function(x, ...)
-# #   standardGeneric('getNames'))
-# # 
-# # setMethod("getNames", signature("Satellite"), f1)
-# # setMethod("getNames", signature("RasterStack"), f1)
-# # 
-# # 
-# # f1(l8)
-# # f1(t)

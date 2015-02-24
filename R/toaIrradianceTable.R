@@ -45,11 +45,11 @@
 #' 
 toaIrradianceTable <- function(sensor, normalize = TRUE, date){
   if(sensor == "Landsat 7") {
-    eSun <- lut$l7_esun
+    eSun <- lut$L7_ESUN
   } else if(sensor == "Landsat 5") {
-    eSun <- lut$l5_esun
+    eSun <- lut$L5_ESUN
   } else if(sensor == "Landsat 4") {
-    eSun <- lut$l4_esun
+    eSun <- lut$L4_ESUN
   }
   if(normalize == FALSE){
     if(missing(date)){
