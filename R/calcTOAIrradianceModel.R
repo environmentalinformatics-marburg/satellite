@@ -13,7 +13,7 @@
 #'
 #' @return Vector object containing ESun for each band
 #'
-#' @export toaIrradianceModel
+#' @export calcTOAIrradianceModel
 #' 
 #' @details Computation of ESun is taken from Updike and Comp (2011).
 #' 
@@ -43,8 +43,8 @@
 #' \href{http://rredc.nrel.gov/solar/spectra/am0/modtran.html}{National Renewable 
 #' Energy Laboratory}.
 #' 
-#' @seealso \code{\link{toaIrradianceTable}} for tabulated solar irradiance
-#' values from the literature or \code{\link{toaIrradianceRadRef}} for the 
+#' @seealso \code{\link{calcTOAIrradianceTable}} for tabulated solar irradiance
+#' values from the literature or \code{\link{calcTOAIrradianceRadRef}} for the 
 #' computation of the solar irradiance based on maximum radiation and reflection
 #' values of the dataset.
 #' 
@@ -57,9 +57,9 @@
 #' 
 #' @examples
 #' lut <- lutInfo()
-#' toaIrradianceModel(lut$L8_RSR, model = "MNewKur")
+#' calcTOAIrradianceModel(lut$L8_RSR, model = "MNewKur")
 #' 
-toaIrradianceModel <- function(rsr, model = "MNewKur", 
+calcTOAIrradianceModel <- function(rsr, model = "MNewKur", 
                                normalize = TRUE, date){
   toa <- lut$SOLAR
   toa$WAVELENGTH <- round(toa$WAVELENGTH, 0)
@@ -90,6 +90,5 @@ toaIrradianceModel <- function(rsr, model = "MNewKur",
     esd <- earthSun(date)
     eSun <- esd * eSun
   }
-  
   return(eSun)
 }

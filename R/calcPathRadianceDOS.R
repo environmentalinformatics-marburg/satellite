@@ -19,7 +19,7 @@
 #' @return Vector object with path radiance values for each band 
 #' (W m-2 micrometer-1)
 #'
-#' @export pathRadianceDOS
+#' @export calcPathRadianceDOS
 #' 
 #' @details The dark object substraction approach is based on an approximation 
 #' of the atmospheric path radiance (i.e. upwelling radiation which is 
@@ -88,12 +88,12 @@
 #'   "LC81950252013188LGN00_MTL.txt", package = "satellite")
 #'   coefs8 <- collectLandsat8Metadata(landsat8_metadatafile)
 #'   
-#'   pathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
+#'   calcPathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
 #'   bnbr = 2, band_wls = l8_band_wl, coefs = coefs8,
 #'   eSun(sensor = "Landsat 8", tab = TRUE, coefs = coefs8), 
 #'   scat_coef = -4)
 #'   
-pathRadianceDOS <- function(DNmin, bnbr, band_wls, coefs, model = "DOS2", 
+calcPathRadianceDOS <- function(DNmin, bnbr, band_wls, coefs, model = "DOS2", 
                             ESun, scat_coef = -4.0, dos_adjust = 0.01){
   
   # Define relative scattering model based on wavelength dependent scattering

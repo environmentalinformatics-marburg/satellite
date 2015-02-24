@@ -8,6 +8,10 @@ sensors <- c(LE4 = "Landsat 4", LE5 = "Landsat 5", LE7 = "Landsat 7",
 bands <- c(LE4 = "L4_BANDS", LE5 = "L5_BANDS", LE7 = "L7_BANDS", 
            LC8 = "L8_BANDS")
 
+# Sensor rsr
+rsr <- c(LE7 = "L7_RSR", LC8 = "L8_RSR")
+
+
 # Band wavelengths, bandwith data taken from
 # http://landsat.usgs.gov/band_designations_landsat_satellites.php
 l4_bands <- data.frame(
@@ -81,6 +85,7 @@ names(l7_esun) <- rownames(l7_bands$BIDS)
 
 meta <- list(SENSORS = "Sensor ids and names",
              BANDS = "Sensor ids and meta names for band information",
+             RSR = "RSR ids and sensor names",
              L4_BANDS = "Band information for Landsat 4 bands",
              L5_BANDS = "Band information for Landsat 5 bands",
              L7_BANDS = "Band information  for Landsat 7 bands",
@@ -92,11 +97,10 @@ meta <- list(SENSORS = "Sensor ids and names",
              L4_ESUN = "Tabulated ESun values from Chander and Markham (2003), tab. II, taken from http://landsathandbook.gsfc.nasa.gov/pdfs/L5TMLUTIEEE2003.pdf",
              L7_ESUN = "Tabulated ESun values from Landsat7 handbook, tab 11.3 (Thuillier SPECTRUM), taken from http://landsathandbook.gsfc.nasa.gov/pdfs/Landsat7_Handbook.pdf")
              
-
-
 # Create sysdata.rda
 lut <- list(SENSORS = sensors, 
             BANDS = bands,
+            RSR = rsr,
             L4_BANDS = l4_bands, L5_BANDS = l5_bands, 
             L7_BANDS = l7_bands, L8_BANDS = l8_bands,
             L7_RSR = l7_rsr, L8_RSR = l8_rsr, SOLAR = solar, 

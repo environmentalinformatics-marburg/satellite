@@ -1,8 +1,12 @@
-#' Get internal LUT values used by various functions
-#'
+#' Get or access internal LUT values used by various functions
+#' 
 #' @description
 #' Get internal LUT values from sysdata.rda which have been compiled using
 #' data-raw/lut_data.R. Metadata is stored in lut$meta.
+#' 
+#' @param bcde band code  as returned e.g. from \code{lutInfoBCDEFromBIDS}
+#' @param bids band id  as returned e.g. from \code{lutInfoBIDSFromBCDE}
+#' @param sid sensor id as returned e.g. from \code{lutInfoSensorFromSID}
 #'
 #' @return List containing several data frames with LUT values
 #'
@@ -10,9 +14,11 @@
 #' 
 #' @details The functions above return the following information:
 #' \itemize{
-#'   \item \code{\link{lutInfoBandsFromSID}} returns the band info block
-#'   \item \code{\link{lutInfoSensorFromSID}} returns the sensor name
-#'   \item \code{\link{lutInfoBCDEFromBIDS}} returns the band code
+#'   \item \code{lutInfoBandsFromSID} returns the band info block
+#'   \item \code{lutInfoBCDEFromBIDS} returns the band code
+#'   \item \code{lutInfoBIDSFromBCDE} returns the band ids
+#'   \item \code{lutInfoRSRromSID} returns the rsr for the sensor
+#'   \item \code{lutInfoSensorFromSID} returns the sensor name
 #'   
 #' }
 #' 
@@ -62,8 +68,6 @@ lutInfo <- function(...){
 }
 
 # Return band information block ------------------------------------------------
-#' @param sid sensor-id as in lut$sensor
-#' 
 #' @export lutInfoBandsFromSID
 #'
 #' @describeIn lutInfo
@@ -75,8 +79,6 @@ lutInfoBandsFromSID <- function(sid){
 
 
 # Return sensor ----------------------------------------------------------------
-#' @param sid sensor-id as in lut$sensor
-#' 
 #' @export lutInfoSensorFromSID
 #'
 #' @describeIn lutInfo
@@ -87,8 +89,6 @@ lutInfoSensorFromSID <- function(sid){
 
 
 # Return band code -------------------------------------------------------------
-#' @param sid sensor-id as in lut$sensor
-#' 
 #' @export lutInfoBCDEFromBIDS
 #'
 #' @describeIn lutInfo
@@ -98,3 +98,23 @@ lutInfoBCDEFromBIDS <- function(bids, sid){
   return(act_bands$BCDE[act_bands$BIDS == bids])
 }
 
+
+# Return band ids --------------------------------------------------------------
+#' @export lutInfoBIDSFromBCDE
+#'
+#' @describeIn lutInfo
+#' 
+lutInfoBIDSFromBCDE <- function(bcde, sid){
+  act_bands <- lutInfoBandsFromSID(sid)
+  return(act_bands$BIDS[act_bands$BCDE == bcde])
+}
+
+
+# Return rsr -------------------------------------------------------------------
+#' @export lutInfoRSRromSID
+#'
+#' @describeIn lutInfo
+#' 
+lutInfoRSRromSID <- function(sid){
+  return(lut[names(lut) == lut$RSR[which(names(lut$RSR) == sid)]][[1]])
+}

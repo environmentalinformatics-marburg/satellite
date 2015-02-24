@@ -37,7 +37,7 @@ collectLandsat8Metadata <- function(files){
                          sep = "=", fill = TRUE)
   
   search_term_date <- "DATE_ACQUIRED"
-  search_term_earthSun <- "EARTH_SUN_DISTANCE"
+  search_term_esd <- "EARTH_SUN_DISTANCE"
   
   metainformation <- lapply(seq(nrow(bandinfo)), function(x){
     search_term_rad_max <- paste0("RADIANCE_MAXIMUM_BAND_", x)
@@ -76,8 +76,8 @@ collectLandsat8Metadata <- function(files){
     
     date <- strftime(as.character(
       (subset(metadata$V2, gsub("\\s","", metadata$V1) == search_term_date))))
-    earthSun <- as.numeric(as.character(
-      (subset(metadata$V2, gsub("\\s","", metadata$V1) == search_term_earthSun))))
+    esd <- as.numeric(as.character(
+      (subset(metadata$V2, gsub("\\s","", metadata$V1) == search_term_esd))))
     selv <- as.numeric(as.character(
       subset(metadata$V2, gsub("\\s","", metadata$V1) == "SUN_ELEVATION")))
     sazm <- as.numeric(as.character(
@@ -94,9 +94,10 @@ collectLandsat8Metadata <- function(files){
     if(length(cal_mult_ref) == 0){cal_mult_ref = NA}
     if(length(cal_BTK1) == 0){cal_BTK1 = NA}
     if(length(cal_BTK2) == 0){cal_BTK2 = NA}
-    if(length(earthSun) == 0){earthSun = NA}
+    if(length(esd) == 0){esd = NA}
     
     result <- data.frame(DATE = date, 
+                         SID = bandinfo$SID[x],
                          SENSOR = bandinfo$SENSOR[x],
                          BIDS = bandinfo$BIDS.x[x],
                          BCDE = bandinfo$BCDE[x],
@@ -112,7 +113,7 @@ collectLandsat8Metadata <- function(files){
                          SUNZEN = szen,
                          SUNAZM = sazm,
                          SUNELEV = selv,
-                         EARTHSUN = earthSun,
+                         ESD = esd,
                          RADMAX = cal_rad_max,
                          RADMIN = cal_rad_min,
                          REFMAX = cal_ref_max,

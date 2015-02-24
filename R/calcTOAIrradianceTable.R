@@ -10,7 +10,7 @@
 #'
 #' @return Vector object containing ESun for each band
 #'
-#' @export toaIrradianceTable
+#' @export calcTOAIrradianceTable
 #' 
 #' @details Currently implemented sensors are Landsat 4, 5 and 7.
 #' 
@@ -28,8 +28,8 @@
 #' \href{http://landsathandbook.gsfc.nasa.gov/pdfs/Landsat7_Handbook.pdf}{NASA's
 #' Landsat7 handbook, tab 11.3 (Thuillier spectrum)}
 #' 
-#' @seealso \code{\link{toaIrradianceTable}} for tabulated solar irradiance
-#' values from the literature or \code{\link{toaIrradianceRadRef}} for the 
+#' @seealso \code{\link{calcTOAIrradianceTable}} for tabulated solar irradiance
+#' values from the literature or \code{\link{calcTOAIrradianceRadRef}} for the 
 #' computation of the solar irradiance based on maximum radiation and reflection
 #' values of the dataset.
 #' 
@@ -41,9 +41,9 @@
 #' satellite sensors already included in this package.
 #' 
 #' @examples
-#' toaIrradianceTable(sensor = "Landsat 7", normalize = FALSE, "2015-01-01")
+#' calcTOAIrradianceTable(sensor = "Landsat 7", normalize = FALSE, "2015-01-01")
 #' 
-toaIrradianceTable <- function(sensor, normalize = TRUE, date){
+calcTOAIrradianceTable <- function(sensor, normalize = TRUE, date){
   if(sensor == "Landsat 7") {
     eSun <- lut$L7_ESUN
   } else if(sensor == "Landsat 5") {

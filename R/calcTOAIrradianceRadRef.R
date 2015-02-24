@@ -4,14 +4,14 @@
 #' Compute extraterrestrial solar irradiance (ESun) using the actual
 #' maximum radiation and reflection values within each band.
 #' 
-#' @param sensor sensor name ("Landsat 8/7/5/4")
-#' @param coefs metadata containing sensor informatino e.g. from 
-#' \code{\link{collectLandsat8Metadata}}
+#' @param rad_max maximum radiance of satellite band(s)
+#' @param rad_min minimum radiance of satellite band(s)
+#' @param esd earth sun distance (AU)
 #' @param normalize normalize ESun to mean earth sun distance
 #'
 #' @return vector object containing ESun for each band
 #'
-#' @export toaIrradianceRadRef
+#' @export calcTOAIrradianceRadRef
 #' 
 #' @details The actual solar irradiance is compute using the following formula 
 #' taken from GRASS' 
@@ -30,10 +30,11 @@
 #' derivation of ESun.
 #' 
 #' @examples
-#' toaIrradianceRadRef(sensor = "Landsat 8", coefs = coefs)
-toaIrradianceRadRef <- function(sensor, coefs, normalize = TRUE){
-    eSun <- pi * coefs$ESD * coefs$RAD_MAX / coefs$REF_MAX
+#' calcTOAIrradianceRadRef(coefs = coefs)
+calcTOAIrradianceRadRef <- function(rad_max, ref_max, esd, normalize = TRUE){
+    eSun <- pi * esd * rad_max / ref_max
     if(normalize == TRUE){
-      eSun <- 1/coefs$ESD * eSun
+      eSun <- 1/esd * eSun
     }
+    return(eSun)
 }

@@ -13,7 +13,7 @@
 #'
 #' @return Raster object with converted values
 #'
-#' @export landsatCalibration
+#' @export calibrateLandsat
 #' 
 #' @references The conversion functions are taken from USGS' Landsat 8 manual
 #' which is available online at 
@@ -26,9 +26,9 @@
 #' path <- system.file("extdata", package = "satellite")
 #' filesl8 <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' coefs8 <- collectLandsat8Metadata(filesl8)
-#' landsatCalibration(l8[[2]], 2, coefs8, conv = "ref")
+#' calibrateLandsat(l8[[2]], 2, coefs8, conv = "ref")
 
-landsatCalibration <- function(band, bnbr, coefs, conv = "rad"){
+calibrateLandsat <- function(band, bnbr, coefs, conv = "rad"){
   if(conv == "rad"){
     result <- coefs$RADM[bnbr] * band + coefs$RADA[bnbr]
   } else if(conv == "ref"){

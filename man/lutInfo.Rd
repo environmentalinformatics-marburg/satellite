@@ -3,9 +3,11 @@
 \name{lutInfo}
 \alias{lutInfo}
 \alias{lutInfoBCDEFromBIDS}
+\alias{lutInfoBIDSFromBCDE}
 \alias{lutInfoBandsFromSID}
+\alias{lutInfoRSRromSID}
 \alias{lutInfoSensorFromSID}
-\title{Get internal LUT values used by various functions}
+\title{Get or access internal LUT values used by various functions}
 \usage{
 lutInfo(...)
 
@@ -14,13 +16,17 @@ lutInfoBandsFromSID(sid)
 lutInfoSensorFromSID(sid)
 
 lutInfoBCDEFromBIDS(bids, sid)
+
+lutInfoBIDSFromBCDE(bcde, sid)
+
+lutInfoRSRromSID(sid)
 }
 \arguments{
-\item{sid}{sensor-id as in lut$sensor}
+\item{sid}{sensor id as returned e.g. from \code{lutInfoSensorFromSID}}
 
-\item{sid}{sensor-id as in lut$sensor}
+\item{bids}{band id  as returned e.g. from \code{lutInfoBIDSFromBCDE}}
 
-\item{sid}{sensor-id as in lut$sensor}
+\item{bcde}{band code  as returned e.g. from \code{lutInfoBCDEFromBIDS}}
 }
 \value{
 List containing several data frames with LUT values
@@ -32,9 +38,11 @@ data-raw/lut_data.R. Metadata is stored in lut$meta.
 \details{
 The functions above return the following information:
 \itemize{
-  \item \code{\link{lutInfoBandsFromSID}} returns the band info block
-  \item \code{\link{lutInfoSensorFromSID}} returns the sensor name
-  \item \code{\link{lutInfoBCDEFromBIDS}} returns the band code
+  \item \code{lutInfoBandsFromSID} returns the band info block
+  \item \code{lutInfoBCDEFromBIDS} returns the band code
+  \item \code{lutInfoBIDSFromBCDE} returns the band ids
+  \item \code{lutInfoRSRromSID} returns the rsr for the sensor
+  \item \code{lutInfoSensorFromSID} returns the sensor name
 
 }
 
@@ -83,6 +91,10 @@ Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285}}
 \item \code{lutInfoSensorFromSID}: 
 
 \item \code{lutInfoBCDEFromBIDS}: 
+
+\item \code{lutInfoBIDSFromBCDE}: 
+
+\item \code{lutInfoRSRromSID}: 
 }}
 \examples{
 lutInfo()

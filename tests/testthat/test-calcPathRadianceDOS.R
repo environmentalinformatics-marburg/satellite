@@ -1,6 +1,6 @@
-context("pathRadianceDOS")
+context("calcPathRadianceDOS")
 
-test_that("pathRadianceDOS works as expected", {
+test_that("calcPathRadianceDOS works as expected", {
   path <- system.file("extdata", 
                       package = "satellite")
   filesl8 <- list.files(path, 
@@ -9,27 +9,27 @@ test_that("pathRadianceDOS works as expected", {
   
   coefs8 <- collectLandsat8Metadata(filesl8)
   
-  t1 <- pathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
+  t1 <- calcPathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
                         bnbr = 2, band_wls = lut$L8_BANDS, coefs = coefs8,
                         ESun = eSun(sensor = "Landsat 8", tab = TRUE, 
                                     rsr = lut$L8_RSR), scat_coef = -4)
   
-  t2 <- pathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
+  t2 <- calcPathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
                         bnbr = 2, band_wls = lut$l8_band_wl, coefs = coefs8,
                         ESun = eSun(sensor = "Landsat 8", tab = TRUE, 
                                     rsr = lut$l8_rsr), scat_coef = -2)
 
-  t3 <- pathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
+  t3 <- calcPathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
                         bnbr = 2, band_wls = lut$l8_band_wl, coefs = coefs8,
                         ESun =  eSun(sensor = "Landsat 8", tab = TRUE, 
                                      rsr = lut$l8_rsr), scat_coef = -1)
   
-  t4 <- pathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
+  t4 <- calcPathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
                         bnbr = 2, band_wls = lut$l8_band_wl, coefs = coefs8,
                         ESun = eSun(sensor = "Landsat 8", tab = TRUE, 
                                     rsr = lut$l8_rsr), scat_coef = -0.7)
   
-  t5 <- pathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
+  t5 <- calcPathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
                         bnbr = 2, band_wls = lut$l8_band_wl, coefs = coefs8,
                         ESun = eSun(sensor = "Landsat 8", tab = TRUE, 
                                     rsr = lut$l8_rsr), scat_coef = -0.5)
