@@ -7,110 +7,138 @@
 #' 
 #' @return Objects of respective type (see \code{\link{satellite}})
 #'
-#' @details The functions above return the following information:
-#' \itemize{
-#'   \item \code{satESD} returns 
-#'   \item \code{satInfo} returns the entire metadata
-#'   \item \code{satRadMax} returns the maximum radiance in band(s)
-#'   \item \code{satRadMin} returns the minimum radiance in band(s) 
-#'   \item \code{satRefMax} returns the maximum reflectance in band(s) 
-#'   \item \code{satRefMin} returns the minimum reflectance in band(s) 
-#'   \item \code{satSensor} returns the sensor name
-#'   \item \code{satSID} returns the sensor ID
-#' }
+#' @details The functions are generally self explaining in that sence that
+#' \code{get*} returns the respective information and \code{set*} sets the
+#' respective information from/in the Satellite object.
+#'  
+#' \code{addSatLog} adds a log entry to the Satellite object
 #' 
 #' @name satInfo
 #' 
 #' @examples
-#' satInfo()
+#' # List of input files
+#' path <- system.file("extdata", package = "satellite")
+#' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+#' sat <- satellite(files)
+#' 
+#' # Raster stack l8
+#' sat <- satellite(l8)
 #' 
 NULL
 
-# Return Satellite object metadata ---------------------------------------------
-#' @export satMeta
-#'
-#' @rdname satInfo
-#'
-satMeta <- function(sat){
-  return(sat@meta)
-}
-
 
 # Return Satellite data layers -------------------------------------------------
-#' @export satLayers
+#' @export getSatLayers
 #'
 #' @rdname satInfo
 #'
-satLayers <- function(sat){
+getSatLayers <- function(sat){
   return(sat@layers)
 }
 
 
+# Return Satellite object metadata ---------------------------------------------
+#' @export getSatMeta
+#'
+#' @rdname satInfo
+#'
+getSatMeta <- function(sat){
+  return(sat@meta)
+}
+
+
+
+# Return Satellite object log info ---------------------------------------------
+#' @export getSatLog
+#'
+#' @rdname satInfo
+#'
+getSatLog <- function(sat){
+  return(sat@log)
+}
+
+
+# Add Satellite object log info ------------------------------------------------
+#' @export addSatLog
+#'
+#' @rdname satInfo
+#'
+addSatLog <- function(sat, info = NA_character_, layers = NA_character_, 
+                      output = NA_character_){
+  new_length <- length(getSatLog(sat)) + 1
+  ps <- sprintf("ps%04d", new_length)
+  sat@log <- append(sat@log, list(list(time = Sys.time(), info = info, 
+                                       layers = layers, output = output)))
+  names(sat@log)[new_length] <- ps
+  return(sat)
+}
+
+
 # Return Sensor ID -------------------------------------------------------------
-#' @export satSID
+#' @export getSatSID
 #'
 #' @rdname satInfo
 #' 
-satSID <- function(sat){
-  return(satMeta(sat)$SID[1])
+getSatSID <- function(sat){
+  return(getSatMeta(sat)$SID[1])
 }
 
 
 # Return Sensor ----------------------------------------------------------------
-#' @export satSensor
+#' @export getSatSensor
 #'
 #' @rdname satInfo
 #' 
-satSensor <- function(sat){
-  return(satMeta(sat)$SENSOR[1])
+getSatSensor <- function(sat){
+  return(getSatMeta(sat)$SENSOR[1])
 }
 
 
 # Return RAD_MAX ---------------------------------------------------------------
-#' @export satRadMax
+#' @export getSatRadMax
 #'
 #' @rdname satInfo
 #' 
-satRadMax <- function(sat){
-  return(satMeta(sat)$RADMAX)
+getSatRadMax <- function(sat){
+  return(getSatMeta(sat)$RADMAX)
 }
 
 
 # Return RAD_MIN ---------------------------------------------------------------
-#' @export satRadMin
+#' @export getSatRadMin
 #'
 #' @rdname satInfo
 #' 
-satRadMin <- function(sat){
-  return(satMeta(sat)$RADMIN)
+getSatRadMin <- function(sat){
+  return(getSatMeta(sat)$RADMIN)
 }
 
 
 # Return REF_MAX ---------------------------------------------------------------
-#' @export satRefMax
+#' @export getSatRefMax
 #'
 #' @rdname satInfo
 #' 
-satRefMax <- function(sat){
-  return(satMeta(sat)$REFMAX)
+getSatRefMax <- function(sat){
+  return(getSatMeta(sat)$REFMAX)
 }
 
 
 # Return REF_MIN ---------------------------------------------------------------
-#' @export satRefMin
+#' @export getSatRefMin
 #'
 #' @rdname satInfo
 #' 
-satRefMin <- function(sat){
-  return(satMeta(sat)$REFMIN)
+getSatRefMin <- function(sat){
+  return(getSatMeta(sat)$REFMIN)
 }
 
 
 # Return ESD -------------------------------------------------------------------
-#' @export satESD
+#' @export getSatESD
 #'
 #' @rdname satInfo
 #' 
-satESD <- function(sat){
-  return(satMeta(sat)$ESD)
+getSatESD <- function(sat){
+  return(getSatMeta(sat)$ESD)
 }

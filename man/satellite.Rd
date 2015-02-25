@@ -3,24 +3,31 @@
 \docType{methods}
 \name{satellite}
 \alias{satellite}
+\alias{satellite,RasterStack-method}
 \alias{satellite,character-method}
 \title{Create a Satellite object}
 \usage{
-\S4method{satellite}{character}(x, layers, meta, log)
+\S4method{satellite}{character}(x, meta, log)
+
+\S4method{satellite}{RasterStack}(x, meta, log)
 }
 \arguments{
+\item{x}{vector of one or more satellite data files, raster::RasterStack}
+
 \item{meta}{optional supply a metadata object (e.g. returned from
 \code{\link{compMetaLandsat}})}
 
-\item{files}{list of one or more satellite data files (full path and name)}
-
-\item{data}{optional supply a list of RasterLayer objects}
+\item{log}{optional supply a log entry}
 }
 \value{
 Satellite object
 }
 \description{
 Method to create a Satellite Object
+
+
+
+
 }
 \details{
 Computation of ESun is taken from Updike and Comp (2011). Sun-earth

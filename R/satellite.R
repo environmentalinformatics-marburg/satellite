@@ -8,6 +8,11 @@ if ( !isGeneric("satellite") ) {
 #' @description
 #' Method to create a Satellite Object
 #' 
+#' @param x vector of one or more satellite data files, raster::RasterStack
+#' @param meta optional supply a metadata object (e.g. returned from 
+#' \code{\link{compMetaLandsat}})
+#' @param log optional supply a log entry
+#' 
 #' @return Satellite object
 #' 
 #' @export satellite
@@ -44,25 +49,23 @@ if ( !isGeneric("satellite") ) {
 NULL
 
 
-# Function using filepath ------------------------------------------------------
-#' @param files list of one or more satellite data files (full path and name)
-#' @param meta optional supply a metadata object (e.g. returned from 
-#' \code{\link{compMetaLandsat}})
-#' @param data optional supply a list of RasterLayer objects
-#'
+# Function using vector of filenames -------------------------------------------
+#' 
 #' @rdname satellite
 #' 
 setMethod("satellite", 
           signature(x = "character"), 
-          function(x, layers, meta, log){
+          function(x, meta, log){
             if(missing(meta)){
-              meta <- compMetaLandsat(x)
+              if(lutInfoSGRPfromFilename(files) == "Landsat"){
+                meta <- compMetaLandsat(x)
+              } else {
+                meta <- data.frame(NULL)
+              }
             }
-            if(missing(layers)){
-              layers <- lapply(as.character(meta$FILE), function(y){
-                raster(y)
-              })
-            }
+            layers <- lapply(as.character(meta$FILE), function(y){
+              raster(y)
+            })
             if(missing(log)){
               ps <- list(time = Sys.time(), info = "Initial import", 
                          layers = "all", output = "all")
@@ -71,11 +74,24 @@ setMethod("satellite",
             return(new("Satellite", layers = layers, meta = meta, log = log))
           })
 
-#             satfp <- new("SatelliteFilepath", 
-#                          name = tools::file_path_sans_ext(basename(files)),
-#                          filepath = files,
-#                          path = dirname(files),
-#                          file = basename(files),
-#                          extension = tools::file_ext(files)
-#             )
 
+# Function using readily existing raster layers --------------------------------
+#'
+#' @rdname satellite
+#' 
+setMethod("satellite", 
+          signature(x = "RasterStack"), 
+          function(x, meta, log){
+            if(missing(meta)){
+              meta <- data.frame(FILE = names(x))
+            }
+            layers <- lapply(nlayers(x), function(y){
+              x[[y]]
+            })
+            if(missing(log)){
+              ps <- list(time = Sys.time(), info = "Initial import", 
+                         layers = "all", output = "all")
+              log <- list(ps0001 = ps)
+            }
+            return(new("Satellite", layers = layers, meta = meta, log = log))
+          })

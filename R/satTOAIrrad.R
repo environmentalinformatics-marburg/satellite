@@ -93,12 +93,12 @@ setMethod("satTOAIrradTable",
           signature(x = "Satellite"), 
           function(x, normalize = TRUE, date){
             if(missing(date)){
-              return(calcTOAIrradRadTable(sensor = satSensor(x), 
-                                            normalize  = normalize))
+              return(calcTOAIrradRadTable(sensor = getSatSensor(x), 
+                                          normalize  = normalize))
             } else {
-              return(calcTOAIrradRadTable(sensor = satSensor(x), 
-                                            normalize  = normalize, 
-                                            date = date))
+              return(calcTOAIrradRadTable(sensor = getSatSensor(x), 
+                                          normalize  = normalize, 
+                                          date = date))
             }
           })
 
@@ -113,11 +113,13 @@ setMethod("satTOAIrradTable",
 setMethod("satTOAIrradModel", 
           signature(x = "Satellite"), 
           function(x, model = "MNewKur", normalize = TRUE, date){
-            rsr <- lutInfoRSRromSID(sid = satSID(x))
+            rsr <- lutInfoRSRromSID(sid = getSatSID(x))
             if(missing(date)){
-              return(calcTOAIrradModel(rsr = rsr, model = model, normalize = normalize))
+              return(calcTOAIrradModel(rsr = rsr, model = model, 
+                                       normalize = normalize))
             } else {
-              return(calcTOAIrradModel(rsr = rsr, model = model, normalize = normalize, date = date))
+              return(calcTOAIrradModel(rsr = rsr, model = model, 
+                                       normalize = normalize, date = date))
             }
           })
 
@@ -133,14 +135,14 @@ setMethod("satTOAIrradRadRef",
           signature(x = "Satellite"), 
           function(x, normalize = TRUE, date){
             if(missing(date)){
-              return(calcTOAIrradRadRef(rad_max = satRadMax(x), 
-                                            ref_max = satRefMax(x), 
-                                            esd = satESD(x),
-                                            normalize = normalize))
+              return(calcTOAIrradRadRef(rad_max = getSatRadMax(x), 
+                                        ref_max = getSatRefMax(x), 
+                                        esd = getSatESD(x),
+                                        normalize = normalize))
             } else {
-              return(calcTOAIrradRadRef(rad_max = satRadMax(x), 
-                                            ref_max = satRefMax(x), 
-                                            esd = satESD(x),
-                                            normalize = normalize, date = date))
+              return(calcTOAIrradRadRef(rad_max = getSatRadMax(x), 
+                                        ref_max = getSatRefMax(x), 
+                                        esd = getSatESD(x),
+                                        normalize = normalize, date = date))
             }
           })

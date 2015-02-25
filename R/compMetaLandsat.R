@@ -97,8 +97,9 @@ compMetaLandsat <- function(files){
     if(length(esd) == 0){esd = NA}
     
     result <- data.frame(DATE = date, 
-                         SID = bandinfo$SID[x],
+                         SID = bandinfo$SID.x[x],
                          SENSOR = bandinfo$SENSOR[x],
+                         SGRP = bandinfo$SGRP[x],
                          BIDS = bandinfo$BIDS.x[x],
                          BCDE = bandinfo$BCDE[x],
                          SRES = bandinfo$SRES[x],
@@ -119,7 +120,7 @@ compMetaLandsat <- function(files){
                          REFMAX = cal_ref_max,
                          REFMIN = cal_ref_min,
                          FILE = bandinfo$FILE[x],
-                         FILE = bandinfo$METAFILE[x])
+                         METAFILE = bandinfo$METAFILE[x])
   })
   metainformation <- do.call("rbind", metainformation)
   return(metainformation)

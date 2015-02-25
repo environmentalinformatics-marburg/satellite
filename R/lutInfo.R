@@ -118,3 +118,33 @@ lutInfoBIDSFromBCDE <- function(bcde, sid){
 lutInfoRSRromSID <- function(sid){
   return(lut[names(lut) == lut$RSR[which(names(lut$RSR) == sid)]][[1]])
 }
+
+
+# Return sensor id from filename --------------------------------------------------
+#' @export lutInfoSIDfromFilename
+#'
+#' @describeIn lutInfo
+#' 
+lutInfoSIDfromFilename <- function(file){
+  test <- sapply(lut$SENSOR_ID_PATTERN$PATTERN, function(x){grepl(x, files)})  
+  if(class(test) == "matrix"){
+    return(colnames(test)[test[1, ]])
+  } else {
+    return(colnames(test)[test])
+  }
+}
+
+
+# Return group id from filename --------------------------------------------------
+#' @export lutInfoSGRPfromFilename
+#'
+#' @describeIn lutInfo
+#' 
+lutInfoSGRPfromFilename <- function(file){
+  sid <- lutInfoSIDfromFilename(file)
+  return(lut$SENSOR_ID_PATTERN$SGRP[lut$SENSOR_ID_PATTERN == sid][1])
+}
+
+
+
+

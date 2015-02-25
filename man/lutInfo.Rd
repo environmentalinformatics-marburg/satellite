@@ -6,6 +6,8 @@
 \alias{lutInfoBIDSFromBCDE}
 \alias{lutInfoBandsFromSID}
 \alias{lutInfoRSRromSID}
+\alias{lutInfoSGRPfromFilename}
+\alias{lutInfoSIDfromFilename}
 \alias{lutInfoSensorFromSID}
 \title{Get or access internal LUT values used by various functions}
 \usage{
@@ -20,6 +22,10 @@ lutInfoBCDEFromBIDS(bids, sid)
 lutInfoBIDSFromBCDE(bcde, sid)
 
 lutInfoRSRromSID(sid)
+
+lutInfoSIDfromFilename(file)
+
+lutInfoSGRPfromFilename(file)
 }
 \arguments{
 \item{sid}{sensor id as returned e.g. from \code{lutInfoSensorFromSID}}
@@ -95,6 +101,10 @@ Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285}}
 \item \code{lutInfoBIDSFromBCDE}: 
 
 \item \code{lutInfoRSRromSID}: 
+
+\item \code{lutInfoSIDfromFilename}: 
+
+\item \code{lutInfoSGRPfromFilename}: 
 }}
 \examples{
 lutInfo()
