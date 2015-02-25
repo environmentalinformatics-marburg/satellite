@@ -6,7 +6,7 @@ test_that("satellite works as expected for Landsat 7  files", {
   files <- list.files(path, 
                       pattern = glob2rx("LE7*.tif"), 
                       full.names = TRUE)
-  sat <- satellite(files)  
+  sat <- satellite(files)
 
   expect_equal(names(getSatLayers(sat)[[1]]), "LE71950252001211EDC00_B1")
   expect_equal(names(getSatLayers(sat)[[2]]), "LE71950252001211EDC00_B2")

@@ -104,8 +104,9 @@ setMethod("satTOAIrradTable",
                                            normalize  = normalize, 
                                            date = date)
             }
-            addSatMetaParam(sat, meta_param = data.frame(BIDS = names(eSun),
-                                                         ESUN = as.numeric(eSun)))
+            x <- addSatMetaParam(x, meta_param = data.frame(BCDE = names(eSun),
+                                                            ESUN = as.numeric(eSun)))
+            return(x)
           })
 
 
@@ -126,8 +127,9 @@ setMethod("satTOAIrradModel",
               eSun <- calcTOAIrradModel(rsr = rsr, model = model, 
                                         normalize = normalize, date = date)
             }
-            addSatMetaParam(sat, meta_param = data.frame(BIDS = names(eSun),
-                                                         ESUN = as.numeric(eSun)))
+            x <- addSatMetaParam(x, meta_param = data.frame(BCDE = names(eSun),
+                                                            ESUN = as.numeric(eSun)))
+            return(x)
           })
 
 
@@ -141,17 +143,17 @@ setMethod("satTOAIrradRadRef",
           signature(x = "Satellite"), 
           function(x, normalize = TRUE, date){
             if(missing(date)){
-              eSun <- calcTOAIrradRadRef(rad_max = getSatRadMax(x, getSatBIDSSolar(sat)), 
-                                         ref_max = getSatRefMax(x, getSatBIDSSolar(sat)), 
+              eSun <- calcTOAIrradRadRef(rad_max = getSatRadMax(x, getSatBCDESolar(x)), 
+                                         ref_max = getSatRefMax(x, getSatBCDESolar(x)), 
                                          esd = getSatESD(x),
                                          normalize = normalize)
             } else {
-              eSun <- calcTOAIrradRadRef(rad_max = getSatRadMax(x), 
-                                         ref_max = getSatRefMax(x), 
+              eSun <- calcTOAIrradRadRef(rad_max = getSatRadMax(x, getSatBCDESolar(x)), 
+                                         ref_max = getSatRefMax(x, getSatBCDESolar(x)),
                                          esd = getSatESD(x),
                                          normalize = normalize, date = date)
-              
-              addSatMetaParam(sat, meta_param = data.frame(BIDS = getSatBIDS(x),
-                                                           ESUN = as.numeric(eSun)))
             }
+            x <- addSatMetaParam(x, meta_param = data.frame(BCDE = getSatBCDESolar(x),
+                                                            ESUN = as.numeric(eSun)))
+            return(x)
           })

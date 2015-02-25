@@ -3,9 +3,11 @@
 \name{satInfo}
 \alias{addSatLog}
 \alias{addSatMetaParam}
+\alias{getSatBCDE}
+\alias{getSatBCDESolar}
 \alias{getSatBIDS}
-\alias{getSatBIDSSolar}
 \alias{getSatESD}
+\alias{getSatESUN}
 \alias{getSatLayers}
 \alias{getSatLog}
 \alias{getSatMeta}
@@ -30,15 +32,17 @@ addSatLog(sat, info = NA_character_, layers = NA_character_,
 
 addSatMetaParam(sat, meta_param)
 
-getSatBIDS(sat)
+getSatParam(sat, param, bcde, return_bcde = TRUE)
 
-getSatParam(sat, param, bids, return_bids = TRUE)
+getSatBCDE(sat)
+
+getSatBIDS(sat)
 
 getSatSID(sat)
 
 getSatSensor(sat)
 
-getSatBIDSSolar(sat)
+getSatBCDESolar(sat)
 
 getSatRadMax(sat, bids)
 
@@ -49,11 +53,13 @@ getSatRefMax(sat, bids)
 getSatRefMin(sat)
 
 getSatESD(sat)
+
+getSatESUN(sat)
 }
 \arguments{
 \item{sat}{Satellite object (see \code{\link{satellite}})}
 
-\item{bids}{band ids}
+\item{bcde}{band code}
 }
 \value{
 Objects of respective type (see \code{\link{satellite}})
@@ -61,8 +67,9 @@ Objects of respective type (see \code{\link{satellite}})
 \description{
 Get information from class Satellite.
 
-Needs to be a separate function since it is called from within
-\code{getSatParam}.
+
+
+
 }
 \details{
 The functions are generally self explaining in that sence that

@@ -50,6 +50,8 @@ calcTOAIrradRadTable <- function(sid, normalize = TRUE, date){
     eSun <- lut$L5_ESUN
   } else if(sid == "LE4") {
     eSun <- lut$L4_ESUN
+  } else {
+    stop(paste0("Satellite ID ", sid, " is not supported, yet."))
   }
   if(normalize == FALSE){
     if(missing(date)){

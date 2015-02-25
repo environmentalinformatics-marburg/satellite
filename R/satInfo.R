@@ -80,45 +80,58 @@ addSatLog <- function(sat, info = NA_character_, layers = NA_character_,
 #'
 addSatMetaParam <- function(sat, meta_param){
   id <- colnames(meta_param)[1]
-  sat@meta <- merge(sat@meta, meta_param, by = id)
+  sat@meta <- merge(sat@meta, meta_param, by = id, all.x = TRUE)
   return(sat)
 }
 
 
+# Return parameter -------------------------------------------------------------
+#' @param bcde band code
+#' @export getSatParam
+#'
+#' @rdname satInfo
+#' 
+getSatParam <- function(sat, param, bcde, return_bcde = TRUE){
+  if(param == "BCDE"){
+    return(getSatMeta(sat)[, which(param == colnames(getSatMeta(sat)))])
+  } else {
+    if(missing(bcde)){
+      param <- getSatMeta(sat)[, which(param == colnames(getSatMeta(sat)))]
+      bcde <- as.character(getSatBCDE(sat))
+    } else {
+      param <- 
+        getSatMeta(sat)[, 
+                        which(param == colnames(getSatMeta(sat)))][match(
+                          bcde, getSatMeta(sat)$BCDE)]
+      bcde <- as.character(bcde)
+    }
+    if(return_bcde == TRUE){
+      attr(param, "names") <- bcde
+    }
+    return(param)
+  }
+}
+
+
+# Return Band code -------------------------------------------------------------
+#' 
+#' @export getSatBCDE
+#'
+#' @rdname satInfo
+#' 
+getSatBCDE <- function(sat){
+  getSatParam(sat, "BCDE", return_bcde = FALSE)
+}
+
+
 # Return Band IDs --------------------------------------------------------------
-#' Needs to be a separate function since it is called from within
-#' \code{getSatParam}. 
 #' 
 #' @export getSatBIDS
 #'
 #' @rdname satInfo
 #' 
 getSatBIDS <- function(sat){
-  return(sat@meta$BIDS)
-}
-
-
-# Return parameter -------------------------------------------------------------
-#' @param bids band ids
-#' @export getSatParam
-#'
-#' @rdname satInfo
-#' 
-getSatParam <- function(sat, param, bids, return_bids = TRUE){
-  if(missing(bids)){
-    param <- getSatMeta(sat)[, which(param == colnames(getSatMeta(sat)))]
-    bids <- as.character(getSatBIDS(sat))
-  } else {
-    param <- 
-      getSatMeta(sat)[, 
-                      which(param == colnames(getSatMeta(sat)))][match(
-                        bids, getSatMeta(sat)$BIDS)]
-    bids <- as.character(bids)
-  }
-  if(return_bids == TRUE){
-    attr(param, "names") <- bids
-  }
-  return(param)
+  getSatParam(sat, "BIDS", return_bcde = FALSE)
 }
 
 
@@ -128,7 +141,7 @@ getSatParam <- function(sat, param, bids, return_bids = TRUE){
 #' @rdname satInfo
 #' 
 getSatSID <- function(sat){
-  getSatParam(sat, "SID", return_bids = FALSE)[1]
+  getSatParam(sat, "SID", return_bcde = FALSE)[1]
 }
 
 
@@ -138,19 +151,19 @@ getSatSID <- function(sat){
 #' @rdname satInfo
 #' 
 getSatSensor <- function(sat){
-  getSatParam(sat, "SENSOR", return_bids = FALSE)[1]
+  getSatParam(sat, "SENSOR", return_bcde = FALSE)[1]
 }
 
 
-# Return solar bands -----------------------------------------------------------
-#' @export getSatBIDSSolar
+# Return solar band codes ------------------------------------------------------
+#' @export getSatBCDESolar
 #'
 #' @rdname satInfo
 #' 
-getSatBIDSSolar <- function(sat){
+getSatBCDESolar <- function(sat){
   spectrum <- getSatParam(sat, "SPECTRUM")
   
-  return(spectrum[grep("solar", spectrum)])
+  return(getSatBCDE(sat)[grep("solar", spectrum)])
 }
 
 
@@ -203,4 +216,14 @@ getSatRefMin <- function(sat){
 #' 
 getSatESD <- function(sat){
   getSatParam(sat, "ESD")[1]
+}
+
+
+# Return ESun ------------------------------------------------------------------
+#' @export getSatESUN
+#'
+#' @rdname satInfo
+#' 
+getSatESUN <- function(sat){
+  getSatParam(sat, "ESUN")
 }

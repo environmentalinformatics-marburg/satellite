@@ -120,7 +120,8 @@ compMetaLandsat <- function(files){
                          REFMAX = cal_ref_max,
                          REFMIN = cal_ref_min,
                          FILE = bandinfo$FILE[x],
-                         METAFILE = bandinfo$METAFILE[x])
+                         METAFILE = bandinfo$METAFILE[x],
+                         stringsAsFactors = FALSE)
   })
   metainformation <- do.call("rbind", metainformation)
   return(metainformation)

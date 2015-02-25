@@ -31,7 +31,8 @@ compFilePathLandsat <- function(files){
                BIDS = band_ids,
                BCDE = band_code,
                FILE = x,
-               METAFILE = meta)
+               METAFILE = meta,
+               stringsAsFactors = FALSE)
   })
   result <- (do.call("rbind", info))
   rownames(result) <- NULL

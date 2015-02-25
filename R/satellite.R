@@ -63,7 +63,7 @@ setMethod("satellite",
                 meta <- data.frame(NULL)
               }
             }
-            layers <- lapply(as.character(meta$FILE), function(y){
+            layers <- lapply(meta$FILE, function(y){
               raster(y)
             })
             if(missing(log)){
@@ -85,7 +85,7 @@ setMethod("satellite",
             if(missing(meta)){
               meta <- data.frame(FILE = names(x))
             }
-            layers <- lapply(nlayers(x), function(y){
+            layers <- lapply(seq(nlayers(x)), function(y){
               x[[y]]
             })
             if(missing(log)){
