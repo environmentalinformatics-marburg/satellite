@@ -3,7 +3,7 @@
 #' @description
 #' Get mean extraterrestrial solar irradiance (ESun) using published values.
 #' 
-#' @param sensor sensor name ("Landsat 4/5/7")
+#' @param sid sensor id ("LC4/5/7")
 #' @param normalize normalize ESun to mean earth sun distance
 #' @param date date of the sensor overpath (YYYY-MM-DD or POSIX* object) (
 #' only required if ESun should be corrected to the actual earth sun distance)
@@ -41,14 +41,14 @@
 #' satellite sensors already included in this package.
 #' 
 #' @examples
-#' calcTOAIrradRadTable(sensor = "Landsat 7", normalize = FALSE, "2015-01-01")
+#' calcTOAIrradRadTable(sensor = "LC7", normalize = FALSE, "2015-01-01")
 #' 
-calcTOAIrradRadTable <- function(sensor, normalize = TRUE, date){
-  if(sensor == "Landsat 7") {
+calcTOAIrradRadTable <- function(sid, normalize = TRUE, date){
+  if(sid == "LE7") {
     eSun <- lut$L7_ESUN
-  } else if(sensor == "Landsat 5") {
+  } else if(sid == "LE5") {
     eSun <- lut$L5_ESUN
-  } else if(sensor == "Landsat 4") {
+  } else if(sid == "LE4") {
     eSun <- lut$L4_ESUN
   }
   if(normalize == FALSE){

@@ -6,7 +6,10 @@ test_that("satTOAIrradTable works as expected", {
   files <- list.files(path, 
                       pattern = glob2rx("LE7*.tif"), 
                       full.names = TRUE)
-  sat <- satellite(files)  
+  sat <- satellite(files)
+  satTOAIrradTable(sat)
+
+  sat <- satellite(files[c(1:3, 6)])
   satTOAIrradTable(sat)
 })
 
@@ -19,6 +22,10 @@ test_that("satTOAIrradModel works as expected", {
                       full.names = TRUE)
   sat <- satellite(files)  
   satTOAIrradModel(sat)
+
+  sat <- satellite(files[c(1,2,10)])  
+  satTOAIrradModel(sat)
+  
 })
 
 test_that("satTOAIrradRadRef works as expected", {
@@ -28,5 +35,8 @@ test_that("satTOAIrradRadRef works as expected", {
                       pattern = glob2rx("LC8*.tif"), 
                       full.names = TRUE)
   sat <- satellite(files)  
+  satTOAIrradRadRef(sat)
+  
+  sat <- satellite(files[c(1,3,10)])  
   satTOAIrradRadRef(sat)
 })

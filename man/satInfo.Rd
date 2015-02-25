@@ -2,10 +2,14 @@
 % Please edit documentation in R/satInfo.R
 \name{satInfo}
 \alias{addSatLog}
+\alias{addSatMetaParam}
+\alias{getSatBIDS}
+\alias{getSatBIDSSolar}
 \alias{getSatESD}
 \alias{getSatLayers}
 \alias{getSatLog}
 \alias{getSatMeta}
+\alias{getSatParam}
 \alias{getSatRadMax}
 \alias{getSatRadMin}
 \alias{getSatRefMax}
@@ -24,15 +28,23 @@ getSatLog(sat)
 addSatLog(sat, info = NA_character_, layers = NA_character_,
   output = NA_character_)
 
+addSatMetaParam(sat, meta_param)
+
+getSatBIDS(sat)
+
+getSatParam(sat, param, bids, return_bids = TRUE)
+
 getSatSID(sat)
 
 getSatSensor(sat)
 
-getSatRadMax(sat)
+getSatBIDSSolar(sat)
 
-getSatRadMin(sat)
+getSatRadMax(sat, bids)
 
-getSatRefMax(sat)
+getSatRadMin(sat, bids)
+
+getSatRefMax(sat, bids)
 
 getSatRefMin(sat)
 
@@ -40,12 +52,17 @@ getSatESD(sat)
 }
 \arguments{
 \item{sat}{Satellite object (see \code{\link{satellite}})}
+
+\item{bids}{band ids}
 }
 \value{
 Objects of respective type (see \code{\link{satellite}})
 }
 \description{
 Get information from class Satellite.
+
+Needs to be a separate function since it is called from within
+\code{getSatParam}.
 }
 \details{
 The functions are generally self explaining in that sence that

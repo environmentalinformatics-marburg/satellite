@@ -65,20 +65,20 @@ calcTOAIrradModel <- function(rsr, model = "MNewKur",
   toa$WAVELENGTH <- round(toa$WAVELENGTH, 0)
   toa_aggregated <- aggregate(toa, by = list(toa$WAVELENGTH), FUN = "mean")
   
-  rsr <- rsr[, c(grep("BAND", colnames(rsr)), grep("WAVELENGTH", colnames(rsr)), 
+  rsr <- rsr[, c(grep("BIDS", colnames(rsr)), grep("WAVELENGTH", colnames(rsr)), 
                  grep("RSR", colnames(rsr)))]
   
-  eSun <- lapply(unique(rsr$BAND), function(x){
-    rsr_solar <- merge(rsr[rsr$BAND == x,], toa_aggregated, by = "WAVELENGTH")
+  eSun <- lapply(unique(rsr$BIDS), function(x){
+    rsr_solar <- merge(rsr[rsr$BIDS == x,], toa_aggregated, by = "WAVELENGTH")
     if(nrow(rsr_solar) > 0){
       act_eSun <- aggregate(rsr_solar$RSR * rsr_solar[,grep(model, names(rsr_solar))], 
-                            by = list(rsr_solar$BAND), FUN = "sum")[2] /
-        aggregate(rsr_solar$RSR, by = list(rsr_solar$BAND), FUN = "sum")[2] * 1000
+                            by = list(rsr_solar$BIDS), FUN = "sum")[2] /
+        aggregate(rsr_solar$RSR, by = list(rsr_solar$BIDS), FUN = "sum")[2] * 1000
       act_eSun <- unlist(act_eSun)
     } else {
       act_eSun <- c(NA)
     }
-    names(act_eSun) <- paste0("Band_", x)
+    names(act_eSun) <- paste0(x)
     return(act_eSun)
   })
   eSun <- unlist(eSun)

@@ -36,8 +36,6 @@ rsr <- c(LE7 = "L7_RSR", LC8 = "L8_RSR")
 # Band wavelengths, bandwith data taken from
 # http://landsat.usgs.gov/band_designations_landsat_satellites.php
 l4_bands <- data.frame(
-  SID = "LE4",
-  SGRP = "Landsat",
   BIDS = seq(7),
   BCDE = c(sprintf("%03dn", seq(7))),
   LMIN = c(0.45, 0.52, 0.63, 0.76, 1.55, 10.40, 2.08),
@@ -46,12 +44,12 @@ l4_bands <- data.frame(
   TYPE = c("VIS", "VIS", "VIS", "NIR", "SWIR", "TIR", 
            "SWIR"),
   SPECTRUM = c("solar", "solar", "solar", "solar", "solar",
-               "thermal", "solar"))
+               "thermal", "solar"),
+  SID = "LE4",
+  SGRP = "Landsat")
 rownames(l4_bands) <- paste0("Band_", l4_bands$BIDS)
 
 l5_bands <- data.frame(
-  SID = "LE5",
-  SGRP = "Landsat",
   BIDS = seq(7),
   BCDE = c(sprintf("%03dn", seq(7))),
   LMIN = c(0.45, 0.52, 0.63, 0.76, 1.55, 10.40, 2.08),
@@ -60,12 +58,12 @@ l5_bands <- data.frame(
   TYPE = c("VIS", "VIS", "VIS", "NIR", "SWIR", "TIR", 
            "SWIR"),
   SPECTRUM = c("solar", "solar", "solar", "solar", "solar",
-               "thermal", "solar"))
+               "thermal", "solar"),
+  SID = "LE5",
+  SGRP = "Landsat")
 rownames(l5_bands) <- paste0("Band_", l5_bands$BIDS)
 
 l7_bands <- data.frame(
-  SID = "LE7",
-  SGRP = "Landsat",
   BIDS = c(seq(5), "6_VCID_1", "6_VCID_2", 7:8),
   BCDE = c(sprintf("%03dn", seq(5)), "0061", "0062", sprintf("%03dn", 7:8)),
   LMIN = c(0.45, 0.52, 0.63, 0.77, 1.55, 10.40, 10.40, 2.09, 0.52),
@@ -73,12 +71,12 @@ l7_bands <- data.frame(
   SRES = c(30, 30, 30, 30, 30, 30, 30, 30, 15),
   TYPE = c("VIS", "VIS", "VIS", "NIR", "SWIR", "TIR", "TIR", "SWIR", "PCM"),
   SPECTRUM = c("solar", "solar", "solar", "solar", "solar",
-               "thermal", "thermal", "solar", "solar"))
+               "thermal", "thermal", "solar", "solar"),
+  SID = "LE7",
+  SGRP = "Landsat")
 rownames(l7_bands) <- paste0("Band_", l7_bands$BIDS)
 
 l8_bands <- data.frame(
-  SID = "LC8",
-  SGRP = "Landsat",
   BIDS = c(seq(11), "QA"),
   BCDE = c(sprintf("%03dn", seq(11)), "0QAn"),
   LMIN = c(0.43, 0.45, 0.53, 0.64, 0.85, 1.57, 2.11, 0.50, 1.36, 10.60, 11.50, NA),
@@ -87,7 +85,9 @@ l8_bands <- data.frame(
   TYPE = c("VIS", "VIS", "VIS", "VIS", "NIR", "SWIR", "SWIR", "PCM", "SWIR",
            "TIR", "TIR", "QA"),
   SPECTRUM = c("solar", "solar", "solar", "solar", "solar", "solar", "solar",
-               "solar", "solar", "thermal", "thermal", NA))
+               "solar", "solar", "thermal", "thermal", NA),
+  SID = "LC8",
+  SGRP = "Landsat")
 rownames(l8_bands) <-  paste0("Band_", l8_bands$BIDS)
 
 # Landat 7 relative spectral response (units: nm-1)
@@ -104,13 +104,13 @@ solar <- read.table("data-raw/mod_etr_solar_irradiance.csv",
 
 # Tabulated values of ESun (W m-2 micrometer-1)
 l4_esun <- c(1957, 1826, 1554, 1036, 215, NA, 80.67)
-names(l4_esun) <- rownames(l4_bands$BIDS)
+attr(l4_esun, "names") <- as.character(l4_bands$BIDS)
 
 l5_esun <- c(1957, 1825, 1557, 1033, 214.9, NA, 80.72)
-names(l5_esun) <- rownames(l5_bands$BIDS)
+attr(l5_esun, "names") <- as.character(l5_bands$BIDS)
 
 l7_esun <- c(1997, 1812, 1533, 1039, 230.8, NA, NA, 84.90, 1362)
-names(l7_esun) <- rownames(l7_bands$BIDS)
+attr(l7_esun, "names") <- as.character(l7_bands$BIDS)
 
 meta <- list(SENSORS = "Sensor ids and names",
              SENSOR_ID_PATTERN = "Filename patter of sensor",

@@ -47,7 +47,6 @@ getSatMeta <- function(sat){
 }
 
 
-
 # Return Satellite object log info ---------------------------------------------
 #' @export getSatLog
 #'
@@ -74,13 +73,62 @@ addSatLog <- function(sat, info = NA_character_, layers = NA_character_,
 }
 
 
+# Add additional metainformation parameter to Satellite object -----------------
+#' @export addSatMetaParam
+#'
+#' @rdname satInfo
+#'
+addSatMetaParam <- function(sat, meta_param){
+  id <- colnames(meta_param)[1]
+  sat@meta <- merge(sat@meta, meta_param, by = id)
+  return(sat)
+}
+
+
+# Return Band IDs --------------------------------------------------------------
+#' Needs to be a separate function since it is called from within
+#' \code{getSatParam}. 
+#' 
+#' @export getSatBIDS
+#'
+#' @rdname satInfo
+#' 
+getSatBIDS <- function(sat){
+  return(sat@meta$BIDS)
+}
+
+
+# Return parameter -------------------------------------------------------------
+#' @param bids band ids
+#' @export getSatParam
+#'
+#' @rdname satInfo
+#' 
+getSatParam <- function(sat, param, bids, return_bids = TRUE){
+  if(missing(bids)){
+    param <- getSatMeta(sat)[, which(param == colnames(getSatMeta(sat)))]
+    bids <- as.character(getSatBIDS(sat))
+  } else {
+    param <- 
+      getSatMeta(sat)[, 
+                      which(param == colnames(getSatMeta(sat)))][match(
+                        bids, getSatMeta(sat)$BIDS)]
+    bids <- as.character(bids)
+  }
+  if(return_bids == TRUE){
+    attr(param, "names") <- bids
+  }
+  return(param)
+}
+
+
 # Return Sensor ID -------------------------------------------------------------
 #' @export getSatSID
 #'
 #' @rdname satInfo
 #' 
 getSatSID <- function(sat){
-  return(getSatMeta(sat)$SID[1])
+  getSatParam(sat, "SID", return_bids = FALSE)[1]
 }
 
 
@@ -90,7 +138,19 @@ getSatSID <- function(sat){
 #' @rdname satInfo
 #' 
 getSatSensor <- function(sat){
-  return(getSatMeta(sat)$SENSOR[1])
+  getSatParam(sat, "SENSOR", return_bids = FALSE)[1]
+}
+
+
+# Return solar bands -----------------------------------------------------------
+#' @export getSatBIDSSolar
+#'
+#' @rdname satInfo
+#' 
+getSatBIDSSolar <- function(sat){
+  spectrum <- getSatParam(sat, "SPECTRUM")
+  
+  return(spectrum[grep("solar", spectrum)])
 }
 
 
@@ -99,8 +159,8 @@ getSatSensor <- function(sat){
 #'
 #' @rdname satInfo
 #' 
-getSatRadMax <- function(sat){
-  return(getSatMeta(sat)$RADMAX)
+getSatRadMax <- function(sat, bids){
+  getSatParam(sat, "RADMAX", bids)
 }
 
 
@@ -109,9 +169,10 @@ getSatRadMax <- function(sat){
 #'
 #' @rdname satInfo
 #' 
-getSatRadMin <- function(sat){
-  return(getSatMeta(sat)$RADMIN)
+getSatRadMin <- function(sat, bids){
+  getSatParam(sat, "RADMIN", bids)
 }
+
 
 
 # Return REF_MAX ---------------------------------------------------------------
@@ -119,9 +180,10 @@ getSatRadMin <- function(sat){
 #'
 #' @rdname satInfo
 #' 
-getSatRefMax <- function(sat){
-  return(getSatMeta(sat)$REFMAX)
+getSatRefMax <- function(sat, bids){
+  getSatParam(sat, "REFMAX", bids)
 }
+
 
 
 # Return REF_MIN ---------------------------------------------------------------
@@ -130,7 +192,7 @@ getSatRefMax <- function(sat){
 #' @rdname satInfo
 #' 
 getSatRefMin <- function(sat){
-  return(getSatMeta(sat)$REFMIN)
+  getSatParam(sat, "REFMIN", bids)
 }
 
 
@@ -140,5 +202,5 @@ getSatRefMin <- function(sat){
 #' @rdname satInfo
 #' 
 getSatESD <- function(sat){
-  return(getSatMeta(sat)$ESD)
+  getSatParam(sat, "ESD")[1]
 }

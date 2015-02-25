@@ -4,10 +4,10 @@
 \alias{calcTOAIrradRadTable}
 \title{Get extraterrestrial solar irradiance (ESun) from readily tabulated values}
 \usage{
-calcTOAIrradRadTable(sensor, normalize = TRUE, date)
+calcTOAIrradRadTable(sid, normalize = TRUE, date)
 }
 \arguments{
-\item{sensor}{sensor name ("Landsat 4/5/7")}
+\item{sid}{sensor id ("LC4/5/7")}
 
 \item{normalize}{normalize ESun to mean earth sun distance}
 
@@ -28,7 +28,7 @@ actual earth sun distance is approximated by the day of the year using
 \code{\link{calcEartSunDist}}.
 }
 \examples{
-calcTOAIrradRadTable(sensor = "Landsat 7", normalize = FALSE, "2015-01-01")
+calcTOAIrradRadTable(sensor = "LC7", normalize = FALSE, "2015-01-01")
 }
 \references{
 Tabulated values of the solar irradiance for Landsat 4 and 5 are

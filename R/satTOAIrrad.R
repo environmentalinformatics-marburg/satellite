@@ -25,13 +25,11 @@ if ( !isGeneric("satTOAIrradRadRef") ) {
 #' given in the metadata file. Otherwise they will be computed using the 
 #' approach discribed above.
 #'
-#' @param sensor sensor name ("Landsat 8/7/5/4")
-#' @param tab use tabulated or measured (Landsat 8) values (TRUE) or compute 
-#' values based on rsr (FALSE)
+#' @param x object of type Satellite
+#' @param model name of the model to be used (see \code{\link{calcTOAIrradModel}})
 #' @param normalize normalize ESun to mean earth sun distance
 #' @param date date of the sensor overpath (YYYY-MM-DD or POSIX* object), only 
 #' relevant if normalize = FALSE
-#' @param rsr Landsat 8 rsr (see \code{\link{calcTOAIrradModel}} for details)
 #'
 #' @return vector object containing ESun for each band
 #'
@@ -73,6 +71,7 @@ if ( !isGeneric("satTOAIrradRadRef") ) {
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' sat <- satellite(files)
+#' 
 #' satTOAIrradModel(sat)
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
@@ -83,8 +82,13 @@ NULL
 
 
 # Function using Satellite object and tabulated values of eSun -----------------
-#' @param x object of type Satellite
 #'
+#' @param meta_param data frame containing the name of the metadata ID field 
+#' used to merge with the readily existing metadata information of the
+#' Satellite class object in the first column and with the same column header
+#' as used in the existing metadata information. All other columns contain the
+#' information to be added to the metadata.
+#' 
 #' @export satTOAIrradTable
 #' 
 #' @rdname satTOAIrrad
@@ -93,18 +97,19 @@ setMethod("satTOAIrradTable",
           signature(x = "Satellite"), 
           function(x, normalize = TRUE, date){
             if(missing(date)){
-              return(calcTOAIrradRadTable(sensor = getSatSensor(x), 
-                                          normalize  = normalize))
+              eSun <- calcTOAIrradRadTable(sid = getSatSID(x), 
+                                           normalize  = normalize)
             } else {
-              return(calcTOAIrradRadTable(sensor = getSatSensor(x), 
-                                          normalize  = normalize, 
-                                          date = date))
+              eSun <- calcTOAIrradRadTable(sid = getSatSID(x), 
+                                           normalize  = normalize, 
+                                           date = date)
             }
+            addSatMetaParam(sat, meta_param = data.frame(BIDS = names(eSun),
+                                                         ESUN = as.numeric(eSun)))
           })
 
 
 # Function using Satellite object and modelled values of eSun ------------------
-#' @param x object of type Satellite
 #' 
 #' @export satTOAIrradModel
 #'
@@ -115,17 +120,18 @@ setMethod("satTOAIrradModel",
           function(x, model = "MNewKur", normalize = TRUE, date){
             rsr <- lutInfoRSRromSID(sid = getSatSID(x))
             if(missing(date)){
-              return(calcTOAIrradModel(rsr = rsr, model = model, 
-                                       normalize = normalize))
+              eSun <- calcTOAIrradModel(rsr = rsr, model = model, 
+                                        normalize = normalize)
             } else {
-              return(calcTOAIrradModel(rsr = rsr, model = model, 
-                                       normalize = normalize, date = date))
+              eSun <- calcTOAIrradModel(rsr = rsr, model = model, 
+                                        normalize = normalize, date = date)
             }
+            addSatMetaParam(sat, meta_param = data.frame(BIDS = names(eSun),
+                                                         ESUN = as.numeric(eSun)))
           })
 
 
 # Function using Satellite object and actual radiance and reflectance values ---
-#' @param x object of type Satellite
 #' 
 #' @export satTOAIrradRadRef
 #'
@@ -135,14 +141,17 @@ setMethod("satTOAIrradRadRef",
           signature(x = "Satellite"), 
           function(x, normalize = TRUE, date){
             if(missing(date)){
-              return(calcTOAIrradRadRef(rad_max = getSatRadMax(x), 
-                                        ref_max = getSatRefMax(x), 
-                                        esd = getSatESD(x),
-                                        normalize = normalize))
+              eSun <- calcTOAIrradRadRef(rad_max = getSatRadMax(x, getSatBIDSSolar(sat)), 
+                                         ref_max = getSatRefMax(x, getSatBIDSSolar(sat)), 
+                                         esd = getSatESD(x),
+                                         normalize = normalize)
             } else {
-              return(calcTOAIrradRadRef(rad_max = getSatRadMax(x), 
-                                        ref_max = getSatRefMax(x), 
-                                        esd = getSatESD(x),
-                                        normalize = normalize, date = date))
+              eSun <- calcTOAIrradRadRef(rad_max = getSatRadMax(x), 
+                                         ref_max = getSatRefMax(x), 
+                                         esd = getSatESD(x),
+                                         normalize = normalize, date = date)
+              
+              addSatMetaParam(sat, meta_param = data.frame(BIDS = getSatBIDS(x),
+                                                           ESUN = as.numeric(eSun)))
             }
           })

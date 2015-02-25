@@ -23,16 +23,13 @@
 \item{date}{date of the sensor overpath (YYYY-MM-DD or POSIX* object), only
 relevant if normalize = FALSE}
 
-\item{sensor}{sensor name ("Landsat 8/7/5/4")}
+\item{model}{name of the model to be used (see \code{\link{calcTOAIrradModel}})}
 
-\item{tab}{use tabulated or measured (Landsat 8) values (TRUE) or compute
-values based on rsr (FALSE)}
-
-\item{rsr}{Landsat 8 rsr (see \code{\link{calcTOAIrradModel}} for details)}
-
-\item{x}{object of type Satellite}
-
-\item{x}{object of type Satellite}
+\item{meta_param}{data frame containing the name of the metadata ID field
+used to merge with the readily existing metadata information of the
+Satellite class object in the first column and with the same column header
+as used in the existing metadata information. All other columns contain the
+information to be added to the metadata.}
 }
 \value{
 vector object containing ESun for each band
@@ -46,6 +43,12 @@ For Landsat 8, no tabulated values are availabe. Instead (and if tab = TRUE)
 ESun will be calculated based on the actual maximum radiance and reflection
 given in the metadata file. Otherwise they will be computed using the
 approach discribed above.
+
+
+
+
+
+
 }
 \details{
 Tabulated values of ESun are taken from the official reference handbooks or
@@ -72,6 +75,7 @@ satTOAIrradTable(sat)
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 sat <- satellite(files)
+
 satTOAIrradModel(sat)
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
