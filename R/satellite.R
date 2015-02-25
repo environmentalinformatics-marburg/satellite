@@ -1,5 +1,5 @@
 if ( !isGeneric("satellite") ) {
-  setGeneric("satellite", function(files, ...)
+  setGeneric("satellite", function(x, ...)
     standardGeneric("satellite"))
 }
 
@@ -13,7 +13,7 @@ if ( !isGeneric("satellite") ) {
 #' @export satellite
 #' 
 #' @details Computation of ESun is taken from Updike and Comp (2011). Sun-earth
-#' distance is computed using \code{\link{earthSun}}.
+#' distance is computed using \code{\link{calcEartSunDist}}.
 #' 
 #' @references The formulas are taken from the following sources:
 #' 
@@ -30,7 +30,7 @@ if ( !isGeneric("satellite") ) {
 #' 
 #' ESA: ESA Earth Observation Quality Control: Landsat frequently asked questions. 
 #' 
-#' @seealso \code{\link{earthSun}} for calculating the sun-earth distance based
+#' @seealso \code{\link{calcEartSunDist}} for calculating the sun-earth distance based
 #' on the day of the year and \code{\link{eSun}} for wrapping this function and
 #' alternative derivation of ESun.
 #' 
@@ -47,23 +47,28 @@ NULL
 # Function using filepath ------------------------------------------------------
 #' @param files list of one or more satellite data files (full path and name)
 #' @param meta optional supply a metadata object (e.g. returned from 
-#' \code{\link{collectLandsat8Metadata}})
+#' \code{\link{compMetaLandsat}})
 #' @param data optional supply a list of RasterLayer objects
 #'
 #' @rdname satellite
 #' 
 setMethod("satellite", 
-          signature(files = "character"), 
-          function(files, meta, data){
+          signature(x = "character"), 
+          function(x, layers, meta, log){
             if(missing(meta)){
-              meta <- collectLandsat8Metadata(files)
+              meta <- compMetaLandsat(x)
             }
-            if(missing(data)){
-              data <- lapply(as.character(meta$FILE), function(x){
-                raster(x)
+            if(missing(layers)){
+              layers <- lapply(as.character(meta$FILE), function(y){
+                raster(y)
               })
             }
-            return(new("Satellite", meta = meta, data = data))
+            if(missing(log)){
+              ps <- list(time = Sys.time(), info = "Initial import", 
+                         layers = "all", output = "all")
+              log <- list(ps0001 = ps)
+            }
+            return(new("Satellite", layers = layers, meta = meta, log = log))
           })
 
 #             satfp <- new("SatelliteFilepath", 

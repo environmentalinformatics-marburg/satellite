@@ -8,14 +8,14 @@
 #' - DOS4: a dark object substratcion model by Moran et al. (1992)
 #'
 #' @param sensor satellite sensor (Landsat 8/7/5/4)
-#' @param coefs metadata from \code{\link{collectLandsat8Metadata}}
+#' @param coefs metadata from \code{\link{compMetaLandsat}}
 #' @param date date of the satellite overpath
 #' @param model to be used (DOS2, DOS4; must be the same as used by \
 #' code{\link{pathRadiance}})
 #'
 #' @return Raster or RasterStack object containing surface reflectance data.
 #'
-#' @export surfaceReflectance
+#' @export calcSurfRef
 #' 
 #' @details The surface reflectance computation is based on a dark object 
 #' approach using either the DOS2 (Chavez 1996) or DOS4 (Moran et al. 1992) 
@@ -64,11 +64,11 @@
 #'
 #' @examples
 #' not run:
-#' surfaceReflectance(band_rad, bnbr, coefs, ESun, Lp)
+#' calcSurfRef(band_rad, bnbr, coefs, ESun, Lp)
 
-surfaceReflectance <- function(bands_rad, coefs, ESun, Lp, model = "DOS2"){
+calcSurfRef <- function(bands_rad, coefs, ESun, Lp, model = "DOS2"){
   cos_szen <- cos(coefs$SUNZEN[1] * pi / 180.0)
-  E0 <- ESun / earthSun(coefs$DATE)^2
+  E0 <- ESun / calcEartSunDist(coefs$DATE)^2
   if(model == "DOS2"){
     Tv <- 1.0
     Tz <- cos_szen

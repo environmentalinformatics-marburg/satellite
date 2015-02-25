@@ -19,16 +19,16 @@
 #'   \item Filepath (FILE) of the sensor data and metadata file (METAFILE)
 #' }
 #' 
-#' @export collectLandsat8Metadata
+#' @export compMetaLandsat
 #'
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
-#' collectLandsat8Metadata(files)
+#' compMetaLandsat(files)
 #' 
-collectLandsat8Metadata <- function(files){
+compMetaLandsat <- function(files){
   
-  datafiles <- compileFilePathLandsat(files)
+  datafiles <- compFilePathLandsat(files)
   
   bandinfo <- lutInfoBandsFromSID(datafiles$SID[1])
   bandinfo <- merge(bandinfo, datafiles, by = "BCDE")

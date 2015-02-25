@@ -8,7 +8,7 @@
 #' @param DNmin digital number of dark object in band bnbr
 #' @param bnbr band number for which DNmin is valid
 #' @param band_wls band wavelengths for which correction should be made
-#' @param coefs metadata from \code{\link{collectLandsat8Metadata}}
+#' @param coefs metadata from \code{\link{compMetaLandsat}}
 #' @param model to be used to correct for 1% scattering (DOS2, DOS4; must be the
 #' same as used by \code{\link{radiometricCorrection}})
 #' @param ESun normalized extraterrestrial solar irradiance for all band_wls
@@ -19,7 +19,7 @@
 #' @return Vector object with path radiance values for each band 
 #' (W m-2 micrometer-1)
 #'
-#' @export calcPathRadianceDOS
+#' @export calcPathRadDOS
 #' 
 #' @details The dark object substraction approach is based on an approximation 
 #' of the atmospheric path radiance (i.e. upwelling radiation which is 
@@ -86,14 +86,14 @@
 #'   #Example for Landat 8
 #'   landsat8_metadatafile <-   system.file("extdata", 
 #'   "LC81950252013188LGN00_MTL.txt", package = "satellite")
-#'   coefs8 <- collectLandsat8Metadata(landsat8_metadatafile)
+#'   coefs8 <- compMetaLandsat(landsat8_metadatafile)
 #'   
-#'   calcPathRadianceDOS(DNmin = min(raster::getValues(l8[[2]])), 
+#'   calcPathRadDOS(DNmin = min(raster::getValues(l8[[2]])), 
 #'   bnbr = 2, band_wls = l8_band_wl, coefs = coefs8,
 #'   eSun(sensor = "Landsat 8", tab = TRUE, coefs = coefs8), 
 #'   scat_coef = -4)
 #'   
-calcPathRadianceDOS <- function(DNmin, bnbr, band_wls, coefs, model = "DOS2", 
+calcPathRadDOS <- function(DNmin, bnbr, band_wls, coefs, model = "DOS2", 
                             ESun, scat_coef = -4.0, dos_adjust = 0.01){
   
   # Define relative scattering model based on wavelength dependent scattering
@@ -129,7 +129,7 @@ calcPathRadianceDOS <- function(DNmin, bnbr, band_wls, coefs, model = "DOS2",
   
   # Compute a correction term for the path radiance values to consider a minimum
   # surface reflection wich one can always expect.
-  E0 <- ESun / earthSun(coefs$DATE)^2
+  E0 <- ESun / calcEartSunDist(coefs$DATE)^2
   cos_szen <- cos(coefs$SUNZEN[1] * pi / 180.0)
   Tv <- 1.0
   Tz <- cos_szen

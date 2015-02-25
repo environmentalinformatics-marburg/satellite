@@ -51,7 +51,7 @@ rownames(l7_bands) <- paste0("Band_", l7_bands$BIDS)
 
 l8_bands <- data.frame(
   BIDS = c(seq(11), "QA"),
-  BCDE = c(sprintf("%03dn", seq(11)), "QA"),
+  BCDE = c(sprintf("%03dn", seq(11)), "0QAn"),
   LMIN = c(0.43, 0.45, 0.53, 0.64, 0.85, 1.57, 2.11, 0.50, 1.36, 10.60, 11.50, NA),
   LMAX = c(0.45, 0.51, 0.59, 0.67, 0.88, 1.65, 2.29, 0.68, 1.38, 11.19, 12.51, NA),
   SRES = c(30, 30, 30, 30, 30, 30, 30, 15, 30, 30, 30, 30),
@@ -106,4 +106,5 @@ lut <- list(SENSORS = sensors,
             L7_RSR = l7_rsr, L8_RSR = l8_rsr, SOLAR = solar, 
             L4_ESUN = l4_esun, L5_ESUN = l5_esun, L7_ESUN = l7_esun,
             META = meta)
+
 devtools::use_data(lut, overwrite = TRUE, internal = TRUE)

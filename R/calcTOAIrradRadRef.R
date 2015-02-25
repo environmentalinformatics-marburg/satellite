@@ -11,7 +11,7 @@
 #'
 #' @return vector object containing ESun for each band
 #'
-#' @export calcTOAIrradianceRadRef
+#' @export calcTOAIrradRadRef
 #' 
 #' @details The actual solar irradiance is compute using the following formula 
 #' taken from GRASS' 
@@ -30,8 +30,8 @@
 #' derivation of ESun.
 #' 
 #' @examples
-#' calcTOAIrradianceRadRef(coefs = coefs)
-calcTOAIrradianceRadRef <- function(rad_max, ref_max, esd, normalize = TRUE){
+#' calcTOAIrradRadRef(coefs = coefs)
+calcTOAIrradRadRef <- function(rad_max, ref_max, esd, normalize = TRUE){
     eSun <- pi * esd * rad_max / ref_max
     if(normalize == TRUE){
       eSun <- 1/esd * eSun

@@ -34,21 +34,33 @@ setClass("SatelliteMetaData",
 
 #' An S4 class to represent satellite data
 #'
-#' @slot data a list object containing individual RasterLayer objects
+#' @slot layers a list object containing individual RasterLayer objects
 #' 
-#' @exportClass SatelliteData
+#' @exportClass SatelliteLayers
 #' 
-setClass("SatelliteData",
+setClass("SatelliteLayers",
          representation(
-           data = "list"
+           layers = "list"
          )
 )
 
+
+#' An S4 class to represent satellite log data
+#'
+#' @slot log a list object containing information on individual processing steps
+#' 
+#' @exportClass SatelliteLog
+#' 
+setClass("SatelliteLog", 
+         representation(
+           log = "list"
+         )
+)
 
 #' An S4 class to represent a complete satellite dataset
 #' 
 #' @exportClass Satellite
 #' 
 setClass("Satellite", 
-         contains = c("SatelliteMetaData", "SatelliteData")
+         contains = c("SatelliteLayers", "SatelliteMetaData", "SatelliteLog")
 )         

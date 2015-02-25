@@ -8,12 +8,12 @@
 #'
 #' @param band raster object of the Landsat band
 #' @param bnbr number of the Landsat band
-#' @param coefs coefficients data frame resulting from collectLandsat8Metadata()
+#' @param coefs coefficients data frame resulting from compMetaLandsat()
 #' @param conv conversion type (one of "rad", "ref", "refsun", "bt")
 #'
 #' @return Raster object with converted values
 #'
-#' @export calibrateLandsat
+#' @export calibLandsat
 #' 
 #' @references The conversion functions are taken from USGS' Landsat 8 manual
 #' which is available online at 
@@ -25,10 +25,10 @@
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
 #' filesl8 <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
-#' coefs8 <- collectLandsat8Metadata(filesl8)
-#' calibrateLandsat(l8[[2]], 2, coefs8, conv = "ref")
+#' coefs8 <- compMetaLandsat(filesl8)
+#' calibLandsat(l8[[2]], 2, coefs8, conv = "ref")
 
-calibrateLandsat <- function(band, bnbr, coefs, conv = "rad"){
+calibLandsat <- function(band, bnbr, coefs, conv = "rad"){
   if(conv == "rad"){
     result <- coefs$RADM[bnbr] * band + coefs$RADA[bnbr]
   } else if(conv == "ref"){

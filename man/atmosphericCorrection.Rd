@@ -9,7 +9,7 @@ atmosphericCorrection()
 \arguments{
 \item{sensor}{satellite sensor (Landsat 8/7/5/4)}
 
-\item{coefs}{metadata from \code{\link{collectLandsat8Metadata}}}
+\item{coefs}{metadata from \code{\link{compMetaLandsat}}}
 
 \item{date}{date of the satellite overpath}
 

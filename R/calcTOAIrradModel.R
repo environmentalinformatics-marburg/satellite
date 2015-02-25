@@ -13,7 +13,7 @@
 #'
 #' @return Vector object containing ESun for each band
 #'
-#' @export calcTOAIrradianceModel
+#' @export calcTOAIrradModel
 #' 
 #' @details Computation of ESun is taken from Updike and Comp (2011).
 #' 
@@ -22,7 +22,7 @@
 #' 
 #' If results should not be normalized to a mean earth sun distance, the 
 #' actual earth sun distance is approximated by the day of the year using
-#' \code{\link{earthSun}}.
+#' \code{\link{calcEartSunDist}}.
 #' 
 #' Relative spectral response values have to be supplied as a as a data frame
 #' which has at least these three columns: (i) a column "Band" for the sensor
@@ -43,12 +43,12 @@
 #' \href{http://rredc.nrel.gov/solar/spectra/am0/modtran.html}{National Renewable 
 #' Energy Laboratory}.
 #' 
-#' @seealso \code{\link{calcTOAIrradianceTable}} for tabulated solar irradiance
-#' values from the literature or \code{\link{calcTOAIrradianceRadRef}} for the 
+#' @seealso \code{\link{calcTOAIrradRadTable}} for tabulated solar irradiance
+#' values from the literature or \code{\link{calcTOAIrradRadRef}} for the 
 #' computation of the solar irradiance based on maximum radiation and reflection
 #' values of the dataset.
 #' 
-#' See \code{\link{earthSun}} for calculating the sun-earth 
+#' See \code{\link{calcEartSunDist}} for calculating the sun-earth 
 #' distance based on the day of the year which is called by this function if
 #' ESun should be corrected for actual earth sun distance.
 #' 
@@ -57,9 +57,9 @@
 #' 
 #' @examples
 #' lut <- lutInfo()
-#' calcTOAIrradianceModel(lut$L8_RSR, model = "MNewKur")
+#' calcTOAIrradModel(lut$L8_RSR, model = "MNewKur")
 #' 
-calcTOAIrradianceModel <- function(rsr, model = "MNewKur", 
+calcTOAIrradModel <- function(rsr, model = "MNewKur", 
                                normalize = TRUE, date){
   toa <- lut$SOLAR
   toa$WAVELENGTH <- round(toa$WAVELENGTH, 0)
@@ -87,7 +87,7 @@ calcTOAIrradianceModel <- function(rsr, model = "MNewKur",
     if(missing(date)){
       stop("Variable date is missing.")
     }
-    esd <- earthSun(date)
+    esd <- calcEartSunDist(date)
     eSun <- esd * eSun
   }
   return(eSun)

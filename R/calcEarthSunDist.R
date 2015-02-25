@@ -8,10 +8,10 @@
 #'
 #' @return vector object containing earth-sun distancen in AU
 #'
-#' @export earthSun
+#' @export calcEartSunDist
 #' 
 #' @details Computation of ESun is taken from Updike and Comp (2011). Sun-earth
-#' distance is computed using \code{\link{earthSun}}.
+#' distance is computed using \code{\link{calcEartSunDist}}.
 #' 
 #' @references The formulas are taken from the following sources:
 #' 
@@ -28,14 +28,14 @@
 #' 
 #' ESA: ESA Earth Observation Quality Control: Landsat frequently asked questions. 
 #' 
-#' @seealso \code{\link{earthSun}} for calculating the sun-earth distance based
+#' @seealso \code{\link{calcEartSunDist}} for calculating the sun-earth distance based
 #' on the day of the year and \code{\link{eSun}} for wrapping this function and
 #' alternative derivation of ESun.
 #' 
 #' @examples
-#' earthSun(date = "2015-01-01", formula = "Spencer")
+#' calcEartSunDist(date = "2015-01-01", formula = "Spencer")
 #' 
-earthSun <- function(date, formula = "Spencer"){
+calcEartSunDist <- function(date, formula = "Spencer"){
   day <- as.numeric(strftime(date, format = "%j"))
   if(formula == "Spencer"){
     T <- 2 * pi * (day - 1) / 365

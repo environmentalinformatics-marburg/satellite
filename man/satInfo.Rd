@@ -3,6 +3,8 @@
 \name{satInfo}
 \alias{satESD}
 \alias{satInfo}
+\alias{satLayers}
+\alias{satMeta}
 \alias{satRadMax}
 \alias{satRadMin}
 \alias{satRefMax}
@@ -11,7 +13,9 @@
 \alias{satSensor}
 \title{Get or access Satellite object information used by various functions}
 \usage{
-satInfo(sat)
+satMeta(sat)
+
+satLayers(sat)
 
 satSID(sat)
 
@@ -49,22 +53,6 @@ The functions above return the following information:
   \item \code{satSID} returns the sensor ID
 }
 }
-\section{Functions}{
-\itemize{
-\item \code{satSID}: 
-
-\item \code{satSensor}: 
-
-\item \code{satRadMax}: 
-
-\item \code{satRadMin}: 
-
-\item \code{satRefMax}: 
-
-\item \code{satRefMin}: 
-
-\item \code{satESD}: 
-}}
 \examples{
 satInfo()
 }

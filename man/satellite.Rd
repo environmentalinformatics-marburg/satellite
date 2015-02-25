@@ -6,13 +6,13 @@
 \alias{satellite,character-method}
 \title{Create a Satellite object}
 \usage{
-\S4method{satellite}{character}(files, meta, data)
+\S4method{satellite}{character}(x, layers, meta, log)
 }
 \arguments{
-\item{files}{list of one or more satellite data files (full path and name)}
-
 \item{meta}{optional supply a metadata object (e.g. returned from
-\code{\link{collectLandsat8Metadata}})}
+\code{\link{compMetaLandsat}})}
+
+\item{files}{list of one or more satellite data files (full path and name)}
 
 \item{data}{optional supply a list of RasterLayer objects}
 }
@@ -24,7 +24,7 @@ Method to create a Satellite Object
 }
 \details{
 Computation of ESun is taken from Updike and Comp (2011). Sun-earth
-distance is computed using \code{\link{earthSun}}.
+distance is computed using \code{\link{calcEartSunDist}}.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
@@ -48,7 +48,7 @@ An Introduction. Wiley, ISBN: 978-0-470-02101-9,
 ESA: ESA Earth Observation Quality Control: Landsat frequently asked questions.
 }
 \seealso{
-\code{\link{earthSun}} for calculating the sun-earth distance based
+\code{\link{calcEartSunDist}} for calculating the sun-earth distance based
 on the day of the year and \code{\link{eSun}} for wrapping this function and
 alternative derivation of ESun.
 }

@@ -8,14 +8,14 @@
 #'
 #' @return Data frame containing filepathes, band numbers and metafilepathes
 #'
-#' @export compileFilePathLandsat
+#' @export compFilePathLandsat
 #'
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
-#' compileFilePathLandsat(files)  
+#' compFilePathLandsat(files)  
 #' 
-compileFilePathLandsat <- function(files){
+compFilePathLandsat <- function(files){
   info <- lapply(files, function(x){
     pos <- gregexpr(pattern ='_B', tools::file_path_sans_ext(basename(x)))[[1]][1]
     band_ids <- substr(basename(x), pos + 2, 

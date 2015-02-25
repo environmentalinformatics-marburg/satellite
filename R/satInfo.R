@@ -7,8 +7,6 @@
 #' 
 #' @return Objects of respective type (see \code{\link{satellite}})
 #'
-#' @export satInfo
-#' 
 #' @details The functions above return the following information:
 #' \itemize{
 #'   \item \code{satESD} returns 
@@ -21,78 +19,98 @@
 #'   \item \code{satSID} returns the sensor ID
 #' }
 #' 
+#' @name satInfo
+#' 
 #' @examples
 #' satInfo()
 #' 
-satInfo <- function(sat){
+NULL
+
+# Return Satellite object metadata ---------------------------------------------
+#' @export satMeta
+#'
+#' @rdname satInfo
+#'
+satMeta <- function(sat){
   return(sat@meta)
 }
 
-# Return Sensor ID --------------------------------------------------------------
+
+# Return Satellite data layers -------------------------------------------------
+#' @export satLayers
+#'
+#' @rdname satInfo
+#'
+satLayers <- function(sat){
+  return(sat@layers)
+}
+
+
+# Return Sensor ID -------------------------------------------------------------
 #' @export satSID
 #'
-#' @describeIn satInfo
+#' @rdname satInfo
 #' 
 satSID <- function(sat){
-  return(sat@meta$SID[1])
+  return(satMeta(sat)$SID[1])
 }
 
 
 # Return Sensor ----------------------------------------------------------------
 #' @export satSensor
 #'
-#' @describeIn satInfo
+#' @rdname satInfo
 #' 
 satSensor <- function(sat){
-  return(sat@meta$SENSOR[1])
+  return(satMeta(sat)$SENSOR[1])
 }
 
 
 # Return RAD_MAX ---------------------------------------------------------------
 #' @export satRadMax
 #'
-#' @describeIn satInfo
+#' @rdname satInfo
 #' 
 satRadMax <- function(sat){
-  return(sat@meta$RADMAX)
+  return(satMeta(sat)$RADMAX)
 }
 
 
 # Return RAD_MIN ---------------------------------------------------------------
 #' @export satRadMin
 #'
-#' @describeIn satInfo
+#' @rdname satInfo
 #' 
 satRadMin <- function(sat){
-  return(sat@meta$RADMIN)
+  return(satMeta(sat)$RADMIN)
 }
 
 
 # Return REF_MAX ---------------------------------------------------------------
 #' @export satRefMax
 #'
-#' @describeIn satInfo
+#' @rdname satInfo
 #' 
 satRefMax <- function(sat){
-  return(sat@meta$REFMAX)
+  return(satMeta(sat)$REFMAX)
 }
 
 
 # Return REF_MIN ---------------------------------------------------------------
 #' @export satRefMin
 #'
-#' @describeIn satInfo
+#' @rdname satInfo
 #' 
 satRefMin <- function(sat){
-  return(sat@meta$REFMIN)
+  return(satMeta(sat)$REFMIN)
 }
 
 
 # Return ESD -------------------------------------------------------------------
 #' @export satESD
 #'
-#' @describeIn satInfo
+#' @rdname satInfo
 #' 
 satESD <- function(sat){
-  return(sat@meta$ESD)
+  return(satMeta(sat)$ESD)
 }
