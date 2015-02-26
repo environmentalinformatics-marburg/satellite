@@ -17,19 +17,21 @@
 #' 
 compFilePathLandsat <- function(files){
   info <- lapply(files, function(x){
-    pos <- gregexpr(pattern ='_B', tools::file_path_sans_ext(basename(x)))[[1]][1]
+    layer <- tools::file_path_sans_ext(basename(x))
+    pos <- gregexpr(pattern ='_B', layer)[[1]][1]
     band_ids <- substr(basename(x), pos + 2, 
-                       nchar(tools::file_path_sans_ext(basename(x))))
+                       nchar(layer))
     meta <- paste0(dirname(x), "/", substr(basename(x), 1, pos), "MTL.txt")
     sid <- substr(basename(x), 1, 3)
     
     sensor <- lutInfoSensorFromSID(sid)
-    band_code <- lutInfoBCDEFromBIDS(band_ids, sid)
+    band_code <- lutInfoBCDEFromBID(band_ids, sid)
 
     data.frame(SID = sid, 
                SENSOR = sensor,
-               BIDS = band_ids,
+               BID = band_ids,
                BCDE = band_code,
+               LAYER = layer,
                FILE = x,
                METAFILE = meta,
                stringsAsFactors = FALSE)

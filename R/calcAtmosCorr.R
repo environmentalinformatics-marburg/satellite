@@ -7,21 +7,31 @@
 #' - DOS2: a dark object substraction model by Chavez (1996)
 #' - DOS4: a dark object substratcion model by Moran et al. (1992)
 #'
-#' @param sensor satellite sensor (Landsat 8/7/5/4)
-#' @param coefs metadata from \code{\link{compMetaLandsat}}
-#' @param date date of the satellite overpath
-#' @param model to be used (DOS2, DOS4; must be the same as used by \
-#' code{\link{pathRadiance}})
+#' @param sensor_rad radiance at the sensor
+#' @param path_rad path radiance, e.g. returned from \code{\link{calcPathRadDOS}}
+#' @param eSun actual (i.e. non-normalized) TOA solar irradianc, e.g. returned 
+#' from \code{link{calcTOAIrradTable}}, \code{link{calcTOAIrradModel}}, or
+#' \code{link{calcTOAIrradRadRef}} with normalization settings equal FALSE
+#' @param cos_szen cosine of the sun zenith angle
+#' @param model model to be used (DOS2, DOS4), must be the same as used for
+#' \code{\link{calcPathRadDOS}}
 #'
 #' @return Raster object containing converted data.
 #'
-#' @export atmosphericCorrection
+#' @export calcAtmosCorr
 #' 
 #' @details The radiometric correction is based on a dark object approach using
 #' either the DOS2 (Chavez 1996) or DOS4 (Moran et al. 1992) model.
 #' 
 #' The minimum reflectance values for the dark object are identified using the
 #' approximation of Chavez (1988, see \code{\link{pathRadiance}} for details).
+#' 
+#' The estimated values of the solar irradiance required for the path radiance
+#' can be computed by one of \code{\link{calcTOAIrradRadTable}} which is used to
+#' get readily published values of ESun, \code{\link{calcTOAIrradRadRef}} which 
+#' computes ESun based on the actual radiance and reflectance in the scene or  
+#' \code{\link{calcTOAIrradModel}}, which computes ESun based on  look-up tables 
+#' for the sensor's relative spectral resonse and solar irradiation spectral data.
 #' 
 #' The atmospheric transmittance towards the sensor (Tv) is approximated by 
 #' 1.0 (DOS2, Chavez 1996) or rayleigh scattering (DOS4, Moran et al. 1992)
@@ -60,12 +70,29 @@
 #' Atmospheric Effects? Remote Sensing of Environment 75/2, 
 #' doi:10.1016/S0034-4257(00)00169-3, URL
 #' \url{http://www.sciencedirect.com/science/article/pii/S0034425700001693}
+#' 
+#' @seealso \code{\link{satAtmosCorr}} which can be used as a wrapper function 
+#' if the data is organized as a Satellite object.
 #'
 #' @examples
 #' not run:
-#' atmosphericCorrection(filepath = "Name_of_Landsat_Metadata_File")
+#' calcAtmosCorr(filepath = "Name_of_Landsat_Metadata_File")
 
-atmosphericCorrection <- function(){
-  #todo
+calcAtmosCorr <- function(sensor_rad, path_rad, esun, cos_szen, model = "DOS2"){
+  cos_szen <- cos(coefs$SUNZEN[bnbr] * pi / 180.0)
+  if(model == "DOS2"){
+    tv <- 1.0
+    tz <- cos_szen
+    edown <- 0.0
+  } else if(model == "DOS4"){
+    tv <- NA
+    tz <- NA
+    edown <- NA
+  }
+  
+  ref <- pi * (sensor_rad - path_rad) / 
+    ( tv * (esun * cos_szen * tz + edown) )
+  
+  return(ref)
 }
  

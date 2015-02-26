@@ -36,7 +36,7 @@ rsr <- c(LE7 = "L7_RSR", LC8 = "L8_RSR")
 # Band wavelengths, bandwith data taken from
 # http://landsat.usgs.gov/band_designations_landsat_satellites.php
 l4_bands <- data.frame(
-  BIDS = seq(7),
+  BID = seq(7),
   BCDE = c(sprintf("%03dn", seq(7))),
   LMIN = c(0.45, 0.52, 0.63, 0.76, 1.55, 10.40, 2.08),
   LMAX = c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 2.35),
@@ -47,10 +47,10 @@ l4_bands <- data.frame(
                "thermal", "solar"),
   SID = "LE4",
   SGRP = "Landsat")
-rownames(l4_bands) <- paste0("Band_", l4_bands$BIDS)
+rownames(l4_bands) <- paste0("Band_", l4_bands$BID)
 
 l5_bands <- data.frame(
-  BIDS = seq(7),
+  BID = seq(7),
   BCDE = c(sprintf("%03dn", seq(7))),
   LMIN = c(0.45, 0.52, 0.63, 0.76, 1.55, 10.40, 2.08),
   LMAX = c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 2.35),
@@ -61,10 +61,10 @@ l5_bands <- data.frame(
                "thermal", "solar"),
   SID = "LE5",
   SGRP = "Landsat")
-rownames(l5_bands) <- paste0("Band_", l5_bands$BIDS)
+rownames(l5_bands) <- paste0("Band_", l5_bands$BID)
 
 l7_bands <- data.frame(
-  BIDS = c(seq(5), "6_VCID_1", "6_VCID_2", 7:8),
+  BID = c(seq(5), "6_VCID_1", "6_VCID_2", 7:8),
   BCDE = c(sprintf("%03dn", seq(5)), "0061", "0062", sprintf("%03dn", 7:8)),
   LMIN = c(0.45, 0.52, 0.63, 0.77, 1.55, 10.40, 10.40, 2.09, 0.52),
   LMAX = c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 12.50, 2.35, 0.90),
@@ -74,12 +74,12 @@ l7_bands <- data.frame(
                "thermal", "thermal", "solar", "solar"),
   SID = "LE7",
   SGRP = "Landsat")
-rownames(l7_bands) <- paste0("Band_", l7_bands$BIDS)
+rownames(l7_bands) <- paste0("Band_", l7_bands$BID)
 
 l8_bands <- data.frame(
   SID = "LC8",
   SGRP = "Landsat",
-  BIDS = c(seq(11), "QA"),
+  BID = c(seq(11), "QA"),
   BCDE = c(sprintf("%03dn", seq(11)), "0QAn"),
   LMIN = c(0.43, 0.45, 0.53, 0.64, 0.85, 1.57, 2.11, 0.50, 1.36, 10.60, 11.50, NA),
   LMAX = c(0.45, 0.51, 0.59, 0.67, 0.88, 1.65, 2.29, 0.68, 1.38, 11.19, 12.51, NA),
@@ -88,7 +88,7 @@ l8_bands <- data.frame(
            "TIR", "TIR", "QA"),
   SPECTRUM = c("solar", "solar", "solar", "solar", "solar", "solar", "solar",
                "solar", "solar", "thermal", "thermal", NA))
-rownames(l8_bands) <-  paste0("Band_", l8_bands$BIDS)
+rownames(l8_bands) <-  paste0("Band_", l8_bands$BID)
 
 # Landat 7 relative spectral response (units: nm-1)
 l7_rsr <- read.table("data-raw/landsat_7_relative_spectral_response.csv",

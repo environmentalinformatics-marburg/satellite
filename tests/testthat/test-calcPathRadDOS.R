@@ -3,41 +3,73 @@ context("calcPathRadDOS")
 test_that("calcPathRadDOS works as expected", {
   path <- system.file("extdata", 
                       package = "satellite")
-  filesl8 <- list.files(path, 
-                        pattern = glob2rx("LC8*.tif"), 
-                        full.names = TRUE)
+  files <- list.files(path, 
+                      pattern = glob2rx("LC8*.tif"), 
+                      full.names = TRUE)
+  sat <- satellite(files)
+  sat <- satTOAIrradModel(sat)
   
-  coefs8 <- compMetaLandsat(filesl8)
+  bcde <- "002n"
+  t1 <- calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),
+                       bnbr = getSatLNBR(sat, bcde),
+                       band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)), 
+                                             LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
+                       radm = getSatRADM(sat, getSatBCDESolar(sat)),
+                       rada = getSatRADA(sat, getSatBCDESolar(sat)),
+                       szen = getSatSZEN(sat, getSatBCDESolar(sat)),
+                       esun = getSatESUN(sat, getSatBCDESolar(sat)),
+                       model = "DOS2",
+                       scat_coef = -4)
   
-  t1 <- calcPathRadDOS(DNmin = min(raster::getValues(l8[[2]])), 
-                        bnbr = 2, band_wls = lut$L8_BANDS, coefs = coefs8,
-                        ESun = eSun(sensor = "Landsat 8", tab = TRUE, 
-                                    rsr = lut$L8_RSR), scat_coef = -4)
-  
-  t2 <- calcPathRadDOS(DNmin = min(raster::getValues(l8[[2]])), 
-                        bnbr = 2, band_wls = lut$l8_band_wl, coefs = coefs8,
-                        ESun = eSun(sensor = "Landsat 8", tab = TRUE, 
-                                    rsr = lut$l8_rsr), scat_coef = -2)
+  t2 <- calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),
+                       bnbr = getSatLNBR(sat, bcde),
+                       band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)), 
+                                             LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
+                       radm = getSatRADM(sat, getSatBCDESolar(sat)),
+                       rada = getSatRADA(sat, getSatBCDESolar(sat)),
+                       szen = getSatSZEN(sat, getSatBCDESolar(sat)),
+                       esun = getSatESUN(sat, getSatBCDESolar(sat)),
+                       model = "DOS2",
+                       scat_coef = -2)
 
-  t3 <- calcPathRadDOS(DNmin = min(raster::getValues(l8[[2]])), 
-                        bnbr = 2, band_wls = lut$l8_band_wl, coefs = coefs8,
-                        ESun =  eSun(sensor = "Landsat 8", tab = TRUE, 
-                                     rsr = lut$l8_rsr), scat_coef = -1)
+  t3 <- calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),
+                       bnbr = getSatLNBR(sat, bcde),
+                       band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)), 
+                                             LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
+                       radm = getSatRADM(sat, getSatBCDESolar(sat)),
+                       rada = getSatRADA(sat, getSatBCDESolar(sat)),
+                       szen = getSatSZEN(sat, getSatBCDESolar(sat)),
+                       esun = getSatESUN(sat, getSatBCDESolar(sat)),
+                       model = "DOS2",
+                       scat_coef = -1)  
+
+  t4 <- calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),
+                       bnbr = getSatLNBR(sat, bcde),
+                       band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)), 
+                                             LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
+                       radm = getSatRADM(sat, getSatBCDESolar(sat)),
+                       rada = getSatRADA(sat, getSatBCDESolar(sat)),
+                       szen = getSatSZEN(sat, getSatBCDESolar(sat)),
+                       esun = getSatESUN(sat, getSatBCDESolar(sat)),
+                       model = "DOS2",
+                       scat_coef = -0.7)
   
-  t4 <- calcPathRadDOS(DNmin = min(raster::getValues(l8[[2]])), 
-                        bnbr = 2, band_wls = lut$l8_band_wl, coefs = coefs8,
-                        ESun = eSun(sensor = "Landsat 8", tab = TRUE, 
-                                    rsr = lut$l8_rsr), scat_coef = -0.7)
-  
-  t5 <- calcPathRadDOS(DNmin = min(raster::getValues(l8[[2]])), 
-                        bnbr = 2, band_wls = lut$l8_band_wl, coefs = coefs8,
-                        ESun = eSun(sensor = "Landsat 8", tab = TRUE, 
-                                    rsr = lut$l8_rsr), scat_coef = -0.5)
-  expect_equal(round(t1[1],4), c(Band_1 = round(59.8861832583,4)))
-  expect_equal(round(t2[3],4), c(Band_3 = round(29.24265456,4)))
-  expect_equal(round(t3[4],4), c(Band_4 = round(29.856403,4)))
-  expect_equal(round(t4[5],4), c(Band_5 = round(28.156769,4)))
-  expect_equal(round(t5[6],4), c(Band_6 = round(24.579342,4)))
+  t5 <- calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),
+                       bnbr = getSatLNBR(sat, bcde),
+                       band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)), 
+                                             LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
+                       radm = getSatRADM(sat, getSatBCDESolar(sat)),
+                       rada = getSatRADA(sat, getSatBCDESolar(sat)),
+                       szen = getSatSZEN(sat, getSatBCDESolar(sat)),
+                       esun = getSatESUN(sat, getSatBCDESolar(sat)),
+                       model = "DOS2",
+                       scat_coef = -0.5)  
+
+  expect_equal(round(t1[1],3), c("001n" = round(60.16885,3)))
+  expect_equal(round(t2[3],3), c("003n" = round(29.51984,3)))
+  expect_equal(round(t3[4],3), c("004n" = round(30.09144,3)))
+  expect_equal(round(t4[5],3), c("005n" = round(28.29916,3)))
+  expect_equal(round(t5[6],3), c("006n" = round(24.61562,3)))
   
   #   c(coef-4, coef-2, coef-1  coef-0.7  coef-0.5
   #   1  59.8861832583 50.01006637 45.566175 44.293677 43.460494

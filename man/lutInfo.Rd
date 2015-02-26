@@ -2,8 +2,8 @@
 % Please edit documentation in R/lutInfo.R
 \name{lutInfo}
 \alias{lutInfo}
-\alias{lutInfoBCDEFromBIDS}
-\alias{lutInfoBIDSFromBCDE}
+\alias{lutInfoBCDEFromBID}
+\alias{lutInfoBIDFromBCDE}
 \alias{lutInfoBandsFromSID}
 \alias{lutInfoRSRromSID}
 \alias{lutInfoSGRPfromFilename}
@@ -17,22 +17,22 @@ lutInfoBandsFromSID(sid)
 
 lutInfoSensorFromSID(sid)
 
-lutInfoBCDEFromBIDS(bids, sid)
+lutInfoBCDEFromBID(bid, sid)
 
-lutInfoBIDSFromBCDE(bcde, sid)
+lutInfoBIDFromBCDE(bcde, sid)
 
 lutInfoRSRromSID(sid)
 
-lutInfoSIDfromFilename(file)
+lutInfoSIDfromFilename(files)
 
 lutInfoSGRPfromFilename(file)
 }
 \arguments{
 \item{sid}{sensor id as returned e.g. from \code{lutInfoSensorFromSID}}
 
-\item{bids}{band id  as returned e.g. from \code{lutInfoBIDSFromBCDE}}
+\item{bid}{band id  as returned e.g. from \code{lutInfoBIDFromBCDE}}
 
-\item{bcde}{band code  as returned e.g. from \code{lutInfoBCDEFromBIDS}}
+\item{bcde}{band code  as returned e.g. from \code{lutInfoBCDEFromBID}}
 }
 \value{
 List containing several data frames with LUT values
@@ -45,8 +45,8 @@ data-raw/lut_data.R. Metadata is stored in lut$meta.
 The functions above return the following information:
 \itemize{
   \item \code{lutInfoBandsFromSID} returns the band info block
-  \item \code{lutInfoBCDEFromBIDS} returns the band code
-  \item \code{lutInfoBIDSFromBCDE} returns the band ids
+  \item \code{lutInfoBCDEFromBID} returns the band code
+  \item \code{lutInfoBIDFromBCDE} returns the band ids
   \item \code{lutInfoRSRromSID} returns the rsr for the sensor
   \item \code{lutInfoSensorFromSID} returns the sensor name
 
@@ -96,9 +96,9 @@ Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285}}
 
 \item \code{lutInfoSensorFromSID}: 
 
-\item \code{lutInfoBCDEFromBIDS}: 
+\item \code{lutInfoBCDEFromBID}: 
 
-\item \code{lutInfoBIDSFromBCDE}: 
+\item \code{lutInfoBIDFromBCDE}: 
 
 \item \code{lutInfoRSRromSID}: 
 

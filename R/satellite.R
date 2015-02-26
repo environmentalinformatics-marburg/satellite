@@ -57,10 +57,11 @@ setMethod("satellite",
           signature(x = "character"), 
           function(x, meta, log){
             if(missing(meta)){
-              if(lutInfoSGRPfromFilename(files) == "Landsat"){
+              if(lutInfoSGRPfromFilename(x) == "Landsat"){
                 meta <- compMetaLandsat(x)
               } else {
-                meta <- data.frame(NULL)
+                meta <- data.frame(LAYER = tools::file_path_sans_ext(basename(x)),
+                                   FILE = x)
               }
             }
             layers <- lapply(meta$FILE, function(y){

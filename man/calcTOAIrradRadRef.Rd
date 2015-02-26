@@ -4,14 +4,15 @@
 \alias{calcTOAIrradRadRef}
 \title{Compute extraterrestrial solar irradiance (ESun) based on Radiation/Reflection}
 \usage{
-calcTOAIrradRadRef(rad_max, ref_max, esd, normalize = TRUE)
+calcTOAIrradRadRef(rad_max, ref_max, normalize = TRUE, esd)
 }
 \arguments{
 \item{rad_max}{maximum radiance of satellite band(s)}
 
-\item{esd}{earth sun distance (AU)}
-
 \item{normalize}{normalize ESun to mean earth sun distance}
+
+\item{esd}{earth-sun distance (AU, can be estimated using
+\code{\link{calcEartSunDist}})}
 
 \item{rad_min}{minimum radiance of satellite band(s)}
 }
@@ -34,13 +35,21 @@ file.
 
 By default, the resulting actual ESun will be normalized to a mean earth sun
 distance to be compatible with other default results from \code{\link{eSun}}.
-The earth sun distance for the normalization is taken from the metadata.
 }
 \examples{
 calcTOAIrradRadRef(coefs = coefs)
 }
 \seealso{
-\code{\link{eSun}} for wrapping this function and alternative
-derivation of ESun.
+\code{\link{calcTOAIrradRadTable}} for tabulated solar irradiance
+values from the literature or \code{\link{calcTOAIrradModel}} for the
+computation of the solar irradiance based on look-up tables for the sensor's
+relative spectral resonse and solar irradiation spectral data.
+
+See \code{\link{calcEartSunDist}} for calculating the sun-earth
+distance based on the day of the year which is called by this function if
+ESun should be corrected for actual earth sun distance.
+
+See \code{\link{satTOAIrrad}} which can be used as a wrapper function if the
+data is organized as a Satellite object.
 }
 

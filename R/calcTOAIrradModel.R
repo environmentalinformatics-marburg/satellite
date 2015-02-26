@@ -8,8 +8,8 @@
 #' @param rsr relative spectral response function (see details for structure)
 #' @param model tabulated solar radiation model to be used 
 #' @param normalize normalize ESun to mean earth sun distance
-#' @param date date of the sensor overpath (YYYY-MM-DD or POSIX* object) (
-#' only required if ESun should be corrected to the actual earth sun distance)
+#' @param esd earth-sun distance (AU, can be estimated using 
+#' \code{\link{calcEartSunDist}})
 #'
 #' @return Vector object containing ESun for each band
 #'
@@ -52,15 +52,16 @@
 #' distance based on the day of the year which is called by this function if
 #' ESun should be corrected for actual earth sun distance.
 #' 
-#' See \code{\link{eSun}} which can be used as a wrapper function for the
-#' satellite sensors already included in this package.
+#' See \code{\link{satTOAIrrad}} which can be used as a wrapper function if the
+#' data is organized as a Satellite object.
 #' 
 #' @examples
 #' lut <- lutInfo()
-#' calcTOAIrradModel(lut$L8_RSR, model = "MNewKur")
+#' calcTOAIrradModel(lut$L8_RSR, model = "MNewKur", normalize = FALSE, 
+#' calcEartSunDist("2015-01-01"))
 #' 
 calcTOAIrradModel <- function(rsr, model = "MNewKur", 
-                               normalize = TRUE, date){
+                               normalize = TRUE, esd){
   toa <- lut$SOLAR
   toa$WAVELENGTH <- round(toa$WAVELENGTH, 0)
   toa_aggregated <- aggregate(toa, by = list(toa$WAVELENGTH), FUN = "mean")
@@ -84,10 +85,9 @@ calcTOAIrradModel <- function(rsr, model = "MNewKur",
   eSun <- unlist(eSun)
   
  if(normalize == FALSE){
-    if(missing(date)){
-      stop("Variable date is missing.")
+    if(missing(esd)){
+      stop("Variable esd is missing.")
     }
-    esd <- calcEartSunDist(date)
     eSun <- esd * eSun
   }
   return(eSun)

@@ -4,7 +4,7 @@
 \alias{calcTOAIrradModel}
 \title{Compute extraterrestrial solar irradiance (ESun) based on RSR}
 \usage{
-calcTOAIrradModel(rsr, model = "MNewKur", normalize = TRUE, date)
+calcTOAIrradModel(rsr, model = "MNewKur", normalize = TRUE, esd)
 }
 \arguments{
 \item{rsr}{relative spectral response function (see details for structure)}
@@ -13,8 +13,8 @@ calcTOAIrradModel(rsr, model = "MNewKur", normalize = TRUE, date)
 
 \item{normalize}{normalize ESun to mean earth sun distance}
 
-\item{date}{date of the sensor overpath (YYYY-MM-DD or POSIX* object) (
-only required if ESun should be corrected to the actual earth sun distance)}
+\item{esd}{earth-sun distance (AU, can be estimated using
+\code{\link{calcEartSunDist}})}
 }
 \value{
 Vector object containing ESun for each band
@@ -42,7 +42,8 @@ response information [0...1].
 }
 \examples{
 lut <- lutInfo()
-calcTOAIrradModel(lut$L8_RSR, model = "MNewKur")
+calcTOAIrradModel(lut$L8_RSR, model = "MNewKur", normalize = FALSE,
+calcEartSunDist("2015-01-01"))
 }
 \references{
 Updike T, Comp C (2011) Radiometric use of WorldView-2 imagery.
@@ -67,7 +68,7 @@ See \code{\link{calcEartSunDist}} for calculating the sun-earth
 distance based on the day of the year which is called by this function if
 ESun should be corrected for actual earth sun distance.
 
-See \code{\link{eSun}} which can be used as a wrapper function for the
-satellite sensors already included in this package.
+See \code{\link{satTOAIrrad}} which can be used as a wrapper function if the
+data is organized as a Satellite object.
 }
 

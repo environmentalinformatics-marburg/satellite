@@ -4,15 +4,15 @@
 \alias{calcTOAIrradRadTable}
 \title{Get extraterrestrial solar irradiance (ESun) from readily tabulated values}
 \usage{
-calcTOAIrradRadTable(sid, normalize = TRUE, date)
+calcTOAIrradRadTable(sid, normalize = TRUE, esd)
 }
 \arguments{
 \item{sid}{sensor id ("LC4/5/7")}
 
 \item{normalize}{normalize ESun to mean earth sun distance}
 
-\item{date}{date of the sensor overpath (YYYY-MM-DD or POSIX* object) (
-only required if ESun should be corrected to the actual earth sun distance)}
+\item{esd}{earth-sun distance (AU, can be estimated using
+\code{\link{calcEartSunDist}})}
 }
 \value{
 Vector object containing ESun for each band
@@ -28,7 +28,8 @@ actual earth sun distance is approximated by the day of the year using
 \code{\link{calcEartSunDist}}.
 }
 \examples{
-calcTOAIrradRadTable(sensor = "LC7", normalize = FALSE, "2015-01-01")
+calcTOAIrradRadTable(sensor = "LC7", normalize = FALSE,
+calcEartSunDist("2015-01-01"))
 }
 \references{
 Tabulated values of the solar irradiance for Landsat 4 and 5 are
@@ -51,7 +52,7 @@ See \code{\link{calcEartSunDist}} for calculating the sun-earth
 distance based on the day of the year which is called by this function if
 ESun should be corrected for actual earth sun distance.
 
-See \code{\link{eSun}} which can be used as a wrapper function for the
-satellite sensors already included in this package.
+See \code{\link{satTOAIrrad}} which can be used as a wrapper function if the
+data is organized as a Satellite object.
 }
 

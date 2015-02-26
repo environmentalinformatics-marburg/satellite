@@ -4,7 +4,7 @@
 \alias{calcPathRadDOS}
 \title{Compute path radiance based on dark object method}
 \usage{
-calcPathRadDOS(DNmin, bnbr, band_wls, coefs, model = "DOS2", ESun,
+calcPathRadDOS(DNmin, bnbr, band_wls, radm, rada, szen, esun, model = "DOS2",
   scat_coef = -4, dos_adjust = 0.01)
 }
 \arguments{
@@ -12,15 +12,15 @@ calcPathRadDOS(DNmin, bnbr, band_wls, coefs, model = "DOS2", ESun,
 
 \item{bnbr}{band number for which DNmin is valid}
 
-\item{band_wls}{band wavelengths for which correction should be made}
+\item{band_wls}{band wavelengths for which correction should be made (
+data frame with min, max in first, second column)}
 
-\item{coefs}{metadata from \code{\link{compMetaLandsat}}}
+\item{esun}{actual (i.e. non-normalized) TOA solar irradianc, e.g. returned
+from \code{link{calcTOAIrradTable}}, \code{link{calcTOAIrradModel}}, or
+\code{link{calcTOAIrradRadRef}} with normalization settings equal FALSE}
 
 \item{model}{to be used to correct for 1% scattering (DOS2, DOS4; must be the
 same as used by \code{\link{radiometricCorrection}})}
-
-\item{ESun}{normalized extraterrestrial solar irradiance for all band_wls
-(W m-2 micrometer -1) which can be computed by  \code{\link{eSun}})}
 
 \item{scat_coef}{scattering coefficient (-4.0, -2.0, -1.0, -0.7, -0.5)}
 
@@ -67,15 +67,22 @@ or the hemispherical integral of the path radiance (DOS4, Moran et al. 1992).
 Equations for the path radiance are taken from Song et al. (2001).
 }
 \examples{
-#Example for Landat 8
-  landsat8_metadatafile <-   system.file("extdata",
-  "LC81950252013188LGN00_MTL.txt", package = "satellite")
-  coefs8 <- compMetaLandsat(landsat8_metadatafile)
+path <- system.file("extdata", package = "satellite")
+files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+sat <- satellite(files)
+sat <- satTOAIrradModel(sat)
 
-  calcPathRadDOS(DNmin = min(raster::getValues(l8[[2]])),
-  bnbr = 2, band_wls = l8_band_wl, coefs = coefs8,
-  eSun(sensor = "Landsat 8", tab = TRUE, coefs = coefs8),
-  scat_coef = -4)
+bcde <- "002n"
+calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),
+               bnbr = getSatLNBR(sat, bcde),
+               band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)),
+                                     LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
+               radm = getSatRADM(sat, getSatBCDESolar(sat)),
+               rada = getSatRADA(sat, getSatBCDESolar(sat)),
+               szen = getSatSZEN(sat, getSatBCDESolar(sat)),
+               esun = getSatESUN(sat, getSatBCDESolar(sat)),
+               model = "DOS2",
+               scat_coef = -4)
 }
 \references{
 Chavez Jr PS (1988) An improved dark-object subtraction technique

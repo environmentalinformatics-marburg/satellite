@@ -5,23 +5,39 @@
 \alias{addSatMetaParam}
 \alias{getSatBCDE}
 \alias{getSatBCDESolar}
-\alias{getSatBIDS}
+\alias{getSatBID}
+\alias{getSatBTK1}
+\alias{getSatBTK2}
+\alias{getSatDataLayer}
+\alias{getSatDataLayers}
 \alias{getSatESD}
 \alias{getSatESUN}
-\alias{getSatLayers}
+\alias{getSatLMAX}
+\alias{getSatLMIN}
+\alias{getSatLNBR}
 \alias{getSatLog}
 \alias{getSatMeta}
+\alias{getSatMetaLayer}
 \alias{getSatParam}
+\alias{getSatRADA}
+\alias{getSatRADM}
+\alias{getSatREFA}
+\alias{getSatREFM}
 \alias{getSatRadMax}
 \alias{getSatRadMin}
 \alias{getSatRefMax}
 \alias{getSatRefMin}
+\alias{getSatSAZM}
+\alias{getSatSELV}
 \alias{getSatSID}
+\alias{getSatSZEN}
 \alias{getSatSensor}
 \alias{satInfo}
 \title{Get or access Satellite object information used by various functions}
 \usage{
-getSatLayers(sat)
+getSatDataLayers(sat)
+
+getSatDataLayer(sat, bcde)
 
 getSatMeta(sat)
 
@@ -36,7 +52,7 @@ getSatParam(sat, param, bcde, return_bcde = TRUE)
 
 getSatBCDE(sat)
 
-getSatBIDS(sat)
+getSatBID(sat)
 
 getSatSID(sat)
 
@@ -44,17 +60,43 @@ getSatSensor(sat)
 
 getSatBCDESolar(sat)
 
-getSatRadMax(sat, bids)
+getSatRadMax(sat, bcde)
 
-getSatRadMin(sat, bids)
+getSatRadMin(sat, bcde)
 
-getSatRefMax(sat, bids)
+getSatRefMax(sat, bcde)
 
-getSatRefMin(sat)
+getSatRefMin(sat, bcde)
 
 getSatESD(sat)
 
-getSatESUN(sat)
+getSatESUN(sat, bcde)
+
+getSatSZEN(sat, bcde)
+
+getSatSAZM(sat, bcde)
+
+getSatSELV(sat, bcde)
+
+getSatMetaLayer(sat, bcde)
+
+getSatLNBR(sat, bcde)
+
+getSatLMIN(sat, bcde)
+
+getSatLMAX(sat, bcde)
+
+getSatRADA(sat, bcde)
+
+getSatRADM(sat, bcde)
+
+getSatREFA(sat, bcde)
+
+getSatREFM(sat, bcde)
+
+getSatBTK1(sat, bcde)
+
+getSatBTK2(sat, bcde)
 }
 \arguments{
 \item{sat}{Satellite object (see \code{\link{satellite}})}

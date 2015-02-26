@@ -6,22 +6,27 @@
 \alias{satTOAIrradModel,Satellite-method}
 \alias{satTOAIrradRadRef,Satellite-method}
 \alias{satTOAIrradTable,Satellite-method}
-\title{Get extraterrestrial solar irradiance (ESun) for satellite bands}
+\title{Get TOA solar irradiance (ESun) for the layers of a Satellite object}
 \usage{
-\S4method{satTOAIrradTable}{Satellite}(x, normalize = TRUE, date)
+\S4method{satTOAIrradTable}{Satellite}(x, normalize = TRUE, esd, date)
 
 \S4method{satTOAIrradModel}{Satellite}(x, model = "MNewKur",
-  normalize = TRUE, date)
+  normalize = TRUE, esd, date)
 
-\S4method{satTOAIrradRadRef}{Satellite}(x, normalize = TRUE, date)
+\S4method{satTOAIrradRadRef}{Satellite}(x, normalize = TRUE, esd, date)
 }
 \arguments{
 \item{x}{object of type Satellite}
 
 \item{normalize}{normalize ESun to mean earth sun distance}
 
+\item{esd}{earth-sun distance (AU), if not supplied and necessary for
+normalize, it is tried to take it from the metadata, otherwise it is estimated
+by the day of the year using \code{\link{calcEartSunDist}}.}
+
 \item{date}{date of the sensor overpath (YYYY-MM-DD or POSIX* object), only
-relevant if normalize = FALSE}
+necessary if esd is required but not given explicitely or found in the
+metadata.}
 
 \item{model}{name of the model to be used (see \code{\link{calcTOAIrradModel}})}
 
@@ -32,17 +37,13 @@ as used in the existing metadata information. All other columns contain the
 information to be added to the metadata.}
 }
 \value{
-vector object containing ESun for each band
+Satellite object with ESun for each band in the metadata
 }
 \description{
 Get extraterrestrial solar irradiance (ESun) from tabulated or computed
-values. If values are computed, mean solar spectral data and the band
-specifiv relative spectral response functions (rsr) are used.
-
-For Landsat 8, no tabulated values are availabe. Instead (and if tab = TRUE)
-ESun will be calculated based on the actual maximum radiance and reflection
-given in the metadata file. Otherwise they will be computed using the
-approach discribed above.
+values. If values are computed, either (i) the mean solar spectral data and
+the band specifiv relative spectral response functions (rsr) are used or (ii)
+actual maximum radiance and reflection values are taken.
 
 
 
@@ -51,20 +52,18 @@ approach discribed above.
 
 }
 \details{
-Tabulated values of ESun are taken from the official reference handbooks or
-peer-review publications using function \code{\link{calcTOAIrradRadTable}}.
+Tabulated values of ESun are compiled using \code{\link{calcTOAIrradRadTable}}.
 
-Instead of returning tabulated values for Landsat 8 which are not available
-in the official handbook, \code{\link{calcTOAIrradRadRef}} is used to
-compute the actual eSun value based on the scene's metadata.
+Actual values of ESun are computed using \code{\link{calcTOAIrradRadRef}}.
 
-If ESun should be computed (all sensors), \code{\link{calcTOAIrradModel}}
-will be called by this function.
+Modeled values of ESun are computed using \code{\link{calcTOAIrradModel}}.
 
-If eSun should be corrected for the actual earth sun distance, an
-approximation of this distance is computed based on the day of by
-\code{\link{calcEartSunDist}}. For Landsat 8, the respective earth sun distance is
-taken from the metadata of the scene.
+If eSun should be corrected for the actual earth sun distance, the distance
+is taken from (i) the function parameter, (ii) the metadata or (iii)
+approximation using \code{\link{calcEartSunDist}} which is called from
+within the functions above.
+
+Please refer to the respective functions for details on the computation.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
@@ -83,16 +82,11 @@ sat <- satellite(files)
 satTOAIrradRadRef(sat)
 }
 \references{
-For references of the data sources, please refer to the
-documentation of the respective functions given in details or see also.
+Please refer to the respective functions for references.
 }
 \seealso{
 This function is a wrapper for
-\code{\link{calcTOAIrradRadTable}} which is used to get readily published
-values of ESun, \code{\link{calcTOAIrradRadRef}} which computes ESun based
-on the actual radiance and reflectance in the scene and for
-\code{\link{calcTOAIrradModel}} which computes ESun based on
-look-up tables for the sensor's relative spectral resonse and solar
-irradiation spectral data.
+\code{\link{calcTOAIrradRadTable}}, \code{\link{calcTOAIrradRadRef}} and
+\code{\link{calcTOAIrradModel}}.
 }
 

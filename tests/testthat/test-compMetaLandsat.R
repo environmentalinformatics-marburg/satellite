@@ -8,9 +8,9 @@ test_that("compFilePathLandsat works as expected for Landsat 7", {
                       full.names = TRUE)
   meta <- compFilePathLandsat(files)
   
-  expect_equal(as.character(meta$BIDS[2]), "2")
-  expect_equal(as.character(meta$BIDS[6]), "6_VCID_1")
-  expect_equal(as.character(meta$BIDS[9]), "8")
+  expect_equal(as.character(meta$BID[2]), "2")
+  expect_equal(as.character(meta$BID[6]), "6_VCID_1")
+  expect_equal(as.character(meta$BID[9]), "8")
 
   expect_equal(as.character(meta$BCDE[2]), "002n")
   expect_equal(as.character(meta$BCDE[6]), "0061")
@@ -32,9 +32,9 @@ test_that("compFilePathLandsat works as expected for Landsat 8", {
                       full.names = TRUE)
   meta <- compFilePathLandsat(files)
   
-  expect_equal(as.character(meta$BIDS[2]), "10")
-  expect_equal(as.character(meta$BIDS[8]), "6")
-  expect_equal(as.character(meta$BIDS[12]), "QA")
+  expect_equal(as.character(meta$BID[2]), "10")
+  expect_equal(as.character(meta$BID[8]), "6")
+  expect_equal(as.character(meta$BID[12]), "QA")
   
   expect_equal(as.character(meta$BCDE[2]), "010n")
   expect_equal(as.character(meta$BCDE[8]), "006n")
@@ -57,9 +57,9 @@ test_that("compMetaLandsat works as expected for Landsat 7", {
                       full.names = TRUE)
   meta <- compMetaLandsat(files)  
   
-  expect_equal(as.character(meta$BIDS[2]), "2")
-  expect_equal(as.character(meta$BIDS[6]), "6_VCID_1")
-  expect_equal(as.character(meta$BIDS[9]), "8")
+  expect_equal(as.character(meta$BID[2]), "2")
+  expect_equal(as.character(meta$BID[6]), "6_VCID_1")
+  expect_equal(as.character(meta$BID[9]), "8")
   
   expect_equal(as.character(meta$BCDE[2]), "002n")
   expect_equal(as.character(meta$BCDE[6]), "0061")
@@ -81,9 +81,9 @@ test_that("compMetaLandsat works as expected for Landsat 8", {
                       full.names = TRUE)
   meta <- compMetaLandsat(files)  
 
-  expect_equal(as.character(meta$BIDS[2]), "2")
-  expect_equal(as.character(meta$BIDS[10]), "10")
-  expect_equal(as.character(meta$BIDS[12]), "QA")
+  expect_equal(as.character(meta$BID[2]), "2")
+  expect_equal(as.character(meta$BID[10]), "10")
+  expect_equal(as.character(meta$BID[12]), "QA")
   
   expect_equal(as.character(meta$BCDE[2]), "002n")
   expect_equal(as.character(meta$BCDE[10]), "010n")

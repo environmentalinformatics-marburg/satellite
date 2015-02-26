@@ -4,8 +4,8 @@
 #' Get internal LUT values from sysdata.rda which have been compiled using
 #' data-raw/lut_data.R. Metadata is stored in lut$meta.
 #' 
-#' @param bcde band code  as returned e.g. from \code{lutInfoBCDEFromBIDS}
-#' @param bids band id  as returned e.g. from \code{lutInfoBIDSFromBCDE}
+#' @param bcde band code  as returned e.g. from \code{lutInfoBCDEFromBID}
+#' @param bid band id  as returned e.g. from \code{lutInfoBIDFromBCDE}
 #' @param sid sensor id as returned e.g. from \code{lutInfoSensorFromSID}
 #'
 #' @return List containing several data frames with LUT values
@@ -15,8 +15,8 @@
 #' @details The functions above return the following information:
 #' \itemize{
 #'   \item \code{lutInfoBandsFromSID} returns the band info block
-#'   \item \code{lutInfoBCDEFromBIDS} returns the band code
-#'   \item \code{lutInfoBIDSFromBCDE} returns the band ids
+#'   \item \code{lutInfoBCDEFromBID} returns the band code
+#'   \item \code{lutInfoBIDFromBCDE} returns the band ids
 #'   \item \code{lutInfoRSRromSID} returns the rsr for the sensor
 #'   \item \code{lutInfoSensorFromSID} returns the sensor name
 #'   
@@ -89,24 +89,24 @@ lutInfoSensorFromSID <- function(sid){
 
 
 # Return band code -------------------------------------------------------------
-#' @export lutInfoBCDEFromBIDS
+#' @export lutInfoBCDEFromBID
 #'
 #' @describeIn lutInfo
 #' 
-lutInfoBCDEFromBIDS <- function(bids, sid){
+lutInfoBCDEFromBID <- function(bid, sid){
   act_bands <- lutInfoBandsFromSID(sid)
-  return(act_bands$BCDE[act_bands$BIDS == bids])
+  return(act_bands$BCDE[act_bands$BID == bid])
 }
 
 
 # Return band ids --------------------------------------------------------------
-#' @export lutInfoBIDSFromBCDE
+#' @export lutInfoBIDFromBCDE
 #'
 #' @describeIn lutInfo
 #' 
-lutInfoBIDSFromBCDE <- function(bcde, sid){
+lutInfoBIDFromBCDE <- function(bcde, sid){
   act_bands <- lutInfoBandsFromSID(sid)
-  return(act_bands$BIDS[act_bands$BCDE == bcde])
+  return(act_bands$BID[act_bands$BCDE == bcde])
 }
 
 
@@ -125,7 +125,7 @@ lutInfoRSRromSID <- function(sid){
 #'
 #' @describeIn lutInfo
 #' 
-lutInfoSIDfromFilename <- function(file){
+lutInfoSIDfromFilename <- function(files){
   test <- sapply(lut$SENSOR_ID_PATTERN$PATTERN, function(x){grepl(x, files)})  
   if(class(test) == "matrix"){
     return(colnames(test)[test[1, ]])
@@ -144,7 +144,3 @@ lutInfoSGRPfromFilename <- function(file){
   sid <- lutInfoSIDfromFilename(file)
   return(lut$SENSOR_ID_PATTERN$SGRP[lut$SENSOR_ID_PATTERN == sid][1])
 }
-
-
-
-

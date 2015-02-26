@@ -28,12 +28,22 @@ NULL
 
 
 # Return Satellite data layers -------------------------------------------------
-#' @export getSatLayers
+#' @export getSatDataLayers
 #'
 #' @rdname satInfo
 #'
-getSatLayers <- function(sat){
+getSatDataLayers <- function(sat){
   return(sat@layers)
+}
+
+
+# Return Satellite data layer i ------------------------------------------------
+#' @export getSatDataLayer
+#'
+#' @rdname satInfo
+#'
+getSatDataLayer <- function(sat, bcde){
+  return(sat@layers[[getSatLNBR(sat, bcde)]])
 }
 
 
@@ -92,23 +102,28 @@ addSatMetaParam <- function(sat, meta_param){
 #' @rdname satInfo
 #' 
 getSatParam <- function(sat, param, bcde, return_bcde = TRUE){
-  if(param == "BCDE"){
-    return(getSatMeta(sat)[, which(param == colnames(getSatMeta(sat)))])
-  } else {
-    if(missing(bcde)){
-      param <- getSatMeta(sat)[, which(param == colnames(getSatMeta(sat)))]
-      bcde <- as.character(getSatBCDE(sat))
+  if(length(which(param == colnames(getSatMeta(sat)))) > 0){
+    
+    if(param == "BCDE"){
+      return(getSatMeta(sat)[, which(param == colnames(getSatMeta(sat)))])
     } else {
-      param <- 
-        getSatMeta(sat)[, 
-                        which(param == colnames(getSatMeta(sat)))][match(
-                          bcde, getSatMeta(sat)$BCDE)]
-      bcde <- as.character(bcde)
+      if(missing(bcde)){
+        param <- getSatMeta(sat)[, which(param == colnames(getSatMeta(sat)))]
+        bcde <- as.character(getSatBCDE(sat))
+      } else {
+        param <- 
+          getSatMeta(sat)[, 
+                          which(param == colnames(getSatMeta(sat)))][match(
+                            bcde, getSatMeta(sat)$BCDE)]
+        bcde <- as.character(bcde)
+      }
+      if(return_bcde == TRUE){
+        attr(param, "names") <- bcde
+      }
+      return(param)
     }
-    if(return_bcde == TRUE){
-      attr(param, "names") <- bcde
-    }
-    return(param)
+  } else {
+    return(NA_character_)  
   }
 }
 
@@ -126,12 +141,12 @@ getSatBCDE <- function(sat){
 
 # Return Band IDs --------------------------------------------------------------
 #' 
-#' @export getSatBIDS
+#' @export getSatBID
 #'
 #' @rdname satInfo
 #' 
-getSatBIDS <- function(sat){
-  getSatParam(sat, "BIDS", return_bcde = FALSE)
+getSatBID <- function(sat){
+  getSatParam(sat, "BID", return_bcde = FALSE)
 }
 
 
@@ -172,8 +187,8 @@ getSatBCDESolar <- function(sat){
 #'
 #' @rdname satInfo
 #' 
-getSatRadMax <- function(sat, bids){
-  getSatParam(sat, "RADMAX", bids)
+getSatRadMax <- function(sat, bcde){
+  getSatParam(sat, "RADMAX", bcde)
 }
 
 
@@ -182,10 +197,9 @@ getSatRadMax <- function(sat, bids){
 #'
 #' @rdname satInfo
 #' 
-getSatRadMin <- function(sat, bids){
-  getSatParam(sat, "RADMIN", bids)
+getSatRadMin <- function(sat, bcde){
+  getSatParam(sat, "RADMIN", bcde)
 }
-
 
 
 # Return REF_MAX ---------------------------------------------------------------
@@ -193,10 +207,9 @@ getSatRadMin <- function(sat, bids){
 #'
 #' @rdname satInfo
 #' 
-getSatRefMax <- function(sat, bids){
-  getSatParam(sat, "REFMAX", bids)
+getSatRefMax <- function(sat, bcde){
+  getSatParam(sat, "REFMAX", bcde)
 }
-
 
 
 # Return REF_MIN ---------------------------------------------------------------
@@ -204,8 +217,8 @@ getSatRefMax <- function(sat, bids){
 #'
 #' @rdname satInfo
 #' 
-getSatRefMin <- function(sat){
-  getSatParam(sat, "REFMIN", bids)
+getSatRefMin <- function(sat, bcde){
+  getSatParam(sat, "REFMIN", bcde)
 }
 
 
@@ -224,6 +237,135 @@ getSatESD <- function(sat){
 #'
 #' @rdname satInfo
 #' 
-getSatESUN <- function(sat){
-  getSatParam(sat, "ESUN")
+getSatESUN <- function(sat, bcde){
+  getSatParam(sat, "ESUN", bcde)
+}
+
+
+# Return SZEN ------------------------------------------------------------------
+#' @export getSatSZEN
+#'
+#' @rdname satInfo
+#' 
+getSatSZEN <- function(sat, bcde){
+  getSatParam(sat, "SZEN", bcde)
+}
+
+
+# Return SAZM ------------------------------------------------------------------
+#' @export getSatSAZM
+#'
+#' @rdname satInfo
+#' 
+getSatSAZM <- function(sat, bcde){
+  getSatParam(sat, "SAZM", bcde)
+}
+
+
+# Return SELV ------------------------------------------------------------------
+#' @export getSatSELV
+#'
+#' @rdname satInfo
+#' 
+getSatSELV <- function(sat, bcde){
+  getSatParam(sat, "SELV", bcde)
+}
+
+# Return LAYER name ------------------------------------------------------------
+#' @export getSatMetaLayer
+#'
+#' @rdname satInfo
+#' 
+getSatMetaLayer <- function(sat, bcde){
+  getSatParam(sat, "LAYER", bcde)
+}
+
+
+# Return LNBR ------------------------------------------------------------------
+#' @export getSatLNBR
+#'
+#' @rdname satInfo
+#' 
+getSatLNBR <- function(sat, bcde){
+  getSatParam(sat, "LNBR", bcde)
+}
+
+
+# Return LMin ------------------------------------------------------------------
+#' @export getSatLMIN
+#'
+#' @rdname satInfo
+#' 
+getSatLMIN <- function(sat, bcde){
+  getSatParam(sat, "LMIN", bcde)
+}
+
+
+# Return LMAX ------------------------------------------------------------------
+#' @export getSatLMAX
+#'
+#' @rdname satInfo
+#' 
+getSatLMAX <- function(sat, bcde){
+  getSatParam(sat, "LMAX", bcde)
+}
+
+
+# Return RADA ------------------------------------------------------------------
+#' @export getSatRADA
+#'
+#' @rdname satInfo
+#' 
+getSatRADA <- function(sat, bcde){
+  getSatParam(sat, "RADA", bcde)
+}
+
+
+# Return RADM ------------------------------------------------------------------
+#' @export getSatRADM
+#'
+#' @rdname satInfo
+#' 
+getSatRADM <- function(sat, bcde){
+  getSatParam(sat, "RADM", bcde)
+}
+
+
+# Return REFA ------------------------------------------------------------------
+#' @export getSatREFA
+#'
+#' @rdname satInfo
+#' 
+getSatREFA <- function(sat, bcde){
+  getSatParam(sat, "REFA", bcde)
+}
+
+
+# Return REFM ------------------------------------------------------------------
+#' @export getSatREFM
+#'
+#' @rdname satInfo
+#' 
+getSatREFM <- function(sat, bcde){
+  getSatParam(sat, "REFM", bcde)
+}
+
+
+# Return BTK1 ------------------------------------------------------------------
+#' @export getSatBTK1
+#'
+#' @rdname satInfo
+#' 
+getSatBTK1 <- function(sat, bcde){
+  getSatParam(sat, "BTK1", bcde)
+}
+
+
+# Return BTK2 ------------------------------------------------------------------
+#' @export getSatBTK2
+#'
+#' @rdname satInfo
+#' 
+getSatBTK2 <- function(sat, bcde){
+  getSatParam(sat, "BTK2", bcde)
 }

@@ -6,14 +6,14 @@
 #' the calibration coefficients from the metadata file. The reflectance 
 #' conversion can additionaly be include a sun zenith correction.
 #'
-#' @param band raster object of the Landsat band
-#' @param bnbr number of the Landsat band
+#' @param band raster, rasterstack or data frame object of the sensor band
+#' @param bnbr number of the band (if rasterstack)
 #' @param coefs coefficients data frame resulting from compMetaLandsat()
 #' @param conv conversion type (one of "rad", "ref", "refsun", "bt")
 #'
 #' @return Raster object with converted values
 #'
-#' @export calibLandsat
+#' @export calibLinear
 #' 
 #' @references The conversion functions are taken from USGS' Landsat 8 manual
 #' which is available online at 
@@ -26,28 +26,15 @@
 #' path <- system.file("extdata", package = "satellite")
 #' filesl8 <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' coefs8 <- compMetaLandsat(filesl8)
-#' calibLandsat(l8[[2]], 2, coefs8, conv = "ref")
+#' calibLinear(l8[[2]], 2, coefs8, conv = "ref")
 
-calibLandsat <- function(band, bnbr, coefs, conv = "rad"){
-  if(conv == "rad"){
-    result <- coefs$RADM[bnbr] * band + coefs$RADA[bnbr]
-  } else if(conv == "ref"){
-    if(is.na(coefs$REFM[bnbr])){
-      stop(paste0("Missing reflectence correction factors for band ", str(bnbr)))
-    }
-    result <- coefs$REFM[bnbr] * band + coefs$REFA[bnbr]
-  } else if(conv == "refsun"){
-    if(is.na(coefs$REFM[bnbr])){
-      stop(paste0("Missing reflectence correction factors for band ", str(bnbr)))
-    }
-    result <- (coefs$REFM[bnbr] * band + coefs$REFA[bnbr]) / 
-      cos(coefs$SUNZEN[bnbr] * pi / 180.0)
-  } else {
-    if(is.na(coefs$BTK2[bnbr])){
-      stop(paste0("Missing temperature correction factors for band ", str(bnbr)))
-    }
-    result <- coefs$BTK2[bnbr] / 
-      log(coefs$BTK1[bnbr] / (coefs$RADM[bnbr] * band + coefs$RADA[bnbr]) + 1)
+calibLinear <- function(band, bnbr, mult, add, szen, k1, k2){
+  result <- mult[bnbr] * band + add[bnbr]
+  if(!missing(szen)){
+    result <- result / cos(szen[bnbr] * pi / 180.0)
+  }
+  if(!missing(k1)){
+    result <- k2[bnbr] / log(k1[bnbr] / result + 1)
   }
   return(result)
 }

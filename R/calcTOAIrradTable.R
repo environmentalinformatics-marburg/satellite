@@ -5,8 +5,8 @@
 #' 
 #' @param sid sensor id ("LC4/5/7")
 #' @param normalize normalize ESun to mean earth sun distance
-#' @param date date of the sensor overpath (YYYY-MM-DD or POSIX* object) (
-#' only required if ESun should be corrected to the actual earth sun distance)
+#' @param esd earth-sun distance (AU, can be estimated using 
+#' \code{\link{calcEartSunDist}})
 #'
 #' @return Vector object containing ESun for each band
 #'
@@ -37,13 +37,14 @@
 #' distance based on the day of the year which is called by this function if
 #' ESun should be corrected for actual earth sun distance.
 #' 
-#' See \code{\link{eSun}} which can be used as a wrapper function for the
-#' satellite sensors already included in this package.
+#' See \code{\link{satTOAIrrad}} which can be used as a wrapper function if the
+#' data is organized as a Satellite object.
 #' 
 #' @examples
-#' calcTOAIrradRadTable(sensor = "LC7", normalize = FALSE, "2015-01-01")
+#' calcTOAIrradRadTable(sensor = "LC7", normalize = FALSE, 
+#' calcEartSunDist("2015-01-01"))
 #' 
-calcTOAIrradRadTable <- function(sid, normalize = TRUE, date){
+calcTOAIrradRadTable <- function(sid, normalize = TRUE, esd){
   if(sid == "LE7") {
     eSun <- lut$L7_ESUN
   } else if(sid == "LE5") {
@@ -54,10 +55,9 @@ calcTOAIrradRadTable <- function(sid, normalize = TRUE, date){
     stop(paste0("Satellite ID ", sid, " is not supported, yet."))
   }
   if(normalize == FALSE){
-    if(missing(date)){
-      stop("Variable date is missing.")
+    if(missing(esd)){
+      stop("Variable esd is missing.")
     }
-    esd <- calcEartSunDist(date)
     eSun <- esd * eSun
   }
   return(eSun)
