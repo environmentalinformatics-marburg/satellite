@@ -78,8 +78,8 @@
 #' not run:
 #' calcAtmosCorr(filepath = "Name_of_Landsat_Metadata_File")
 
-calcAtmosCorr <- function(sensor_rad, path_rad, esun, cos_szen, model = "DOS2"){
-  cos_szen <- cos(coefs$SUNZEN[bnbr] * pi / 180.0)
+calcAtmosCorr <- function(sensor_rad, path_rad, esun, szen, model = "DOS2"){
+  cos_szen <- cos(szen * pi / 180.0)
   if(model == "DOS2"){
     tv <- 1.0
     tz <- cos_szen
