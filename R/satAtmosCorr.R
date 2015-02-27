@@ -61,19 +61,26 @@ NULL
 #' 
 setMethod("satAtmosCorr", 
           signature(x = "Satellite"), 
-          function(x, model, calc_esun){
+          # Take care of earth sun distance information
+          function(x, atmos_model, esun_mode){
             if(is.na(getSatESUN(x))){
               esd = getSatESD(x)
               if(is.na(esd)){
-                esd = calcEartSunDist(date)
+                esd = calcEartSunDist(getSatDate(x))
+                x <- addSatMetaParam(x, meta_param = data.frame(BCDE = names(getSatBCDE(x)),
+                                                                ESD = as.numeric(esd)))
               }
-              if(calc_esun == "Table"){
+            }
+            
+            # Take care of TOA solar irradiance information
+            if(any(is.na(getSatESUN(x, getSatBCDESolar(x))))){
+              if(esun_mode == "Table"){
                 esun <- calcTOAIrradRadTable(sid = getSatSID(x), 
                                              normalize  = TRUE, esd = esd)
-              } else if(calc_esun == "Model"){
+              } else if(esun_mode == "Model"){
                 esun <- calcTOAIrradModel(rsr = rsr, model = model, 
                                           normalize = TRUE, esd = esd)
-              } else if(calc_esun == "RadRef"){
+              } else if(esun_mode == "RadRef"){
                 esun <- calcTOAIrradRadRef(rad_max = getSatRadMax(x, getSatBCDESolar(x)), 
                                            ref_max = getSatRefMax(x, getSatBCDESolar(x)),
                                            normalize = TRUE, esd = esd)
@@ -82,8 +89,25 @@ setMethod("satAtmosCorr",
                                                               ESUN = as.numeric(esun)))
             }
             
-            path_rad <- calcPathRadDOS(DNmin, bnbr, band_wls, coefs, model = "DOS2", 
-                                       ESun, scat_coef = -4.0, dos_adjust = 0.01)
+            
+            # Take care of dark object values
+            
+            x <- addSatMetaParam(x, meta_param = data.frame(BCDE = names(esun),
+                                                            DOS = as.numeric(esun)))
+            # Take care of path radiance
+            path_rad <- calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),
+                                       bnbr = getSatLNBR(sat, bcde),
+                                       band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)), 
+                                                             LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
+                                       radm = getSatRADM(sat, getSatBCDESolar(sat)),
+                                       rada = getSatRADA(sat, getSatBCDESolar(sat)),
+                                       szen = getSatSZEN(sat, getSatBCDESolar(sat)),
+                                       esun = getSatESUN(sat, getSatBCDESolar(sat)),
+                                       model = "DOS2")
+            x <- addSatMetaParam(x, meta_param = data.frame(BCDE = names(path_rad),
+                                                            PRAD = as.numeric(path_rad)))
+            
+            # Compute atmospheric correction (reflectance)
             for(bnds in seq(5)){
               ref <- calcAtmosCorr(sensor_rad = getSatLayer(x, bnds), 
                                    path_rad = path_rad[i], 
@@ -91,58 +115,8 @@ setMethod("satAtmosCorr",
                                    cos_szen = getSatSZEN(x, bnds), 
                                    model = "DOS2")
               x <- addSatLayer(ref)
-#               x <- addSatMetaParam(x, meta_param = data.frame(BCDE = names(eSun),
-#                                                                                         ESUN = as.numeric(eSun)))
-                                        
+              #               x <- addSatMetaParam(x, meta_param = data.frame(BCDE = names(path_rad),
+              #                                                               PRAD = as.numeric(path_rad)))                                        
             }
             return(x)
           })
-
-# 
-# # Function using Satellite object and modelled values of eSun ------------------
-# #' 
-# #' @export satTOAIrradModel
-# #'
-# #' @rdname satTOAIrrad
-# #' 
-# setMethod("satTOAIrradModel", 
-#           signature(x = "Satellite"), 
-#           function(x, model = "MNewKur", normalize = TRUE, date){
-#             rsr <- lutInfoRSRromSID(sid = getSatSID(x))
-#             if(missing(date)){
-#               eSun <- calcTOAIrradModel(rsr = rsr, model = model, 
-#                                         normalize = normalize)
-#             } else {
-#               eSun <- calcTOAIrradModel(rsr = rsr, model = model, 
-#                                         normalize = normalize, date = date)
-#             }
-#             x <- addSatMetaParam(x, meta_param = data.frame(BCDE = names(eSun),
-#                                                             ESUN = as.numeric(eSun)))
-#             return(x)
-#           })
-# 
-# 
-# # Function using Satellite object and actual radiance and reflectance values ---
-# #' 
-# #' @export satTOAIrradRadRef
-# #'
-# #' @rdname satTOAIrrad
-# #' 
-# setMethod("satTOAIrradRadRef", 
-#           signature(x = "Satellite"), 
-#           function(x, normalize = TRUE, date){
-#             if(missing(date)){
-#               eSun <- calcTOAIrradRadRef(rad_max = getSatRadMax(x, getSatBCDESolar(x)), 
-#                                          ref_max = getSatRefMax(x, getSatBCDESolar(x)), 
-#                                          esd = getSatESD(x),
-#                                          normalize = normalize)
-#             } else {
-#               eSun <- calcTOAIrradRadRef(rad_max = getSatRadMax(x, getSatBCDESolar(x)), 
-#                                          ref_max = getSatRefMax(x, getSatBCDESolar(x)),
-#                                          esd = getSatESD(x),
-#                                          normalize = normalize, date = date)
-#             }
-#             x <- addSatMetaParam(x, meta_param = data.frame(BCDE = getSatBCDESolar(x),
-#                                                             ESUN = as.numeric(eSun)))
-#             return(x)
-#           })

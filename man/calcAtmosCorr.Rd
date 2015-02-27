@@ -4,14 +4,12 @@
 \alias{calcAtmosCorr}
 \title{Atmospheric correction of remote sensing data}
 \usage{
-calcAtmosCorr(sensor_rad, path_rad, esun, cos_szen, model = "DOS2")
+calcAtmosCorr(sensor_rad, path_rad, esun, szen, model = "DOS2")
 }
 \arguments{
 \item{sensor_rad}{radiance at the sensor}
 
 \item{path_rad}{path radiance, e.g. returned from \code{\link{calcPathRadDOS}}}
-
-\item{cos_szen}{cosine of the sun zenith angle}
 
 \item{model}{model to be used (DOS2, DOS4), must be the same as used for
 \code{\link{calcPathRadDOS}}}
@@ -19,6 +17,8 @@ calcAtmosCorr(sensor_rad, path_rad, esun, cos_szen, model = "DOS2")
 \item{eSun}{actual (i.e. non-normalized) TOA solar irradianc, e.g. returned
 from \code{link{calcTOAIrradTable}}, \code{link{calcTOAIrradModel}}, or
 \code{link{calcTOAIrradRadRef}} with normalization settings equal FALSE}
+
+\item{cos_szen}{cosine of the sun zenith angle}
 }
 \value{
 Raster object containing converted data.

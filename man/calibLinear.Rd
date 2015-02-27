@@ -4,7 +4,7 @@
 \alias{calibLinear}
 \title{Convert DNs to radiance, reflectance and/or brightness temperature.}
 \usage{
-calibLinear(band, bnbr, mult, add, szen, bt = FALSE, k1, k2)
+calibLinear(band, bnbr, mult, add, szen, k1, k2)
 }
 \arguments{
 \item{band}{raster, rasterstack or data frame object of the sensor band}
@@ -26,9 +26,14 @@ conversion can additionaly be include a sun zenith correction.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-filesl8 <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
-coefs8 <- compMetaLandsat(filesl8)
-calibLinear(l8[[2]], 2, coefs8, conv = "ref")
+files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+sat <- satellite(files)
+
+bcde <- "002n"
+
+calibLinear(band = getSatDataLayer(sat, bcde), bnbr = 1,
+            mult = getSatRADM(sat, bcde),
+            add = getSatRADA(sat, bcde))
 }
 \references{
 The conversion functions are taken from USGS' Landsat 8 manual

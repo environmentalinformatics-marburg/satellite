@@ -7,22 +7,29 @@ test_that("satAtmosCorr works as expected", {
                       pattern = glob2rx("LC8*.tif"), 
                       full.names = TRUE)
   sat <- satellite(files)
-  test <- satAtmosCorr(sat)
+  sat <- satTOAIrradRadRef(sat)
   
-  expect_equal(as.character(getSatBID(test)[2]), "2")
-  expect_equal(as.numeric(getSatESUN(test)[2]), 1812.0)
+  bcde <- "002n"
+  path_rad <- calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),
+                             bnbr = getSatLNBR(sat, bcde),
+                             band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)), 
+                                                   LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
+                             radm = getSatRADM(sat, getSatBCDESolar(sat)),
+                             rada = getSatRADA(sat, getSatBCDESolar(sat)),
+                             szen = getSatSZEN(sat, getSatBCDESolar(sat)),
+                             esun = getSatESUN(sat, getSatBCDESolar(sat)),
+                             model = "DOS2")
   
-  sat <- satellite(files[c(1, 3, 6)])
-  test <- satTOAIrradTable(sat)
+  sensor_rad <- calibLinear(band = getSatDataLayer(sat, bcde),
+                            bnbr = 1,
+                            mult = getSatRADM(sat, bcde),
+                            add = getSatRADA(sat, bcde))
   
-  expect_equal(as.character(getSatBID(test)[2]), "3")
-  expect_equal(as.numeric(getSatESUN(test)[2]), 1533.0)
+  ref_atmos <- calcAtmosCorr(sensor_rad = sensor_rad,
+                             path_rad = path_rad[names(path_rad) == bcde],
+                             esun = getSatESUN(sat, bcde),
+                             szen = getSatSZEN(sat, bcde), 
+                             model = "DOS2")
   
-  path <- system.file("extdata", 
-                      package = "satellite")
-  files <- list.files(path, 
-                      pattern = glob2rx("LC8*.tif"), 
-                      full.names = TRUE)
-  sat <- satellite(files)  
-  expect_error(satTOAIrradTable(sat), "Satellite ID LC8 is not supported, yet.")
+  expect_equal(round(raster::getValues(ref_atmos)[50],4), round(0.04668206, 4))
 })

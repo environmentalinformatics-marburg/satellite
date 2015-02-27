@@ -24,10 +24,15 @@
 #'
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
-#' filesl8 <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
-#' coefs8 <- compMetaLandsat(filesl8)
-#' calibLinear(l8[[2]], 2, coefs8, conv = "ref")
-
+#' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+#' sat <- satellite(files)
+#' 
+#' bcde <- "002n"
+#' 
+#' calibLinear(band = getSatDataLayer(sat, bcde), bnbr = 1,
+#'             mult = getSatRADM(sat, bcde),
+#'             add = getSatRADA(sat, bcde))
+#' 
 calibLinear <- function(band, bnbr, mult, add, szen, k1, k2){
   result <- mult[bnbr] * band + add[bnbr]
   if(!missing(szen)){

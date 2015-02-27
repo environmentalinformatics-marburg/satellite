@@ -369,3 +369,13 @@ getSatBTK1 <- function(sat, bcde){
 getSatBTK2 <- function(sat, bcde){
   getSatParam(sat, "BTK2", bcde)
 }
+
+
+# Return DATE ------------------------------------------------------------------
+#' @export getSatDATE
+#'
+#' @rdname satInfo
+#' 
+getSatDATE <- function(sat, bcde){
+  getSatParam(sat, "DATE", bcde)
+}

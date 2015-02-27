@@ -6,7 +6,7 @@
 \alias{satAtmosCorr,Satellite-method}
 \title{Calculate an atmospheric correction for the layers of a Satellite object}
 \usage{
-\S4method{satAtmosCorr}{Satellite}(x, model, calc_esun)
+\S4method{satAtmosCorr}{Satellite}(x, atmos_model, esun_mode)
 }
 \arguments{
 \item{x}{object of type Satellite}

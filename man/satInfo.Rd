@@ -8,6 +8,7 @@
 \alias{getSatBID}
 \alias{getSatBTK1}
 \alias{getSatBTK2}
+\alias{getSatDATE}
 \alias{getSatDataLayer}
 \alias{getSatDataLayers}
 \alias{getSatESD}
@@ -97,6 +98,8 @@ getSatREFM(sat, bcde)
 getSatBTK1(sat, bcde)
 
 getSatBTK2(sat, bcde)
+
+getSatDATE(sat, bcde)
 }
 \arguments{
 \item{sat}{Satellite object (see \code{\link{satellite}})}

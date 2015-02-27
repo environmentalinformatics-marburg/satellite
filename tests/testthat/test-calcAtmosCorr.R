@@ -30,17 +30,6 @@ test_that("calcAtmosCorr works as expected", {
                              esun = getSatESUN(sat, bcde),
                              szen = getSatSZEN(sat, bcde), 
                              model = "DOS2")
+  
+  expect_equal(round(raster::getValues(ref_atmos)[50],4), round(0.04668206, 4))
 })
-
-t <- calibLinear(band = getSatDataLayer(sat, bcde),
-                 bnbr = 1,
-                 mult = getSatREFM(sat, bcde),
-                 add = getSatREFA(sat, bcde),
-                 szen = getSatSZEN(sat, bcde))
-
-
-test <- calcAtmosCorr(sensor_rad = sensor_rad,
-                      path_rad = 0,
-                      esun = getSatESUN(sat, bcde),
-                      szen = getSatSZEN(sat, bcde), 
-                      model = "DOS2")
