@@ -9,7 +9,7 @@ test_that("calcPathRadDOS works as expected", {
   sat <- satellite(files)
   sat <- satTOAIrradModel(sat)
   
-  bcde <- "002n"
+  bcde <- "B002n"
   t1 <- calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),
                        bnbr = getSatLNBR(sat, bcde),
                        band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)), 
@@ -65,11 +65,11 @@ test_that("calcPathRadDOS works as expected", {
                        model = "DOS2",
                        scat_coef = -0.5)  
 
-  expect_equal(round(t1[1],3), c("001n" = round(60.16885,3)))
-  expect_equal(round(t2[3],3), c("003n" = round(29.51984,3)))
-  expect_equal(round(t3[4],3), c("004n" = round(30.09144,3)))
-  expect_equal(round(t4[5],3), c("005n" = round(28.29916,3)))
-  expect_equal(round(t5[6],3), c("006n" = round(24.61562,3)))
+  expect_equal(round(t1[1],3), c("B001n" = round(60.16885,3)))
+  expect_equal(round(t2[3],3), c("B003n" = round(29.51984,3)))
+  expect_equal(round(t3[4],3), c("B004n" = round(30.09144,3)))
+  expect_equal(round(t4[5],3), c("B005n" = round(28.29916,3)))
+  expect_equal(round(t5[6],3), c("B006n" = round(24.61562,3)))
   
   #   c(coef-4, coef-2, coef-1  coef-0.7  coef-0.5
   #   1  59.8861832583 50.01006637 45.566175 44.293677 43.460494

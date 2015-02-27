@@ -83,5 +83,4 @@ test_that("satTOAIrradRadRef works as expected", {
   expect_equal(round(as.numeric(getSatESUN(test)[1]), 3), round( 1907.999, 3))
   expect_equal(as.character(getSatBID(test)[2]), "2")
   expect_equal(round(as.numeric(getSatESUN(test)[2]), 3), round( 1953.814, 3))
-  
 })

@@ -37,7 +37,7 @@ rsr <- c(LE7 = "L7_RSR", LC8 = "L8_RSR")
 # http://landsat.usgs.gov/band_designations_landsat_satellites.php
 l4_bands <- data.frame(
   BID = seq(7),
-  BCDE = c(sprintf("%03dn", seq(7))),
+  BCDE = c(sprintf("B%03dn", seq(7))),
   LMIN = c(0.45, 0.52, 0.63, 0.76, 1.55, 10.40, 2.08),
   LMAX = c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 2.35),
   SRES = c(30, 30, 30, 30, 30, 30, 30),
@@ -51,7 +51,7 @@ rownames(l4_bands) <- paste0("Band_", l4_bands$BID)
 
 l5_bands <- data.frame(
   BID = seq(7),
-  BCDE = c(sprintf("%03dn", seq(7))),
+  BCDE = c(sprintf("B%03dn", seq(7))),
   LMIN = c(0.45, 0.52, 0.63, 0.76, 1.55, 10.40, 2.08),
   LMAX = c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 2.35),
   SRES = c(30, 30, 30, 30, 30, 30, 30),
@@ -65,7 +65,7 @@ rownames(l5_bands) <- paste0("Band_", l5_bands$BID)
 
 l7_bands <- data.frame(
   BID = c(seq(5), "6_VCID_1", "6_VCID_2", 7:8),
-  BCDE = c(sprintf("%03dn", seq(5)), "0061", "0062", sprintf("%03dn", 7:8)),
+  BCDE = c(sprintf("B%03dn", seq(5)), "B0061", "B0062", sprintf("B%03dn", 7:8)),
   LMIN = c(0.45, 0.52, 0.63, 0.77, 1.55, 10.40, 10.40, 2.09, 0.52),
   LMAX = c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 12.50, 2.35, 0.90),
   SRES = c(30, 30, 30, 30, 30, 30, 30, 30, 15),
@@ -80,7 +80,7 @@ l8_bands <- data.frame(
   SID = "LC8",
   SGRP = "Landsat",
   BID = c(seq(11), "QA"),
-  BCDE = c(sprintf("%03dn", seq(11)), "0QAn"),
+  BCDE = c(sprintf("B%03dn", seq(11)), "B0QAn"),
   LMIN = c(0.43, 0.45, 0.53, 0.64, 0.85, 1.57, 2.11, 0.50, 1.36, 10.60, 11.50, NA),
   LMAX = c(0.45, 0.51, 0.59, 0.67, 0.88, 1.65, 2.29, 0.68, 1.38, 11.19, 12.51, NA),
   SRES = c(30, 30, 30, 30, 30, 30, 30, 15, 30, 30, 30, 30),

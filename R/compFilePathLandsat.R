@@ -26,13 +26,13 @@ compFilePathLandsat <- function(files){
     
     sensor <- lutInfoSensorFromSID(sid)
     band_code <- lutInfoBCDEFromBID(band_ids, sid)
-
     data.frame(SID = sid, 
                SENSOR = sensor,
                BID = band_ids,
                BCDE = band_code,
                LAYER = layer,
                FILE = x,
+               CALIB = "SC",
                METAFILE = meta,
                stringsAsFactors = FALSE)
   })

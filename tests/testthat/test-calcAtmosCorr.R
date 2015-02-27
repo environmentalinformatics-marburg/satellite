@@ -9,7 +9,7 @@ test_that("calcAtmosCorr works as expected", {
   sat <- satellite(files)
   sat <- satTOAIrradRadRef(sat)
   
-  bcde <- "002n"
+  bcde <- "B002n"
   path_rad <- calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),
                              bnbr = getSatLNBR(sat, bcde),
                              band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)), 

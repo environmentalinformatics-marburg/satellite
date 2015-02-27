@@ -12,9 +12,9 @@ test_that("compFilePathLandsat works as expected for Landsat 7", {
   expect_equal(as.character(meta$BID[6]), "6_VCID_1")
   expect_equal(as.character(meta$BID[9]), "8")
 
-  expect_equal(as.character(meta$BCDE[2]), "002n")
-  expect_equal(as.character(meta$BCDE[6]), "0061")
-  expect_equal(as.character(meta$BCDE[9]), "008n")
+  expect_equal(as.character(meta$BCDE[2]), "B002n")
+  expect_equal(as.character(meta$BCDE[6]), "B0061")
+  expect_equal(as.character(meta$BCDE[9]), "B008n")
 
   expect_equal(basename(as.character(meta$FILE[2])), 
                "LE71950252001211EDC00_B2.tif")
@@ -36,9 +36,9 @@ test_that("compFilePathLandsat works as expected for Landsat 8", {
   expect_equal(as.character(meta$BID[8]), "6")
   expect_equal(as.character(meta$BID[12]), "QA")
   
-  expect_equal(as.character(meta$BCDE[2]), "010n")
-  expect_equal(as.character(meta$BCDE[8]), "006n")
-  expect_equal(as.character(meta$BCDE[12]), "0QAn")
+  expect_equal(as.character(meta$BCDE[2]), "B010n")
+  expect_equal(as.character(meta$BCDE[8]), "B006n")
+  expect_equal(as.character(meta$BCDE[12]), "B0QAn")
   
   expect_equal(basename(as.character(meta$FILE[2])), 
                "LC81950252013188LGN00_B10.tif")
@@ -61,9 +61,9 @@ test_that("compMetaLandsat works as expected for Landsat 7", {
   expect_equal(as.character(meta$BID[6]), "6_VCID_1")
   expect_equal(as.character(meta$BID[9]), "8")
   
-  expect_equal(as.character(meta$BCDE[2]), "002n")
-  expect_equal(as.character(meta$BCDE[6]), "0061")
-  expect_equal(as.character(meta$BCDE[9]), "008n")
+  expect_equal(as.character(meta$BCDE[2]), "B002n")
+  expect_equal(as.character(meta$BCDE[6]), "B0061")
+  expect_equal(as.character(meta$BCDE[9]), "B008n")
   
   expect_equal(basename(as.character(meta$FILE[2])), 
                "LE71950252001211EDC00_B2.tif")
@@ -85,9 +85,9 @@ test_that("compMetaLandsat works as expected for Landsat 8", {
   expect_equal(as.character(meta$BID[10]), "10")
   expect_equal(as.character(meta$BID[12]), "QA")
   
-  expect_equal(as.character(meta$BCDE[2]), "002n")
-  expect_equal(as.character(meta$BCDE[10]), "010n")
-  expect_equal(as.character(meta$BCDE[12]), "0QAn")
+  expect_equal(as.character(meta$BCDE[2]), "B002n")
+  expect_equal(as.character(meta$BCDE[10]), "B010n")
+  expect_equal(as.character(meta$BCDE[12]), "B0QAn")
   
   expect_equal(basename(as.character(meta$FILE[2])), 
                "LC81950252013188LGN00_B2.tif")

@@ -105,6 +105,7 @@ compMetaLandsat <- function(files){
                          SRES = bandinfo$SRES[x],
                          TYPE = bandinfo$TYPE[x],
                          SPECTRUM = bandinfo$SPECTRUM[x],
+                         CALIB = bandinfo$CALIB[x],
                          RADA = cal_add_rad,
                          RADM = cal_mult_rad,
                          REFA = cal_add_ref,

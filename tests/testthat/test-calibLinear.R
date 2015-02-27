@@ -8,7 +8,7 @@ test_that("calibLinear works as expected", {
                       full.names = TRUE)
   sat <- satellite(files)
   
-  bcde <- "002n"
+  bcde <- "B002n"
   
   t1 <- calibLinear(band = getSatDataLayer(sat, bcde),
                     bnbr = 1,
@@ -26,7 +26,7 @@ test_that("calibLinear works as expected", {
                     mult = getSatRADM(sat, bcde),
                     add = getSatRADA(sat, bcde))
 
-  bcde <- "010n"
+  bcde <- "B010n"
   t4 <- calibLinear(band = getSatDataLayer(sat, bcde),
                     bnbr = 1,
                     mult = getSatRADM(sat, bcde),

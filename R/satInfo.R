@@ -47,6 +47,20 @@ getSatDataLayer <- function(sat, bcde){
 }
 
 
+# Add Satellite data layer -----------------------------------------------------
+#' @export addSatDataLayer
+#'
+#' @rdname satInfo
+#'
+addSatDataLayer <- function(sat, bcde, data, info, in_bcde){
+  names(data) <- bcde
+  sat@layers[[length(sat@layers) + 1]] <- data
+  sat <- addSatLog(sat, info = info, in_bcde = in_bcde, 
+                   out_bcde = bcde)
+  return(sat)
+}
+
+
 # Return Satellite object metadata ---------------------------------------------
 #' @export getSatMeta
 #'
@@ -72,12 +86,12 @@ getSatLog <- function(sat){
 #'
 #' @rdname satInfo
 #'
-addSatLog <- function(sat, info = NA_character_, layers = NA_character_, 
-                      output = NA_character_){
+addSatLog <- function(sat, info = NA_character_, in_bcde = NA_character_, 
+                      out_bcde = NA_character_){
   new_length <- length(getSatLog(sat)) + 1
   ps <- sprintf("ps%04d", new_length)
   sat@log <- append(sat@log, list(list(time = Sys.time(), info = info, 
-                                       layers = layers, output = output)))
+                                       in_bcde = in_bcde, out_bcde = out_bcde)))
   names(sat@log)[new_length] <- ps
   return(sat)
 }
@@ -90,6 +104,11 @@ addSatLog <- function(sat, info = NA_character_, layers = NA_character_,
 #'
 addSatMetaParam <- function(sat, meta_param){
   id <- colnames(meta_param)[1]
+  name <- colnames(meta_param)[2]
+  # Parameter already exists: overwrite, otherwise add
+  if(length(which(name == colnames(sat@meta))) > 0){
+    sat@meta[, which(name == colnames(sat@meta))] <- NULL
+  } 
   sat@meta <- merge(sat@meta, meta_param, by = id, all.x = TRUE)
   return(sat)
 }
@@ -170,15 +189,56 @@ getSatSensor <- function(sat){
 }
 
 
+# Return SPECTRUM --------------------------------------------------------------
+#' @export getSatSpectrum
+#'
+#' @rdname satInfo
+#' 
+getSatSpectrum <- function(sat){
+  getSatParam(sat, "SPECTRUM")
+}
+
+
 # Return solar band codes ------------------------------------------------------
 #' @export getSatBCDESolar
 #'
 #' @rdname satInfo
 #' 
 getSatBCDESolar <- function(sat){
-  spectrum <- getSatParam(sat, "SPECTRUM")
-  
+  spectrum <- getSatSpectrum(sat)
   return(getSatBCDE(sat)[grep("solar", spectrum)])
+}
+
+
+# Return CALIB -----------------------------------------------------------------
+#' @export getSatCalib
+#'
+#' @rdname satInfo
+#' 
+getSatCalib <- function(sat){
+  getSatParam(sat, "CALIB")
+}
+
+
+# Return CALIB band codes matching id ------------------------------------------
+#' @export getSatBCDECalib
+#'
+#' @rdname satInfo
+#' 
+getSatBCDECalib <- function(sat, bcde, id){
+  calib <- getSatCalib(sat)
+  return(getSatBCDE(sat)[grep(id, calib)])
+}
+
+
+# Return CALIB band codes machting id and are solare bands ---------------------
+#' @export getSatBCDESolarCalib
+#'
+#' @rdname satInfo
+#' 
+getSatBCDESolarCalib <- function(sat, bcde, id){
+  calib <- getSatBCDECalib(sat, bcde, id)
+  return(getSatBCDESolar(sat)[getSatBCDESolar(sat) %in% calib])
 }
 
 
@@ -378,4 +438,14 @@ getSatBTK2 <- function(sat, bcde){
 #' 
 getSatDATE <- function(sat, bcde){
   getSatParam(sat, "DATE", bcde)
+}
+
+
+# Return PRAD ------------------------------------------------------------------
+#' @export getSatPRAD
+#'
+#' @rdname satInfo
+#' 
+getSatPRAD <- function(sat, bcde){
+  getSatParam(sat, "PRAD", bcde)
 }
