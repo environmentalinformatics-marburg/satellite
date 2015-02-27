@@ -87,8 +87,8 @@ setMethod("satAtmosCorr",
             sc_bands <- getSatBCDESolarCalib(x, id = "SC")
             
             # Take care of dark object values
-            bcde <- "002n"
-            dn_min <- min(getValues(getSatDataLayer(sat, bcde)))
+            bcde <- "B002n"
+            dn_min <- min(raster::getValues(getSatDataLayer(x, bcde)))
               
             # Take care of path radiance
             path_rad <- calcPathRadDOS(DNmin = dn_min,
@@ -111,9 +111,18 @@ setMethod("satAtmosCorr",
                                   szen = getSatSZEN(x, bcde), 
                                   model = "DOS2")
               layer_bcde <- paste0(bcde, "_ref_cA")
-              x <- addSatDataLayer(x, bcde = layer_bcde, data = ref)
+              info <- sys.calls()[[1]]
+              info <- paste0("Add layer from ", info[1], "(", 
+                             toString(info[2:length(info)]), ")")
+              x <- addSatDataLayer(x, bcde = layer_bcde, data = ref,
+                                   info = info,
+                                   in_bcde = bcde)
               #               x <- addSatMetaParam(x, meta_param = data.frame(BCDE = names(path_rad),
               #                                                               PRAD = as.numeric(path_rad)))                                        
             }
             return(x)
           })
+test <- function(x, y, z){
+  print(x)
+  sys.call()
+}
