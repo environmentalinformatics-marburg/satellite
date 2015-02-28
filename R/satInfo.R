@@ -56,8 +56,12 @@ getSatDataLayer <- function(sat, bcde){
 #'
 #' @rdname satInfo
 #'
-getSatMeta <- function(sat){
-  return(sat@meta)
+getSatMeta <- function(sat, bcde){
+  if(missing(bcde)){
+    return(sat@meta)
+  } else {
+    return(sat@meta[sat@meta$BCDE == bcde, ])
+  }
 }
 
 
@@ -101,17 +105,23 @@ addSatMetaEntry <- function(sat, meta_param){
   if(missing(meta_param)){
     meta_param <- data.frame(DATE = as.POSIXlt(Sys.Date(), tz = "UTC"))
   }
+  
+  lnbr_new <- nrow(getSatMeta(sat)) + 1
+  meta_param$LNBR <- lnbr_new
+  
   if("DATE" %in% colnames(meta_param) == FALSE){
     meta_param$DATE <- as.POSIXlt(Sys.Date(), tz = "UTC")
   }
+  
   if("LAYER" %in% colnames(meta_param) == FALSE){
-    if(length(getSatDataLayers(sat)) == nrow(getSatMeta(sat)) + 1){
+    if(length(getSatDataLayers(sat)) == lnbr_new){
       meta_param$LAYER <- 
         getSatLayerfromData(sat, nbr = length(getSatDataLayers(sat)))
     } else {
-      meta_param$LAYER <- paste0("Layer number ", nrow(getSatMeta(sat)) + 1)
+      meta_param$LAYER <- paste0("Layer number ", lnbr_new)
     }
   }
+  
   sat@meta <- plyr::rbind.fill(getSatMeta(sat), meta_param)
   return(sat)
 }
@@ -167,7 +177,6 @@ addSatDataLayer <- function(sat, bcde, data, meta_param, info, in_bcde){
 #' 
 getSatParam <- function(sat, param, bcde, return_bcde = TRUE){
   if(length(which(param == colnames(getSatMeta(sat)))) > 0){
-    
     if(param == "BCDE"){
       return(getSatMeta(sat)[, which(param == colnames(getSatMeta(sat)))])
     } else {
@@ -313,8 +322,12 @@ getSatCalib <- function(sat, bcde){
 #' @rdname satInfo
 #' 
 getSatBCDECalib <- function(sat, bcde, id){
-  calib <- getSatCalib(sat)
-  return(getSatBCDE(sat)[grep(id, calib)])
+  calib <- getSatCalib(sat, bcde)
+  result <- getSatBCDE(sat)[grep(id, calib)]
+  if(length(result) == 0){
+    result = NA_character_
+  }
+  return(result)
 }
 
 

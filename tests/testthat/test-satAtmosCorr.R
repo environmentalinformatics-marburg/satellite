@@ -7,5 +7,16 @@ test_that("satAtmosCorr works as expected", {
                       pattern = glob2rx("LC8*.tif"), 
                       full.names = TRUE)
   sat <- satellite(files)
-  satAtmosCorr(sat, atmos_model = "DOS2", esun_mode = "RadRef")
+  sat_atmos <- satAtmosCorr(sat, atmos_model = "DOS2", esun_mode = "RadRef")
+  
+  expect_equal(
+    round(raster::getValues(
+      getSatDataLayer(sat_atmos, bcde = "B002n_ref_cA"))[50],4), 
+    round(0.04668206, 4))
 })
+
+
+
+
+
+

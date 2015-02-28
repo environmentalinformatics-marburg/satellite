@@ -103,16 +103,45 @@ setMethod("satAtmosCorr",
             x <- addSatMetaParam(x, meta_param = data.frame(BCDE = names(path_rad),
                                                             PRAD = as.numeric(path_rad)))
             
-            # Compute atmospheric correction (reflectance)
+            # Convert bands to radiance
             for(bcde in sc_bands){
-              ref <-calcAtmosCorr(sensor_rad = getSatDataLayer(x, bcde),
-                                  path_rad = getSatPRAD(x, bcde),
-                                  esun = getSatESUN(x, bcde),
-                                  szen = getSatSZEN(x, bcde), 
+              calib <- getSatBCDECalib(x, id = "RAD")
+              if(any(is.na(calib)) | length(grep(bcde, calib)) == 0){
+                sensor_rad <- calibLinear(band = getSatDataLayer(x, bcde),
+                                          bnbr = 1,
+                                          mult = getSatRADM(sat, bcde),
+                                          add = getSatRADA(sat, bcde))
+                layer_bcde <- paste0(bcde, "_rad")
+                
+                meta_param <- getSatMeta(x, bcde)
+                meta_param$DATE <- NULL
+                meta_param$LAYER <- NULL
+                meta_param$BCDE <- layer_bcde
+                meta_param$CALIB <- "RAD"
+                
+                info <- sys.calls()[[1]]
+                info <- paste0("Add layer from ", info[1], "(", 
+                               toString(info[2:length(info)]), ")")
+                
+                x <- addSatDataLayer(x, bcde = layer_bcde, data = sensor_rad,
+                                     meta_param = meta_param,
+                                     info = info, in_bcde = bcde)
+              }
+            }
+
+
+            # Compute atmospheric correction (reflectance)
+            rad_bands <- getSatBCDESolarCalib(x, id = "RAD")
+            for(bcde_rad in rad_bands){
+              ref <-calcAtmosCorr(sensor_rad = getSatDataLayer(x, bcde_rad),
+                                  path_rad = getSatPRAD(x, bcde_rad),
+                                  esun = getSatESUN(x, bcde_rad),
+                                  szen = getSatSZEN(x, bcde_rad), 
                                   model = "DOS2")
-              layer_bcde <- paste0(bcde, "_ref_cA")
+              layer_bcde <- paste0(substr(bcde_rad, 1, nchar(bcde_rad) - 4),
+                                   "_ref_cA")
               meta_param <- data.frame(getSatSensorInfo(x),
-                                       getSatBandInfo(x, bcde, 
+                                       getSatBandInfo(x, bcde_rad, 
                                                       return_calib = FALSE),
                                        CALIB = "REFcA")
               info <- sys.calls()[[1]]
@@ -120,11 +149,7 @@ setMethod("satAtmosCorr",
                              toString(info[2:length(info)]), ")")
               x <- addSatDataLayer(x, bcde = layer_bcde, data = ref,
                                    meta_param = meta_param,
-                                   info = info, in_bcde = bcde)
+                                   info = info, in_bcde = bcde_rad)
             }
             return(x)
           })
-test <- function(x, y, z){
-  print(x)
-  sys.call()
-}
