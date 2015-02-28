@@ -53,7 +53,7 @@ getSatDataLayers(sat)
 
 getSatDataLayer(sat, bcde)
 
-getSatMeta(sat)
+getSatMeta(sat, bcde)
 
 getSatLog(sat)
 

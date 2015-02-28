@@ -1,14 +1,6 @@
-if ( !isGeneric("satTOAIrradTable") ) {
-  setGeneric("satTOAIrradTable", function(x, ...)
-    standardGeneric("satTOAIrradTable"))
-}
-if ( !isGeneric("satTOAIrradModel") ) {
-  setGeneric("satTOAIrradModel", function(x, ...)
-    standardGeneric("satTOAIrradModel"))
-}
-if ( !isGeneric("satTOAIrradRadRef") ) {
-  setGeneric("satTOAIrradRadRef", function(x, ...)
-    standardGeneric("satTOAIrradRadRef"))
+if ( !isGeneric("satTOAIrrad") ) {
+  setGeneric("satTOAIrrad", function(x, ...)
+    standardGeneric("satTOAIrrad"))
 }
 #' Get TOA solar irradiance (ESun) for the layers of a Satellite object
 #'
@@ -19,16 +11,19 @@ if ( !isGeneric("satTOAIrradRadRef") ) {
 #' actual maximum radiance and reflection values are taken.
 #' 
 #' @param x object of type Satellite
-#' @param model name of the model to be used (see \code{\link{calcTOAIrradModel}})
+#' @param method name of the method to be used ("Table", "Model", "RadRef)
+#' @param model name of the model to be used if method is "Model"
+#' (see \code{\link{calcTOAIrradModel}})
 #' @param normalize normalize ESun to mean earth sun distance
 #' @param esd earth-sun distance (AU), if not supplied and necessary for
 #' normalize, it is tried to take it from the metadata, otherwise it is estimated
 #' by the day of the year using \code{\link{calcEartSunDist}}.
-#' @param date date of the sensor overpath (YYYY-MM-DD or POSIX* object), only
-#' necessary if esd is required but not given explicitely or found in the 
-#' metadata.
-#'
+#' 
 #' @return Satellite object with ESun for each band in the metadata
+#' 
+#' @export satTOAIrrad
+#' 
+#' @name satTOAIrrad
 #'
 #' @details 
 #' Tabulated values of ESun are compiled using \code{\link{calcTOAIrradRadTable}}. 
@@ -50,117 +45,75 @@ if ( !isGeneric("satTOAIrradRadRef") ) {
 #' \code{\link{calcTOAIrradRadTable}}, \code{\link{calcTOAIrradRadRef}} and 
 #' \code{\link{calcTOAIrradModel}}.
 #' 
-#' @name satTOAIrrad
-#'  
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LE7*.tif"), full.names = TRUE)
 #' sat <- satellite(files)
-#' satTOAIrradTable(sat)
+#' satTOAIrrad(sat, method = "Table")
 #' 
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' sat <- satellite(files)
+#' satTOAIrrad(sat, method = "Model")
 #' 
 #' satTOAIrradModel(sat)
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' sat <- satellite(files)  
-#' satTOAIrradRadRef(sat)
+#' satTOAIrrad(sat, method = "RadRef")
 # 
-NULL
-
-
-# Function using Satellite object and tabulated values of eSun -----------------
-#'
-#' @param meta_param data frame containing the name of the metadata ID field 
-#' used to merge with the readily existing metadata information of the
-#' Satellite class object in the first column and with the same column header
-#' as used in the existing metadata information. All other columns contain the
-#' information to be added to the metadata.
-#' 
-#' @export satTOAIrradTable
-#' 
-#' @rdname satTOAIrrad
-#' 
-setMethod("satTOAIrradTable", 
+setMethod("satTOAIrrad", 
           signature(x = "Satellite"), 
-          function(x, normalize = TRUE, esd, date){
-            if(normalize == TRUE){
-              esun <- calcTOAIrradRadTable(sid = getSatSID(x), 
-                                           normalize  = normalize)
-            } else {
-              if(missing(esd)){
-                esd = getSatESD(x)
-                if(is.na(esd)){
-                  esd = calcEartSunDist(date)
-                } 
-              }
-              esun <- calcTOAIrradRadTable(sid = getSatSID(x), 
-                                           normalize  = normalize, 
-                                           esd = esd)
+          function(x, method = "Table", model = "MNewKur", 
+                   normalize = TRUE, esd){
+            
+            if((method != "RadRef" & normalize == FALSE & missing(esd)) |
+                 (method == "RadRef" & normalize == TRUE & missing(esd))){
+              esd = getSatESD(x)
+              if(is.na(esd)){
+                esd = calcEartSunDist(date)
+              } 
             }
-            x <- addSatMetaParam(x, meta_param = data.frame(BCDE = names(esun),
-                                                            ESUN = as.numeric(esun)))
-            return(x)
-          })
-
-
-# Function using Satellite object and modelled values of eSun ------------------
-#' 
-#' @export satTOAIrradModel
-#'
-#' @rdname satTOAIrrad
-#' 
-setMethod("satTOAIrradModel", 
-          signature(x = "Satellite"), 
-          function(x, model = "MNewKur", normalize = TRUE, esd, date){
-            rsr <- lutInfoRSRromSID(sid = getSatSID(x))
-            if(normalize == TRUE){
-              esun <- calcTOAIrradModel(rsr = rsr, model = model, 
-                                        normalize = normalize)
-            } else {
-              if(missing(esd)){
-                esd = getSatESD(x)
-                if(is.na(esd)){
-                  esd = calcEartSunDist(date)
-                } 
+            
+            if(method == "Table"){
+              if(normalize == TRUE){
+                esun <- calcTOAIrradRadTable(sid = getSatSID(x), 
+                                             normalize  = normalize)
+              } else {
+                esun <- calcTOAIrradRadTable(sid = getSatSID(x), 
+                                             normalize  = normalize, 
+                                             esd = esd)
               }
-              esun <- calcTOAIrradModel(rsr = rsr, model = model, 
-                                        normalize = normalize, esd = esd)
-            }
-            x <- addSatMetaParam(x, meta_param = data.frame(BCDE = names(esun),
-                                                            ESUN = as.numeric(esun)))
-            return(x)
-          })
-
-
-# Function using Satellite object and actual radiance and reflectance values ---
-#' 
-#' @export satTOAIrradRadRef
-#'
-#' @rdname satTOAIrrad
-#' 
-setMethod("satTOAIrradRadRef", 
-          signature(x = "Satellite"), 
-          function(x, normalize = TRUE, esd, date){
-            if(normalize == TRUE){
-              if(missing(esd)){
-                esd = getSatESD(x)
-                if(is.na(esd)){
-                  esd = calcEartSunDist(date)
-                } 
+              bcde = names(esun)
+            } else if(method == "Model"){
+              rsr <- lutInfoRSRromSID(sid = getSatSID(x))
+              if(normalize == TRUE){
+                esun <- calcTOAIrradModel(rsr = rsr, model = model, 
+                                          normalize = normalize)
+              } else {
+                esun <- calcTOAIrradModel(rsr = rsr, model = model, 
+                                          normalize = normalize, esd = esd)
               }
-              esun <- calcTOAIrradRadRef(rad_max = getSatRadMax(x, getSatBCDESolar(x)), 
-                                         ref_max = getSatRefMax(x, getSatBCDESolar(x)),
-                                         esd = esd,
-                                         normalize = normalize)
-            } else {
-              esun <- calcTOAIrradRadRef(rad_max = getSatRadMax(x, getSatBCDESolar(x)), 
-                                         ref_max = getSatRefMax(x, getSatBCDESolar(x)), 
-                                         normalize = normalize)
+              bcde = names(esun)
+            } else if(method == "RadRef"){
+              if(normalize == TRUE){
+                esun <- 
+                  calcTOAIrradRadRef(
+                    rad_max = getSatRadMax(x, getSatBCDESolar(x)), 
+                    ref_max = getSatRefMax(x, getSatBCDESolar(x)),
+                    esd = esd, normalize = normalize)
+              } else {
+                esun <- 
+                  calcTOAIrradRadRef(
+                    rad_max = getSatRadMax(x, getSatBCDESolar(x)), 
+                    ref_max = getSatRefMax(x, getSatBCDESolar(x)), 
+                    normalize = normalize)
+              }
+              bcde = getSatBCDESolar(x)
             }
-            x <- addSatMetaParam(x, meta_param = data.frame(BCDE = getSatBCDESolar(x),
-                                                            ESUN = as.numeric(esun)))
+            x <- addSatMetaParam(x, 
+                                 meta_param = data.frame(
+                                   BCDE = bcde,
+                                   ESUN = as.numeric(esun)))
             return(x)
           })

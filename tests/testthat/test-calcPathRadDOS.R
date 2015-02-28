@@ -7,7 +7,7 @@ test_that("calcPathRadDOS works as expected", {
                       pattern = glob2rx("LC8*.tif"), 
                       full.names = TRUE)
   sat <- satellite(files)
-  sat <- satTOAIrradModel(sat)
+  sat <- satTOAIrrad(sat, method = "Model")
   
   bcde <- "B002n"
   t1 <- calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),

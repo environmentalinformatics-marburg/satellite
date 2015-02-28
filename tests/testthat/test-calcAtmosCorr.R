@@ -7,7 +7,7 @@ test_that("calcAtmosCorr works as expected", {
                       pattern = glob2rx("LC8*.tif"), 
                       full.names = TRUE)
   sat <- satellite(files)
-  sat <- satTOAIrradRadRef(sat)
+  sat <- satTOAIrrad(sat, method = "RadRef")
   
   bcde <- "B002n"
   path_rad <- calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),

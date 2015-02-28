@@ -3,38 +3,24 @@
 \docType{methods}
 \name{satTOAIrrad}
 \alias{satTOAIrrad}
-\alias{satTOAIrradModel,Satellite-method}
-\alias{satTOAIrradRadRef,Satellite-method}
-\alias{satTOAIrradTable,Satellite-method}
 \title{Get TOA solar irradiance (ESun) for the layers of a Satellite object}
 \usage{
-\S4method{satTOAIrradTable}{Satellite}(x, normalize = TRUE, esd, date)
-
-\S4method{satTOAIrradModel}{Satellite}(x, model = "MNewKur",
-  normalize = TRUE, esd, date)
-
-\S4method{satTOAIrradRadRef}{Satellite}(x, normalize = TRUE, esd, date)
+\S4method{satTOAIrrad}{Satellite}(x, method = "Table", model = "MNewKur",
+  normalize = TRUE, esd)
 }
 \arguments{
 \item{x}{object of type Satellite}
+
+\item{method}{name of the method to be used ("Table", "Model", "RadRef)}
+
+\item{model}{name of the model to be used if method is "Model"
+(see \code{\link{calcTOAIrradModel}})}
 
 \item{normalize}{normalize ESun to mean earth sun distance}
 
 \item{esd}{earth-sun distance (AU), if not supplied and necessary for
 normalize, it is tried to take it from the metadata, otherwise it is estimated
 by the day of the year using \code{\link{calcEartSunDist}}.}
-
-\item{date}{date of the sensor overpath (YYYY-MM-DD or POSIX* object), only
-necessary if esd is required but not given explicitely or found in the
-metadata.}
-
-\item{model}{name of the model to be used (see \code{\link{calcTOAIrradModel}})}
-
-\item{meta_param}{data frame containing the name of the metadata ID field
-used to merge with the readily existing metadata information of the
-Satellite class object in the first column and with the same column header
-as used in the existing metadata information. All other columns contain the
-information to be added to the metadata.}
 }
 \value{
 Satellite object with ESun for each band in the metadata
@@ -44,12 +30,6 @@ Get extraterrestrial solar irradiance (ESun) from tabulated or computed
 values. If values are computed, either (i) the mean solar spectral data and
 the band specifiv relative spectral response functions (rsr) are used or (ii)
 actual maximum radiance and reflection values are taken.
-
-
-
-
-
-
 }
 \details{
 Tabulated values of ESun are compiled using \code{\link{calcTOAIrradRadTable}}.
@@ -69,17 +49,18 @@ Please refer to the respective functions for details on the computation.
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LE7*.tif"), full.names = TRUE)
 sat <- satellite(files)
-satTOAIrradTable(sat)
+satTOAIrrad(sat, method = "Table")
 
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 sat <- satellite(files)
+satTOAIrrad(sat, method = "Model")
 
 satTOAIrradModel(sat)
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 sat <- satellite(files)
-satTOAIrradRadRef(sat)
+satTOAIrrad(sat, method = "RadRef")
 }
 \references{
 Please refer to the respective functions for references.

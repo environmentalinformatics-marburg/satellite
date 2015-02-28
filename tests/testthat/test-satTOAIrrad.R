@@ -1,19 +1,19 @@
 context("satTOAIrrad")
 
-test_that("satTOAIrradTable works as expected", {
+test_that("satTOAIrrad for table works as expected", {
   path <- system.file("extdata", 
                       package = "satellite")
   files <- list.files(path, 
                       pattern = glob2rx("LE7*.tif"), 
                       full.names = TRUE)
   sat <- satellite(files)
-  test <- satTOAIrradTable(sat)
+  test <- satTOAIrrad(sat, method = "Table")
   
   expect_equal(as.character(getSatBID(test)[2]), "2")
   expect_equal(as.numeric(getSatESUN(test)[2]), 1812.0)
   
   sat <- satellite(files[c(1, 3, 6)])
-  test <- satTOAIrradTable(sat)
+  test <- satTOAIrrad(sat, method = "Table")
   
   expect_equal(as.character(getSatBID(test)[2]), "3")
   expect_equal(as.numeric(getSatESUN(test)[2]), 1533.0)
@@ -24,18 +24,19 @@ test_that("satTOAIrradTable works as expected", {
                       pattern = glob2rx("LC8*.tif"), 
                       full.names = TRUE)
   sat <- satellite(files)  
-  expect_error(satTOAIrradTable(sat), "Satellite ID LC8 is not supported, yet.")
+  expect_error(satTOAIrrad(sat, method = "Table"), 
+               "Satellite ID LC8 is not supported, yet.")
 })
 
 
-test_that("satTOAIrradModel works as expected", {
+test_that("satTOAIrrad for model works as expected", {
   path <- system.file("extdata", 
                       package = "satellite")
   files <- list.files(path, 
                       pattern = glob2rx("LC8*.tif"), 
                       full.names = TRUE)
   sat <- satellite(files)  
-  test <- satTOAIrradModel(sat)
+  test <- satTOAIrrad(sat, method = "Model")
   
   expect_equal(as.character(getSatBID(test)[1]), "1")
   expect_equal(round(as.numeric(getSatESUN(test)[1]),4), round(1888.4115033, 4))
@@ -52,7 +53,7 @@ test_that("satTOAIrradModel works as expected", {
                       pattern = glob2rx("LC8*.tif"), 
                       full.names = TRUE)
   sat <- satellite(files[c(1,3,4)])  
-  test <- satTOAIrradModel(sat)
+  test <- satTOAIrrad(sat, method = "Model")
   
   expect_equal(as.character(getSatBID(test)[1]), "1")
   expect_equal(round(as.numeric(getSatESUN(test)[1]),4), round(1888.4115033, 4))
@@ -62,14 +63,14 @@ test_that("satTOAIrradModel works as expected", {
   expect_equal(round(as.numeric(getSatESUN(test)[3]),4), round(0.1068904, 4))
 })
 
-test_that("satTOAIrradRadRef works as expected", {
+test_that("satTOAIrrad for rad/ref works as expected", {
   path <- system.file("extdata", 
                       package = "satellite")
   files <- list.files(path, 
                       pattern = glob2rx("LC8*.tif"), 
                       full.names = TRUE)
   sat <- satellite(files)  
-  test <- satTOAIrradRadRef(sat)
+  test <- satTOAIrrad(sat, method = "RadRef")
   
   expect_equal(as.character(getSatBID(test)[1]), "1")
   expect_equal(round(as.numeric(getSatESUN(test)[1]), 3), round( 1907.999, 3))
@@ -77,7 +78,7 @@ test_that("satTOAIrradRadRef works as expected", {
   expect_equal(round(as.numeric(getSatESUN(test)[3]), 3), round( 1800.423, 3))
   
   sat <- satellite(files[c(1,3,4)])
-  test <- satTOAIrradRadRef(sat)
+  test <- satTOAIrrad(sat, method = "RadRef")
   
   expect_equal(as.character(getSatBID(test)[1]), "1")
   expect_equal(round(as.numeric(getSatESUN(test)[1]), 3), round( 1907.999, 3))
