@@ -84,7 +84,8 @@ setMethod("satellite",
           signature(x = "RasterStack"), 
           function(x, meta, log){
             if(missing(meta)){
-              meta <- data.frame(FILE = names(x))
+              meta <- data.frame(DATE = as.POSIXlt(Sys.Date(), tz = "UTC"),
+                                 FILE = names(x))
             }
             layers <- lapply(seq(nlayers(x)), function(y){
               x[[y]]

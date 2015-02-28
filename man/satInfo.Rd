@@ -3,6 +3,7 @@
 \name{satInfo}
 \alias{addSatDataLayer}
 \alias{addSatLog}
+\alias{addSatMetaEntry}
 \alias{addSatMetaParam}
 \alias{getSatBCDE}
 \alias{getSatBCDECalib}
@@ -11,6 +12,7 @@
 \alias{getSatBID}
 \alias{getSatBTK1}
 \alias{getSatBTK2}
+\alias{getSatBandInfo}
 \alias{getSatCalib}
 \alias{getSatDATE}
 \alias{getSatDataLayer}
@@ -20,6 +22,7 @@
 \alias{getSatLMAX}
 \alias{getSatLMIN}
 \alias{getSatLNBR}
+\alias{getSatLayerfromData}
 \alias{getSatLog}
 \alias{getSatMeta}
 \alias{getSatMetaLayer}
@@ -33,12 +36,16 @@
 \alias{getSatRadMin}
 \alias{getSatRefMax}
 \alias{getSatRefMin}
+\alias{getSatRes}
 \alias{getSatSAZM}
 \alias{getSatSELV}
 \alias{getSatSID}
 \alias{getSatSZEN}
 \alias{getSatSensor}
+\alias{getSatSensorGroup}
+\alias{getSatSensorInfo}
 \alias{getSatSpectrum}
+\alias{getSatType}
 \alias{satInfo}
 \title{Get or access Satellite object information used by various functions}
 \usage{
@@ -46,36 +53,48 @@ getSatDataLayers(sat)
 
 getSatDataLayer(sat, bcde)
 
-addSatDataLayer(sat, bcde, data)
-
 getSatMeta(sat)
 
 getSatLog(sat)
 
-addSatLog(sat, info = NA_character_, layers = NA_character_,
-  output = NA_character_)
-
 addSatMetaParam(sat, meta_param)
+
+addSatMetaEntry(sat, meta_param)
+
+addSatLog(sat, info = NA_character_, in_bcde = NA_character_,
+  out_bcde = NA_character_)
+
+addSatDataLayer(sat, bcde, data, meta_param, info, in_bcde)
 
 getSatParam(sat, param, bcde, return_bcde = TRUE)
 
 getSatBCDE(sat)
 
-getSatBID(sat)
+getSatBID(sat, bcde)
 
 getSatSID(sat)
 
 getSatSensor(sat)
 
-getSatSpectrum(sat)
+getSatSensorGroup(sat)
+
+getSatSensorInfo(sat)
+
+getSatSpectrum(sat, bcde)
 
 getSatBCDESolar(sat)
 
-getSatCalib(sat)
+getSatRes(sat, bcde)
+
+getSatType(sat, bcde)
+
+getSatCalib(sat, bcde)
 
 getSatBCDECalib(sat, bcde, id)
 
 getSatBCDESolarCalib(sat, bcde, id)
+
+getSatBandInfo(sat, bcde, return_calib = TRUE)
 
 getSatRadMax(sat, bcde)
 
@@ -96,6 +115,8 @@ getSatSAZM(sat, bcde)
 getSatSELV(sat, bcde)
 
 getSatMetaLayer(sat, bcde)
+
+getSatLayerfromData(sat, bcde, nbr)
 
 getSatLNBR(sat, bcde)
 

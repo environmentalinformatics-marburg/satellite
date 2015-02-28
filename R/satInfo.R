@@ -27,6 +27,10 @@
 NULL
 
 
+################################################################################
+# Return complete sections of the Satellite object
+################################################################################
+
 # Return Satellite data layers -------------------------------------------------
 #' @export getSatDataLayers
 #'
@@ -44,20 +48,6 @@ getSatDataLayers <- function(sat){
 #'
 getSatDataLayer <- function(sat, bcde){
   return(sat@layers[[getSatLNBR(sat, bcde)]])
-}
-
-
-# Add Satellite data layer -----------------------------------------------------
-#' @export addSatDataLayer
-#'
-#' @rdname satInfo
-#'
-addSatDataLayer <- function(sat, bcde, data, info, in_bcde){
-  names(data) <- bcde
-  sat@layers[[length(sat@layers) + 1]] <- data
-  sat <- addSatLog(sat, info = info, in_bcde = in_bcde, 
-                   out_bcde = bcde)
-  return(sat)
 }
 
 
@@ -81,23 +71,11 @@ getSatLog <- function(sat){
 }
 
 
-# Add Satellite object log info ------------------------------------------------
-#' @export addSatLog
-#'
-#' @rdname satInfo
-#'
-addSatLog <- function(sat, info = NA_character_, in_bcde = NA_character_, 
-                      out_bcde = NA_character_){
-  new_length <- length(getSatLog(sat)) + 1
-  ps <- sprintf("ps%04d", new_length)
-  sat@log <- append(sat@log, list(list(time = Sys.time(), info = info, 
-                                       in_bcde = in_bcde, out_bcde = out_bcde)))
-  names(sat@log)[new_length] <- ps
-  return(sat)
-}
+################################################################################
+# Add entries to the Satellite object
+################################################################################
 
-
-# Add additional metainformation parameter to Satellite object -----------------
+# Add additional or overwrite metainformation parameter to Satellite object ----
 #' @export addSatMetaParam
 #'
 #' @rdname satInfo
@@ -114,7 +92,74 @@ addSatMetaParam <- function(sat, meta_param){
 }
 
 
-# Return parameter -------------------------------------------------------------
+# Add metainformation for an additional layer to Satellite object --------------
+#' @export addSatMetaEntry
+#'
+#' @rdname satInfo
+#'
+addSatMetaEntry <- function(sat, meta_param){
+  if(missing(meta_param)){
+    meta_param <- data.frame(DATE = as.POSIXlt(Sys.Date(), tz = "UTC"))
+  }
+  if("DATE" %in% colnames(meta_param) == FALSE){
+    meta_param$DATE <- as.POSIXlt(Sys.Date(), tz = "UTC")
+  }
+  if("LAYER" %in% colnames(meta_param) == FALSE){
+    if(length(getSatDataLayers(sat)) == nrow(getSatMeta(sat)) + 1){
+      meta_param$LAYER <- 
+        getSatLayerfromData(sat, nbr = length(getSatDataLayers(sat)))
+    } else {
+      meta_param$LAYER <- paste0("Layer number ", nrow(getSatMeta(sat)) + 1)
+    }
+  }
+  sat@meta <- plyr::rbind.fill(getSatMeta(sat), meta_param)
+  return(sat)
+}
+
+
+# Add new log entry to Satellite object ----------------------------------------
+#' @export addSatLog
+#'
+#' @rdname satInfo
+#'
+addSatLog <- function(sat, info = NA_character_, in_bcde = NA_character_, 
+                      out_bcde = NA_character_){
+  new_length <- length(getSatLog(sat)) + 1
+  ps <- sprintf("ps%04d", new_length)
+  sat@log <- append(sat@log, list(list(time = Sys.time(), info = info, 
+                                       in_bcde = in_bcde, out_bcde = out_bcde)))
+  names(sat@log)[new_length] <- ps
+  return(sat)
+}
+
+
+# Add new atellite data layer --------------------------------------------------
+#' @export addSatDataLayer
+#'
+#' @rdname satInfo
+#'
+addSatDataLayer <- function(sat, bcde, data, meta_param, info, in_bcde){
+  names(data) <- bcde
+  sat@layers[[length(sat@layers) + 1]] <- data
+  
+  if(missing(meta_param)){
+    meta_param = data.frame(BCDE = bcde)
+  } else {
+    meta_param$BCDE = bcde 
+  }
+  
+  sat <- addSatMetaEntry(sat, meta_param = meta_param)
+  sat <- addSatLog(sat, info = info, in_bcde = in_bcde, 
+                   out_bcde = bcde)
+  return(sat)
+}
+
+
+################################################################################
+# Return individual entries of the Satellite object
+################################################################################
+
+# Return parameter (general method implemented by the specific functions below)-
 #' @param bcde band code
 #' @export getSatParam
 #'
@@ -164,12 +209,12 @@ getSatBCDE <- function(sat){
 #'
 #' @rdname satInfo
 #' 
-getSatBID <- function(sat){
-  getSatParam(sat, "BID", return_bcde = FALSE)
+getSatBID <- function(sat, bcde){
+  getSatParam(sat, "BID", bcde, return_bcde = FALSE)
 }
 
 
-# Return Sensor ID -------------------------------------------------------------
+# Return sensor ID -------------------------------------------------------------
 #' @export getSatSID
 #'
 #' @rdname satInfo
@@ -179,7 +224,7 @@ getSatSID <- function(sat){
 }
 
 
-# Return Sensor ----------------------------------------------------------------
+# Return sensor ----------------------------------------------------------------
 #' @export getSatSensor
 #'
 #' @rdname satInfo
@@ -189,13 +234,35 @@ getSatSensor <- function(sat){
 }
 
 
-# Return SPECTRUM --------------------------------------------------------------
+# Return sensor group ----------------------------------------------------------
+#' @export getSatSensorGroup
+#'
+#' @rdname satInfo
+#' 
+getSatSensorGroup <- function(sat){
+  getSatParam(sat, "SGRP", return_bcde = FALSE)[1]
+}
+
+
+# Return sensor information ----------------------------------------------------
+#' @export getSatSensorInfo
+#'
+#' @rdname satInfo
+#' 
+getSatSensorInfo <- function(sat){
+  data.frame(SID = getSatSID(sat),
+             SENSOR = getSatSensor(sat),
+             SGRP = getSatSensorGroup(sat))
+}
+
+
+# Return spectrum --------------------------------------------------------------
 #' @export getSatSpectrum
 #'
 #' @rdname satInfo
 #' 
-getSatSpectrum <- function(sat){
-  getSatParam(sat, "SPECTRUM")
+getSatSpectrum <- function(sat, bcde){
+  getSatParam(sat, "SPECTRUM", bcde)
 }
 
 
@@ -210,13 +277,33 @@ getSatBCDESolar <- function(sat){
 }
 
 
+# Return sensor resolution -----------------------------------------------------
+#' @export getSatRes
+#'
+#' @rdname satInfo
+#' 
+getSatRes <- function(sat, bcde){
+  getSatParam(sat, "SRES", bcde)
+}
+
+
+# Return sensor type -----------------------------------------------------------
+#' @export getSatType
+#'
+#' @rdname satInfo
+#' 
+getSatType <- function(sat, bcde){
+  getSatParam(sat, "TYPE", bcde)
+}
+
+
 # Return CALIB -----------------------------------------------------------------
 #' @export getSatCalib
 #'
 #' @rdname satInfo
 #' 
-getSatCalib <- function(sat){
-  getSatParam(sat, "CALIB")
+getSatCalib <- function(sat, bcde){
+  getSatParam(sat, "CALIB", bcde)
 }
 
 
@@ -239,6 +326,28 @@ getSatBCDECalib <- function(sat, bcde, id){
 getSatBCDESolarCalib <- function(sat, bcde, id){
   calib <- getSatBCDECalib(sat, bcde, id)
   return(getSatBCDESolar(sat)[getSatBCDESolar(sat) %in% calib])
+}
+
+
+# Return band information ------------------------------------------------------
+#' @export getSatBandInfo
+#'
+#' @rdname satInfo
+#' 
+getSatBandInfo <- function(sat, bcde, return_calib = TRUE){
+  if(return_calib){
+    result <- data.frame(BID = getSatBID(sat, bcde),
+                         SRES = getSatRes(sat, bcde),
+                         TYPE = getSatType(sat, bcde),
+                         SPECTRUM = getSatSpectrum(sat, bcde),
+                         CALIB = getSatCalib(sat, bcde))
+  } else {
+    result <- data.frame(BID = getSatBID(sat, bcde),
+                         SRES = getSatRes(sat, bcde),
+                         TYPE = getSatType(sat, bcde),
+                         SPECTRUM = getSatSpectrum(sat, bcde))
+  }
+  return(result)
 }
 
 
@@ -331,7 +440,7 @@ getSatSELV <- function(sat, bcde){
   getSatParam(sat, "SELV", bcde)
 }
 
-# Return LAYER name ------------------------------------------------------------
+# Return Layer name from metadata ----------------------------------------------
 #' @export getSatMetaLayer
 #'
 #' @rdname satInfo
@@ -339,6 +448,28 @@ getSatSELV <- function(sat, bcde){
 getSatMetaLayer <- function(sat, bcde){
   getSatParam(sat, "LAYER", bcde)
 }
+
+
+# Return Layer name from data layer --------------------------------------------
+#' @export getSatLayerfromData
+#'
+#' @rdname satInfo
+#' 
+getSatLayerfromData <- function(sat, bcde, nbr){
+  if(missing(bcde)){
+    layers <- sapply(getSatDataLayers(sat), function(x){
+      names(x)
+    })
+    if(missing(nbr)){
+      return(layers)
+    } else {
+      return(layers[nbr])
+    }
+  } else {
+    names(getSatDataLayer(sat, bcde))
+  }
+}
+
 
 
 # Return LNBR ------------------------------------------------------------------

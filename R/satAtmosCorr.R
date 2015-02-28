@@ -111,14 +111,16 @@ setMethod("satAtmosCorr",
                                   szen = getSatSZEN(x, bcde), 
                                   model = "DOS2")
               layer_bcde <- paste0(bcde, "_ref_cA")
+              meta_param <- data.frame(getSatSensorInfo(x),
+                                       getSatBandInfo(x, bcde, 
+                                                      return_calib = FALSE),
+                                       CALIB = "REFcA")
               info <- sys.calls()[[1]]
               info <- paste0("Add layer from ", info[1], "(", 
                              toString(info[2:length(info)]), ")")
               x <- addSatDataLayer(x, bcde = layer_bcde, data = ref,
-                                   info = info,
-                                   in_bcde = bcde)
-              #               x <- addSatMetaParam(x, meta_param = data.frame(BCDE = names(path_rad),
-              #                                                               PRAD = as.numeric(path_rad)))                                        
+                                   meta_param = meta_param,
+                                   info = info, in_bcde = bcde)
             }
             return(x)
           })

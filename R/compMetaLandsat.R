@@ -73,9 +73,9 @@ compMetaLandsat <- function(files){
       (subset(metadata$V2, gsub("\\s","", metadata$V1) == search_term_BTK1))))
     cal_BTK2 <- as.numeric(as.character(
       (subset(metadata$V2, gsub("\\s","", metadata$V1) == search_term_BTK2))))
-    
-    date <- strftime(as.character(
-      (subset(metadata$V2, gsub("\\s","", metadata$V1) == search_term_date))))
+    date <- as.POSIXlt(as.character(
+      (subset(metadata$V2, gsub("\\s","", metadata$V1) == search_term_date))), 
+      tz = "UTC")
     esd <- as.numeric(as.character(
       (subset(metadata$V2, gsub("\\s","", metadata$V1) == search_term_esd))))
     selv <- as.numeric(as.character(
