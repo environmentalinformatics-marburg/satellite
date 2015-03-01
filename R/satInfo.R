@@ -28,7 +28,7 @@ NULL
 
 
 ################################################################################
-# Return complete sections of the Satellite object
+# Return (almost) complete sections of the Satellite object
 ################################################################################
 
 # Return Satellite data layers -------------------------------------------------
@@ -62,6 +62,21 @@ getSatMeta <- function(sat, bcde){
   } else {
     return(sat@meta[sat@meta$BCDE == bcde, ])
   }
+}
+
+
+# Return template for Satellite object metadata which is based on existing band-
+#' @export getSatMetaBCDETemplate
+#'
+#' @rdname satInfo
+#'
+getSatMetaBCDETemplate <- function(sat, bcde){
+  meta_template <- getSatMeta(sat, bcde)
+  meta_template$DATE <- NULL
+  meta_template$LAYER <- NULL
+  meta_template$FILE <- NULL
+  meta_template$METAFILE <- NULL
+  return(meta_template)
 }
 
 
@@ -286,6 +301,17 @@ getSatBCDESolar <- function(sat){
 }
 
 
+# Return thermal band codes ------------------------------------------------------
+#' @export getSatBCDEThermal
+#'
+#' @rdname satInfo
+#' 
+getSatBCDEThermal <- function(sat){
+  spectrum <- getSatSpectrum(sat)
+  return(getSatBCDE(sat)[grep("thermal", spectrum)])
+}
+
+
 # Return sensor resolution -----------------------------------------------------
 #' @export getSatRes
 #'
@@ -338,7 +364,22 @@ getSatBCDECalib <- function(sat, bcde, id){
 #' 
 getSatBCDESolarCalib <- function(sat, bcde, id){
   calib <- getSatBCDECalib(sat, bcde, id)
-  return(getSatBCDESolar(sat)[getSatBCDESolar(sat) %in% calib])
+  result <- getSatBCDESolar(sat)[getSatBCDESolar(sat) %in% calib]
+  if(length(result) == 0){
+    result = NA_character_
+  }
+  return(result)
+}
+
+
+# Return CALIB band codes machting id and are thermal bands --------------------
+#' @export getSatBCDEThermalCalib
+#'
+#' @rdname satInfo
+#' 
+getSatBCDEThermalCalib <- function(sat, bcde, id){
+  calib <- getSatBCDECalib(sat, bcde, id)
+  return(getSatBCDEThermal(sat)[getSatBCDEThermal(sat) %in% calib])
 }
 
 

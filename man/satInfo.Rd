@@ -9,6 +9,8 @@
 \alias{getSatBCDECalib}
 \alias{getSatBCDESolar}
 \alias{getSatBCDESolarCalib}
+\alias{getSatBCDEThermal}
+\alias{getSatBCDEThermalCalib}
 \alias{getSatBID}
 \alias{getSatBTK1}
 \alias{getSatBTK2}
@@ -25,6 +27,7 @@
 \alias{getSatLayerfromData}
 \alias{getSatLog}
 \alias{getSatMeta}
+\alias{getSatMetaBCDETemplate}
 \alias{getSatMetaLayer}
 \alias{getSatPRAD}
 \alias{getSatParam}
@@ -55,6 +58,8 @@ getSatDataLayer(sat, bcde)
 
 getSatMeta(sat, bcde)
 
+getSatMetaBCDETemplate(sat, bcde)
+
 getSatLog(sat)
 
 addSatMetaParam(sat, meta_param)
@@ -84,6 +89,8 @@ getSatSpectrum(sat, bcde)
 
 getSatBCDESolar(sat)
 
+getSatBCDEThermal(sat)
+
 getSatRes(sat, bcde)
 
 getSatType(sat, bcde)
@@ -93,6 +100,8 @@ getSatCalib(sat, bcde)
 getSatBCDECalib(sat, bcde, id)
 
 getSatBCDESolarCalib(sat, bcde, id)
+
+getSatBCDEThermalCalib(sat, bcde, id)
 
 getSatBandInfo(sat, bcde, return_calib = TRUE)
 

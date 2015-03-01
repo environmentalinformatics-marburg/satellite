@@ -11,7 +11,7 @@ test_that("satAtmosCorr works as expected", {
   
   expect_equal(
     round(raster::getValues(
-      getSatDataLayer(sat_atmos, bcde = "B002n_ref_cA"))[50],4), 
+      getSatDataLayer(sat_atmos, bcde = "B002n_REF_AtmosCorr"))[50],4), 
     round(0.04668206, 4))
 })
 

@@ -57,7 +57,7 @@ setMethod("satAtmosCorr",
           # Take care of earth sun distance information
           function(x, atmos_model = "DOS2", esun_mode = "RadRef"){
             
-            # Take care of TOA solar irradiance information
+            # Take care of TOA solar irradiance calculation if necessary
             if(any(is.na(getSatESUN(x, getSatBCDESolar(x))))){
               # Compute toa irradiance for all solar band layers
               if(esun_mode == "Table"){
@@ -73,36 +73,16 @@ setMethod("satAtmosCorr",
             
             # Get solar bands with calibration information equals scaled counts
             sc_bands <- getSatBCDESolarCalib(x, id = "SC")
+            
+            # Take care of path radiance computation if necessary
             if(any(is.na(getSatPRAD(x, sc_bands)))){
               x <- satPathRadDOS(x, atmos_model = "DOS2")
             }
             
-            # Convert bands to radiance
-            for(bcde in sc_bands){
-              calib <- getSatBCDECalib(x, id = "RAD")
-              if(any(is.na(calib)) | length(grep(bcde, calib)) == 0){
-                sensor_rad <- calibLinear(band = getSatDataLayer(x, bcde),
-                                          bnbr = 1,
-                                          mult = getSatRADM(x, bcde),
-                                          add = getSatRADA(x, bcde))
-                layer_bcde <- paste0(bcde, "_rad")
-                
-                meta_param <- getSatMeta(x, bcde)
-                meta_param$DATE <- NULL
-                meta_param$LAYER <- NULL
-                meta_param$BCDE <- layer_bcde
-                meta_param$CALIB <- "RAD"
-                
-                info <- sys.calls()[[1]]
-                info <- paste0("Add layer from ", info[1], "(", 
-                               toString(info[2:length(info)]), ")")
-                
-                x <- addSatDataLayer(x, bcde = layer_bcde, data = sensor_rad,
-                                     meta_param = meta_param,
-                                     info = info, in_bcde = bcde)
-              }
+            # Take care of radiance calibration if necessary
+            if(any(is.na(getSatBCDESolarCalib(x, id = "RAD")))){
+              x <- satCalib(x, convert = "Rad")
             }
-            
             
             # Compute atmospheric correction (reflectance)
             rad_bands <- getSatBCDESolarCalib(x, id = "RAD")
@@ -113,11 +93,11 @@ setMethod("satAtmosCorr",
                                   szen = getSatSZEN(x, bcde_rad), 
                                   model = "DOS2")
               layer_bcde <- paste0(substr(bcde_rad, 1, nchar(bcde_rad) - 4),
-                                   "_ref_cA")
+                                   "_REF_AtmosCorr")
               meta_param <- data.frame(getSatSensorInfo(x),
                                        getSatBandInfo(x, bcde_rad, 
                                                       return_calib = FALSE),
-                                       CALIB = "REFcA")
+                                       CALIB = "REF_AtmosCorr")
               info <- sys.calls()[[1]]
               info <- paste0("Add layer from ", info[1], "(", 
                              toString(info[2:length(info)]), ")")
