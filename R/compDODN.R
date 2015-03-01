@@ -1,4 +1,4 @@
-#' Compute surface reflectance using radiative transfer approximations
+#' Compile dark object DN for given sensor band
 #'
 #' @description
 #' The function computes the surface reflectance using one of the following
@@ -15,7 +15,7 @@
 #'
 #' @return Raster or RasterStack object containing surface reflectance data.
 #'
-#' @export calcSurfRef
+#' @export compDODN
 #' 
 #' @details The surface reflectance computation is based on a dark object 
 #' approach using either the DOS2 (Chavez 1996) or DOS4 (Moran et al. 1992) 
@@ -66,22 +66,10 @@
 #' not run:
 #' calcSurfRef(band_rad, bnbr, coefs, ESun, Lp)
 
-calcSurfRef <- function(bands_rad, coefs, ESun, Lp, model = "DOS2"){
-  cos_szen <- cos(coefs$SUNZEN[1] * pi / 180.0)
-  E0 <- ESun / calcEartSunDist(coefs$DATE)^2
-  if(model == "DOS2"){
-    Tv <- 1.0
-    Tz <- cos_szen
-    Edown <- 0.0
-  }
-  
-  for(i in seq(raster::nlayers(bands_rad))){
-    if(coefs$SOLAR[i] == TRUE){
-      bands_rad[[i]] <- pi * (bands_rad[[i]] - Lp[i]) / 
-        (Tv * (E0[i] * cos_szen * Tz + Edown))
-    } else {
-      raster::setValues(bands_rad[[i]], 0)
-    }
-  }
-  return(bands_rad)
+compDODN <- function(band){
+  raster::hist(band)
+  raster::quantile(band, probs = seq(0.00001, 0.0010, 0.00001))
+  sort(raster::getValues(band))[100]
+  t <- plyr::count(raster::getValues(band))
+  head(t, 200)
 }

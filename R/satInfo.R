@@ -107,6 +107,7 @@ addSatMetaParam <- function(sat, meta_param){
     sat@meta[, which(name == colnames(sat@meta))] <- NULL
   } 
   sat@meta <- merge(sat@meta, meta_param, by = id, all.x = TRUE)
+  sat@meta <- sat@meta[order(sat@meta$LNBR),]
   return(sat)
 }
 
@@ -158,7 +159,7 @@ addSatLog <- function(sat, info = NA_character_, in_bcde = NA_character_,
 }
 
 
-# Add new atellite data layer --------------------------------------------------
+# Add new Satellite data layer --------------------------------------------------
 #' @export addSatDataLayer
 #'
 #' @rdname satInfo
