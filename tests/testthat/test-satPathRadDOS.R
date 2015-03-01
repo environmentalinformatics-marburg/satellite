@@ -10,8 +10,8 @@ test_that("satPathRadDOS works as expected", {
   
   sat_pathrad <- satPathRadDOS(sat, atmos_model = "DOS2", esun_mode = "RadRef")
   
-  expect_equal(round(getSatPRAD(sat_pathrad, bcde = "B002n"),3), round(c(B002n = 41.55883), 3))
-  expect_equal(round(getSatPRAD(sat_pathrad, bcde = "B009n"),3), round(c(B009n = -0.1658088), 3))
+  expect_equal(round(getSatPRAD(sat_pathrad, bcde = "B002n"),3), round(c(B002n = 42.21805), 3))
+  expect_equal(round(getSatPRAD(sat_pathrad, bcde = "B009n"),3), round(c(B009n = -0.1560062), 3))
 })
 
 

@@ -2,15 +2,23 @@
 #'
 #' @description
 #' Identify pseudi-invariant features from a satellite scene based on a 
-#' red, near-infrared and short-wave infrared band.
+#' vis, near-infravis and short-wave infravis band.
 #'
-#' @param red a raster of the sensor's red band
+#' @param vis a raster of the sensor's vis band
 #' @param nir a raster of the sensor's nir band
 #' @param swir a raster of the sensor's swir band
+#' @param quant a value v = [0...1] which is used to define the percentage
+#' threshold values (thv) for invariant features (nir/vis ratio < thv, 
+#' swir band values > 1-thv)
+#' 
 #'
 #' @return raster object with invariant pixels marked with 1, 0 otherwise
 #'
-#' @export invariantFeatures
+#' @export maskInvarFeatures
+#' 
+#' @details Invariant features are identified as pixels which belong to the 
+#' group of (i) the n lowest VIS/NIR ratios and of (ii) the highest n
+#' SWIR values. The value of n is given by the parameter quant (0...1).
 #' 
 #' @references This function is taken and only slightly adapted from the PIF
 #' function of Sarah C. Goslee (2011). Analyzing Remote Sensing Data in R: The 
@@ -24,49 +32,22 @@
 #'  \url{http://www.sciencedirect.com/science/article/pii/0034425788901162}
 #'
 #' @examples
-#' not run:
-#' invariantFeatures(red, nir, swir, level=.99)
-invariantFeatures <-
-  function(red, nir, swir, level=.99) {
-    # identify pseudo-invariant features after SSV1988
+#' path <- system.file("extdata", package = "satellite")
+#' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+#' sat <- satellite(files)
+#' maskInvarFeatures(vis = getSatDataLayer(sat, "B004n"), 
+#'                   nir = getSatDataLayer(sat, "B005n"), 
+#'                   swir = getSatDataLayer(sat, "B007n"))
+#' 
+maskInvarFeatures <-function(vis, nir, swir, quant=0.01) {
+    ratio_nir_vis <- nir/vis
     
-    if(is.character(red)) {
-      red <- read.asciigrid(red)
-      pifgrid <- red
-      red <- red@data[,1]
-    } else {
-      pifgrid <- red
-      red <- as.vector(as.matrix(red))
-    } 
+    ratio_nir_vis_quant <- quantile(ratio_nir_vis, probs = quant, na.rm=TRUE)
+    swir_quant <- quantile(swir, probs = 1-quant, na.rm=TRUE)
     
-    if(is.character(nir)) {
-      nir <- read.asciigrid(nir)@data[,1]
-    } else {
-      nir <- as.vector(as.matrix(nir))
-    }
-    
-    if(is.character(swir)) {
-      swir <- read.asciigrid(swir)@data[,1]
-    } else {
-      swir <- as.vector(as.matrix(swir))
-    }
-    
-    nir3 <- nir/red
-    
-    nir3.level <- quantile(nir3, 1-level, na.rm=TRUE)
-    swir.level <- quantile(swir, level, na.rm=TRUE)
-    
-    pifmask <- ifelse(nir3 < nir3.level & swir > swir.level & swir < 255, 1, 0)
-    
-    # return the same structure as the input values
-    if(class(pifgrid) == "SpatialGridDataFrame")
-      pifgrid@data[,1] <- pifmask
-    else if(is.data.frame(pifgrid))
-      pifgrid <- data.frame(matrix(pifmask, nrow=nrow(pifgrid), ncol=ncol(pifgrid)))
-    else if(is.matrix(pifgrid))
-      pifgrid <- matrix(pifmask, nrow=nrow(pifgrid), ncol=ncol(pifgrid))
-    else # return a vector 
-      pifgrid <- pifmask
-    
-    pifgrid
+    invar_feats <- ratio_nir_vis < ratio_nir_vis_quant & swir > swir_quant
+    #     invar_feats <- ratio_nir_vis < ratio_nir_vis_quant & 
+    #       swir > swir_quant & swir < 255
+        
+    return(invar_feats)
   }

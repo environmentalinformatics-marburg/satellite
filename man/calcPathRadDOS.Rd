@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcPathRadDOS.R
 \name{calcPathRadDOS}
 \alias{calcPathRadDOS}
-\title{Compute path radiance based on dark object method}
+\title{Compute path radiance based on the dark object method}
 \usage{
 calcPathRadDOS(DNmin, bnbr, band_wls, radm, rada, szen, esun, model = "DOS2",
   scat_coef = -4, dos_adjust = 0.01)

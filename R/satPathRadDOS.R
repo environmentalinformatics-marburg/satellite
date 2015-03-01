@@ -75,7 +75,7 @@ setMethod("satPathRadDOS",
             
             # Take care of dark object values
             bcde <- "B002n"
-            dn_min <- min(raster::getValues(getSatDataLayer(x, bcde)))
+            dn_min <- calcDODN(getSatDataLayer(x, bcde))
             
             # Take care of path radiance
             path_rad <- calcPathRadDOS(DNmin = dn_min,

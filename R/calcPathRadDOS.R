@@ -1,4 +1,4 @@
-#' Compute path radiance based on dark object method
+#' Compute path radiance based on the dark object method
 #'
 #' @description
 #' Compute an estimaed path radiance for all sensor band_wls using a dark object 
