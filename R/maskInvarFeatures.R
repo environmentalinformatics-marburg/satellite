@@ -46,8 +46,6 @@ maskInvarFeatures <-function(vis, nir, swir, quant=0.01) {
     swir_quant <- quantile(swir, probs = 1-quant, na.rm=TRUE)
     
     invar_feats <- ratio_nir_vis < ratio_nir_vis_quant & swir > swir_quant
-    #     invar_feats <- ratio_nir_vis < ratio_nir_vis_quant & 
-    #       swir > swir_quant & swir < 255
         
     return(invar_feats)
   }

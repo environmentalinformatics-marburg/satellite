@@ -32,10 +32,18 @@ if ( !isGeneric("satAtmosCorr") ) {
 #' @name satAtmosCorr
 #'
 #' @details 
-#' If necessary, TOA solar irradiance is computed using 
-#' \code{\link{satTOAIrrad}}.
-#' 
 #' Atmospheric correction is computed using \code{\link{calcAtmosCorr}}. 
+#' 
+#' If necessary (i.e. Satellite object does not contain the respective 
+#' information) the following is computed before the actual atmospheric
+#' correction:
+#' 
+#' The TOA solar irradiance is computed using \code{\link{satTOAIrrad}}.
+#' 
+#' The path radiance is computed based on a dark object's DN using 
+#' \code{\link{calcPathRadDOS}}.
+#' 
+#' The bands' DNs are converted to radiance using \code{\link{satCalib}}.
 #' 
 #' Please refer to the respective functions for details on the computation.
 #' 

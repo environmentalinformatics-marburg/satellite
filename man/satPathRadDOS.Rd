@@ -26,11 +26,15 @@ by the day of the year using \code{\link{calcEartSunDist}}.}
 Satellite object with path radiance for each band in the metadata
 }
 \description{
-Compute an estimaed path radiance for all sensor band_wls using a dark object
+Compute an estimaed path radiance for all sensor bands using a dark object
 method which can be used to roughly correct the radiance values for
-atmospheric scattering.
+atmospheric scattering. The dark object is identified in one band using a
+histogram analysis and estimated for all other bands using a scattering
+coefficient power law.
 }
 \details{
+The dark object's DN is computed using \code{\link{calcDODN}}.
+
 The path radiance is computed using \code{\link{calcPathRadDOS}}.
 
 If the TOA solar irradiance is not part of the metadata of the Satellite

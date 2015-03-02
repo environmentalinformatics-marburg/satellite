@@ -35,7 +35,7 @@ files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 sat <- satellite(files)
 maskInvarFeatures(vis = getSatDataLayer(sat, "B004n"),
                   nir = getSatDataLayer(sat, "B005n"),
-                  swir = getSatDataLayer(sat, "B006n"))
+                  swir = getSatDataLayer(sat, "B007n"))
 }
 \references{
 This function is taken and only slightly adapted from the PIF

@@ -5,9 +5,11 @@ if ( !isGeneric("satPathRadDOS") ) {
 #' Compute path radiance based on dark object method for a Satellite object
 #'
 #' @description
-#' Compute an estimaed path radiance for all sensor band_wls using a dark object 
+#' Compute an estimaed path radiance for all sensor bands using a dark object 
 #' method which can be used to roughly correct the radiance values for 
-#' atmospheric scattering.
+#' atmospheric scattering. The dark object is identified in one band using a 
+#' histogram analysis and estimated for all other bands using a scattering
+#' coefficient power law.
 #' 
 #' @param x object of type Satellite
 #' @param method name of the method to be used ("Table", "Model", "RadRef)
@@ -25,6 +27,8 @@ if ( !isGeneric("satPathRadDOS") ) {
 #' @name satPathRadDOS
 #'
 #' @details 
+#' The dark object's DN is computed using \code{\link{calcDODN}}. 
+#' 
 #' The path radiance is computed using \code{\link{calcPathRadDOS}}. 
 #' 
 #' If the TOA solar irradiance is not part of the metadata of the Satellite
