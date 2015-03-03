@@ -8,11 +8,11 @@ test_that("satCalib works as expected", {
                       full.names = TRUE)
   sat <- satellite(files)
   
-  t1 <- satCalib(sat, convert = "Rad")
-  t2 <- satCalib(sat, convert = "Ref", szen_correction = TRUE)
-  t3 <- satCalib(sat, convert = "Ref", szen_correction = FALSE)
-  t4 <- satCalib(sat, convert = "BT")
-  t5 <- satCalib(sat, convert = "all")
+  t1 <- calibLinear(sat, convert = "Rad")
+  t2 <- calibLinear(sat, convert = "Ref", szen_correction = TRUE)
+  t3 <- calibLinear(sat, convert = "Ref", szen_correction = FALSE)
+  t4 <- calibLinear(sat, convert = "BT")
+  t5 <- calibLinear(sat, convert = "all")
   
   expect_equal(
     round(raster::getValues(getSatDataLayer(t1, bcde = "B002n_RAD"))[50],4), 
