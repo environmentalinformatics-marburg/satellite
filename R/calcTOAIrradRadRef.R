@@ -43,9 +43,6 @@
 calcTOAIrradRadRef <- function(rad_max, ref_max, normalize = TRUE, esd){
   eSun <- pi * esd * rad_max / ref_max
   if(normalize == TRUE){
-    if(missing(esd)){
-      stop("Variable esd is missing.")
-    }
     eSun <- 1/esd * eSun
   }
   return(eSun)

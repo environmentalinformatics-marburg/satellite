@@ -52,7 +52,6 @@ setMethod("satCalib",
               for(bcde in band_codes){
                 if(!is.na(getSatRADM(x, bcde))){
                   sensor_rad <- calibLinear(band = getSatDataLayer(x, bcde),
-                                            bnbr = 1,
                                             mult = getSatRADM(x, bcde),
                                             add = getSatRADA(x, bcde))
                   layer_bcde <- paste0(bcde, "_RAD")
@@ -79,14 +78,12 @@ setMethod("satCalib",
                   if(szen_correction == TRUE){
                     szen <- getSatSZEN(x, bcde)
                     sensor_ref <- calibLinear(band = getSatDataLayer(x, bcde),
-                                              bnbr = 1,
                                               mult = getSatREFM(x, bcde),
                                               add = getSatREFA(x, bcde),
                                               szen = szen)
                     calib = "REF"
                   } else {
                     sensor_ref <- calibLinear(band = getSatDataLayer(x, bcde),
-                                              bnbr = 1,
                                               mult = getSatREFM(x, bcde),
                                               add = getSatREFA(x, bcde))
                     calib = "REF_NoSZEN"
@@ -113,7 +110,6 @@ setMethod("satCalib",
               for(bcde in band_codes){
                 if(!any(is.na(getSatRADM(x, bcde)), is.na(getSatBTK1(x, bcde)))){
                   sensor_ref <- calibLinear(band = getSatDataLayer(x, bcde),
-                                            bnbr = 1,
                                             mult = getSatRADM(x, bcde),
                                             add = getSatRADA(x, bcde),
                                             k1 = getSatBTK1(x, bcde),

@@ -1,10 +1,9 @@
-#' Convert DNs to radiance, reflectance and/or brightness temperature.
+#' Convert reflectance to radiance using linear function coefficients
 #'
 #' @description
-#' The function converts the digital numbers of a Lansat 8 level 1B/T file
-#' to radiance (rad), relfectance (ref) and/or brightness temperature (bt) using
-#' the calibration coefficients from the metadata file. The reflectance 
-#' conversion can additionaly be include a sun zenith correction.
+#' The function converts the relfectance (ref) back to radiance (rad) given that
+#' linear conversion coefficients for both, radiance and reflectance are 
+#' available.
 #'
 #' @param band raster, rasterstack or data frame object of the sensor band
 #' @param coefs coefficients data frame resulting from compMetaLandsat()
@@ -12,7 +11,7 @@
 #'
 #' @return Raster object with converted values
 #'
-#' @export calibLinear
+#' @export calibLinearInverse
 #' 
 #' @references The conversion functions are taken from USGS' Landsat 8 manual
 #' which is available online at 
@@ -32,13 +31,13 @@
 #'             mult = getSatRADM(sat, bcde),
 #'             add = getSatRADA(sat, bcde))
 #' 
-calibLinear <- function(band, mult, add, szen, k1, k2){
-  result <- mult * band + add
+calibLinearInverse <- function(band, ref_mult, ref_add, 
+                               rad_mult, rad_add, szen){
   if(!missing(szen)){
-    result <- result / cos(szen * pi / 180.0)
+    band <- band * cos(szen * pi / 180.0)
   }
-  if(!missing(k1)){
-    result <- k2 / log(k1 / result + 1)
-  }
+  
+  dn <- (band - ref_add) / ref_mult
+  result <- rad_mult * dn + rad_add
   return(result)
 }

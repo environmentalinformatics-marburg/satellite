@@ -21,7 +21,6 @@ test_that("calcAtmosCorr works as expected", {
                              model = "DOS2")
   
   sensor_rad <- calibLinear(band = getSatDataLayer(sat, bcde),
-                            bnbr = 1,
                             mult = getSatRADM(sat, bcde),
                             add = getSatRADA(sat, bcde))
   

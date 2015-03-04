@@ -8,7 +8,7 @@
 #' @param DNmin digital number of dark object in band bnbr
 #' @param bnbr band number for which DNmin is valid
 #' @param band_wls band wavelengths for which correction should be made (
-#' data frame with min, max in first, second column)
+#' data frame with min, max in first, second column, see details)
 #' @param model to be used to correct for 1% scattering (DOS2, DOS4; must be the
 #' same as used by \code{\link{radiometricCorrection}})
 #' @param esun actual (i.e. non-normalized) TOA solar irradianc, e.g. returned 
@@ -51,6 +51,10 @@
 #' or the hemispherical integral of the path radiance (DOS4, Moran et al. 1992).
 #' 
 #' Equations for the path radiance are taken from Song et al. (2001).
+#' 
+#' For some sensors, the band wavelengths are already included. See
+#' \code{lutInfo()[grepl("_BANDS", names(lutInfo()$META))]} if your sensor is
+#' included. To retrieve a sensor, use \code{lutInfo()$<Sensor ID>_BANDS}.
 #' 
 #' @references Chavez Jr PS (1988) An improved dark-object subtraction technique 
 #' for atmospheric scattering correction of multispectral data. Remote Sensing 

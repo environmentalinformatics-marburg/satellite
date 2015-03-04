@@ -13,7 +13,7 @@ calcPathRadDOS(DNmin, bnbr, band_wls, radm, rada, szen, esun, model = "DOS2",
 \item{bnbr}{band number for which DNmin is valid}
 
 \item{band_wls}{band wavelengths for which correction should be made (
-data frame with min, max in first, second column)}
+data frame with min, max in first, second column, see details)}
 
 \item{esun}{actual (i.e. non-normalized) TOA solar irradianc, e.g. returned
 from \code{link{calcTOAIrradTable}}, \code{link{calcTOAIrradModel}}, or
@@ -65,6 +65,10 @@ The downwelling diffuse irradiance is approximated by 0.0 (DOS2, Chavez 1996)
 or the hemispherical integral of the path radiance (DOS4, Moran et al. 1992).
 
 Equations for the path radiance are taken from Song et al. (2001).
+
+For some sensors, the band wavelengths are already included. See
+\code{lutInfo()[grepl("_BANDS", names(lutInfo()$META))]} if your sensor is
+included. To retrieve a sensor, use \code{lutInfo()$<Sensor ID>_BANDS}.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
