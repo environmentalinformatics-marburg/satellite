@@ -17,7 +17,7 @@ lutInfoBandsFromSID(sid)
 
 lutInfoSensorFromSID(sid)
 
-lutInfoBCDEFromBID(bid, sid)
+lutInfoBCDEFromBID(sid, bid)
 
 lutInfoBIDFromBCDE(bcde, sid)
 
