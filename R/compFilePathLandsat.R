@@ -4,7 +4,8 @@
 #' The function compiles the sensor, band, filename and metafilename information
 #' for standard level 1B/T Landsat filenames.
 #'
-#' @param files path and filename of one or more landsat band file
+#' @param files path and filename of one or more Landsat band files or 
+#' alternatively one or more Landsat metadata files
 #'
 #' @return Data frame containing filepathes, band numbers and metafilepathes
 #'
@@ -16,27 +17,47 @@
 #' compFilePathLandsat(files)  
 #' 
 compFilePathLandsat <- function(files){
-  info <- lapply(files, function(x){
-    layer <- tools::file_path_sans_ext(basename(x))
-    pos <- gregexpr(pattern ='_B', layer)[[1]][1]
-    band_ids <- substr(basename(x), pos + 2, 
-                       nchar(layer))
-    meta <- paste0(dirname(x), "/", substr(basename(x), 1, pos), "MTL.txt")
-    sid <- substr(basename(x), 1, 3)
-    
-    sensor <- lutInfoSensorFromSID(sid)
-    band_code <- lutInfoBCDEFromBID(band_ids, sid)
-    data.frame(SID = sid, 
-               SENSOR = sensor,
-               BID = band_ids,
-               BCDE = band_code,
-               LAYER = layer,
-               FILE = x,
-               CALIB = "SC",
-               METAFILE = meta,
-               stringsAsFactors = FALSE)
-  })
-  result <- (do.call("rbind", info))
-  rownames(result) <- NULL
-  return(result)
+  if((length(files) == 1 & grepl("MTL", files[1])) == FALSE){
+    info <- lapply(files, function(x){
+      layer <- tools::file_path_sans_ext(basename(x))
+      pos <- gregexpr(pattern ='_B', layer)[[1]][1]
+      band_ids <- substr(basename(x), pos + 2, 
+                         nchar(layer))
+      meta <- paste0(dirname(x), "/", substr(basename(x), 1, pos), "MTL.txt")
+      sid <- substr(basename(x), 1, 3)
+      
+      sensor <- lutInfoSensorFromSID(sid)
+      band_code <- lutInfoBCDEFromBID(sid = sid, bid = band_ids)
+      data.frame(SID = sid, 
+                 SENSOR = sensor,
+                 BID = band_ids,
+                 BCDE = band_code,
+                 LAYER = layer,
+                 FILE = x,
+                 CALIB = "SC",
+                 METAFILE = meta,
+                 stringsAsFactors = FALSE,
+                 row.names = NULL)
+    })
+    result <- (do.call("rbind", info))
+    return(result)
+  } else {
+    info <- lapply(files, function(x){
+      sid <- substr(basename(x), 1, 3)
+      sensor <- lutInfoSensorFromSID(sid)
+      band_code <- lutInfoBCDEFromBID(sid = sid)
+      data.frame(BCDE = as.character(band_code),SID = sid, 
+                 SENSOR = sensor,
+                 BID = NA,
+                 LAYER = NA,
+                 FILE = NA,
+                 CALIB = NA,
+                 METAFILE = x,
+                 stringsAsFactors = FALSE,
+                 row.names = NULL)
+    })
+    result <- (do.call("rbind", info))
+    rownames(result) <- NULL
+    return(result)
+  }
 }
