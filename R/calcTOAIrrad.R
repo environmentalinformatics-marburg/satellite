@@ -13,7 +13,7 @@ if ( !isGeneric("calcTOAIrrad") ) {
 #' @param x Satellite, Raster*, or numeric object of the sensor's band values
 #' @param method name of the method to be used ("Table", "Model", "RadRef)
 #' @param model name of the model to be used if method is "Model"
-#' (one of "MCebKur_MChKur", "MNewKur", "MthKur", "MoldKur", "MODWherli_WMO")
+#' (see \code{\link{.calcTOAIrradModel}})
 #' @param rsr relative spectral response function (see details for structure)
 #' @param rad_max maximum radiance of satellite band(s)
 #' @param rad_min minimum radiance of satellite band(s)
@@ -142,71 +142,45 @@ setMethod("calcTOAIrrad",
             }
             
             if(method == "Table"){
-#               if(normalize == TRUE){
-#                 esun <- .calcTOAIrradRadTable(sid = getSatSID(x), 
-#                                              normalize  = normalize)
-#               } else {
+              if(normalize == TRUE){
+                esun <- .calcTOAIrradRadTable(sid = getSatSID(x), 
+                                             normalize  = normalize)
+              } else {
                 esun <- .calcTOAIrradRadTable(sid = getSatSID(x), 
                                              normalize  = normalize, 
                                              esd = esd)
-#               }
+              }
               bcde = names(esun)
             } else if(method == "Model"){
               rsr <- lutInfoRSRromSID(sid = getSatSID(x))
-#               if(normalize == TRUE){
-#                 esun <- .calcTOAIrradModel(rsr = rsr, model = model, 
-#                                           normalize = normalize)
-#               } else {
+              if(normalize == TRUE){
+                esun <- .calcTOAIrradModel(rsr = rsr, model = model, 
+                                          normalize = normalize)
+              } else {
                 esun <- .calcTOAIrradModel(rsr = rsr, model = model, 
                                           normalize = normalize, esd = esd)
-#               }
+              }
               bcde = names(esun)
             } else if(method == "RadRef"){
-#               if(normalize == TRUE){
+              if(normalize == TRUE){
                 esun <- 
                   .calcTOAIrradRadRef(
                     rad_max = getSatRadMax(x, getSatBCDESolar(x)), 
                     ref_max = getSatRefMax(x, getSatBCDESolar(x)),
                     esd = esd, normalize = normalize)
-#               } else {
-#                 esun <- 
-#                   .calcTOAIrradRadRef(
-#                     rad_max = getSatRadMax(x, getSatBCDESolar(x)), 
-#                     ref_max = getSatRefMax(x, getSatBCDESolar(x)), 
-#                     normalize = normalize)
-#               }
+              } else {
+                esun <- 
+                  .calcTOAIrradRadRef(
+                    rad_max = getSatRadMax(x, getSatBCDESolar(x)), 
+                    ref_max = getSatRefMax(x, getSatBCDESolar(x)), 
+                    normalize = normalize)
+              }
               bcde = getSatBCDESolar(x)
             }
             x <- addSatMetaParam(x, 
                                  meta_param = data.frame(
                                    BCDE = bcde,
                                    ESUN = as.numeric(esun)))
-            return(x)
-          })
-
-
-# Function for Raster objects --------------------------------------------------
-#' @rdname calcTOAIrrad
-#' @export calcTOAIrrad
-setMethod("calcTOAIrrad", 
-          signature(x = "Raster"), 
-          function(x, sid, method = "Table", model = "MNewKur", 
-                   normalize = TRUE, esd, rad_max, ref_max){
-            
-            if(method == "Table"){
-              esun <- .calcTOAIrradRadTable(sid = sid, 
-                                            normalize  = normalize, esd = esd)
-            } else if(method == "Model"){
-              rsr <- lutInfoRSRromSID(sid = sid)
-              esun <- .calcTOAIrradModel(rsr = rsr, model = model, 
-                                         normalize = normalize, esd = esd)
-            } else if(method == "RadRef"){
-              esun <- 
-                .calcTOAIrradRadRef(
-                  rad_max = rad_max, 
-                  ref_max = ref_max,
-                  esd = esd, normalize = normalize)
-            }
             return(x)
           })
 

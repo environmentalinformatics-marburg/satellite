@@ -3,15 +3,11 @@
 \docType{methods}
 \name{calcTOAIrrad}
 \alias{calcTOAIrrad}
-\alias{calcTOAIrrad,Raster-method}
 \alias{calcTOAIrrad,Satellite-method}
 \title{Calculate or look-up TOA solar irradiance (ESun) for the sensor bands}
 \usage{
 \S4method{calcTOAIrrad}{Satellite}(x, method = "Table", model = "MNewKur",
   normalize = TRUE, esd)
-
-\S4method{calcTOAIrrad}{Raster}(x, sid, method = "Table", model = "MNewKur",
-  normalize = TRUE, esd, rad_max, ref_max)
 }
 \arguments{
 \item{x}{Satellite, Raster*, or numeric object of the sensor's band values}
@@ -19,7 +15,7 @@
 \item{method}{name of the method to be used ("Table", "Model", "RadRef)}
 
 \item{model}{name of the model to be used if method is "Model"
-(one of "MCebKur_MChKur", "MNewKur", "MthKur", "MoldKur", "MODWherli_WMO")}
+(see \code{\link{.calcTOAIrradModel}})}
 
 \item{normalize}{normalize ESun to mean earth sun distance}
 
@@ -27,9 +23,9 @@
 normalize, it is tried to take it from the metadata, otherwise it is estimated
 by the day of the year using \code{\link{calcEartSunDist}}.}
 
-\item{rad_max}{maximum radiance of satellite band(s)}
-
 \item{rsr}{relative spectral response function (see details for structure)}
+
+\item{rad_max}{maximum radiance of satellite band(s)}
 
 \item{rad_min}{minimum radiance of satellite band(s)}
 }

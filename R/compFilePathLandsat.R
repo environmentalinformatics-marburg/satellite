@@ -17,7 +17,7 @@
 #' compFilePathLandsat(files)  
 #' 
 compFilePathLandsat <- function(files){
-  if((length(files) == 1 & grepl("MTL", files[1])) == FALSE){
+  if((length(files) == 1 & grepl("MTL", files)) == FALSE){
     info <- lapply(files, function(x){
       layer <- tools::file_path_sans_ext(basename(x))
       pos <- gregexpr(pattern ='_B', layer)[[1]][1]
