@@ -93,13 +93,9 @@ lutInfoSensorFromSID <- function(sid){
 #'
 #' @describeIn lutInfo
 #' 
-lutInfoBCDEFromBID <- function(sid, bid){
+lutInfoBCDEFromBID <- function(bid, sid){
   act_bands <- lutInfoBandsFromSID(sid)
-  if(missing(bid)){
-    return(act_bands$BCDE)
-  } else {
-    return(act_bands$BCDE[act_bands$BID == bid])
-  }
+  return(act_bands$BCDE[act_bands$BID == bid])
 }
 
 

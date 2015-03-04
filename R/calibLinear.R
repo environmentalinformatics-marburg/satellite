@@ -5,10 +5,10 @@ if ( !isGeneric("calibLinear") ) {
 #' Convert DNs to radiance, reflectance and/or brightness temperature.
 #'
 #' @description
-#' The function converts the digital numbers of a sensor band to radiance (rad), 
-#' relfectance (ref) and/or brightness temperature (bt) using the calibration 
-#' coefficients from the metadata file. The reflectance  conversion can 
-#' additionaly be include a sun zenith correction.
+#' The function converts the digital numbers of a Lansat 8 level 1B/T file
+#' to radiance (rad), relfectance (ref) and/or brightness temperature (bt) using
+#' the calibration coefficients from the metadata file. The reflectance 
+#' conversion can additionaly be include a sun zenith correction.
 #'
 #' @param x Satellite, Raster*, or numeric object of the sensor's band values
 #' @param bnbr number of the band (required if rasterstack)
@@ -39,7 +39,6 @@ if ( !isGeneric("calibLinear") ) {
 #'
 NULL
 
-# Function for Satellite objects -----------------------------------------------
 #' @rdname calibLinear
 #' @export calibLinear
 setMethod("calibLinear", 
@@ -140,7 +139,6 @@ setMethod("calibLinear",
           })
 
 
-# Function for Raster objects --------------------------------------------------
 #' @rdname calibLinear
 #' @export calibLinear
 setMethod("calibLinear", 
@@ -161,7 +159,6 @@ setMethod("calibLinear",
           })
 
 
-# Base function for calibratin sensor data -------------------------------------
 .calibLinear <-  function(x, bnbr = 1, mult, add, szen, k1, k2){
   result <- mult[bnbr] * x + add[bnbr]
   if(!missing(szen)){

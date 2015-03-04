@@ -28,10 +28,10 @@
 Satellite, Raster*, or numeric object object with converted values
 }
 \description{
-The function converts the digital numbers of a sensor band to radiance (rad),
-relfectance (ref) and/or brightness temperature (bt) using the calibration
-coefficients from the metadata file. The reflectance  conversion can
-additionaly be include a sun zenith correction.
+The function converts the digital numbers of a Lansat 8 level 1B/T file
+to radiance (rad), relfectance (ref) and/or brightness temperature (bt) using
+the calibration coefficients from the metadata file. The reflectance
+conversion can additionaly be include a sun zenith correction.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")

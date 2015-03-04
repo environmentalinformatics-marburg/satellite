@@ -27,9 +27,9 @@
 #' compMetaLandsat(files)
 #' 
 compMetaLandsat <- function(files){
-
+  
   datafiles <- compFilePathLandsat(files)
-
+  
   bandinfo <- lutInfoBandsFromSID(datafiles$SID[1])
   bandinfo <- merge(bandinfo, datafiles, by = "BCDE")
   

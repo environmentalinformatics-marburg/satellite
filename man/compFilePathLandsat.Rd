@@ -7,8 +7,7 @@
 compFilePathLandsat(files)
 }
 \arguments{
-\item{files}{path and filename of one or more Landsat band files or
-alternatively one or more Landsat metadata files}
+\item{files}{path and filename of one or more landsat band file}
 }
 \value{
 Data frame containing filepathes, band numbers and metafilepathes
