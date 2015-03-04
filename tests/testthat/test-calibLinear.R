@@ -10,7 +10,7 @@ test_that("calibLinear works as expected", {
   
   bcde <- "B002n"
   
-  t1 <- calibLinear(x = getValues(getSatDataLayer(sat, bcde)),
+  t1 <- calibLinear(band = getSatDataLayer(sat, bcde),
                     bnbr = 1,
                     mult = getSatREFM(sat, bcde),
                     add = getSatREFA(sat, bcde))
