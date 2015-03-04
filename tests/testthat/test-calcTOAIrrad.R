@@ -93,15 +93,15 @@ test_that("calcTOAIrrad works as expected for Satellite", {
 
 
 test_that("alcTOAIrrad works as expected for numeric", {
-  calcTOAIrradModel(lut$L8_RSR, model = "MNewKur")
-  calcTOAIrradModel(lut$L7_RSR, model = "MNewKur")
-  calcTOAIrradModel(lut$L7_RSR, model = "MNewKur", normalize = FALSE, 
+  calcTOAIrrad(lut$L8_RSR, method = "Model", model = "MNewKur")
+  calcTOAIrrad(lut$L7_RSR, method = "Model", model = "MNewKur")
+  calcTOAIrrad(lut$L7_RSR, method = "Model", model = "MNewKur", normalize = FALSE, 
                     esd = calcEartSunDist("2015-01-01"))
 })
 
 test_that("calcTOAIrradRadTable works as expected for character", {
-  calcTOAIrradRadTable(sid = "LE5")
-  calcTOAIrradRadTable(sid = "LE7")
-  calcTOAIrradRadTable(sid = "LE7", normalize = FALSE, 
+  calcTOAIrrad(method = "table", sid = "LE5")
+  calcTOAIrrad(method = "table", sid = "LE7")
+  calcTOAIrrad(method = "table", sid = "LE7", normalize = FALSE, 
                        esd = calcEartSunDist("2015-01-01"))
 })
