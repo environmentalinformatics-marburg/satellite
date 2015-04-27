@@ -9,9 +9,13 @@ calibLinear(band, mult, add, szen, k1, k2)
 \arguments{
 \item{band}{raster, rasterstack or data frame object of the sensor band}
 
-\item{coefs}{coefficients data frame resulting from compMetaLandsat()}
+\item{mult}{multiplicative coefficient for value transformation (i.e. slope)}
 
-\item{conv}{conversion type (one of "rad", "ref", "refsun", "bt")}
+\item{add}{additive coefficient for value transformation (i.e. offset)}
+
+\item{szen}{cosine of solar zenith angle}
+
+\item{k1,k2}{temperature correction parameters}
 }
 \value{
 Raster object with converted values

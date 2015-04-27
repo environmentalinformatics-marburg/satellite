@@ -5,17 +5,21 @@
 #' method which can be used to roughly correct the radiance values for 
 #' atmospheric scattering.
 #'
-#' @param DNmin digital number of dark object in band bnbr
+#' @param DNmin digital number of dark object in band bnbr (e.g. minimum raw 
+#' count of selected raster band bnbr or \code{\link{calcDODN}})
 #' @param bnbr band number for which DNmin is valid
 #' @param band_wls band wavelengths for which correction should be made (
 #' data frame with min, max in first, second column, see details)
-#' @param model to be used to correct for 1% scattering (DOS2, DOS4; must be the
-#' same as used by \code{\link{calcAtmosCorr}})
+#' @param radm multiplicative coefficient for radiance transformation (i.e. slope)
+#' @param rada additive coefficient for radiance transformation (i.e. offset)
+#' @param cos_szen cosine of the sun zenith angle
 #' @param esun actual (i.e. non-normalized) TOA solar irradianc, e.g. returned 
 #' from \code{link{calcTOAIrradTable}}, \code{link{calcTOAIrradModel}}, or
+#' @param model to be used to correct for 1% scattering (DOS2, DOS4; must be the
+#' same as used by \code{\link{calcAtmosCorr}})
 #' \code{link{calcTOAIrradRadRef}} with normalization settings equal FALSE
-#' @param scat_coef scattering coefficient (-4.0, -2.0, -1.0, -0.7, -0.5)
 #' @param dos_adjust dark object adjustment assuming a reflexion of e.g. 0.01
+#' @param scat_coef scattering coefficient (-4.0, -2.0, -1.0, -0.7, -0.5)
 #'  
 #' @return Vector object with path radiance values for each band 
 #' (W m-2 micrometer-1)
