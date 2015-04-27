@@ -35,7 +35,7 @@ The radiometric correction is based on a dark object approach using
 either the DOS2 (Chavez 1996) or DOS4 (Moran et al. 1992) model.
 
 The minimum reflectance values for the dark object are identified using the
-approximation of Chavez (1988, see \code{\link{pathRadiance}} for details).
+approximation of Chavez (1988, see \code{\link{calcPathRadDOS}} for details).
 
 The estimated values of the solar irradiance required for the path radiance
 can be computed by one of \code{\link{calcTOAIrradRadTable}} which is used to
