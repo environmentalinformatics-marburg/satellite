@@ -81,9 +81,9 @@ included. To retrieve a sensor, use \code{lutInfo()$<Sensor ID>_BANDS}.
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 sat <- satellite(files)
-sat <- satTOAIrradModel(sat)
+sat <- satTOAIrrad(sat, method = "Model")
 
-bcde <- "002n"
+bcde <- "B002n"
 calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),
                bnbr = getSatLNBR(sat, bcde),
                band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)),
