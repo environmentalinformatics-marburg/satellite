@@ -10,7 +10,7 @@
 #' @param band_wls band wavelengths for which correction should be made (
 #' data frame with min, max in first, second column, see details)
 #' @param model to be used to correct for 1% scattering (DOS2, DOS4; must be the
-#' same as used by \code{\link{radiometricCorrection}})
+#' same as used by \code{\link{calcAtmosCorr}})
 #' @param esun actual (i.e. non-normalized) TOA solar irradianc, e.g. returned 
 #' from \code{link{calcTOAIrradTable}}, \code{link{calcTOAIrradModel}}, or
 #' \code{link{calcTOAIrradRadRef}} with normalization settings equal FALSE
@@ -84,7 +84,7 @@
 #'
 #' If you refer to Sawyer and Stephen 2014, please note that eq. 5 is wrong.
 #' 
-#' @seealso This function is used by \code{\link{radiometricCorrection}} to 
+#' @seealso This function is used by \code{\link{calcAtmosCorr}} to 
 #' compute the path radiance.
 #' 
 #' @examples

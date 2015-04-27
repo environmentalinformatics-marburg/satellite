@@ -20,7 +20,7 @@ from \code{link{calcTOAIrradTable}}, \code{link{calcTOAIrradModel}}, or
 \code{link{calcTOAIrradRadRef}} with normalization settings equal FALSE}
 
 \item{model}{to be used to correct for 1% scattering (DOS2, DOS4; must be the
-same as used by \code{\link{radiometricCorrection}})}
+same as used by \code{\link{calcAtmosCorr}})}
 
 \item{scat_coef}{scattering coefficient (-4.0, -2.0, -1.0, -0.7, -0.5)}
 
@@ -118,7 +118,7 @@ doi:10.1016/S0034-4257(00)00169-3, URL
 If you refer to Sawyer and Stephen 2014, please note that eq. 5 is wrong.
 }
 \seealso{
-This function is used by \code{\link{radiometricCorrection}} to
+This function is used by \code{\link{calcAtmosCorr}} to
 compute the path radiance.
 }
 
