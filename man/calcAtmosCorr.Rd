@@ -16,7 +16,7 @@ calcAtmosCorr(sensor_rad, path_rad, esun, szen, model = "DOS2")
 
 \item{eSun}{actual (i.e. non-normalized) TOA solar irradianc, e.g. returned
 from \code{\link{calcTOAIrradTable}}, \code{\link{calcTOAIrradModel}}, or
-\code{link{\calcTOAIrradRadRef}} with normalization settings equal FALSE}
+\code{\link{calcTOAIrradRadRef}} with normalization settings equal FALSE}
 
 \item{cos_szen}{cosine of the sun zenith angle}
 }

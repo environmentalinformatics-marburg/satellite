@@ -11,7 +11,7 @@
 #' @param path_rad path radiance, e.g. returned from \code{\link{calcPathRadDOS}}
 #' @param eSun actual (i.e. non-normalized) TOA solar irradianc, e.g. returned 
 #' from \code{\link{calcTOAIrradTable}}, \code{\link{calcTOAIrradModel}}, or
-#' \code{link{\calcTOAIrradRadRef}} with normalization settings equal FALSE
+#' \code{\link{calcTOAIrradRadRef}} with normalization settings equal FALSE
 #' @param cos_szen cosine of the sun zenith angle
 #' @param model model to be used (DOS2, DOS4), must be the same as used for
 #' \code{\link{calcPathRadDOS}}
