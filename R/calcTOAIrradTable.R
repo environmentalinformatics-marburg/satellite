@@ -10,7 +10,7 @@
 #'
 #' @return Vector object containing ESun for each band
 #'
-#' @export calcTOAIrradRadTable
+#' @export calcTOAIrradTable
 #' 
 #' @details Currently implemented sensors are Landsat 4, 5 and 7.
 #' 
@@ -28,7 +28,7 @@
 #' \href{http://landsathandbook.gsfc.nasa.gov/pdfs/Landsat7_Handbook.pdf}{NASA's
 #' Landsat7 handbook, tab 11.3 (Thuillier spectrum)}
 #' 
-#' @seealso \code{\link{calcTOAIrradRadTable}} for tabulated solar irradiance
+#' @seealso \code{\link{calcTOAIrradTable}} for tabulated solar irradiance
 #' values from the literature or \code{\link{calcTOAIrradRadRef}} for the 
 #' computation of the solar irradiance based on maximum radiation and reflection
 #' values of the dataset.
@@ -41,10 +41,10 @@
 #' data is organized as a Satellite object.
 #' 
 #' @examples
-#' calcTOAIrradRadTable(sensor = "LC7", normalize = FALSE, 
+#' calcTOAIrradTable(sensor = "LC7", normalize = FALSE, 
 #' calcEartSunDist("2015-01-01"))
 #' 
-calcTOAIrradRadTable <- function(sid, normalize = TRUE, esd){
+calcTOAIrradTable <- function(sid, normalize = TRUE, esd){
   if(sid == "LE7") {
     eSun <- lut$L7_ESUN
   } else if(sid == "LE5") {

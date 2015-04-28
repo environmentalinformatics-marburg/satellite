@@ -21,7 +21,8 @@ data frame with min, max in first, second column, see details)}
 \item{rada}{additive coefficient for radiance transformation (i.e. offset)}
 
 \item{esun}{actual (i.e. non-normalized) TOA solar irradianc, e.g. returned
-from \code{\link{calcTOAIrrad}}.}
+from e.g. \code{\link{calcTOAIrradRadRef}}, \code{\link{calcTOAIrradTable}}
+or \code{\link{calcTOAIrradModel}}.}
 
 \item{model}{to be used to correct for 1% scattering (DOS2, DOS4; must be the
 same as used by \code{\link{calcAtmosCorr}})
