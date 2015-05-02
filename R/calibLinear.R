@@ -7,8 +7,10 @@
 #' conversion can additionaly be include a sun zenith correction.
 #'
 #' @param band raster, rasterstack or data frame object of the sensor band
-#' @param coefs coefficients data frame resulting from compMetaLandsat()
-#' @param conv conversion type (one of "rad", "ref", "refsun", "bt")
+#' @param mult multiplicative coefficient for value transformation (i.e. slope)
+#' @param add additive coefficient for value transformation (i.e. offset)
+#' @param szen cosine of solar zenith angle
+#' @param k1,k2 temperature correction parameters
 #'
 #' @return Raster object with converted values
 #'

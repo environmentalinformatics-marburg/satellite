@@ -15,8 +15,8 @@ calcAtmosCorr(sensor_rad, path_rad, esun, szen, model = "DOS2")
 \code{\link{calcPathRadDOS}}}
 
 \item{eSun}{actual (i.e. non-normalized) TOA solar irradianc, e.g. returned
-from \code{link{calcTOAIrradTable}}, \code{link{calcTOAIrradModel}}, or
-\code{link{calcTOAIrradRadRef}} with normalization settings equal FALSE}
+from \code{\link{calcTOAIrradTable}}, \code{\link{calcTOAIrradModel}}, or
+\code{\link{calcTOAIrradRadRef}} with normalization settings equal FALSE}
 
 \item{cos_szen}{cosine of the sun zenith angle}
 }
@@ -35,7 +35,7 @@ The radiometric correction is based on a dark object approach using
 either the DOS2 (Chavez 1996) or DOS4 (Moran et al. 1992) model.
 
 The minimum reflectance values for the dark object are identified using the
-approximation of Chavez (1988, see \code{\link{pathRadiance}} for details).
+approximation of Chavez (1988, see \code{\link{calcPathRadDOS}} for details).
 
 The estimated values of the solar irradiance required for the path radiance
 can be computed by one of \code{\link{calcTOAIrradRadTable}} which is used to

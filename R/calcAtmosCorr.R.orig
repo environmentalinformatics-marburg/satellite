@@ -12,7 +12,11 @@
 #' @param eSun actual (i.e. non-normalized) TOA solar irradianc, e.g. returned 
 #' from \code{\link{calcTOAIrradTable}}, \code{\link{calcTOAIrradModel}}, or
 #' \code{\link{calcTOAIrradRadRef}} with normalization settings equal FALSE
+<<<<<<< HEAD
 #' @param szen sun zenith angle in degrees.
+=======
+#' @param cos_szen cosine of the sun zenith angle
+>>>>>>> upstream/master
 #' @param model model to be used (DOS2, DOS4), must be the same as used for
 #' \code{\link{calcPathRadDOS}}
 #'
@@ -77,6 +81,24 @@
 #' @examples
 #' not run:
 #' calcAtmosCorr(filepath = "Name_of_Landsat_Metadata_File")
+#' 
+#' path <- system.file("extdata", package = "satellite")
+#' files <- list.files(path, pattern = glob2rx("LE7*.tif"), full.names = TRUE)
+#' #reading meta data to data frame
+#' dfmeta <- compMetaLandsat(paste0(path,"LC81950252013188LGN00_MTL.txt"))
+#' dfmeta <- dfmeta[!is.na(dfmeta$SPECTRUM) & dfmeta$SRES == 30, ]
+#' #specify bandnr
+#' n <- 2
+#' #calculate solar irradiance
+#' inesun <- calcTOAIrradRadRef(rad_max = dfmeta$RADMAX, ref_max = dfmeta$REFMAX, normalize = FALSE, esd = calcEartSunDist(dfmeta$DATE))
+#' #calculate DOS path radiance
+#' inpath_rad <- calcPathRadDOS(DNmin = min(getValues(landsat_8[[n]])), bnbr = dfmeta$LNBR[dfmeta$BID==n], band_wls = data.frame(LMIN = dfmeta$LMIN,
+#' LMAX = dfmeta$LMAX), radm = dfmeta$RADM, rada = dfmeta$RADA, szen = dfmeta$SZEN, inesun, model = "DOS2", scat_coef = -4, dos_adjust = 0.01)
+#' #calculate atmospheric correction for sat images
+#' for(img in rep(1:length(names(landsat_8)))){
+#'  tmp <- calcAtmosCorr(sensor_rad = landsat_8[[img]], inpath_rad[img], inesun[img], dfmeta$SZEN[img])
+#'  landsat_8_ac <- stack(atcor,tmp)
+#' }
 
 calcAtmosCorr <- function(sensor_rad, path_rad, esun, szen, model = "DOS2"){
   cos_szen <- cos(szen * pi / 180.0)

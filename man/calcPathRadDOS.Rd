@@ -8,23 +8,31 @@ calcPathRadDOS(DNmin, bnbr, band_wls, radm, rada, szen, esun, model = "DOS2",
   scat_coef = -4, dos_adjust = 0.01)
 }
 \arguments{
-\item{DNmin}{digital number of dark object in band bnbr}
+\item{DNmin}{digital number of dark object in band bnbr (e.g. minimum raw
+count of selected raster band bnbr or \code{\link{calcDODN}})}
 
 \item{bnbr}{band number for which DNmin is valid}
 
 \item{band_wls}{band wavelengths for which correction should be made (
 data frame with min, max in first, second column, see details)}
 
+\item{radm}{multiplicative coefficient for radiance transformation (i.e. slope)}
+
+\item{rada}{additive coefficient for radiance transformation (i.e. offset)}
+
 \item{esun}{actual (i.e. non-normalized) TOA solar irradianc, e.g. returned
-from \code{link{calcTOAIrradTable}}, \code{link{calcTOAIrradModel}}, or
-\code{link{calcTOAIrradRadRef}} with normalization settings equal FALSE}
+from e.g. \code{\link{calcTOAIrradRadRef}}, \code{\link{calcTOAIrradTable}}
+or \code{\link{calcTOAIrradModel}}.}
 
 \item{model}{to be used to correct for 1% scattering (DOS2, DOS4; must be the
-same as used by \code{\link{radiometricCorrection}})}
+same as used by \code{\link{calcAtmosCorr}})
+\code{link{calcTOAIrradRadRef}} with normalization settings equal FALSE}
 
 \item{scat_coef}{scattering coefficient (-4.0, -2.0, -1.0, -0.7, -0.5)}
 
 \item{dos_adjust}{dark object adjustment assuming a reflexion of e.g. 0.01}
+
+\item{cos_szen}{cosine of the sun zenith angle}
 }
 \value{
 Vector object with path radiance values for each band
@@ -74,9 +82,9 @@ included. To retrieve a sensor, use \code{lutInfo()$<Sensor ID>_BANDS}.
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 sat <- satellite(files)
-sat <- satTOAIrradModel(sat)
+sat <- satTOAIrrad(sat, method = "Model")
 
-bcde <- "002n"
+bcde <- "B002n"
 calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),
                bnbr = getSatLNBR(sat, bcde),
                band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)),
@@ -118,7 +126,7 @@ doi:10.1016/S0034-4257(00)00169-3, URL
 If you refer to Sawyer and Stephen 2014, please note that eq. 5 is wrong.
 }
 \seealso{
-This function is used by \code{\link{radiometricCorrection}} to
+This function is used by \code{\link{calcAtmosCorr}} to
 compute the path radiance.
 }
 
