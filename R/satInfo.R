@@ -343,6 +343,36 @@ getSatCalib <- function(sat, bcde){
 }
 
 
+# Return TYPE band codes matching id ------------------------------------------
+#' @export getSatBCDEType
+#'
+#' @rdname satInfo
+#' 
+getSatBCDEType <- function(sat, bcde, id){
+  type <- getSatType(sat, bcde)
+  result <- getSatBCDE(sat)[grep(id, type)]
+  if(length(result) == 0){
+    result = NA_character_
+  }
+  return(result)
+}
+
+
+# Return SRES band codes matching id ------------------------------------------
+#' @export getSatBCDESres
+#'
+#' @rdname satInfo
+#' 
+getSatBCDESres <- function(sat, bcde, id){
+  sres <- getSatRes(sat, bcde)
+  result <- getSatBCDE(sat)[grep(id, sres)]
+  if(length(result) == 0){
+    result = NA_character_
+  }
+  return(result)
+}
+
+
 # Return CALIB band codes matching id ------------------------------------------
 #' @export getSatBCDECalib
 #'
