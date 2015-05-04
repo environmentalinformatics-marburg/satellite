@@ -44,7 +44,11 @@ if ( !isGeneric("panSharpening") ) {
 #' http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=1368950&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D1368950
 
 #'
-#' @examples test
+#' @examples 
+#' path <- system.file("extdata", package = "satellite")
+#' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+#' sat <- satellite(files)
+#' panSharpening(sat)
 #' 
 setMethod("panSharpening", 
           signature(x = "Satellite"), 
