@@ -63,7 +63,7 @@ topoC <- function (x,dem=NULL,cloudmask=TRUE){
   if (class (x)=="RasterLayer"){
     model<-summary(lm(values(xtmp)~values(hillsh)))
     calib<-hillsh*model$coefficients[[2]]+model$coefficients[[1]]
-    topoC <- x-calib+mean(values(xtmp),na.rm=T)
+    result <- x-calib+mean(values(xtmp),na.rm=TRUE)
   }
   if (class (x)=="RasterStack"||class (x)=="RasterBrick"){
     lmfun<-function(x){summary(lm(x~values(hillsh)))$coefficients[1:2]}
@@ -72,7 +72,7 @@ topoC <- function (x,dem=NULL,cloudmask=TRUE){
     for (i in 1:ncol(model)){
       calib[[i]]<-values(hillsh)*model[2,i]+model[1,i]
     }
-    topoC <- x-calib+apply(values(xtmp),2,mean,na.rm=T)
+    result <- x-calib+apply(values(xtmp),2,mean,na.rm=TRUE)
   }
   #return....
 }
