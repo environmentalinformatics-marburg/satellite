@@ -11,14 +11,14 @@ calcAtmosCorr(sensor_rad, path_rad, esun, szen, model = "DOS2")
 
 \item{path_rad}{path radiance, e.g. returned from \code{\link{calcPathRadDOS}}}
 
+\item{szen}{sun zenith angle}
+
 \item{model}{model to be used (DOS2, DOS4), must be the same as used for
 \code{\link{calcPathRadDOS}}}
 
 \item{eSun}{actual (i.e. non-normalized) TOA solar irradianc, e.g. returned
 from \code{\link{calcTOAIrradTable}}, \code{\link{calcTOAIrradModel}}, or
 \code{\link{calcTOAIrradRadRef}} with normalization settings equal FALSE}
-
-\item{cos_szen}{cosine of the sun zenith angle}
 }
 \value{
 Raster object containing converted data.
