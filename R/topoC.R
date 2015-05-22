@@ -74,5 +74,5 @@ topoC <- function (x,dem=NULL,cloudmask=TRUE){
     }
     result <- x-calib+apply(values(xtmp),2,mean,na.rm=TRUE)
   }
-  #return....
+  return(result)
 }
