@@ -8,11 +8,13 @@ Maintainer: Environmental Informatics
     <admin@environmentalinformatics-marburg.de>
 Description: The package provides a variety of functions which are usefull for
     handling, manipulating and visualizing remote sensing data.
-Depends:
+Depends: 
     raster
-Imports:
+Imports: 
     tools
 License: GPL-3
-Suggests:
-    testthat
+Suggests: 
+    testthat,
+    knitr
 LazyData: true
+VignetteBuilder: knitr

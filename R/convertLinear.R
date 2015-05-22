@@ -14,7 +14,7 @@
 #'
 #' @return Raster object with converted values
 #'
-#' @export calibLinear
+#' @export convertLinear
 #' 
 #' @references The conversion functions are taken from USGS' Landsat 8 manual
 #' which is available online at 
@@ -30,11 +30,11 @@
 #' 
 #' bcde <- "002n"
 #' 
-#' calibLinear(band = getSatDataLayer(sat, bcde),
+#' convertLinear(band = getSatDataLayer(sat, bcde),
 #'             mult = getSatRADM(sat, bcde),
 #'             add = getSatRADA(sat, bcde))
 #' 
-calibLinear <- function(band, mult, add, szen, k1, k2){
+convertLinear <- function(band, mult, add, szen, k1, k2){
   result <- mult * band + add
   if(!missing(szen)){
     result <- result / cos(szen * pi / 180.0)
