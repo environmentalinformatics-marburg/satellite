@@ -121,3 +121,18 @@ satPathRadDOS <- function(x, atmos_model = "DOS2", esun_mode = "RadRef"){
 satAtmosCorr <- function(x, atmos_model = "DOS2", esun_mode = "RadRef"){
   calcAtmosCorr(x, model = atmos_model, esun_method = esun_mode)
 }
+
+
+# Depricated calibLinearInverse ------------------------------------------------
+#' @export calibLinearInverse
+#'
+#' @rdname depricated
+#'
+calibLinearInverse <- function(band, ref_mult, ref_add, rad_mult, rad_add, 
+                               szen){
+  if(missing(szen)){
+    convertRef2Rad(band, ref_mult, ref_add, rad_mult, rad_add)
+  } else {
+    convertRef2Rad(band, ref_mult, ref_add, rad_mult, rad_add, szen)  
+  }
+}

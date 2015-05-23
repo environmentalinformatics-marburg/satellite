@@ -2,6 +2,7 @@
 % Please edit documentation in R/depricated.R
 \name{depricated}
 \alias{calibLinear}
+\alias{calibLinearInverse}
 \alias{depricated}
 \alias{satAtmosCorr}
 \alias{satCalib}
@@ -18,6 +19,8 @@ satTOAIrrad(x, method = "Table", model = "MNewKur", normalize = TRUE, esd)
 satPathRadDOS(x, atmos_model = "DOS2", esun_mode = "RadRef")
 
 satAtmosCorr(x, atmos_model = "DOS2", esun_mode = "RadRef")
+
+calibLinearInverse(band, ref_mult, ref_add, rad_mult, rad_add, szen)
 }
 \description{
 The functions have been implemented in the very beginging of the package

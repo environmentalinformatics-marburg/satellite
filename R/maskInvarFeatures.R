@@ -11,7 +11,6 @@
 #' threshold values (thv) for invariant features (nir/vis ratio < thv, 
 #' swir band values > 1-thv)
 #' 
-#'
 #' @return raster object with invariant pixels marked with 1, 0 otherwise
 #'
 #' @export maskInvarFeatures
@@ -40,13 +39,11 @@
 #'                   swir = getSatDataLayer(sat, "B007n"))
 #' 
 maskInvarFeatures <-function(vis, nir, swir, quant=0.01) {
-    ratio_nir_vis <- nir/vis
-    
-    ratio_nir_vis_quant <- quantile(ratio_nir_vis, probs = quant, na.rm=TRUE)
-    swir_quant <- quantile(swir, probs = 1-quant, na.rm=TRUE)
-    
-    invar_feats <- ratio_nir_vis < ratio_nir_vis_quant & swir > swir_quant
-    invar_feats[invar_feats == 0] <- NA
-        
-    return(invar_feats)
-  }
+  ratio_nir_vis <- nir/vis
+  ratio_nir_vis_quant <- quantile(ratio_nir_vis, probs = quant, na.rm=TRUE)
+  swir_quant <- quantile(swir, probs = 1-quant, na.rm=TRUE)
+  
+  invar_feats <- ratio_nir_vis < ratio_nir_vis_quant & swir > swir_quant
+  invar_feats[invar_feats == 0] <- NA
+  return(invar_feats)
+}

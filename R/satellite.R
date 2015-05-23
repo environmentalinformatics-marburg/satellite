@@ -2,7 +2,6 @@ if ( !isGeneric("satellite") ) {
   setGeneric("satellite", function(x, ...)
     standardGeneric("satellite"))
 }
-
 #' Create a Satellite object
 #'
 #' @description

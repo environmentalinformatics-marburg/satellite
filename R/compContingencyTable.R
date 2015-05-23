@@ -24,7 +24,6 @@
 #' 
 compContingencyTable <- function(pred, ref, ref_id){
   pairs <- extract(pred, ref[grep(ref_id, names(ts))])
-  
   valid <- lapply(seq(length(ref[grep(ref_id, names(ts))])), function(x) {
     dat <- data.frame(REFERENCE = ref@data[x, grep(ref_id, names(ts))], 
                       PREDICTION = unlist(pairs[x]))

@@ -3,24 +3,21 @@
 #' @description
 #' Earth-sun distance is computed by one of several empirical formulas.
 #' 
-#' @param date date of the sensor overpath (YYYY-MM-DD or POSIX* object)
-#' @param formula formula name to be used (Spencer, Mather, ESA)
+#' @param date Date of the sensor overpath (YYYY-MM-DD or POSIX* object)
+#' @param formula Formula providing author to be used (Spencer, Mather, ESA)
 #'
-#' @return vector object containing earth-sun distancen in AU
+#' @return Vector object containing earth-sun distancen in AU
 #'
 #' @export calcEartSunDist
 #' 
-#' @details Computation of ESun is taken from Updike and Comp (2011). Sun-earth
-#' distance is computed using \code{\link{calcEartSunDist}}.
+#' @details Computation of earth-sun distance using formulas provided by
+#' Spencer (1971), Mather (2005) or ESA.
 #' 
 #' @references The formulas are taken from the following sources:
 #' 
 #' Spencer: Spencer JW (1971) Fourier series representation of the position of 
 #' the sun. Search 2/5. Taken from 
-#' \url{http://www.mail-archive.com/sundialuni-koeln.de/msg01050.html}. See
-#' also: Bird R, Riordan C (1984) Simple solar spectral model for direct and 
-#' diffuse irradiance on horizontal and tilted planes at the Earth's surface for
-#' cloudless atmospheres. \url{http://www.nrel.gov/docs/legosti/old/2436.pdf}.
+#' \url{http://www.mail-archive.com/sundialuni-koeln.de/msg01050.html}. 
 #' 
 #' Mather:  Paul M. Mather (2005) Computer Processing of Remotely-Sensed Images:
 #' An Introduction. Wiley, ISBN: 978-0-470-02101-9, 
@@ -28,9 +25,9 @@
 #' 
 #' ESA: ESA Earth Observation Quality Control: Landsat frequently asked questions. 
 #' 
-#' @seealso \code{\link{calcEartSunDist}} for calculating the sun-earth distance based
-#' on the day of the year and \code{\link{eSun}} for wrapping this function and
-#' alternative derivation of ESun.
+#' See also: Bird R, Riordan C (1984) Simple solar spectral model for direct and 
+#' diffuse irradiance on horizontal and tilted planes at the Earth's surface for
+#' cloudless atmospheres. \url{http://www.nrel.gov/docs/legosti/old/2436.pdf}.
 #' 
 #' @examples
 #' calcEartSunDist(date = "2015-01-01", formula = "Spencer")

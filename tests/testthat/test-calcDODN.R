@@ -1,11 +1,8 @@
 context("compDODN")
 
 test_that("compDODN works as expected", {
-  path <- system.file("extdata", 
-                      package = "satellite")
-  files <- list.files(path, 
-                      pattern = glob2rx("LC8*.tif"), 
-                      full.names = TRUE)
+  path <- system.file("extdata", package = "satellite")
+  files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
   sat <- satellite(files)
 
   t1 <- calcDODN(getSatDataLayer(sat, bcde = "B002n"))

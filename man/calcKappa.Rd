@@ -11,31 +11,43 @@ calcKappa(ctable)
 \code{\link{comContingencyTable}})}
 }
 \value{
-matrix containing different kappa coefficients
+Matrix containing different kappa coefficients
 }
 \description{
 Calculate various kappa coefficients for accuracy assessment of
 classifications.
 }
 \details{
-currently, the following coefficients are implemented:
-standard kappa index
-kappa of location
-kappa of histogram
-chance agreement
-quantity agreement
-allocation agreement
-allocation disagreement
-quantity disagreement
+The forumlas have been take from Kuhnert et al. (2005) and Pontius
+and Millones (2011). Currently, the following coefficients are implemented:
+\itemize{
+  \item standard kappa index
+  \item kappa of location
+  \item kappa of histogram
+  \item chance agreement
+  \item quantity agreement
+  \item allocation agreement
+  \item allocation disagreement
+  \item quantity disagreement
+}
 }
 \examples{
 # Not run
 calcKappa(contab)
 }
 \references{
-Todo.
+Kuhnert M, Voinov A, Seppelt R (2005) Comparing raster map comparison
+algorithms for spatial modeling and analysis. Photogrammetric Engineering and
+Remote Sensing 71/8, doi: 10.14358/PERS.71.8.975 available online at
+ \url{http://dx.doi.org/10.14358/PERS.71.8.975}
+
+Pontius RG, Millones M (2011) Death to Kappa: birth of quantity
+disagreement and allocation disagreement for accuracy assessment.
+International Journal of Remote Sensing 32/15,
+doi: 10.1080/01431161.2011.552923, available online at
+ \url{http://dx.doi.org/10.1080/01431161.2011.552923}
 }
 \seealso{
-\code{\link{comContingencyTable}} for compiling a contingency table.
+\code{\link{compContingencyTable}} for compiling a contingency table.
 }
 
