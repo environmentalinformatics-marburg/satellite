@@ -111,3 +111,13 @@ satTOAIrrad <- function(x, method = "Table", model = "MNewKur",
 satPathRadDOS <- function(x, atmos_model = "DOS2", esun_mode = "RadRef"){
   calcPathRadDOS(x, model = atmos_model, esun_method = esun_mode)
 }
+
+
+# Depricated satAtmosCorr ------------------------------------------------------
+#' @export satAtmosCorr
+#'
+#' @rdname depricated
+#'
+satAtmosCorr <- function(x, atmos_model = "DOS2", esun_mode = "RadRef"){
+  calcAtmosCorr(x, model = atmos_model, esun_method = esun_mode)
+}

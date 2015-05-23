@@ -152,7 +152,6 @@ setMethod("convertSCLinear",
 #' 
 #' @rdname convertSCLinear
 #'
-
 setMethod("convertSCLinear", 
           signature(x = "RasterStack"), 
           function(x, mult, add, szen, k1, k2){
@@ -169,7 +168,6 @@ setMethod("convertSCLinear",
 #' 
 #' @rdname convertSCLinear
 #'
-
 setMethod("convertSCLinear", 
           signature(x = "RasterLayer"), 
           function(x, mult, add, szen, k1, k2){
