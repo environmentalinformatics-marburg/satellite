@@ -38,7 +38,7 @@ Satellite object with added converted layers
 
 raster::RasterStack object with converted layers
 
-raster::RasterLayer object with converted layers
+raster::RasterLayer object with converted layer
 }
 \description{
 Convert a band's scalled counts to radiance, reflectance

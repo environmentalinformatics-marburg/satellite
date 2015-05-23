@@ -1,16 +1,23 @@
-#' Get extraterrestrial solar irradiance (ESun) from readily tabulated values
+if ( !isGeneric("calcTOAIrradTable") ) {
+  setGeneric("calcTOAIrradTable", function(x, ...)
+    standardGeneric("calcTOAIrradTable"))
+}
+#' Get top of atmosphere solar irradiance using readily tabulated values
 #'
 #' @description
 #' Get mean extraterrestrial solar irradiance (ESun) using published values.
 #' 
-#' @param sid sensor id ("LC4/5/7")
-#' @param normalize normalize ESun to mean earth sun distance
-#' @param esd earth-sun distance (AU, can be estimated using 
-#' \code{\link{calcEartSunDist}})
-#'
-#' @return Vector object containing ESun for each band
+#' @param x An object of type Satellite or sensor id ("LC4/5/7") as character
+#' @param normalize Normalize ESun to mean earth sun distance, TRUE or FALSE
+#' @param esd Earth-sun distance (AU, can be estimated using 
+#' \code{\link{calcEarthSunDist}}). If x is a Satellite object and esd is not 
+#' supplied and necessary for normalization, it is tried to take it from the 
+#' metadata, otherwise it is estimated by the day of the year using 
+#' \code{\link{calcEartSunDist}}.
 #'
 #' @export calcTOAIrradTable
+#' 
+#' @name calcTOAIrradTable
 #' 
 #' @details Currently implemented sensors are Landsat 4, 5 and 7.
 #' 
@@ -28,37 +35,101 @@
 #' \href{http://landsathandbook.gsfc.nasa.gov/pdfs/Landsat7_Handbook.pdf}{NASA's
 #' Landsat7 handbook, tab 11.3 (Thuillier spectrum)}
 #' 
-#' @seealso \code{\link{calcTOAIrradTable}} for tabulated solar irradiance
-#' values from the literature or \code{\link{calcTOAIrradRadRef}} for the 
-#' computation of the solar irradiance based on maximum radiation and reflection
-#' values of the dataset.
+#' @seealso \code{\link{calcTOAIrradRadRef}} for the computation of the solar 
+#' irradiance based on maximum radiation and reflection values of the dataset or
+#' \code{\link{calcTOAIrradModel}} for the computation of the solar irradiance 
+#' based on look-up tables for the sensor's relative spectral resonse and solar 
+#' irradiation spectral data.
 #' 
-#' See \code{\link{calcEartSunDist}} for calculating the sun-earth 
+#' See \code{\link{calcEarthSunDist}} for calculating the earth-sun
 #' distance based on the day of the year which is called by this function if
 #' ESun should be corrected for actual earth sun distance.
 #' 
-#' See \code{\link{satTOAIrrad}} which can be used as a wrapper function if the
-#' data is organized as a Satellite object.
-#' 
 #' @examples
+#' path <- system.file("extdata", package = "satellite")
+#' files <- list.files(path, pattern = glob2rx("LE7*.tif"), full.names = TRUE)
+#' sat <- satellite(files)
+#' calcTOAIrradTable(sat)
+#'  
 #' calcTOAIrradTable(sensor = "LC7", normalize = FALSE, 
 #' calcEartSunDist("2015-01-01"))
 #' 
-calcTOAIrradTable <- function(sid, normalize = TRUE, esd){
-  if(sid == "LE7") {
-    eSun <- lut$L7_ESUN
-  } else if(sid == "LE5") {
-    eSun <- lut$L5_ESUN
-  } else if(sid == "LE4") {
-    eSun <- lut$L4_ESUN
-  } else {
-    stop(paste0("Satellite ID ", sid, " is not supported, yet."))
-  }
-  if(normalize == FALSE){
-    if(missing(esd)){
-      stop("Variable esd is missing.")
-    }
-    eSun <- esd * eSun
-  }
-  return(eSun)
-}
+NULL
+
+# Function using satellite object ----------------------------------------------
+#' 
+#' @return Satellite object with ESun information added to the metadata
+#' 
+#' @rdname calcTOAIrradTable
+#'
+setMethod("calcTOAIrradTable", 
+          signature(x = "Satellite"), 
+          function(x, normalize = TRUE, esd){
+            if(normalize == FALSE & missing(esd)){
+              esd = getSatESD(x)
+              if(is.na(esd)){
+                esd = calcEartSunDist(date)
+              } 
+            }
+            if(normalize == TRUE){
+              esun <- calcTOAIrradTable(x = getSatSID(x), 
+                                        normalize  = normalize)
+            } else {
+              esun <- calcTOAIrradTable(x = getSatSID(x), 
+                                        normalize  = normalize, 
+                                        esd = esd)
+            }
+            bcde = names(esun)
+            x <- addSatMetaParam(x, 
+                                 meta_param = data.frame(
+                                   BCDE = bcde,
+                                   ESUN = as.numeric(esun)))
+            return(x)
+          })
+
+
+# Function using factor --------------------------------------------------------
+#' 
+#' @return Vector object containing ESun for the respective band(s)
+#' 
+#' @rdname calcTOAIrradTable
+#'
+setMethod("calcTOAIrradTable", 
+          signature(x = "factor"),
+          function(x, normalize = TRUE, esd){
+            x <- as.character(x)  
+            if(missing(esd)){
+                eSun <- calcTOAIrradTable(x, normalize)
+              } else {
+                eSun <- calcTOAIrradTable(x, normalize, esd)
+              }
+              return(eSun)
+          })            
+
+
+# Function using character -----------------------------------------------------
+#' 
+#' @return Vector object containing ESun for the respective band(s)
+#' 
+#' @rdname calcTOAIrradTable
+#'
+setMethod("calcTOAIrradTable", 
+          signature(x = "character"),
+          function(x, normalize = TRUE, esd){
+            if(x == "LE7") {
+              eSun <- lut$L7_ESUN
+            } else if(x == "LE5") {
+              eSun <- lut$L5_ESUN
+            } else if(x == "LE4") {
+              eSun <- lut$L4_ESUN
+            } else {
+              stop(paste0("Satellite ID ", x, " is not supported, yet."))
+            }
+            if(normalize == FALSE){
+              if(missing(esd)){
+                stop("Variable esd is missing.")
+              }
+              eSun <- esd * eSun
+            }
+            return(eSun)
+          })
