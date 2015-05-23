@@ -1,16 +1,16 @@
+# devtools::test(".", "calcPathRadDOS")
 context("calcPathRadDOS")
 
-test_that("calcPathRadDOS works as expected", {
-  path <- system.file("extdata", 
-                      package = "satellite")
-  files <- list.files(path, 
-                      pattern = glob2rx("LC8*.tif"), 
-                      full.names = TRUE)
+
+#-------------------------------------------------------------------------------
+test_that("calcPathRadDOS for numeric works as expected", {
+  path <- system.file("extdata", package = "satellite")
+  files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
   sat <- satellite(files)
   sat <- satTOAIrrad(sat, method = "Model")
   
   bcde <- "B002n"
-  t1 <- calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),
+  t1 <- calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bcde))),
                        bnbr = getSatLNBR(sat, bcde),
                        band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)), 
                                              LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
@@ -21,7 +21,7 @@ test_that("calcPathRadDOS works as expected", {
                        model = "DOS2",
                        scat_coef = -4)
   
-  t2 <- calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),
+  t2 <- calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bcde))),
                        bnbr = getSatLNBR(sat, bcde),
                        band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)), 
                                              LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
@@ -31,8 +31,8 @@ test_that("calcPathRadDOS works as expected", {
                        esun = getSatESUN(sat, getSatBCDESolar(sat)),
                        model = "DOS2",
                        scat_coef = -2)
-
-  t3 <- calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),
+  
+  t3 <- calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bcde))),
                        bnbr = getSatLNBR(sat, bcde),
                        band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)), 
                                              LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
@@ -42,8 +42,8 @@ test_that("calcPathRadDOS works as expected", {
                        esun = getSatESUN(sat, getSatBCDESolar(sat)),
                        model = "DOS2",
                        scat_coef = -1)  
-
-  t4 <- calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),
+  
+  t4 <- calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bcde))),
                        bnbr = getSatLNBR(sat, bcde),
                        band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)), 
                                              LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
@@ -54,7 +54,7 @@ test_that("calcPathRadDOS works as expected", {
                        model = "DOS2",
                        scat_coef = -0.7)
   
-  t5 <- calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),
+  t5 <- calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bcde))),
                        bnbr = getSatLNBR(sat, bcde),
                        band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)), 
                                              LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
@@ -64,7 +64,7 @@ test_that("calcPathRadDOS works as expected", {
                        esun = getSatESUN(sat, getSatBCDESolar(sat)),
                        model = "DOS2",
                        scat_coef = -0.5)  
-
+  
   expect_equal(round(t1[1],3), c("B001n" = round(60.16885,3)))
   expect_equal(round(t2[3],3), c("B003n" = round(29.51984,3)))
   expect_equal(round(t3[4],3), c("B004n" = round(30.09144,3)))
@@ -85,3 +85,33 @@ test_that("calcPathRadDOS works as expected", {
   #   11 -0.0001497598  0.07333347  1.843295  4.843989  9.223823
 })
 
+
+#-------------------------------------------------------------------------------
+test_that("calcPathRadDOS for Satellite works as expected", {
+  path <- system.file("extdata", package = "satellite")
+  files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+  sat <- satellite(files)
+  
+  sat_pathrad <- calcPathRadDOS(sat, model = "DOS2", esun_method = "RadRef")
+  
+  expect_equal(round(getSatPRAD(sat_pathrad, bcde = "B002n"),3), 
+               round(c(B002n = 42.21805), 3))
+  expect_equal(round(getSatPRAD(sat_pathrad, bcde = "B009n"),3), 
+               round(c(B009n = -0.1560062), 3))
+})
+
+
+#-------------------------------------------------------------------------------
+  test_that("Depricated satPathRadDOS for Satellite works as expected", {
+    path <- system.file("extdata", package = "satellite")
+    files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+    sat <- satellite(files)
+    
+    sat_pathrad <- satPathRadDOS(sat, atmos_model = "DOS2", 
+                                 esun_mode = "RadRef")
+    
+    expect_equal(round(getSatPRAD(sat_pathrad, bcde = "B002n"),3), 
+                 round(c(B002n = 42.21805), 3))
+    expect_equal(round(getSatPRAD(sat_pathrad, bcde = "B009n"),3), 
+                 round(c(B009n = -0.1560062), 3))
+  })

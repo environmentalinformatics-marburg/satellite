@@ -101,3 +101,13 @@ satTOAIrrad <- function(x, method = "Table", model = "MNewKur",
                                                   ESUN = as.numeric(esun)))
   return(x)
 }
+
+
+# Depricated satTOAIrrad -------------------------------------------------------
+#' @export satPathRadDOS
+#'
+#' @rdname depricated
+#'
+satPathRadDOS <- function(x, atmos_model = "DOS2", esun_mode = "RadRef"){
+  calcPathRadDOS(x, model = atmos_model, esun_method = esun_mode)
+}

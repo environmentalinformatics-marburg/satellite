@@ -4,6 +4,7 @@
 \alias{calibLinear}
 \alias{depricated}
 \alias{satCalib}
+\alias{satPathRadDOS}
 \alias{satTOAIrrad}
 \title{Depricated functions}
 \usage{
@@ -12,6 +13,8 @@ satCalib(x, convert = "all", szen_correction = "TRUE")
 calibLinear(band, mult, add, szen, k1, k2)
 
 satTOAIrrad(x, method = "Table", model = "MNewKur", normalize = TRUE, esd)
+
+satPathRadDOS(x, atmos_model = "DOS2", esun_mode = "RadRef")
 }
 \description{
 The functions have been implemented in the very beginging of the package

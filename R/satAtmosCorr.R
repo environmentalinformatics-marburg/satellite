@@ -2,7 +2,6 @@ if ( !isGeneric("satAtmosCorr") ) {
   setGeneric("satAtmosCorr", function(x, ...)
     standardGeneric("satAtmosCorr"))
 }
-
 #' Calculate an atmospheric correction for the layers of a Satellite object
 #'
 #' @description
