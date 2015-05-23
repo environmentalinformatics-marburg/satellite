@@ -1,3 +1,4 @@
+# devtools::test(".", "satellite")
 context("satellite")
 
 test_that("satellite works as expected for Landsat 7  files", {

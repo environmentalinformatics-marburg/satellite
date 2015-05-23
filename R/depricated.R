@@ -18,15 +18,16 @@ calibLinear <- function(band, mult, add, szen, k1, k2){
   .Deprecated("convertSCLinear")
   if(missing(szen)){
     if(missing(k1)){
-      convertSCLinear(band, mult, add)
+      convertSCLinear(x = band, mult = mult, add = add)
     } else {
-      convertSCLinear(band, mult, add, k1, k2)  
+      convertSCLinear(x = band, mult = mult, add = add, k1 = k1, k2 =k2)  
     }
   } else {
     if(missing(k1)){
-      convertSCLinear(band, mult, add, szen)
+      convertSCLinear(x = band, mult = mult, add = add, szen = szen)
     } else {
-      convertSCLinear(band, mult, add, szen, k1, k2)
+      convertSCLinear(x = band, mult = mult, add = add, szen = szen,
+                      k1 = k1, k2 =k2)
     }
   }
 }

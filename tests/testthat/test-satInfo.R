@@ -1,3 +1,4 @@
+# devtools::test(".", "satInfo")
 context("satInfo")
 
 test_that("satAddLog works as expected for Landsat 8", {
