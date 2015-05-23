@@ -12,7 +12,11 @@
 #' @param eSun actual (i.e. non-normalized) TOA solar irradianc, e.g. returned 
 #' from \code{\link{calcTOAIrradTable}}, \code{\link{calcTOAIrradModel}}, or
 #' \code{\link{calcTOAIrradRadRef}} with normalization settings equal FALSE
+<<<<<<< HEAD
+#' @param szen sun zenith angle in degrees.
+=======
 #' @param szen sun zenith angle
+>>>>>>> e025a535a58f57edc3b1764e28c6c4641d337ac1
 #' @param model model to be used (DOS2, DOS4), must be the same as used for
 #' \code{\link{calcPathRadDOS}}
 #'

@@ -1,46 +1,38 @@
-if ( !isGeneric("satCalib") ) {
-  setGeneric("satCalib", function(x, ...)
-    standardGeneric("satCalib"))
+if ( !isGeneric("satConvertLinear") ) {
+  setGeneric("satConvertLinear", function(x, ...)
+    standardGeneric("satConvertLinear"))
 }
-#' Calibrate SC of Satellite object to radiance, reflectance and/or temperature
+#' Convert a band's scaled counts to radiance, reflectance and/or temperature
 #'
 #' @description
-#' Calibrate the scalled counts of a Satellite object to radiance, reflectance
-#' and or brightness temperature, using standard calibration procedures without
-#' atmospheric correction etc.
+#' Convert a band's scalled counts to radiance, reflectance
+#' and or brightness temperature, using a simple linear conversion without
+#' any kind of atmospheric correction etc.
 #' 
-#' @param x object of type Satellite
-#' @param method name of the method to be used ("Table", "Model", "RadRef)
-#' @param model name of the model to be used if method is "Model"
-#' (see \code{\link{calcTOAIrradModel}})
-#' @param normalize normalize ESun to mean earth sun distance
-#' @param esd earth-sun distance (AU), if not supplied and necessary for
-#' normalize, it is tried to take it from the metadata, otherwise it is estimated
-#' by the day of the year using \code{\link{calcEartSunDist}}.
-#' 
-#' @return Satellite object with added data layers for the respective conversions
-#' 
-#' @export satCalib
-#' 
-#' @name satCalib
-#'
-#' @details 
-#' The calibration is computed using \code{\link{calibLinear}}. 
-#' 
-#' Please refer to the respective functions for details on the computation.
-#' 
-#' @references Please refer to the respective functions for references.
+#' @param x An object of type Satellite or a raster::RasterStack
+#' @param convert Type of physical output, one of "rad", "ref", "bt" or "all"
+#' @param szen_cor Apply sun zenith correction, TRUE or FALSE
 #'  
-#' @seealso This function is a wrapper for \code{\link{calibLinear}}.
+#' @export satConvertLinear
+#' 
+#' @name satConvertLinear
+#'
+#' @return Satellite object with added converted layers
+#' 
+#' @details 
+#' The conversion functions are taken from USGS' Landsat 8 manual
+#' which is available online at 
+#' \url{http://landsat.usgs.gov/Landsat8_Using_Product.php}
+#' 
+#' @seealso \code{\link{calcAtmosCorr}} for converions of scaled counts 
+#' to physical units including a scene-based atmospheric correction.
 #' 
 #' @examples
-#' satPathRadDOSModel(sat)
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' sat <- satellite(files)  
-#' satPathRadDOSRadRef(sat)
-# 
-setMethod("satCalib", 
+#' sat <- satConvertLinear(sat)
+setMethod("satConvertLinear", 
           signature(x = "Satellite"), 
           function(x, convert = "all", szen_correction = "TRUE"){
             if(convert == "all"){
@@ -51,7 +43,7 @@ setMethod("satCalib",
               band_codes <- getSatBCDECalib(x, id = "SC")
               for(bcde in band_codes){
                 if(!is.na(getSatRADM(x, bcde))){
-                  sensor_rad <- calibLinear(band = getSatDataLayer(x, bcde),
+                  sensor_rad <- convertLinear(band = getSatDataLayer(x, bcde),
                                             mult = getSatRADM(x, bcde),
                                             add = getSatRADA(x, bcde))
                   layer_bcde <- paste0(bcde, "_RAD")
@@ -77,13 +69,13 @@ setMethod("satCalib",
                 if(!is.na(getSatREFM(x, bcde))){
                   if(szen_correction == TRUE){
                     szen <- getSatSZEN(x, bcde)
-                    sensor_ref <- calibLinear(band = getSatDataLayer(x, bcde),
+                    sensor_ref <- convertLinear(band = getSatDataLayer(x, bcde),
                                               mult = getSatREFM(x, bcde),
                                               add = getSatREFA(x, bcde),
                                               szen = szen)
                     calib = "REF"
                   } else {
-                    sensor_ref <- calibLinear(band = getSatDataLayer(x, bcde),
+                    sensor_ref <- convertLinear(band = getSatDataLayer(x, bcde),
                                               mult = getSatREFM(x, bcde),
                                               add = getSatREFA(x, bcde))
                     calib = "REF_NoSZEN"
@@ -109,7 +101,7 @@ setMethod("satCalib",
               band_codes <- getSatBCDEThermalCalib(x, id = "SC")
               for(bcde in band_codes){
                 if(!any(is.na(getSatRADM(x, bcde)), is.na(getSatBTK1(x, bcde)))){
-                  sensor_ref <- calibLinear(band = getSatDataLayer(x, bcde),
+                  sensor_ref <- convertLinear(band = getSatDataLayer(x, bcde),
                                             mult = getSatRADM(x, bcde),
                                             add = getSatRADA(x, bcde),
                                             k1 = getSatBTK1(x, bcde),
@@ -132,4 +124,5 @@ setMethod("satCalib",
             }
             return(x)
           })
-          
+
+

@@ -18,7 +18,7 @@
 #' or \code{\link{calcTOAIrradModel}}.
 #' @param model to be used to correct for 1% scattering (DOS2, DOS4; must be the
 #' same as used by \code{\link{calcAtmosCorr}})
-#' \code{link{calcTOAIrradRadRef}} with normalization settings equal FALSE
+#' \code{\link{calcTOAIrradRadRef}} with normalization settings equal FALSE
 #' @param dos_adjust dark object adjustment assuming a reflexion of e.g. 0.01
 #' @param scat_coef scattering coefficient (-4.0, -2.0, -1.0, -0.7, -0.5)
 #'  
