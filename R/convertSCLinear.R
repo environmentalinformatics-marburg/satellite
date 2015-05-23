@@ -165,7 +165,7 @@ setMethod("convertSCLinear",
 
 # Function using raster::RasterLayer object ------------------------------------
 #' 
-#' @return raster::RasterLayer object with converted layers
+#' @return raster::RasterLayer object with converted layer
 #' 
 #' @rdname convertSCLinear
 #'

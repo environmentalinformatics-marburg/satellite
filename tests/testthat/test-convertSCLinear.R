@@ -1,6 +1,8 @@
 # devtools::test(".", "satInfo")
 context("convertSCLinear")
 
+
+#-------------------------------------------------------------------------------
 test_that("convertSCLinear works as expected", {
   path <- system.file("extdata", 
                       package = "satellite")
@@ -35,24 +37,24 @@ test_that("convertSCLinear works as expected", {
   bcde <- "B002n"
   
   t1 <- convertSCLinear(x = getSatDataLayer(sat, bcde),
-                    mult = getSatREFM(sat, bcde),
-                    add = getSatREFA(sat, bcde))
+                        mult = getSatREFM(sat, bcde),
+                        add = getSatREFA(sat, bcde))
   
   t2 <- convertSCLinear(x = getSatDataLayer(sat, bcde),
-                    mult = getSatREFM(sat, bcde),
-                    add = getSatREFA(sat, bcde),
-                    szen = getSatSZEN(sat, bcde))
+                        mult = getSatREFM(sat, bcde),
+                        add = getSatREFA(sat, bcde),
+                        szen = getSatSZEN(sat, bcde))
   
   t3 <- convertSCLinear(x = getSatDataLayer(sat, bcde),
-                    mult = getSatRADM(sat, bcde),
-                    add = getSatRADA(sat, bcde))
+                        mult = getSatRADM(sat, bcde),
+                        add = getSatRADA(sat, bcde))
   
   bcde <- "B010n"
   t4 <- convertSCLinear(x = getSatDataLayer(sat, bcde),
-                    mult = getSatRADM(sat, bcde),
-                    add = getSatRADA(sat, bcde),
-                    k1 = getSatBTK1(sat, bcde),
-                    k2 = getSatBTK2(sat, bcde))
+                        mult = getSatRADM(sat, bcde),
+                        add = getSatRADA(sat, bcde),
+                        k1 = getSatBTK1(sat, bcde),
+                        k2 = getSatBTK2(sat, bcde))
   
   expect_equal(round(raster::getValues(t1)[50],3), round(0.10124,3))
   expect_equal(round(raster::getValues(t2)[50],3), round(0.1179185,3))
@@ -62,8 +64,7 @@ test_that("convertSCLinear works as expected", {
 })
 
 
-
-
+#-------------------------------------------------------------------------------
 test_that("Depricated satCalib and calibLinear works as expected", {
   path <- system.file("extdata", 
                       package = "satellite")
@@ -121,7 +122,4 @@ test_that("Depricated satCalib and calibLinear works as expected", {
   expect_equal(round(raster::getValues(t2)[50],3), round(0.1179185,3))
   expect_equal(round(raster::getValues(t3)[50],3), round(62.959,3))
   expect_equal(round(raster::getValues(t4)[50],3), round(303.5775,3))
-  
-  })
-
-  
+})

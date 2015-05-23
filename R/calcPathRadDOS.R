@@ -1,33 +1,46 @@
+if ( !isGeneric("calcPathRadDOS") ) {
+  setGeneric("calcPathRadDOS", function(x, ...)
+    standardGeneric("calcPathRadDOS"))
+}
 #' Compute path radiance based on the dark object method
 #'
 #' @description
-#' Compute an estimaed path radiance for all sensor band_wls using a dark object 
+#' Compute an estimaed path radiance for all sensor bands using a dark object 
 #' method which can be used to roughly correct the radiance values for 
 #' atmospheric scattering.
 #'
-#' @param DNmin digital number of dark object in band bnbr (e.g. minimum raw 
-#' count of selected raster band bnbr or \code{\link{calcDODN}})
-#' @param bnbr band number for which DNmin is valid
-#' @param band_wls band wavelengths for which correction should be made (
+#' @param x A Satellite object or the value (scalled count) of a dark object in 
+#' band bnbr (e.g. minimum raw count of selected raster band bnbr). If x is a
+#' Satellite object, the value is computed using \code{\link{calcDODN}})
+#' @param bnbr Band number for which DNmin is valid
+#' @param band_wls Band wavelengths for which correction should be made (
 #' data frame with min, max in first, second column, see details)
-#' @param radm multiplicative coefficient for radiance transformation (i.e. slope)
-#' @param rada additive coefficient for radiance transformation (i.e. offset)
-#' @param cos_szen cosine of the sun zenith angle
-#' @param esun actual (i.e. non-normalized) TOA solar irradianc, e.g. returned 
-#' from e.g. \code{\link{calcTOAIrradRadRef}}, \code{\link{calcTOAIrradTable}} 
+#' @param radm Multiplicative coefficient for radiance transformation (i.e. slope)
+#' @param rada Additive coefficient for radiance transformation (i.e. offset)
+#' @param szen Sun zenith angle
+#' @param esun Actual (i.e. non-normalized) TOA solar irradianc, e.g. returned 
+#' from \code{\link{calcTOAIrradRadRef}}, \code{\link{calcTOAIrradTable}} 
 #' or \code{\link{calcTOAIrradModel}}.
+#' @param esun_method If x is a Satellite object, name of the method to be used 
+#' to compute esun using one of \code{\link{calcTOAIrradRadRef}} ("RadRef"), 
+#' \code{\link{calcTOAIrradTable}} ("Table") or \code{\link{calcTOAIrradModel}}
+#' ("Model")
 #' @param model to be used to correct for 1% scattering (DOS2, DOS4; must be the
 #' same as used by \code{\link{calcAtmosCorr}})
-#' \code{\link{calcTOAIrradRadRef}} with normalization settings equal FALSE
 #' @param dos_adjust dark object adjustment assuming a reflexion of e.g. 0.01
 #' @param scat_coef scattering coefficient (-4.0, -2.0, -1.0, -0.7, -0.5)
 #'  
-#' @return Vector object with path radiance values for each band 
-#' (W m-2 micrometer-1)
-#'
 #' @export calcPathRadDOS
 #' 
-#' @details The dark object substraction approach is based on an approximation 
+#' @name calcPathRadDOS
+#' 
+#' @details 
+#' If x is a Satellite object, the minimum raw count value (x) is computed using
+#' \code{\link{calcDODN}}). If the TOA solar irradiance is not part of the 
+#' metadata of the Satellite object, it is computed using 
+#' \code{\link{satTOAIrrad}}.
+#'  
+#' The dark object substraction approach is based on an approximation 
 #' of the atmospheric path radiance (i.e. upwelling radiation which is 
 #' scatter into the sensors field of view, aka haze) using the reflectance of a 
 #' dark object (i.e. reflectance ~1%). 
@@ -94,6 +107,21 @@
 #' 
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
+#' files <- list.files(path, pattern = glob2rx("LE7*.tif"), full.names = TRUE)
+#' sat <- satellite(files)
+#' satPathRadDOSTable(sat)
+#' 
+#' path <- system.file("extdata", package = "satellite")
+#' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+#' sat <- satellite(files)
+#' 
+#' satPathRadDOSModel(sat)
+#' path <- system.file("extdata", package = "satellite")
+#' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+#' sat <- satellite(files)  
+#' satPathRadDOSRadRef(sat)
+#'  
+#' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' sat <- satellite(files)
 #' sat <- satTOAIrrad(sat, method = "Model")
@@ -110,56 +138,113 @@
 #'                model = "DOS2",
 #'                scat_coef = -4)
 #'   
-calcPathRadDOS <- function(DNmin, bnbr, band_wls, radm, rada, szen, esun,
-                           model = "DOS2", scat_coef = -4.0, dos_adjust = 0.01){
-  
-  # Define relative scattering model based on wavelength dependent scattering
-  # processes and different atmospheric optical thiknesses. Resulting 
-  # coefficients are the band wavelength to the power of the respective 
-  # scattering coefficients defined for the model.
-  scattering_model <- sapply(seq(nrow(band_wls)), function(x){
-    act_band <- seq(band_wls[x, 1], band_wls[x, 2], by=0.001)
-    mean(act_band ^ scat_coef)
-  })
-  
-  # Compute multiplication factors which relate the scattering model coefficents
-  # between the individual band_wls and the one band which has been used for the
-  # extraction of the dark object radiation.
-  basline_factor <- scattering_model[bnbr]
-  scattering_factors <- scattering_model / basline_factor
-  
-  # Compute radiation multiplication factors for radiance conversion (i.e.
-  # RADM) and normalize the factors to the multiplication factor of the band
-  # that has been used for the dark object extraction.
-  normalized_radm <- radm / radm[bnbr]
-  
-  # Compute first estimate of path radiance for all band_wls based on the values
-  # the band used to derive the dark object properties
-  lp_min <- radm[bnbr] * DNmin + rada[bnbr]
-  lp_min_band_wls <- lp_min * scattering_factors
-  # DN way
-  # DNmin_basis <- DNmin - rada[bnbr]
-  # DNmin_band_wls <- DNmin_basis * scattering_factors
-  # DNmin_band_wls_radm <- DNmin_band_wls * normalized_radm[1:6]
-  # DNmin_band_wls_rad <- DNmin_band_wls_radm + rada[1:6]
-  # radm[1:6] * DNmin_band_wls_rad + rada[1:6]
-  
-  # Compute a correction term for the path radiance values to consider a minimum
-  # surface reflection wich one can always expect.
-  esun
-  cos_szen <- cos(szen * pi / 180.0)
-  if(model == "DOS2"){
-    tv <- 1.0
-    tz <- cos_szen
-    edown <- 0.0
-  } else if(model == "DOS4"){
-    tv <- NA
-    tz <- NA
-    edown <- NA
-  }
-  lp_adj <- dos_adjust * (esun * cos_szen * tz + edown) * tv / pi
-  
-  # Compute final path radiance estimate for all band_wls
-  lp <- lp_min_band_wls - lp_adj
-  return(lp)
-}
+NULL
+
+
+# Function using satellite object ----------------------------------------------
+#' 
+#' @return Satellite object with path radiance for each band in the metadata
+#' (W m-2 micrometer-1)
+#' 
+#' @rdname calcPathRadDOS
+#'
+setMethod("calcPathRadDOS", 
+          signature(x = "Satellite"), 
+          function(x, model = "DOS2", esun_method = "RadRef"){
+            
+            # Take care of TOA solar irradiance information
+            if(any(is.na(getSatESUN(x, getSatBCDESolar(x))))){
+              # Compute toa irradiance for all solar band layers
+              if(esun_method == "Table"){
+                x <- calcTOAIrradTable(x, normalize = TRUE)
+              } else if(esun_method == "Model"){
+                x <- calcTOAIrradModel(x, model = "MNewKur", normalize = TRUE)
+              } else if(esun_method == "RadRef"){
+                x <- calcTOAIrradRadRef(x, normalize = "TRUE")
+              }
+            }
+            
+            
+            # Get solar bands with calibration information equals scaled counts
+            sc_bands <- getSatBCDESolarCalib(x, id = "SC")
+            
+            # Take care of dark object values
+            bcde <- "B002n"
+            dn_min <- calcDODN(getSatDataLayer(x, bcde))
+            
+            # Take care of path radiance
+            path_rad <- calcPathRadDOS(x = dn_min,
+                                       bnbr = getSatLNBR(x, bcde),
+                                       band_wls = data.frame(
+                                         LMIN = getSatLMIN(x, sc_bands),
+                                         LMAX = getSatLMAX(x, sc_bands)),
+                                       radm = getSatRADM(x, sc_bands),
+                                       rada = getSatRADA(x, sc_bands),
+                                       szen = getSatSZEN(x, sc_bands),
+                                       esun = getSatESUN(x, sc_bands),
+                                       model = model)
+            x <- addSatMetaParam(x, 
+                                 meta_param = data.frame(
+                                   BCDE = names(path_rad),
+                                   PRAD = as.numeric(path_rad)))
+            return(x)
+          })
+
+
+# Function using numeric -------------------------------------------------------
+#' 
+#' @return Vector object with path radiance values for each band 
+#' (W m-2 micrometer-1)
+#' 
+#' @rdname calcPathRadDOS
+#'
+setMethod("calcPathRadDOS", 
+          signature(x = "numeric"), 
+          function(x, bnbr, band_wls, radm, rada, szen, esun,
+                   model = "DOS2", scat_coef = -4.0, dos_adjust = 0.01){
+            
+            # Define relative scattering model based on wavelength dependent 
+            # scattering processes and different atmospheric optical thiknesses. 
+            # Resulting  coefficients are the band wavelength to the power of 
+            # the respective scattering coefficients defined for the model.
+            scattering_model <- sapply(seq(nrow(band_wls)), function(y){
+              act_band <- seq(band_wls[y, 1], band_wls[y, 2], by=0.001)
+              mean(act_band ^ scat_coef)
+            })
+            
+            # Compute multiplication factors which relate the scattering model 
+            # coefficents between the individual band_wls and the one band which 
+            # has been used for the eytraction of the dark object radiation.
+            basline_factor <- scattering_model[bnbr]
+            scattering_factors <- scattering_model / basline_factor
+            
+            # Compute radiation multiplication factors for radiance conversion 
+            # (i.e.RADM) and normalize the factors to the multiplication factor 
+            # of the band that has been used for the dark object eytraction.
+            normalized_radm <- radm / radm[bnbr]
+            
+            # Compute first estimate of path radiance for all band_wls based on 
+            # the values the band used to derive the dark object properties
+            lp_min <- radm[bnbr] * x + rada[bnbr]
+            lp_min_band_wls <- lp_min * scattering_factors
+            
+            # Compute a correction term for the path radiance values to consider
+            # a minimum surface reflection wich one can always eypect.
+            esun
+            cos_szen <- cos(szen * pi / 180.0)
+            if(model == "DOS2"){
+              tv <- 1.0
+              tz <- cos_szen
+              edown <- 0.0
+            } else if(model == "DOS4"){
+              tv <- NA
+              tz <- NA
+              edown <- NA
+            }
+            lp_adj <- dos_adjust * (esun * cos_szen * tz + edown) * tv / pi
+            
+            # Compute final path radiance estimate for all band_wls
+            lp <- lp_min_band_wls - lp_adj
+            return(lp)
+          })
+          
