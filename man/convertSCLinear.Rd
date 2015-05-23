@@ -63,7 +63,7 @@ sat <- satellite(files)
 sat <- convertSCLinear(sat)
 
 # If you use a raster layer, supply required meta information
-bcde <- "002n"
+bcde <- "B002n"
 convertSCLinear(band = getSatDataLayer(sat, bcde),
             mult = getSatRADM(sat, bcde),
             add = getSatRADA(sat, bcde))
