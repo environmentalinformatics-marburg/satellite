@@ -42,26 +42,52 @@
 calcHistMatch <- function(x, target, mask, ttab = FALSE, 
                             minv = NULL, maxv = NULL, step = NULL){
 
+  x <- getSatDataLayer(sat, "B002n")
+  target <- getSatDataLayer(sat, "B003n")
+  target <- getSatDataLayer(sat, "B002n")*1.12
   
-  n <- 256
-  m <- 20
-  ho <- hist(x, maxpixels = 1000000, breaks = n)
-  ht <- hist(target, maxpixels = 1000000, breaks = m)
+  n <- 500
+  nmin <- 1
+  nmax <- 500
+  m <- 500
   
-#   pixelsreq <- matrix(data = NA, nrow = n, ncol = m)
-#   pixelsrem <- matrix(data = NA, nrow = n, ncol = m)
-#   subtotal1 <- matrix(data = NA, nrow = n, ncol = m)
-#   subtotal2 <- matrix(data = NA, nrow = n, ncol = m)
-  t <- matrix(data = NA, nrow = n, ncol = m)
-  for(j in seq(m)){
-    for(i in seq(n)){
+  x <- round((x - minValue(x)) * (nmax - nmin) / (maxValue(x) - minValue(x)) + nmin)
+#   target <- (target - minValue(target)) * 
+#     (nmax - nmin) / (maxValue(target) - minValue(target)) + nmin
+#   
+  ho <- hist(x, maxpixels = 1000000, 
+             breaks = seq(minValue(x), maxValue(x), length.out = n+1))
+  ht <- hist(target, maxpixels = 1000000, 
+             breaks = seq(minValue(target), maxValue(target), length.out = m+1))
+  
+  t <- matrix(data = 0, nrow = length(ho$counts), ncol = length(ht$counts))
+  for(j in seq(length(ht$counts))){
+    for(i in seq(length(ho$counts))){
       pixelsreq <- ht$counts[j] - sum(t[1:i,j], na.rm = TRUE)
       pixelsrem <- ho$counts[i] - sum(t[i,1:j], na.rm = TRUE)
       t[i,j] <- min(pixelsreq, pixelsrem)
     }
   }
   t
-
+  df <-getValues(x)
+  df[which(df <= 1)] <- 1
+  for(i in seq(length(df))){
+    cpf <- cumsum(t[df[i],])
+    set.seed(1)
+    p <- sample(1:max(cpf), 1)
+    j <- which(p <= cpf)[1]
+    df[i] <- ht$breaks[j]
+    t[v,j] <- t[v,j]
+  }
+  df
+  x <- round(setValues(x, df))
+  plot(x)
+  plot(target)
+  hist(target)
+  hist(x)
+  
+  
+  
   if (missing(minv)) {
     minv <- floor(min(minValue(x), minValue(target), na.rm = TRUE))
   }
