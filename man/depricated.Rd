@@ -6,6 +6,7 @@
 \alias{depricated}
 \alias{satAtmosCorr}
 \alias{satCalib}
+\alias{satInvarFeatures}
 \alias{satPathRadDOS}
 \alias{satTOAIrrad}
 \title{Depricated functions}
@@ -21,6 +22,8 @@ satPathRadDOS(x, atmos_model = "DOS2", esun_mode = "RadRef")
 satAtmosCorr(x, atmos_model = "DOS2", esun_mode = "RadRef")
 
 calibLinearInverse(band, ref_mult, ref_add, rad_mult, rad_add, szen)
+
+satInvarFeatures(x)
 }
 \description{
 The functions have been implemented in the very beginging of the package

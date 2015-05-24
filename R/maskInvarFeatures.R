@@ -1,19 +1,24 @@
+if ( !isGeneric("maskInvarFeatures") ) {
+  setGeneric("maskInvarFeatures", function(x, ...)
+    standardGeneric("maskInvarFeatures"))
+}
 #' Identify pseudi-invariant features from a satellite scene
 #'
 #' @description
 #' Identify pseudi-invariant features from a satellite scene based on a 
 #' vis, near-infravis and short-wave infravis band.
 #'
-#' @param vis a raster of the sensor's vis band
+#' @param x A Satellite object or a raster::RasterLayer providing the sensor's 
+#' vis band
 #' @param nir a raster of the sensor's nir band
 #' @param swir a raster of the sensor's swir band
 #' @param quant a value v = [0...1] which is used to define the percentage
 #' threshold values (thv) for invariant features (nir/vis ratio < thv, 
 #' swir band values > 1-thv)
 #' 
-#' @return raster object with invariant pixels marked with 1, 0 otherwise
-#'
 #' @export maskInvarFeatures
+#' 
+#' @name maskInvarFeatures
 #' 
 #' @details Invariant features are identified as pixels which belong to the 
 #' group of (i) the n lowest VIS/NIR ratios and of (ii) the highest n
@@ -34,16 +39,63 @@
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' sat <- satellite(files)
-#' maskInvarFeatures(vis = getSatDataLayer(sat, "B004n"), 
+#' sat <- maskInvarFeatures(sat)
+#' 
+#' maskInvarFeatures(x = getSatDataLayer(sat, "B004n"), 
 #'                   nir = getSatDataLayer(sat, "B005n"), 
 #'                   swir = getSatDataLayer(sat, "B007n"))
+#'
+NULL
+
+
+# Function using satellite object ----------------------------------------------
 #' 
-maskInvarFeatures <-function(vis, nir, swir, quant=0.01) {
-  ratio_nir_vis <- nir/vis
-  ratio_nir_vis_quant <- quantile(ratio_nir_vis, probs = quant, na.rm=TRUE)
-  swir_quant <- quantile(swir, probs = 1-quant, na.rm=TRUE)
-  
-  invar_feats <- ratio_nir_vis < ratio_nir_vis_quant & swir > swir_quant
-  invar_feats[invar_feats == 0] <- NA
-  return(invar_feats)
-}
+#' @return Satellite object with added layer (invariant pixels 1, 0 otherwise)
+#' 
+#' @rdname maskInvarFeatures
+#'
+setMethod("maskInvarFeatures", 
+          signature(x = "Satellite"), 
+          function(x){
+            bcde_vis <- "B004n"
+            bcde_nir <- "B005n"
+            bcde_swir <- "B007n"
+            mask <- maskInvarFeatures(x = getSatDataLayer(x, bcde_vis), 
+                                      nir = getSatDataLayer(x, bcde_nir), 
+                                      swir = getSatDataLayer(x, bcde_swir))
+            layer_bcde <- "M0000_InvarFeatures"
+            
+            meta_param <- getSatSensorInfo(x)
+            meta_param$BCDE <- layer_bcde
+            meta_param$CALIB <- "BINARY"
+            
+            info <- sys.calls()[[1]]
+            info <- paste0("Add layer from ", info[1], "(", 
+                           toString(info[2:length(info)]), ")")
+            
+            x <- addSatDataLayer(x, bcde = layer_bcde, data = mask,
+                                 meta_param = meta_param,
+                                 info = info, in_bcde = paste(bcde_vis, 
+                                                              bcde_nir, 
+                                                              bcde_swir,
+                                                              sep = ", "))
+            return(x)
+          })
+
+# Function using raster::RasterLayer object ------------------------------------
+#' 
+#' @return raster::RasterLayer object with invariant pixels as 1, 0 otherwise
+#' 
+#' @rdname maskInvarFeatures
+#'
+setMethod("maskInvarFeatures", 
+          signature(x = "RasterLayer"), 
+          function(x, nir, swir, quant=0.01) {
+            ratio_nir_vis <- nir/x
+            ratio_nir_vis_quant <- quantile(ratio_nir_vis, probs = quant, na.rm=TRUE)
+            swir_quant <- quantile(swir, probs = 1-quant, na.rm=TRUE)
+            
+            invar_feats <- ratio_nir_vis < ratio_nir_vis_quant & swir > swir_quant
+            invar_feats[invar_feats == 0] <- NA
+            return(invar_feats)
+          })

@@ -136,3 +136,13 @@ calibLinearInverse <- function(band, ref_mult, ref_add, rad_mult, rad_add,
     convertRef2Rad(band, ref_mult, ref_add, rad_mult, rad_add, szen)  
   }
 }
+
+
+# Depricated satInvarFeatures --------------------------------------------------
+#' @export satInvarFeatures
+#'
+#' @rdname depricated
+#'
+satInvarFeatures <- function(x){
+  maskInvarFeatures(x)
+}
