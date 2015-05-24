@@ -7,19 +7,19 @@
 calcEartSunDist(date, formula = "Spencer")
 }
 \arguments{
-\item{date}{date of the sensor overpath (YYYY-MM-DD or POSIX* object)}
+\item{date}{Date of the sensor overpath (YYYY-MM-DD or POSIX* object)}
 
-\item{formula}{formula name to be used (Spencer, Mather, ESA)}
+\item{formula}{Formula providing author to be used (Spencer, Mather, ESA)}
 }
 \value{
-vector object containing earth-sun distancen in AU
+Vector object containing earth-sun distancen in AU
 }
 \description{
 Earth-sun distance is computed by one of several empirical formulas.
 }
 \details{
-Computation of ESun is taken from Updike and Comp (2011). Sun-earth
-distance is computed using \code{\link{calcEartSunDist}}.
+Computation of earth-sun distance using formulas provided by
+Spencer (1971), Mather (2005) or ESA.
 }
 \examples{
 calcEartSunDist(date = "2015-01-01", formula = "Spencer")
@@ -29,20 +29,16 @@ The formulas are taken from the following sources:
 
 Spencer: Spencer JW (1971) Fourier series representation of the position of
 the sun. Search 2/5. Taken from
-\url{http://www.mail-archive.com/sundialuni-koeln.de/msg01050.html}. See
-also: Bird R, Riordan C (1984) Simple solar spectral model for direct and
-diffuse irradiance on horizontal and tilted planes at the Earth's surface for
-cloudless atmospheres. \url{http://www.nrel.gov/docs/legosti/old/2436.pdf}.
+\url{http://www.mail-archive.com/sundialuni-koeln.de/msg01050.html}.
 
 Mather:  Paul M. Mather (2005) Computer Processing of Remotely-Sensed Images:
 An Introduction. Wiley, ISBN: 978-0-470-02101-9,
 \url{http://eu.wiley.com/WileyCDA/WileyTitle/productCd-0470021012.html}.
 
 ESA: ESA Earth Observation Quality Control: Landsat frequently asked questions.
-}
-\seealso{
-\code{\link{calcEartSunDist}} for calculating the sun-earth distance based
-on the day of the year and \code{\link{eSun}} for wrapping this function and
-alternative derivation of ESun.
+
+See also: Bird R, Riordan C (1984) Simple solar spectral model for direct and
+diffuse irradiance on horizontal and tilted planes at the Earth's surface for
+cloudless atmospheres. \url{http://www.nrel.gov/docs/legosti/old/2436.pdf}.
 }
 
