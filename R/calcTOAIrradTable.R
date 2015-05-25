@@ -129,7 +129,7 @@ setMethod("calcTOAIrradTable",
               if(missing(esd)){
                 stop("Variable esd is missing.")
               }
-              eSun <- esd * eSun
+              eSun <- eSun / esd**2
             }
             return(eSun)
           })

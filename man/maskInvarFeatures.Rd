@@ -47,7 +47,7 @@ files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 sat <- satellite(files)
 sat <- maskInvarFeatures(sat)
 
-maskInvarFeatures(vis = getSatDataLayer(sat, "B004n"),
+maskInvarFeatures(x = getSatDataLayer(sat, "B004n"),
                   nir = getSatDataLayer(sat, "B005n"),
                   swir = getSatDataLayer(sat, "B007n"))
 }

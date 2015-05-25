@@ -104,7 +104,7 @@ setMethod("calcTOAIrradRadRef",
           function(x, ref_max, normalize = TRUE, esd){
             eSun <- pi * esd * x / ref_max
             if(normalize == TRUE){
-              eSun <- 1/esd * eSun
+              eSun <- eSun * esd**2
             }
             return(eSun)
           })

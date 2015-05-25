@@ -14,7 +14,7 @@
 #'   
 #' @return Raster object with converted values
 #'
-#' @export convertRef2Rad
+#' @export convRef2RadLinear
 #' 
 #' @details The conversion functions are taken from USGS' Landsat 8 manual
 #' which is available online at 
@@ -23,7 +23,7 @@
 #' @examples
 #' Not run:
 #' 
-convertRef2Rad <- function(band, refm, refa, radm, rada, szen){
+convRef2RadLinear <- function(band, refm, refa, radm, rada, szen){
   if(!missing(szen)){
     band <- band * cos(szen * pi / 180.0)
   }

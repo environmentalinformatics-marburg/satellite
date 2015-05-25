@@ -1,6 +1,6 @@
-if ( !isGeneric("convertSCLinear") ) {
-  setGeneric("convertSCLinear", function(x, ...)
-    standardGeneric("convertSCLinear"))
+if (!isGeneric("convDN2RU") ) {
+  setGeneric("convDN2RU", function(x, ...)
+    standardGeneric("convDN2RU"))
 }
 #' Convert a band's scaled counts to radiance, reflectance and/or temperature
 #'
@@ -19,9 +19,9 @@ if ( !isGeneric("convertSCLinear") ) {
 #' @param szen cosine of solar zenith angle
 #' @param k1,k2 temperature correction parameters
 #'   
-#' @export convertSCLinear
+#' @export convDN2RU
 #' 
-#' @name convertSCLinear
+#' @name convDN2RU
 #'
 #' @details 
 #' The conversion functions are taken from USGS' Landsat 8 manual
@@ -35,11 +35,11 @@ if ( !isGeneric("convertSCLinear") ) {
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' sat <- satellite(files)  
-#' sat <- convertSCLinear(sat)
+#' sat <- convDN2RU(sat)
 #' 
 #' # If you use a raster layer, supply required meta information
 #' bcde <- "B002n"
-#' convertSCLinear(band = getSatDataLayer(sat, bcde),
+#' convDN2RU(band = getSatDataLayer(sat, bcde),
 #'             mult = getSatRADM(sat, bcde),
 #'             add = getSatRADA(sat, bcde))
 #' 
@@ -50,11 +50,12 @@ NULL
 #' 
 #' @return Satellite object with added converted layers
 #' 
-#' @rdname convertSCLinear
+#' @rdname convDN2RU
 #'
-setMethod("convertSCLinear", 
+setMethod("convDN2RU", 
           signature(x = "Satellite"), 
           function(x, convert = "all", szen_correction = "TRUE"){
+            .Deprecated("convSC2Rad", "convSC2Ref", "convRad2BT")
             if(convert == "all"){
               convert <- c("Rad", "Ref", "BT")
             }
@@ -63,7 +64,7 @@ setMethod("convertSCLinear",
               band_codes <- getSatBCDECalib(x, id = "SC")
               for(bcde in band_codes){
                 if(!is.na(getSatRADM(x, bcde))){
-                  sensor_rad <- convertSCLinear(x = getSatDataLayer(x, bcde),
+                  sensor_rad <- convDN2RU(x = getSatDataLayer(x, bcde),
                                               mult = getSatRADM(x, bcde),
                                               add = getSatRADA(x, bcde))
                   layer_bcde <- paste0(bcde, "_RAD")
@@ -89,13 +90,13 @@ setMethod("convertSCLinear",
                 if(!is.na(getSatREFM(x, bcde))){
                   if(szen_correction == TRUE){
                     szen <- getSatSZEN(x, bcde)
-                    sensor_ref <- convertSCLinear(x = getSatDataLayer(x, bcde),
+                    sensor_ref <- convDN2RU(x = getSatDataLayer(x, bcde),
                                                 mult = getSatREFM(x, bcde),
                                                 add = getSatREFA(x, bcde),
                                                 szen = szen)
                     calib = "REF"
                   } else {
-                    sensor_ref <- convertSCLinear(x = getSatDataLayer(x, bcde),
+                    sensor_ref <- convDN2RU(x = getSatDataLayer(x, bcde),
                                                 mult = getSatREFM(x, bcde),
                                                 add = getSatREFA(x, bcde))
                     calib = "REF_NoSZEN"
@@ -121,7 +122,7 @@ setMethod("convertSCLinear",
               band_codes <- getSatBCDEThermalCalib(x, id = "SC")
               for(bcde in band_codes){
                 if(!any(is.na(getSatRADM(x, bcde)), is.na(getSatBTK1(x, bcde)))){
-                  sensor_ref <- convertSCLinear(x = getSatDataLayer(x, bcde),
+                  sensor_ref <- convDN2RU(x = getSatDataLayer(x, bcde),
                                               mult = getSatRADM(x, bcde),
                                               add = getSatRADA(x, bcde),
                                               k1 = getSatBTK1(x, bcde),
@@ -150,13 +151,14 @@ setMethod("convertSCLinear",
 #' 
 #' @return raster::RasterStack object with converted layers
 #' 
-#' @rdname convertSCLinear
+#' @rdname convDN2RU
 #'
-setMethod("convertSCLinear", 
+setMethod("convDN2RU", 
           signature(x = "RasterStack"), 
           function(x, mult, add, szen, k1, k2){
+            .Deprecated("convSC2Rad", "convSC2Ref", "convRad2BT")
             for(l in seq(nlayers(x))){
-              x[[l]] <- convertSCLinear(x[[l]], mult, add, szen, k1, k2)
+              x[[l]] <- convDN2RU(x[[l]], mult, add, szen, k1, k2)
             }
             return(x)
           })
@@ -166,11 +168,12 @@ setMethod("convertSCLinear",
 #' 
 #' @return raster::RasterLayer object with converted layer
 #' 
-#' @rdname convertSCLinear
+#' @rdname convDN2RU
 #'
-setMethod("convertSCLinear", 
+setMethod("convDN2RU", 
           signature(x = "RasterLayer"), 
           function(x, mult, add, szen, k1, k2){
+            .Deprecated("convSC2Rad", "convSC2Ref", "convRad2BT")
             result <- mult * x + add
             if(!missing(szen)){
               result <- result / cos(szen * pi / 180.0)
