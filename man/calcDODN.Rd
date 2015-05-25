@@ -7,7 +7,7 @@
 calcDODN(band)
 }
 \arguments{
-\item{band}{satellite sensor band data (raster layer)}
+\item{band}{satellite sensor band data (raster::RasterLayer)}
 }
 \value{
 Numeric value of the DN for the dark object.

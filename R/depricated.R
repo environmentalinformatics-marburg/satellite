@@ -18,8 +18,8 @@ NULL
 #' @rdname depricated
 #'
 satCalib <- function(x, convert = "all", szen_correction = "TRUE"){
-  .Deprecated("convertSCLinear")
-  convertSCLinear(x, convert, szen_correction)
+  .Deprecated("convDN2RU")
+  convDN2RU(x, convert, szen_correction)
 }
 
 
@@ -29,18 +29,18 @@ satCalib <- function(x, convert = "all", szen_correction = "TRUE"){
 #' @rdname depricated
 #'
 calibLinear <- function(band, mult, add, szen, k1, k2){
-  .Deprecated("convertSCLinear")
+  .Deprecated("convDN2RU")
   if(missing(szen)){
     if(missing(k1)){
-      convertSCLinear(x = band, mult = mult, add = add)
+      convDN2RU(x = band, mult = mult, add = add)
     } else {
-      convertSCLinear(x = band, mult = mult, add = add, k1 = k1, k2 =k2)  
+      convDN2RU(x = band, mult = mult, add = add, k1 = k1, k2 =k2)  
     }
   } else {
     if(missing(k1)){
-      convertSCLinear(x = band, mult = mult, add = add, szen = szen)
+      convDN2RU(x = band, mult = mult, add = add, szen = szen)
     } else {
-      convertSCLinear(x = band, mult = mult, add = add, szen = szen,
+      convDN2RU(x = band, mult = mult, add = add, szen = szen,
                       k1 = k1, k2 =k2)
     }
   }
@@ -110,4 +110,39 @@ satTOAIrrad <- function(x, method = "Table", model = "MNewKur",
 #'
 satPathRadDOS <- function(x, atmos_model = "DOS2", esun_mode = "RadRef"){
   calcPathRadDOS(x, model = atmos_model, esun_method = esun_mode)
+}
+
+
+# Depricated satAtmosCorr ------------------------------------------------------
+#' @export satAtmosCorr
+#'
+#' @rdname depricated
+#'
+satAtmosCorr <- function(x, atmos_model = "DOS2", esun_mode = "RadRef"){
+  calcAtmosCorr(x, model = atmos_model, esun_method = esun_mode)
+}
+
+
+# Depricated calibLinearInverse ------------------------------------------------
+#' @export calibLinearInverse
+#'
+#' @rdname depricated
+#'
+calibLinearInverse <- function(band, ref_mult, ref_add, rad_mult, rad_add, 
+                               szen){
+  if(missing(szen)){
+    convertRef2Rad(band, ref_mult, ref_add, rad_mult, rad_add)
+  } else {
+    convertRef2Rad(band, ref_mult, ref_add, rad_mult, rad_add, szen)  
+  }
+}
+
+
+# Depricated satInvarFeatures --------------------------------------------------
+#' @export satInvarFeatures
+#'
+#' @rdname depricated
+#'
+satInvarFeatures <- function(x){
+  maskInvarFeatures(x)
 }

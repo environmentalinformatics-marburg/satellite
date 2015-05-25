@@ -71,7 +71,7 @@ calcTOAIrradModel(lut$L8_RSR, model = "MNewKur", normalize = FALSE,
 \references{
 Updike T, Comp C (2011) Radiometric use of WorldView-2 imagery.
 Technical Note, URL
-\url{https://www.digitalglobe.com/sites/default/files/Radiometric_Use_of_WorldView-2_Imagery(1).pdf}.
+\url{https://goo.gl/np4Bwm}.
 
 Tabulated relative spectral response functions (nm-1) are taken from taken from the
 \href{http://landsat.usgs.gov/instructions.php}{spectral viewer}

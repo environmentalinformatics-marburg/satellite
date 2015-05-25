@@ -7,7 +7,7 @@
 #' and the value for which the first derivate has the absolute maximum is
 #' taken as the DN for a dark object.
 #'
-#' @param band satellite sensor band data (raster layer)
+#' @param band satellite sensor band data (raster::RasterLayer)
 #'
 #' @return Numeric value of the DN for the dark object.
 #'

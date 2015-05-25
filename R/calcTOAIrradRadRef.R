@@ -52,7 +52,7 @@ if ( !isGeneric("calcTOAIrradRadRef") ) {
 #' 
 #' calcTOAIrradRadRef(x = getSatRadMax(x, getSatBCDESolar(x)), 
 #'                    ref_max = getSatRefMax(x, getSatBCDESolar(x)), 
-#'                    normalize = normalize, 
+#'                    normalize = FALSE, 
 #'                    esd = calcEartSunDist("2015-01-01"))
 #'                    
 NULL
@@ -69,7 +69,7 @@ setMethod("calcTOAIrradRadRef",
             if(normalize == TRUE & missing(esd)){
               esd = getSatESD(x)
               if(is.na(esd)){
-                esd = calcEartSunDist(date)
+                esd = calcEartSunDist(getSatDATE(x)[1])
               } 
             }
             if(normalize == TRUE){
@@ -102,9 +102,12 @@ setMethod("calcTOAIrradRadRef",
 setMethod("calcTOAIrradRadRef", 
           signature(x = "numeric"), 
           function(x, ref_max, normalize = TRUE, esd){
-            eSun <- pi * esd * x / ref_max
+            eSun <- pi * x / ref_max
             if(normalize == TRUE){
-              eSun <- 1/esd * eSun
+              if(missing(esd)){
+                stop("Variable esd is missing.")
+              }
+              eSun <- eSun * esd**2
             }
             return(eSun)
           })

@@ -21,12 +21,12 @@ if ( !isGeneric("calcPathRadDOS") ) {
 #' @param esun Actual (i.e. non-normalized) TOA solar irradianc, e.g. returned 
 #' from \code{\link{calcTOAIrradRadRef}}, \code{\link{calcTOAIrradTable}} 
 #' or \code{\link{calcTOAIrradModel}}.
+#' @param model to be used to correct for 1% scattering (DOS2, DOS4; must be the
+#' same as used by \code{\link{calcAtmosCorr}})
 #' @param esun_method If x is a Satellite object, name of the method to be used 
 #' to compute esun using one of \code{\link{calcTOAIrradRadRef}} ("RadRef"), 
 #' \code{\link{calcTOAIrradTable}} ("Table") or \code{\link{calcTOAIrradModel}}
 #' ("Model")
-#' @param model to be used to correct for 1% scattering (DOS2, DOS4; must be the
-#' same as used by \code{\link{calcAtmosCorr}})
 #' @param dos_adjust dark object adjustment assuming a reflexion of e.g. 0.01
 #' @param scat_coef scattering coefficient (-4.0, -2.0, -1.0, -0.7, -0.5)
 #'  
@@ -152,7 +152,7 @@ setMethod("calcPathRadDOS",
           signature(x = "Satellite"), 
           function(x, model = "DOS2", esun_method = "RadRef"){
             
-            # Take care of TOA solar irradiance information
+            # Compute TOA solar irradiance information if necessary
             if(any(is.na(getSatESUN(x, getSatBCDESolar(x))))){
               # Compute toa irradiance for all solar band layers
               if(esun_method == "Table"){
@@ -163,7 +163,6 @@ setMethod("calcPathRadDOS",
                 x <- calcTOAIrradRadRef(x, normalize = "TRUE")
               }
             }
-            
             
             # Get solar bands with calibration information equals scaled counts
             sc_bands <- getSatBCDESolarCalib(x, id = "SC")
