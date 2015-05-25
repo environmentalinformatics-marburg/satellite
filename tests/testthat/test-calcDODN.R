@@ -1,3 +1,4 @@
+# devtools::test(".", "calcDODN")
 context("compDODN")
 
 test_that("compDODN works as expected", {
@@ -10,9 +11,3 @@ test_that("compDODN works as expected", {
   expect_equal(t1, 8763)
   expect_equal(t2, 6677)
 })
-
-
-
-
-
-

@@ -4,9 +4,15 @@ context("Solar irradiation (ESun)")
 #-------------------------------------------------------------------------------
 test_that("calcTOAIrradModel for data frames works as expected", {
   calcTOAIrradModel(lut$L8_RSR, model = "MNewKur")
+  calcTOAIrradModel(lut$L8_RSR, model = "MNewKur", normalize = FALSE, 
+                    esd = calcEartSunDist("2015-01-01"))
+  calcTOAIrradModel(lut$L8_RSR, model = "MNewKur", normalize = FALSE, 
+                    esd = calcEartSunDist("2015-07-07"))
   calcTOAIrradModel(lut$L7_RSR, model = "MNewKur")
   calcTOAIrradModel(lut$L7_RSR, model = "MNewKur", normalize = FALSE, 
                     esd = calcEartSunDist("2015-01-01"))
+  calcTOAIrradModel(lut$L7_RSR, model = "MNewKur", normalize = FALSE, 
+                    esd = calcEartSunDist("2015-07-07"))
 })
 
 
@@ -47,8 +53,8 @@ test_that("calcTOAIrradRadRef for numeric works as expected", {
   sat <- satellite(files)  
   test <- calcTOAIrradRadRef(x = getSatRadMax(sat, getSatBCDESolar(sat)), 
                              ref_max = getSatRefMax(sat, getSatBCDESolar(sat)), 
-                             normalize = normalize, 
-                             esd = calcEartSunDist("2015-01-01")) 
+                             normalize = FALSE,
+                             esd = calcEartSunDist("2013-07-07")) 
   
   expect_equal(round(as.numeric(test[1]), 3), round( 1907.999, 3))
   expect_equal(round(as.numeric(test[3]), 3), round( 1800.423, 3))

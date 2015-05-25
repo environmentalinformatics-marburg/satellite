@@ -17,7 +17,7 @@
 #' 
 #' Spencer: Spencer JW (1971) Fourier series representation of the position of 
 #' the sun. Search 2/5. Taken from 
-#' \url{http://www.mail-archive.com/sundialuni-koeln.de/msg01050.html}. 
+#' \url{https://goo.gl/lhi9UI}. 
 #' 
 #' Mather:  Paul M. Mather (2005) Computer Processing of Remotely-Sensed Images:
 #' An Introduction. Wiley, ISBN: 978-0-470-02101-9, 
@@ -36,10 +36,10 @@ calcEartSunDist <- function(date, formula = "Spencer"){
   day <- as.numeric(strftime(date, format = "%j"))
   if(formula == "Spencer"){
     T <- 2 * pi * (day - 1) / 365
-    1.000110 + 0.034221 * cos(T) + 0.001280 * sin(T) + 0.000719 * 
-      cos(2 * T) + 0.000077 * sin(2 * T)
+    (1/(1.000110 + 0.034221 * cos(T) + 0.001280 * sin(T) + 0.000719 * 
+      cos(2 * T) + 0.000077 * sin(2 * T)))**0.5
   } else if(formula == "Mather"){
-    1 - 0.016729 * cos(0.9856 * (day - 4))  
+    1/(1 - 0.016729 * cos(0.9856 * (day - 4)))
   } else if(formula == "ESA"){
     1 - 0.016729 * cos((2 * pi) * (0.9856 * (day - 4) / 360))
   }
