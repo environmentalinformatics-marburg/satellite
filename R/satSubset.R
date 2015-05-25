@@ -1,6 +1,6 @@
-if ( !isGeneric("subsetSat") ) {
-  setGeneric("subsetSat", function(x, ...)
-    standardGeneric("subsetSat"))
+if ( !isGeneric("satSubset") ) {
+  setGeneric("satSubset", function(x, ...)
+    standardGeneric("satSubset"))
 }
 
 #' Subset a Satellite object
@@ -15,16 +15,16 @@ if ( !isGeneric("subsetSat") ) {
 #' 
 #' @return Satellite object
 #' 
-#' @export subsetSat
+#' @export satSubset
 #' 
 #' @details Subsetting of computation stages.
 #' 
-#' @name subsetSat
+#' @name satSubset
 #' 
 #' @examples
-#' new_sat <- subsetSat(old_sat,subset = "cropped")
+#' new_sat <- satSubset(old_sat,subset = "cropped")
 #' 
-setMethod("subsetSat", 
+setMethod("satSubset", 
           signature(x = "Satellite"), 
           function(x, subset){
             if (is.character(subset)) {

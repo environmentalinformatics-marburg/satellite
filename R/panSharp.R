@@ -1,25 +1,21 @@
-if ( !isGeneric("panSharpening") ) {
-  setGeneric("panSharpening", function(x, ...)
-    standardGeneric("panSharpening"))
-}
-
 #' Pan sharpen low resolution satellite channels by using the high resolution panchromatic channel.
 #'
 #' @description The function PAN sharpens the low resolution channels with the pachromatic channel.
 #' This is done by multiplying the normlized XS channel with the PAN channel (see Details).
 #' 
 #'
-#' @param x Object of type Satellite
+#' @param pan panchromatic raster
+#' @param xs low resolution raster to be sharpened
 #' @param filter type of filter to be used for smoothing the PAN raster (e.g. mean (default), Gauss, median).
 #' @param winsize with n integer size of filter window n x n in pixels. Defaults to 3.
 # #' @param subset logical, defaults to TRUE. Drops all layers but the cropped ones.
 #' If set to false appends cropped layers to Satellite object.
 #'
-#' @return Satellite object
+#' @return raster
 #' 
-#' @export panSharpening
+#' @export panSharp
 #' 
-#' @name panSharpening
+#' @name panSharp
 #'
 #' @details Pan sharpen low resolution satellite channels by using the high resolution panchromatic channel. This function uses
 #' the same algorithm as the OTB Toolbox where "The idea is to apply a low pass filter to the panchromatic band to give it a spectral
@@ -50,65 +46,51 @@ if ( !isGeneric("panSharpening") ) {
 #' sat <- satellite(files)
 #' panSharpening(sat)
 #' 
-setMethod("panSharpening", 
-          signature(x = "Satellite"), 
-          function(x, filter = "mean", winsize = 3, subset = FALSE){
-            pan <- getSatDataLayer(x, getSatBCDEType(x, id = "PCM"))
-            d2 <- winsize*res(pan)[1]
-            sigma <- 3
-            #select type of filter for PAN smoothing
-            switch(filter,
-                   mean = {
-                     #Since filtering is done using the raster::focal function raster::focalWeight function
-                     #is used to define the weight matrix for focal.
-                     ftype <- focalWeight(pan, d = d2, type = "rectangle")
-                     fun <- sum #sum is default to focal. just set to be sure.
-                   },
-                   Gauss = {
-                     #set sigma default to 3 for Gauss function. Maybe make sigma subject to user choice?
-                     ftype <- focalWeight(pan, d=c(sigma, d2), type = "Gauss")
-                     fun <- sum
-                   },
-                   median = {
-                     #since median filtering can not be defined by the weights matrix for the focal function
-                     #the function to be applied when envocing focal is set to median (this is computationally inefficiant see raster::focal)
-                     ftype <- focalWeight(pan, d = d2, type = "rectangle" )
-                     fun <- median
-                   }
-            )
-            
-            pan_lf <- focal(pan, w = ftype, fun = fun)
-            
-            #pan sharpen all low resolution channels of sat object
-            #todo: - make id for resolution more general (e.g. scan meta data of sat object for min/ max resolution!?)
-            res_bands <- getSatBCDESres(x, id = "30")
-            #maybe loop can be generalizd since it is similar to loops found in other function e.g. satAtmosCorr
-            #maybe building raster brick instead of looping over layers of sat object will speed up processing?
-            for(bcde_res in res_bands){
-              #resample low resolution layer to resolution of panchromatic layer
-              interpol <- resample(getSatDataLayer(x, bcde_res), pan, method = "ngb")
-              #pan sharpen
-              ref <-  interpol / pan_lf * pan
-              layer_bcde <- paste0(substr(bcde_res, 1, nchar(bcde_res) - 1),
-                                   "_PAN_sharpend")
-              meta_param <- data.frame(getSatSensorInfo(x),
-                                       getSatBandInfo(x, bcde_res, 
-                                                      return_calib = FALSE),
-                                       CALIB = "PAN_sharpend")
-              info <- sys.calls()[[1]]
-              info <- paste0("Add layer from ", info[1], "(", 
-                             toString(info[2:length(info)]), ")")
-              x <- addSatDataLayer(x, bcde = layer_bcde, data = ref,
-                                   meta_param = meta_param,
-                                   info = info, in_bcde = bcde_res)
-            }
-            if(subset == TRUE){
-              x <- subsetSat(x,"PAN_sharpend")
-            }
-            #set new resolution to old column (dirty hack)
-            x@meta$SRES[x@meta$CALIB == "PAN_sharpend"] <- res(pan)[1]
-            return(x)
-          })
+
+panlf <- function(r, fl, ws){
+  #r pan raster
+  #fl filter
+  #ws window size of filter
+  d2 <- ws*res(r)[1]
+  sigma <- 3
+  #select type of filter for PAN smoothing
+  switch(fl,
+         mean = {
+           #Since filtering is done using the raster::focal function raster::focalWeight function
+           #is used to define the weight matrix for focal.
+           ftype <- focalWeight(r, d = d2, type = "rectangle")
+           fun <- sum #sum is default to focal. just set to be sure.
+         },
+         Gauss = {
+           #set sigma default to 3 for Gauss function. Maybe make sigma subject to user choice?
+           ftype <- focalWeight(r, d=c(sigma, d2), type = "Gauss")
+           fun <- sum
+         },
+         median = {
+           #since median filtering can not be defined by the weights matrix for the focal function
+           #the function to be applied when envocing focal is set to median (this is computationally inefficiant see raster::focal)
+           ftype <- focalWeight(r, d = d2, type = "rectangle" )
+           fun <- median
+         }
+  )
+  
+  ref <- focal(r, w = ftype, fun = fun)
+  return(ref)
+  
+}
+
+sharp <- function(rpan, rxs, rpanlf){
+  #resample low resolution layer to resolution of panchromatic layer
+  interpol <- resample(rxs, rpan, method = "ngb")
+  #pan sharpen
+  ref <-  interpol / rpanlf * rpan
+  return(ref)
+}
+
+panSharp <- function(pan, xs, filter = "mean", winsize = 3){
+  ref <- sharp(pan, xs, panlf(pan, filter, winsize))  
+  return(ref)
+}
 
 # http://ssrebelious.blogspot.de/2015/02/pan-sharpening-using-r.html
 # # Create needed functions -------------------------------------------------
