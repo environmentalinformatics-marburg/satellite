@@ -1,3 +1,8 @@
+if ( !isGeneric("TopoCorr") ) {
+  setGeneric("TopoCorr", function(x, ...)
+    standardGeneric("TopoCorr"))
+}
+
 #' Correct for topographic effects
 #' @param x Object of class satellite
 #' @param dem Object of class RasterLayer. 
@@ -22,57 +27,60 @@
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' x<-satellite(files)
-#' topoC(x)
+#' TopoCorr(x)
 
 
-topoC <- function (x,dem=NULL,cloudmask=TRUE){
-  require(raster)
-  require(rgdal)
-  if (is.null(dem)){
-    center<-spTransform(SpatialPoints(data.frame("X"=mean(extent(x)@xmin,
-                                                          extent(x)@xmax),
-                                                 "Y"=mean(extent(x)@ymin,
-                                                          extent(x)@ymax)),
-                                      proj4string = CRS(proj4string(x))), 
-                        CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"))
-    dem<-getData('SRTM', lon=coordinates(center)[1],
-                 lat=coordinates(center)[2])
-  }
-  if (res(dem)!=res(x)||proj4string(dem)!=proj4string(x)){
-    dem<-projectRaster(dem, crs=proj4string(x) ,method="bilinear",
-                       res=res(x))
-  }
-  if(extent(x)!=extent(dem)){
-    if(extent(dem)>extent(x)){
-      dem <- crop(dem, x)
-    }
-    if(extent(dem)<extent(x)){
-      x <- crop(x, dem)
-    }
-  }
-  ### Analytical hillshade
-  terr<-terrain(dem, opt=c("slope","aspect"))
-  hillsh<-hillShade(terr$slope, terr$aspect, angle=x@meta$SELV, 
-                    direction=x@meta$SAZM)
-  ###hier noch automatisch nach cloudmask schauen...wenn vorhanden dann anwenden
-  xtmp<-x
-  #  if (cloudmask){
-  #    xtmp<-mask(x,x@cloudmask)
-  #  }
-  ### Calibrate hillshade and apply regression coefficients 
-  if (class (x)=="RasterLayer"){
-    model<-summary(lm(values(xtmp)~values(hillsh)))
-    calib<-hillsh*model$coefficients[[2]]+model$coefficients[[1]]
-    result <- x-calib+mean(values(xtmp),na.rm=TRUE)
-  }
-  if (class (x)=="RasterStack"||class (x)=="RasterBrick"){
-    lmfun<-function(x){summary(lm(x~values(hillsh)))$coefficients[1:2]}
-    model <- apply(as.data.frame(xtmp),2,lmfun)
-    calib<-x
-    for (i in 1:ncol(model)){
-      calib[[i]]<-values(hillsh)*model[2,i]+model[1,i]
-    }
-    result <- x-calib+apply(values(xtmp),2,mean,na.rm=TRUE)
-  }
-  return(result)
-}
+
+
+
+
+# Function using satellite object ----------------------------------------------
+#' 
+#' @return Satellite object with added converted layers
+#' 
+#' @rdname TopoCorr
+#'
+# setMethod("TopoCorr", 
+#           signature(x = "Satellite"), 
+#           )
+
+
+
+
+
+# Function using raster::RasterStack object ------------------------------------
+#' 
+#' @return raster::RasterStack object with converted layers
+#' 
+#' @rdname TopoCorr
+#'
+setMethod("TopoCorr", 
+          signature(x = "RasterStack"), 
+          function(x, hillsh, cloudmask=NULL){
+            for(l in seq(nlayers(x))){
+              x[[l]] <- TopoCorr(x[[l]], hillsh, cloudmask)
+            }
+            return(x)
+          })
+
+
+
+# Function using raster::RasterLayer object ------------------------------------
+#' 
+#' @return raster::RasterLayer object with converted layer
+#' 
+#' @rdname TopoCorr
+#'
+setMethod("TopoCorr", 
+          signature(x = "RasterLayer"), 
+          function(x, hillsh, cloudmask=NULL){
+            xtmp<-x
+            if (!is.null(cloudmask)){
+              xtmp<-mask(x,cloudmask)
+            }
+            model<-summary(lm(values(xtmp)~values(hillsh)))
+            calib<-hillsh*model$coefficients[[2]]+model$coefficients[[1]]
+            x <- x-calib+mean(values(xtmp),na.rm=TRUE)
+            return(x)
+          })
+
