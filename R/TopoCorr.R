@@ -2,13 +2,14 @@ if ( !isGeneric("TopoCorr") ) {
   setGeneric("TopoCorr", function(x, ...)
     standardGeneric("TopoCorr"))
 }
-
 #' Correct for topographic effects
+#' 
 #' @param x Object of class satellite
 #' @param dem Object of class RasterLayer. 
 #' If not specified, an srtm elevation model will be downloaded.
 #' @param cloudmask Logical. If TRUE then the cloudmask from the 
 #' satellite object (if available) will be considered in the regression model.
+#' 
 #' @details 
 #' The method of Civco (1989) is applied:
 #' First, an analytical hillshade image is created based on a DEM and sun elevation and
@@ -19,19 +20,23 @@ if ( !isGeneric("TopoCorr") ) {
 #' (for each channel individually). 
 #' Finally the calibrated hillshade image is substracted from the corresponding
 #' channel and the mean value of the channel is added.
+#' 
 #' @return Satellite object with added, topographic corrected layers
-#' @export topoC
-#' @references CIVCO, D.L. (1989): Topographic normalization of Landsat Thematic Mapper digital
-#imagery.In: Photogrammetric Engineering & Remote Sensing, 55, S. 1303–1309.
+#' 
+#' @export TopoCorr
+#' 
+#' @name TopoCorr
+#' 
+#' @references CIVCO, D.L. (1989): Topographic normalization of Landsat Thematic
+#' Mapper digitalimagery.In: Photogrammetric Engineering & Remote Sensing, 55, 
+#' S. 1303–1309.
+#' 
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' x<-satellite(files)
 #' TopoCorr(x)
-
-
-
-
+NULL
 
 
 # Function using satellite object ----------------------------------------------
