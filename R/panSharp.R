@@ -1,17 +1,21 @@
+if ( !isGeneric("panSharp") ) {
+  setGeneric("panSharp", function(x, ...)
+    standardGeneric("panSharp"))
+}
+
 #' Pan sharpen low resolution satellite channels by using the high resolution panchromatic channel.
 #'
 #' @description The function PAN sharpens the low resolution channels with the pachromatic channel.
 #' This is done by multiplying the normlized XS channel with the PAN channel (see Details).
 #' 
 #'
-#' @param pan panchromatic raster
-#' @param xs low resolution raster to be sharpened
+#' @param x Object of type Satellite
 #' @param filter type of filter to be used for smoothing the PAN raster (e.g. mean (default), Gauss, median).
 #' @param winsize with n integer size of filter window n x n in pixels. Defaults to 3.
 # #' @param subset logical, defaults to TRUE. Drops all layers but the cropped ones.
 #' If set to false appends cropped layers to Satellite object.
 #'
-#' @return raster
+#' @return Satellite object
 #' 
 #' @export panSharp
 #' 
@@ -38,15 +42,94 @@
 #' http://remotesensing.spiedigitallibrary.org/article.aspx?articleid=1726558
 #' 
 #' http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=1368950&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D1368950
-
 #'
 #' @examples 
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' sat <- satellite(files)
-#' panSharpening(sat)
+#' panSharp(sat)
 #' 
+NULL
 
+# Function using satellite object ----------------------------------------------
+#' 
+#' @return Satellite object with added pansharpened layers
+#' 
+#' @rdname panSharp
+#'
+setMethod("panSharp", 
+          signature(x = "Satellite"), 
+          function(x, filter = "mean", winsize = 3, subset = FALSE){
+            pan <- getSatDataLayer(x, getSatBCDEType(x, id = "PCM"))
+            #create low frequency component of pan
+            pan_lf <- panlf(pan, filter, winsize)
+            
+            #pan sharpen all low resolution channels of sat object
+            #todo: - make id for resolution more general (e.g. scan meta data of sat object for min/ max resolution!?)
+            res_bands <- getSatBCDESres(x, id = "30")
+            #maybe loop can be generalizd since it is similar to loops found in other function e.g. satAtmosCorr
+            #maybe building raster brick instead of looping over layers of sat object will speed up processing?
+            for(bcde_res in res_bands){
+              #pan sharpen
+              ref <- sharp(getSatDataLayer(x, bcde_res), pan, pan_lf)
+              layer_bcde <- paste0(substr(bcde_res, 1, nchar(bcde_res) - 1),
+                                   "_PAN_sharpend")
+              meta_param <- data.frame(getSatSensorInfo(x),
+                                       getSatBandInfo(x, bcde_res, 
+                                                      return_calib = FALSE),
+                                       CALIB = "PAN_sharpend")
+              info <- sys.calls()[[1]]
+              info <- paste0("Add layer from ", info[1], "(", 
+                             toString(info[2:length(info)]), ")")
+              x <- addSatDataLayer(x, bcde = layer_bcde, data = ref,
+                                   meta_param = meta_param,
+                                   info = info, in_bcde = bcde_res)
+            }
+            if(subset == TRUE){
+              x <- satSubset(x,"PAN_sharpend")
+            }
+            #set new resolution to old column (dirty hack)
+            x@meta$SRES[x@meta$CALIB == "PAN_sharpend"] <- res(pan)[1]
+            return(x)
+          }
+)
+
+
+# Function using raster::RasterStack object ------------------------------------
+#' 
+#' @return raster::RasterStack object with pansharpened layers
+#' 
+#' @rdname panSharp
+#'
+setMethod("panSharp", 
+          signature(x = "RasterStack"),
+          #if pan is present in stack, it will get sharpened to.
+          #Thus checking for pan in stack would be usefull.
+          function(x, pan, filter = "mean", winsize = 3){
+            pan_lf <- panlf(pan, filter, winsize)
+            for(l in seq(nlayers(x))){
+              x[[l]] <- sharp(x, pan, pan_lf)  
+            return(x)
+          }
+          }
+)
+
+
+# Function using raster::RasterLayer object ------------------------------------
+#' 
+#' @return raster::RasterLayer object with pansharpened layer
+#' 
+#' @rdname panSharp
+#'
+setMethod("panSharp", 
+          signature(x = "RasterLayer"), 
+          function(x, pan, filter = "mean", winsize = 3){
+            ref <- sharp(x, pan, panlf(pan, filter, winsize))  
+            return(ref)
+          }         
+)
+
+#helper functions
 panlf <- function(r, fl, ws){
   #r pan raster
   #fl filter
@@ -56,7 +139,6 @@ panlf <- function(r, fl, ws){
   #select type of filter for PAN smoothing
   switch(fl,
          mean = {
-           #Since filtering is done using the raster::focal function raster::focalWeight function
            #is used to define the weight matrix for focal.
            ftype <- focalWeight(r, d = d2, type = "rectangle")
            fun <- sum #sum is default to focal. just set to be sure.
@@ -79,122 +161,10 @@ panlf <- function(r, fl, ws){
   
 }
 
-sharp <- function(rpan, rxs, rpanlf){
+sharp <- function(rxs, rpan, rpanlf){
   #resample low resolution layer to resolution of panchromatic layer
   interpol <- resample(rxs, rpan, method = "ngb")
   #pan sharpen
   ref <-  interpol / rpanlf * rpan
   return(ref)
 }
-
-panSharp <- function(pan, xs, filter = "mean", winsize = 3){
-  ref <- sharp(pan, xs, panlf(pan, filter, winsize))  
-  return(ref)
-}
-
-# http://ssrebelious.blogspot.de/2015/02/pan-sharpening-using-r.html
-# # Create needed functions -------------------------------------------------
-# 
-# pansharpFun <- function(raster){
-#   '
-#   This function pansharpens a raster
-#   '
-#   # @param raster - Raster object with 3 bands (to-be-pansharpened, high-res and low-frequency component of the high-res image)
-#   # @param band - band numver, integer
-#   # @return pansharpened_raster - pansharpened Raster object
-#   # pansharp = Lowres * Highres / LPF[Highres]
-#   
-#   pansharpened_raster <- (raster[,1] * raster[,2]) / raster[,3]
-# }
-# 
-# extractLPF <- function(pan, multi, filter = 'auto', fun = mean) {
-#   '
-#   Returns a low-frequency component of the high-resolution raster by the
-#   filter adjusted to the low-resolution raster
-#   '
-#   # @param pan - a high-resolution panchromatic raster - Raster object
-#   # @param multi - low-resolution raster to be pansharpened - Raster object
-#   # @param filter - a smoothing wondow - matrix
-#   # @param fun - a function to process filter (part of the focal() function)
-#   # @return LPF - a low-frequency component of the high-resolution raster - Raster object
-#   
-#   # Adjust filter size
-#   if (filter == 'auto') {
-#     pan_res <- res(pan) # (x, y) resolution of the panchromatic raster in CRS units (?)
-#     multi_res <- res(multi) # (x, y) resolution of the lowres raster in CRS units (?)
-#     x_res_ratio <- round(multi_res[1]/pan_res[1])
-#     y_res_ratio <- round(multi_res[2]/pan_res[2])
-#     total <- x_res_ratio + y_res_ratio
-#     filter <- matrix(1, nc = x_res_ratio, nr = y_res_ratio)
-#     
-#     # Enshure that the matrix has an uneven number of colums and rows (needed by focal())
-#     if (nrow(filter)%%2 == 0) {
-#       filter <- rbind(filter, 0)
-#     }
-#     if (ncol(filter)%%2 == 0) {
-#       filter <- cbind(filter, 0)
-#     }
-#     
-#     LPF <- focal(pan, w = filter, fun = fun) # low-frequency component
-#     
-#   } 
-#   
-#   
-#   processingPansharp <- function(pan, multi, filter = 'auto', fun = mean){
-#     '
-#     Pansharpening routine
-#     '
-#     # @param pan - a high-resolution panchromatic raster - Raster object
-#     # @param multi - low-resolution raster to be pansharpened - Raster object
-#     # @param filter - a smoothing wondow - matrix
-#     # @param fun - a function to process filter (part of the focal() function)
-#     # @return pansharp - pansharpened 'multi' raster - Raster object
-#     
-#     # Check if input parameters are valid - we can loose a lot of time if some of the inputs is wrong
-#     
-#     LPF <- extractLPF(pan, multi, filter, fun)
-#     
-#     multi <- resample(multi, pan) # resample low-resolution image to match high-res one
-#     
-#     all <- stack(multi, pan, LPF)
-#     
-#     bands <- nbands(multi)
-#     pan_band <- bands + 1
-#     lpf_band <- bands + 2
-#     
-#     # Pansharpen layers from low-resolution raster one by one
-#     pansharp_bands <- list()
-#     for (band in 1:bands) {
-#       subset <- all[[c(band, pan_band, lpf_band)]]
-#       raster <- calc(subset, pansharpFun)
-#       pansharp_bands[[band]] <- raster
-#     }
-#     
-#     pansharp <- stack(pansharp_bands)
-#   }
-#   
-#   saveResult <- function(raster, path, format = 'GTiff', datatype = 'INT2S'){
-#     '
-#     Saves Raster object to location
-#     '
-#     # @param raster - raster to be saved - Raser object
-#     # @param path - path including filename without extention - string
-#     # @param format - format of the output raster accordingly to writeRaster() function - string
-#     # @param datatype - datatype of the raster accordingly to writeRaster() - string
-#     
-#     writeRaster(raster,
-#                 path,
-#                 format = format,
-#                 datatype = datatype,
-#                 overwrite = T)
-#   }
-#   
-#   
-#   # Do pansharpening --------------------------------------------------------
-#   
-#   
-#   pan <- raster('pan.tif')
-#   multi <- brick('multi.tif')
-#   pansharp <- processingPansharp(pan, multi)
-#   output_path <- 'r_pansharp-new' # includes path and filename but not the extention
-#   saveResult(pansharp, output_path)

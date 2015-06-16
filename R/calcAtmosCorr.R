@@ -149,7 +149,7 @@ setMethod("calcAtmosCorr",
             
             # Radiance conversion if necessary
             if(any(is.na(getSatBCDESolarCalib(x, id = "RAD")))){
-              x <- convertSCLinear(x, convert = "Rad", szen_correction = "TRUE")
+              x <- convDN2RU(x, convert = "Rad", szen_correction = "TRUE")
             }
             
             # Compute atmospheric correction (reflectance)

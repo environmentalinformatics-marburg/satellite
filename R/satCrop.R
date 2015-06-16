@@ -56,9 +56,10 @@ setMethod("cropSat",
                                    info = info, in_bcde = bcde_rad)
             }
             if(subset == TRUE){
-              x <- subsetSat(x,"cropped")
+              x <- satSubset(x,"cropped")
               #reset LNBR (dirty hack)
               x@meta$LNBR <- rep(1:nrow(x@meta))
+              x@meta$CALIB <- "SC"
             }
             return(x)
           })
