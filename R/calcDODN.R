@@ -32,7 +32,10 @@
 #' calcDODN(getSatDataLayer(sat, bcde = "B002n"))
 #' 
 calcDODN <- function(band){
-  freq <- plyr::count(raster::getValues(band))
+  vals <- raster::getValues(band)
+  #use only values > 0 (if using whole satellite images e.g. landsat no data values
+  #may be zero or negative, which will lead to a value of zero in calcDODN function)
+  freq <- plyr::count(vals[vals > 0])
   q01 <- raster::quantile(band, probs = 0.01)
   freq_q01 <- freq[freq$x <= q01, ]
   return(freq_q01$x[which.max(diff(freq_q01$freq))])
