@@ -55,7 +55,7 @@ the result with the original panchromatic band." (see \url{https://www.orfeo-too
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 sat <- satellite(files)
-satPanSharp(sat)
+panSharp(sat)
 }
 \references{
 Al-amri, Salem Saleh, Namdeo V. Kalyankar, and Santosh D. Khamitkar. "A comparative study of removal noise from remote sensing image."
