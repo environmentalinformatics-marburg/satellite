@@ -1,31 +1,41 @@
-if ( !isGeneric("allignGeometry") ) {
-  setGeneric("allignGeometry", function(x, ...)
-    standardGeneric("allignGeometry"))
+if ( !isGeneric("alignGeometry") ) {
+  setGeneric("alignGeometry", function(x, ...)
+    standardGeneric("alignGeometry"))
 }
-#' Allign raster geometry between two data sets
+#' Align raster geometry between two data sets
 #'
 #' @description
-#' Allign raster data by bringing it in the same geometry and extend.
-#' If the data set is not in the same projection as the template, the allignment
+#' Align raster data by bringing it in the same geometry and extent.
+#' If the data set is not in the same projection as the template, the alignment
 #' will be computed by reprojection. If the data has already the same
-#' projection, the data set will be croped and aggregated prior to resampling
+#' projection, the data set will be cropped and aggregated prior to resampling
 #' in order to reduce computation time.
 #'
-#' @param data Raster layer to be resampled
-#' @param template Raster or spatial data set from which geometry can be extracted
-#' @param method Method for resampling ("ngb" or "bilinear")
+#' @param x Satellite or Raster* object to be resampled.
+#' @param template Raster* or spatial data set from which geometry can be 
+#' extracted.
+#' @param band_codes Band ID(s) to be resampled. If not supplied, all bands will 
+#' be considered for resampling.
+#' @param type (Missing)
+#' @param method Method for resampling; "bilinear" for bilinear interpolation 
+#' (default) or "ngb" for nearest neighbor interpolation. See e.g. 
+#' \code{\link{resample}}, \code{\link{projectRaster}}.
 #'  
-#' @export allignGeometry
+#' @export alignGeometry
 #' 
-#' @name allignGeometry
+#' @name alignGeometry
 #' 
 #' @examples
+#' ## sample data
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LE7*.tif"), full.names = TRUE)
+#' 
+#' ## import as 'Satellite' object
 #' sat <- satellite(files)
-#' allignGeometry(sat, template = getSatDataLayer(sat, "B008n"), 
+#' 
+#' ## align geometry
+#' alignGeometry(sat, template = getSatDataLayer(sat, "B008n"), 
 #'                band_codes = "B001n")
-NULL
 
 
 # Function using satellite object ----------------------------------------------
@@ -33,11 +43,12 @@ NULL
 #' @return Satellite object with path radiance for each band in the metadata
 #' (W m-2 micrometer-1)
 #' 
-#' @rdname allignGeometry
+#' @rdname alignGeometry
 #'
-setMethod("allignGeometry", 
+setMethod("alignGeometry", 
           signature(x = "Satellite"), 
-          function(x, template, band_codes, type, method = "bilinear"){
+          function(x, template, band_codes, type, method = c("bilinear", "ngb")){
+            method <- method[1]
             if(!missing(type)){
               band_codes <- getSatBCDE(x)[which(getSatType(sat) == type)]
             }
@@ -45,8 +56,8 @@ setMethod("allignGeometry",
               band_codes <- getSatBCDE(sat)
             } 
             for(bcde in band_codes){
-              ag <- allignGeometry(x = getSatDataLayer(x, bcde),
-                                   template = template, method = method)
+              ag <- alignGeometry(x = getSatDataLayer(x, bcde),
+                                  template = template, method = method)
               layer_bcde <- paste0(bcde, "_AG")
               meta_param <- getSatMetaBCDETemplate(x, bcde)
               meta_param$BCDE <- layer_bcde
@@ -67,13 +78,14 @@ setMethod("allignGeometry",
 #' 
 #' @return raster::RasterStack object with converted layers
 #' 
-#' @rdname allignGeometry
+#' @rdname alignGeometry
 #'
-setMethod("allignGeometry", 
+setMethod("alignGeometry", 
           signature(x = "RasterStack"), 
-          function(x, template, method = "bilinear"){
+          function(x, template, method = c("bilinear", "ngb")){
+            method <- method[1]
             for(l in seq(nlayers(x))){
-              x[[l]] <- allignGeometry(x[[l]], template, method)
+              x[[l]] <- alignGeometry(x[[l]], template, method)
             }
             return(x)
           })
@@ -83,18 +95,19 @@ setMethod("allignGeometry",
 #' 
 #' @return raster::RasterLayer object with converted layer
 #' 
-#' @rdname allignGeometry
+#' @rdname alignGeometry
 #'
-setMethod("allignGeometry", 
+setMethod("alignGeometry", 
           signature(x = "RasterLayer"),
-          function(x, template, method = "bilinear"){
+          function(x, template, method = c("bilinear", "ngb")){
+            method <- method[1]
             if(projection(x) == projection(template)){
               x <- crop(x, template, snap = "out")
               if(class(template) == "RasterLayer"){
                 if(x@ncols / template@ncols >= 2){
                   factor <- floor(x@ncols/template@ncols)
                   x <- aggregate(x, fact = factor, fun = mean, 
-                                 expand=TRUE)
+                                 expand = TRUE)
                 }
                 x <- resample(x, template, method = method)
               }
