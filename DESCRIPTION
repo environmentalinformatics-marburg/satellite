@@ -6,7 +6,7 @@ Date: 2015-02-18
 Author: Thomas Nauss, Hanna Meyer, Florian Detsch
 Maintainer: Environmental Informatics
     <admin@environmentalinformatics-marburg.de>
-Description: The package provides a variety of functions which are usefull for
+Description: The package provides a variety of functions which are useful for
     handling, manipulating and visualizing remote sensing data.
 Depends: 
     raster

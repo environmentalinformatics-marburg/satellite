@@ -3,7 +3,7 @@
 #' @slot name name of the data file without extension
 #' @slot filepath full path and file of the data file
 #' @slot path path to the data file
-#' @slot file filename inkl. extension of the data file
+#' @slot file filename incl. extension of the data file
 #' @slot extension extension of the data file
 #' 
 #' @exportClass SatelliteInfo

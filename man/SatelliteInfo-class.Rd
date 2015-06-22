@@ -16,7 +16,7 @@ An S4 class to represent a satellite data file
 
 \item{\code{path}}{path to the data file}
 
-\item{\code{file}}{filename inkl. extension of the data file}
+\item{\code{file}}{filename incl. extension of the data file}
 
 \item{\code{extension}}{extension of the data file}
 }}
