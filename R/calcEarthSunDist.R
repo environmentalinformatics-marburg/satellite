@@ -1,38 +1,46 @@
-#' Compute earth-sun distance based on day of the year.
+#' Compute earth-sun distance based on day of the year
 #'
 #' @description
-#' Earth-sun distance is computed by one of several empirical formulas.
+#' The earth-sun distance for a particular day of the year is computed based on
+#' one of several empirical formulas.
 #' 
-#' @param date Date of the sensor overpath (YYYY-MM-DD or POSIX* object)
-#' @param formula Formula providing author to be used (Spencer, Mather, ESA)
+#' @param date Date of the sensor overpass; either a character string in a 
+#' native date format (e.g. "YYYY-MM-DD", see \code{\link{as.Date}}) or a POSIX* 
+#' object (see \code{\link{as.POSIXct}}). 
+#' @param formula Formula to be applied, specified through the name of the 
+#' author, i.e. one of "Spencer", "Mather" or "ESA".
 #'
-#' @return Vector object containing earth-sun distancen in AU
+#' @return Numeric earth-sun distance (in AU).
 #'
-#' @export calcEartSunDist
+#' @export calcEarthSunDist
 #' 
 #' @details Computation of earth-sun distance using formulas provided by
 #' Spencer (1971), Mather (2005) or ESA.
 #' 
 #' @references The formulas are taken from the following sources:
+#' \itemize{
+#'   \item Spencer: Spencer JW (1971) Fourier series representation of the position of 
+#'   the sun. Search 2/5. Taken from 
+#'   \url{https://goo.gl/lhi9UI}. 
 #' 
-#' Spencer: Spencer JW (1971) Fourier series representation of the position of 
-#' the sun. Search 2/5. Taken from 
-#' \url{https://goo.gl/lhi9UI}. 
+#'   \item Mather: Paul M. Mather (2005) Computer Processing of Remotely-Sensed Images:
+#'   An Introduction. Wiley, ISBN: 978-0-470-02101-9, 
+#'   \url{http://eu.wiley.com/WileyCDA/WileyTitle/productCd-0470021012.html}.
 #' 
-#' Mather:  Paul M. Mather (2005) Computer Processing of Remotely-Sensed Images:
-#' An Introduction. Wiley, ISBN: 978-0-470-02101-9, 
-#' \url{http://eu.wiley.com/WileyCDA/WileyTitle/productCd-0470021012.html}.
-#' 
-#' ESA: ESA Earth Observation Quality Control: Landsat frequently asked questions. 
-#' 
+#'   \item ESA: ESA Earth Observation Quality Control: Landsat frequently asked questions. 
+#' }
 #' See also: Bird R, Riordan C (1984) Simple solar spectral model for direct and 
 #' diffuse irradiance on horizontal and tilted planes at the Earth's surface for
 #' cloudless atmospheres. \url{http://www.nrel.gov/docs/legosti/old/2436.pdf}.
 #' 
 #' @examples
-#' calcEartSunDist(date = "2015-01-01", formula = "Spencer")
+#' calcEarthSunDist(date = "2015-01-01", formula = "Spencer")
 #' 
-calcEartSunDist <- function(date, formula = "Spencer"){
+calcEarthSunDist <- function(date, formula = c("Spencer", "Mather", "ESA")){
+  
+  ## if not supplied, formula defaults to "Spencer"
+  formula <- formula[1]
+  
   day <- as.numeric(strftime(date, format = "%j"))
   if(formula == "Spencer"){
     T <- 2 * pi * (day - 1) / 365
