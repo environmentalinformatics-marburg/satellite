@@ -7,37 +7,39 @@ if ( !isGeneric("calcAtmosCorr") ) {
 #' @description
 #' The function computes an atmospheric scattering correction and converts
 #' the sensors digital numbers to reflectances using
-#' - absolute radiance correction \cr
-#' - DOS2: a dark object substraction model by Chavez (1996)
-#' - DOS4: a dark object substratcion model by Moran et al. (1992)
+#' \itemize{
+#'   \item absolute radiance correction
+#'   \item DOS2: a dark object substraction model by Chavez (1996)
+#'   \item DOS4: a dark object substratcion model by Moran et al. (1992)
+#' }
 #'
-#' @param x A Satellite object or a raster::RasterStack or raster::RasterLayer
-#' provding the radiance at the sensor
-#' @param path_rad Path radiance, e.g. returned from \code{\link{calcPathRadDOS}}
-#' @param esun Actual (i.e. non-normalized) TOA solar irradianc, e.g. returned 
+#' @param x Satellite or Raster* object providing the radiance at the sensor.
+#' @param model Model to be used to correct for 1\% scattering (DOS2, DOS4; must 
+#' be the same as used by \code{\link{calcAtmosCorr}}).
+#' @param esun_method If x is a Satellite object, name of the method to be used 
+#' to compute \code{esun} using one of \code{\link{calcTOAIrradRadRef}} 
+#' ("RadRef"), \code{\link{calcTOAIrradTable}} ("Table") or 
+#' \code{\link{calcTOAIrradModel}} ("Model").
+#' @param path_rad Path radiance, e.g. returned from 
+#' \code{\link{calcPathRadDOS}}.
+#' @param esun Actual (i.e. non-normalized) TOA solar irradiance, e.g. returned 
 #' from \code{\link{calcTOAIrradRadRef}}, \code{\link{calcTOAIrradTable}} 
 #' or \code{\link{calcTOAIrradModel}}.
-#' @param szen sun zenith angle
-#' @param model to be used to correct for 1% scattering (DOS2, DOS4; must be the
-#' same as used by \code{\link{calcAtmosCorr}})
-#' @param esun_method If x is a Satellite object, name of the method to be used 
-#' to compute esun using one of \code{\link{calcTOAIrradRadRef}} ("RadRef"), 
-#' \code{\link{calcTOAIrradTable}} ("Table") or \code{\link{calcTOAIrradModel}}
-#' ("Model")
+#' @param szen Sun zenith angle.
 #'
 #' @export calcAtmosCorr
 #' 
 #' @name calcAtmosCorr
 #' 
 #' @details 
-#' If x is a Satellite object is passed to the function, and if the required
+#' If a Satellite object is passed to the function, and if the required
 #' pre-processing has not been performed already, the path radiance is computed 
 #' based on a dark object's scaled count value using 
 #' \code{\link{calcPathRadDOS}} which will also take care of the TOA solar 
 #' irradiance by calling \code{\link{calcTOAIrradModel}}, 
-#' \code{\link{calcTOAIrradRadRef}} or \code{\link{calcTOAIrradTable}} (depending
-#' on esun_method) if necessary. The bands' scaled counts are converted to 
-#' radiance using \code{\link{convertSCLinear}}.
+#' \code{\link{calcTOAIrradRadRef}} or \code{\link{calcTOAIrradTable}} 
+#' (depending on \code{esun_method}) if necessary. The bands' scaled counts are 
+#' converted to radiance using \code{\link{convertSCLinear}}.
 #'  
 #' The radiometric correction is based on a dark object approach using
 #' either the DOS2 (Chavez 1996) or DOS4 (Moran et al. 1992) model.
@@ -48,15 +50,15 @@ if ( !isGeneric("calcAtmosCorr") ) {
 #' The estimated values of the solar irradiance required for the path radiance
 #' can be computed by one of \code{\link{calcTOAIrradRadTable}} which is used to
 #' get readily published values of ESun, \code{\link{calcTOAIrradRadRef}} which 
-#' computes ESun based on the actual radiance and reflectance in the scene or  
-#' \code{\link{calcTOAIrradModel}}, which computes ESun based on  look-up tables 
-#' for the sensor's relative spectral resonse and solar irradiation spectral data.
+#' computes ESun based on the actual radiance and reflectance in the scene, or  
+#' \code{\link{calcTOAIrradModel}} which computes ESun based on  look-up tables 
+#' for the sensor's relative spectral response and solar irradiation spectral data.
 #' 
 #' The atmospheric transmittance towards the sensor (Tv) is approximated by 
-#' 1.0 (DOS2, Chavez 1996) or rayleigh scattering (DOS4, Moran et al. 1992)
+#' 1.0 (DOS2, Chavez 1996) or Rayleigh scattering (DOS4, Moran et al. 1992).
 #' 
 #' The atmospheric transmittance from the sun (Tz) is approximated by the 
-#' cosine of the sun zenith angle (DOS2, Chavez 1996) or again using rayleigh
+#' cosine of the sun zenith angle (DOS2, Chavez 1996) or again using Rayleigh
 #' scattering (DOS4, Moran et al. 1992).
 #' 
 #' The downwelling diffuse irradiance is approximated by 0.0 (DOS2, Chavez 1996)
@@ -78,8 +80,8 @@ if ( !isGeneric("calcAtmosCorr") ) {
 #' Package. Journal of Statistical Software,43/4, 1-25. URL 
 #' \url{http://www.jstatsoft.org/v43/i04/}.
 #' 
-#' Moran MS, Jackson RD, Slater PN, Teillet PM (1992) Evlauation of simplified
-#' procedures for rretrieval of land surface reflectane factors from satellite
+#' Moran MS, Jackson RD, Slater PN, Teillet PM (1992) Evaluation of simplified
+#' procedures for retrieval of land surface reflectance factors from satellite
 #' sensor output.Remote Sensing of Environment 41/2-3, 169-184, 
 #' doi:10.1016/0034-4257(92)90076-V, 
 #' URL \url{http://www.sciencedirect.com/science/article/pii/003442579290076V}.
@@ -136,8 +138,11 @@ NULL
 #'
 setMethod("calcAtmosCorr", 
           signature(x = "Satellite"), 
-          function(x, model = "DOS2", esun_method = "RadRef"){
+          function(x, model = c("DOS2", "DOS4"), esun_method = "RadRef"){
 
+            # If not supplied, 'model' defaults to DOS2
+            model <- model[1]
+            
             # Get solar bands with calibration information equals scaled counts
             sc_bands <- getSatBCDESolarCalib(x, id = "SC")
             
@@ -185,7 +190,10 @@ setMethod("calcAtmosCorr",
 #'
 setMethod("calcAtmosCorr", 
           signature(x = "RasterStack"), 
-          function(x, path_rad, esun, szen, model = "DOS2"){
+          function(x, path_rad, esun, szen, model = c("DOS2", "DOS4")){
+            # If not supplied, 'model' defaults to DOS2
+            model <- model[1]
+            
             for(l in seq(nlayers(x))){
               x[[l]] <- calcAtmosCorr(x, path_rad, esun, szen, model = "DOS2")
             }
@@ -201,7 +209,10 @@ setMethod("calcAtmosCorr",
 #'
 setMethod("calcAtmosCorr", 
           signature(x = "RasterLayer"), 
-          function(x, path_rad, esun, szen, model = "DOS2"){
+          function(x, path_rad, esun, szen, model = c("DOS2", "DOS4")){
+            # If not supplied, 'model' defaults to DOS2
+            model <- model[1]
+            
             cos_szen <- cos(szen * pi / 180.0)
             if(model == "DOS2"){
               tv <- 1.0
