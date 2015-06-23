@@ -50,8 +50,8 @@ setMethod("demTools",
             result <- demTools(getSatDataLayer(x, bcde), sunElev = sunElev, 
                                sunAzim = sunAzim, 
                                method = method)
-            x <- addSatDataLayer(x, method, data = result, info = NULL, 
-                                 in_bcde = NULL)
+            x <- addSatDataLayer(x, bcde = method, data = result, info = paste0(
+              "Add layer ", method), in_bcde = bcde)
           }
 )
 
