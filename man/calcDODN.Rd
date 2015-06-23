@@ -7,7 +7,8 @@
 calcDODN(band)
 }
 \arguments{
-\item{band}{satellite sensor band data (raster::RasterLayer)}
+\item{band}{raster::RasterLayer with sensor band data, e.g. returned by
+\code{\link{getSatDataLayer}}.}
 }
 \value{
 Numeric value of the DN for the dark object.
@@ -15,7 +16,7 @@ Numeric value of the DN for the dark object.
 \description{
 The function estimates the DN value of a "dark object" which is used for
 atmospheric correction using the DOS2 and DOS4 model. Therefore, the
-frequency distribution of the smalest 1% of the data values is analyzed
+frequency distribution of the smallest 1\% of the data values is analyzed
 and the value for which the first derivate has the absolute maximum is
 taken as the DN for a dark object.
 }
