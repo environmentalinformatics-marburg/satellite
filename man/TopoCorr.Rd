@@ -5,8 +5,11 @@
 \alias{TopoCorr}
 \alias{TopoCorr,RasterLayer-method}
 \alias{TopoCorr,RasterStack-method}
+\alias{TopoCorr,Satellite-method}
 \title{Correct for topographic effects}
 \usage{
+\S4method{TopoCorr}{Satellite}(x, mask = TRUE)
+
 \S4method{TopoCorr}{RasterStack}(x, hillsh, cloudmask = NULL)
 
 \S4method{TopoCorr}{RasterLayer}(x, hillsh, cloudmask = NULL)
@@ -14,11 +17,12 @@
 \arguments{
 \item{x}{Object of class satellite}
 
-\item{cloudmask}{Logical. If TRUE then the cloudmask from the
+\item{mask}{Logical. If TRUE then the cloudmask from the
 satellite object (if available) will be considered in the regression model.}
 
-\item{dem}{Object of class RasterLayer.
-If not specified, an srtm elevation model will be downloaded.}
+\item{hillsh}{A rasterLayer created with \code{\link{hillShade}}}
+
+\item{cloudmask}{A rasterLayer in which clouds are masked with NA values}
 }
 \value{
 Satellite object with added, topographic corrected layers
@@ -35,11 +39,15 @@ Correct for topographic effects
 
 
 
+
+
 }
 \details{
-The method of Civco (1989) is applied:
-First, an analytical hillshade image is created based on a DEM and sun elevation and
-sun zenith information from the metadata. A regression between
+The method of Civco (1989) is applied on Atmospherically corrected bands
+(if not already available in the satellite object,
+\code{\link{calcAtmosCorr}} is performed with its default settings.:
+First, an analytical hillshade image is created based on a DEM and sun
+elevation and sun zenith information from the metadata. A regression between
 the hillshade (independent variable) and each channel is then calculated
 with consideration of a cloudmask (if available).
 The regression coefficents are used to calibrate the hillshade raster
@@ -48,10 +56,12 @@ Finally the calibrated hillshade image is substracted from the corresponding
 channel and the mean value of the channel is added.
 }
 \examples{
+#' \dontrun{
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 x<-satellite(files)
 TopoCorr(x)
+}
 }
 \references{
 CIVCO, D.L. (1989): Topographic normalization of Landsat Thematic
