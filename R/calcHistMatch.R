@@ -4,47 +4,51 @@
 #' This function adjusts the illumination of individual bands across two scenes
 #' using a histogram match.
 #'
-#' @param x A Satellite object or a raster::RasterStack or raster::RasterLayer
-#' providing the source band(s) which should be adjusted.
-#' @param target The target band as raster::RasterLayer
-#' @param mask An invariant feature mask as raster::RasterLayer
-#' @param ttab Logical, whether to return the transformation table
-#' @param minv Lower bound of the possible range for transformation
-#' (if not provided, the minimum of both layers)
-#' @param maxv Upper bound of the possible range for transformation
-#' (if not provided, the maximum of both layers)
-#' @param by Step size used to build the new historgram
-#' (if not provided, 1 for integer master layer, 0.01 for float master layer)
+#' @param x Satellite or raster::Raster* object providing the source band(s) to 
+#' be adjusted.
+#' @param target The target band as raster::RasterLayer.
+#' @param mask An invariant feature mask as raster::RasterLayer.
+#' @param ttab Logical. If TRUE, the transformation table is being returned.
+#' @param minv Lower limit of the possible range for transformation (if not 
+#' provided, defaults to the minimum of both layers).
+#' @param maxv Upper limit of the possible range for transformation (if not 
+#' provided, defaults to the maximum of both layers).
+#' @param by Step size used to build the new histogram
+#' (if not provided, defaults to 1 for integer master layer and 0.01 for float 
+#' master layer).
 #'
 #' @export calcHistMatch
 #' 
 #' @return
-#' if \code{ttab = FALSE} a RasterLayer, if \code{ttab = TRUE} a list
-#' with components
-#' \code{recode} the trasnsformation table used to match the histograms
+#' If \code{ttab = FALSE} a RasterLayer; \cr 
+#' if \code{ttab = TRUE} a list containing
+#' \code{recode} the transformation table used to match the histograms
 #' \code{newraster} the transformed RasterLayer
 #'
-#' @references This function is taken and only slightly adapted from the histmatch
-#' function of Sarah C. Goslee (2011). Analyzing Remote Sensing Data in R: The 
-#' landsat Package. Journal of Statistical Software,43(4), 1-25. URL 
-#' \url{http://www.jstatsoft.org/v43/i04/}.
+#' @references This function is taken and only slightly adapted from the 
+#' \code{\link{histmatch}} function by Sarah C. Goslee (2011). Analyzing Remote 
+#' Sensing Data in R: The landsat Package. Journal of Statistical Software, 
+#' 43(4), 1-25. URL \url{http://www.jstatsoft.org/v43/i04/}.
 #'
 #' @examples
+#' ## sample data
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' sat <- satellite(files)
 #' 
+#' ## extraction of source and targed bands
+#' x <- getSatDataLayer(sat, "B004n")
+#' target <- getSatDataLayer(sat, "B005n")
 #' 
-#' x = getSatDataLayer(sat, "B004n")
-#' target = getSatDataLayer(sat, "B005n")
-#'
+#' ## histogram matching
+#' calcHistMatch(x, target)
 
 calcHistMatch <- function(x, target, mask, ttab = FALSE, 
-                            minv = NULL, maxv = NULL, step = NULL){
-
-  x <- getSatDataLayer(sat, "B002n")
-  target <- getSatDataLayer(sat, "B003n")
-  target <- getSatDataLayer(sat, "B002n")*1.12
+                          minv = NULL, maxv = NULL, step = NULL){
+  
+  #   x <- getSatDataLayer(sat, "B002n")
+  #   target <- getSatDataLayer(sat, "B003n")
+  #   target <- getSatDataLayer(sat, "B002n")*1.12
   
   n <- 500
   nmin <- 1
@@ -52,9 +56,11 @@ calcHistMatch <- function(x, target, mask, ttab = FALSE,
   m <- 500
   
   x <- round((x - minValue(x)) * (nmax - nmin) / (maxValue(x) - minValue(x)) + nmin)
-#   target <- (target - minValue(target)) * 
-#     (nmax - nmin) / (maxValue(target) - minValue(target)) + nmin
-#   
+  
+  #   target <- (target - minValue(target)) * 
+  #     (nmax - nmin) / (maxValue(target) - minValue(target)) + nmin
+  #   
+  
   ho <- hist(x, maxpixels = 1000000, 
              breaks = seq(minValue(x), maxValue(x), length.out = n+1))
   ht <- hist(target, maxpixels = 1000000, 
@@ -68,7 +74,7 @@ calcHistMatch <- function(x, target, mask, ttab = FALSE,
       t[i,j] <- min(pixelsreq, pixelsrem)
     }
   }
-  t
+  
   df <-getValues(x)
   df[which(df <= 1)] <- 1
   for(i in seq(length(df))){
@@ -105,7 +111,7 @@ calcHistMatch <- function(x, target, mask, ttab = FALSE,
   minv <- round_any(minv, step, f = floor)
   maxv <- round_any(maxv, step, f = ceiling)
   
-
+  
   results <- tofix
   master <- as.vector(as.matrix(master))
   tofix <- as.vector(as.matrix(tofix))
