@@ -11,39 +11,41 @@
   esun_method = "RadRef")
 
 \S4method{calcPathRadDOS}{numeric}(x, bnbr, band_wls, radm, rada, szen, esun,
-  model = "DOS2", scat_coef = -4, dos_adjust = 0.01)
+  model = "DOS2", scat_coef = c(-4, -2, -1, -0.7, -0.5),
+  dos_adjust = 0.01)
 }
 \arguments{
-\item{x}{A Satellite object or the value (scalled count) of a dark object in
-band bnbr (e.g. minimum raw count of selected raster band bnbr). If x is a
-Satellite object, the value is computed using \code{\link{calcDODN}})}
+\item{x}{A Satellite object or the value (scaled count) of a dark object in
+\code{\bnbr} (e.g. minimum raw count of selected raster \code{bnbr}). If x is
+a Satellite object, the value is computed using \code{\link{calcDODN}}.}
 
-\item{model}{to be used to correct for 1% scattering (DOS2, DOS4; must be the
-same as used by \code{\link{calcAtmosCorr}})}
+\item{model}{Model to be used to correct for 1\% scattering (DOS2, DOS4; must
+be the same as used by \code{\link{calcAtmosCorr}}).}
 
 \item{esun_method}{If x is a Satellite object, name of the method to be used
 to compute esun using one of \code{\link{calcTOAIrradRadRef}} ("RadRef"),
 \code{\link{calcTOAIrradTable}} ("Table") or \code{\link{calcTOAIrradModel}}
 ("Model")}
 
-\item{bnbr}{Band number for which DNmin is valid}
+\item{bnbr}{Band number for which DNmin is valid.}
 
-\item{band_wls}{Band wavelengths for which correction should be made (
-data frame with min, max in first, second column, see details)}
+\item{band_wls}{Band wavelengths to be corrected; \code{data.frame} with min
+(max) in first (second) column, see details.}
 
-\item{radm}{Multiplicative coefficient for radiance transformation (i.e. slope)}
+\item{radm}{Multiplicative coefficient for radiance transformation (i.e.
+slope).}
 
-\item{rada}{Additive coefficient for radiance transformation (i.e. offset)}
+\item{rada}{Additive coefficient for radiance transformation (i.e. offset).}
 
-\item{szen}{Sun zenith angle}
+\item{szen}{Sun zenith angle.}
 
-\item{esun}{Actual (i.e. non-normalized) TOA solar irradianc, e.g. returned
-from \code{\link{calcTOAIrradRadRef}}, \code{\link{calcTOAIrradTable}}
-or \code{\link{calcTOAIrradModel}}.}
+\item{esun}{Actual (i.e. non-normalized) TOA solar irradiance, e.g. returned
+by \code{\link{calcTOAIrradRadRef}}, \code{\link{calcTOAIrradTable}} or
+\code{\link{calcTOAIrradModel}}.}
 
-\item{scat_coef}{scattering coefficient (-4.0, -2.0, -1.0, -0.7, -0.5)}
+\item{scat_coef}{Scattering coefficient; defaults to -4.0.}
 
-\item{dos_adjust}{dark object adjustment assuming a reflexion of e.g. 0.01}
+\item{dos_adjust}{Assumed reflection for dark object adjustment; defaults to 0.01.}
 }
 \value{
 Satellite object with path radiance for each band in the metadata
@@ -53,9 +55,9 @@ Vector object with path radiance values for each band
 (W m-2 micrometer-1)
 }
 \description{
-Compute an estimaed path radiance for all sensor bands using a dark object
-method which can be used to roughly correct the radiance values for
-atmospheric scattering.
+Compute an estimated path radiance for all sensor bands, which can then be
+used to roughly correct the radiance values for atmospheric scattering. Path
+radiance estimation is based on a dark object method.
 
 
 
@@ -63,14 +65,13 @@ atmospheric scattering.
 }
 \details{
 If x is a Satellite object, the minimum raw count value (x) is computed using
-\code{\link{calcDODN}}). If the TOA solar irradiance is not part of the
-metadata of the Satellite object, it is computed using
-\code{\link{satTOAIrrad}}.
+\code{\link{calcDODN}}. If the TOA solar irradiance is not part of the
+Satellite object's metadata, it is computed using \code{\link{satTOAIrrad}}.
 
-The dark object substraction approach is based on an approximation
+The dark object subtraction approach is based on an approximation
 of the atmospheric path radiance (i.e. upwelling radiation which is
-scatter into the sensors field of view, aka haze) using the reflectance of a
-dark object (i.e. reflectance ~1%).
+scattered into the sensors field of view, aka haze) using the reflectance of a
+dark object (i.e. reflectance ~1\%).
 
 Chavez (1988) proposed a method which uses the dark object reflectance
 in one band to predict the corresponding path radiances in all other band_wls

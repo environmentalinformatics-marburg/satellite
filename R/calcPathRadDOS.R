@@ -5,30 +5,31 @@ if ( !isGeneric("calcPathRadDOS") ) {
 #' Compute path radiance based on the dark object method
 #'
 #' @description
-#' Compute an estimaed path radiance for all sensor bands using a dark object 
-#' method which can be used to roughly correct the radiance values for 
-#' atmospheric scattering.
+#' Compute an estimated path radiance for all sensor bands, which can then be 
+#' used to roughly correct the radiance values for atmospheric scattering. Path 
+#' radiance estimation is based on a dark object method.
 #'
-#' @param x A Satellite object or the value (scalled count) of a dark object in 
-#' band bnbr (e.g. minimum raw count of selected raster band bnbr). If x is a
-#' Satellite object, the value is computed using \code{\link{calcDODN}})
-#' @param bnbr Band number for which DNmin is valid
-#' @param band_wls Band wavelengths for which correction should be made (
-#' data frame with min, max in first, second column, see details)
-#' @param radm Multiplicative coefficient for radiance transformation (i.e. slope)
-#' @param rada Additive coefficient for radiance transformation (i.e. offset)
-#' @param szen Sun zenith angle
-#' @param esun Actual (i.e. non-normalized) TOA solar irradianc, e.g. returned 
-#' from \code{\link{calcTOAIrradRadRef}}, \code{\link{calcTOAIrradTable}} 
-#' or \code{\link{calcTOAIrradModel}}.
-#' @param model to be used to correct for 1% scattering (DOS2, DOS4; must be the
-#' same as used by \code{\link{calcAtmosCorr}})
+#' @param x A Satellite object or the value (scaled count) of a dark object in 
+#' \code{\bnbr} (e.g. minimum raw count of selected raster \code{bnbr}). If x is 
+#' a Satellite object, the value is computed using \code{\link{calcDODN}}.
+#' @param bnbr Band number for which DNmin is valid.
+#' @param band_wls Band wavelengths to be corrected; \code{data.frame} with min 
+#' (max) in first (second) column, see details.
+#' @param radm Multiplicative coefficient for radiance transformation (i.e. 
+#' slope).
+#' @param rada Additive coefficient for radiance transformation (i.e. offset).
+#' @param szen Sun zenith angle.
+#' @param esun Actual (i.e. non-normalized) TOA solar irradiance, e.g. returned 
+#' by \code{\link{calcTOAIrradRadRef}}, \code{\link{calcTOAIrradTable}} or 
+#' \code{\link{calcTOAIrradModel}}.
+#' @param model Model to be used to correct for 1\% scattering (DOS2, DOS4; must 
+#' be the same as used by \code{\link{calcAtmosCorr}}).
 #' @param esun_method If x is a Satellite object, name of the method to be used 
 #' to compute esun using one of \code{\link{calcTOAIrradRadRef}} ("RadRef"), 
 #' \code{\link{calcTOAIrradTable}} ("Table") or \code{\link{calcTOAIrradModel}}
 #' ("Model")
-#' @param dos_adjust dark object adjustment assuming a reflexion of e.g. 0.01
-#' @param scat_coef scattering coefficient (-4.0, -2.0, -1.0, -0.7, -0.5)
+#' @param dos_adjust Assumed reflection for dark object adjustment; defaults to 0.01.
+#' @param scat_coef Scattering coefficient; defaults to -4.0. 
 #'  
 #' @export calcPathRadDOS
 #' 
@@ -36,27 +37,26 @@ if ( !isGeneric("calcPathRadDOS") ) {
 #' 
 #' @details 
 #' If x is a Satellite object, the minimum raw count value (x) is computed using
-#' \code{\link{calcDODN}}). If the TOA solar irradiance is not part of the 
-#' metadata of the Satellite object, it is computed using 
-#' \code{\link{satTOAIrrad}}.
+#' \code{\link{calcDODN}}. If the TOA solar irradiance is not part of the 
+#' Satellite object's metadata, it is computed using \code{\link{satTOAIrrad}}.
 #'  
-#' The dark object substraction approach is based on an approximation 
+#' The dark object subtraction approach is based on an approximation 
 #' of the atmospheric path radiance (i.e. upwelling radiation which is 
-#' scatter into the sensors field of view, aka haze) using the reflectance of a 
-#' dark object (i.e. reflectance ~1%). 
+#' scattered into the sensors field of view, aka haze) using the reflectance of a 
+#' dark object (i.e. reflectance ~1\%). 
 #' 
 #' Chavez (1988) proposed a method which uses the dark object reflectance
-#' in one band to predict the corresponding path radiances in all other band_wls 
-#' using a relative radiance model which depends on the wavlelength and overall
-#' atmospheric optical thickness (which is estimated based on the dark object's
-#' DN value). This has the advantage that the path radiance is actually 
-#' correlated across different sensor band_wls and not computed individuall for 
-#' each band using independent dark objects. He proposed a relative radiance 
-#' model which follows a wavelength dependent scattering that ranges from a
-#' power of -4 over -2, -1, -0.7 to -0.5 for very clear over clear, moderate, 
-#' hazy to very hazy conditions. The relative factors are computed individually
-#' for each 1/1000 wavelength within each band range and subsequently averaged 
-#' over the band as proposed by Goslee (2011).
+#' in one band to predict the corresponding path radiances in all other 
+#' \code{band_wls}. This is done using a relative radiance model which depends on 
+#' the wavelength and overall atmospheric optical thickness (which is estimated 
+#' based on the dark object's DN value). This has the advantage that the path 
+#' radiance is actually correlated across different sensor \code{band_wls} and 
+#' not computed individually for each band using independent dark objects. He 
+#' proposed a relative radiance model which follows a wavelength dependent 
+#' scattering that ranges from a power of -4 over -2, -1, -0.7 to -0.5 for very 
+#' clear over clear, moderate, hazy to very hazy conditions. The relative 
+#' factors are computed individually for each 1/1000 wavelength within each band 
+#' range and subsequently averaged over the band as proposed by Goslee (2011).
 #' 
 #' The atmospheric transmittance towards the sensor (Tv) is approximated by 
 #' 1.0 (DOS2, Chavez 1996) or rayleigh scattering (DOS4, Moran et al. 1992)
@@ -200,7 +200,11 @@ setMethod("calcPathRadDOS",
 setMethod("calcPathRadDOS", 
           signature(x = "numeric"), 
           function(x, bnbr, band_wls, radm, rada, szen, esun,
-                   model = "DOS2", scat_coef = -4.0, dos_adjust = 0.01){
+                   model = "DOS2", scat_coef = c(-4.0, -2.0, -1.0, -0.7, -0.5), 
+                   dos_adjust = 0.01){
+            
+            # if not supplied, scat_coef defaults to -4.0
+            scat_coef <- scat_coef[1]
             
             # Define relative scattering model based on wavelength dependent 
             # scattering processes and different atmospheric optical thiknesses. 
