@@ -61,10 +61,10 @@ if ( !isGeneric("calcPathRadDOS") ) {
 #' range and subsequently averaged over the band as proposed by Goslee (2011).
 #' 
 #' The atmospheric transmittance towards the sensor (Tv) is approximated by 
-#' 1.0 (DOS2, Chavez 1996) or rayleigh scattering (DOS4, Moran et al. 1992)
+#' 1.0 (DOS2, Chavez 1996) or Rayleigh scattering (DOS4, Moran et al. 1992)
 #' 
 #' The atmospheric transmittance from the sun (Tz) is approximated by the 
-#' cosine of the sun zenith angle (DOS2, Chavez 1996) or again using rayleigh
+#' cosine of the sun zenith angle (DOS2, Chavez 1996) or again using Rayleigh
 #' scattering (DOS4, Moran et al. 1992).
 #' 
 #' The downwelling diffuse irradiance is approximated by 0.0 (DOS2, Chavez 1996)
@@ -79,27 +79,27 @@ if ( !isGeneric("calcPathRadDOS") ) {
 #' @references Chavez Jr PS (1988) An improved dark-object subtraction technique 
 #' for atmospheric scattering correction of multispectral data. Remote Sensing 
 #' of Environment 24/3, doi:10.1016/0034-4257(88)90019-3, available online at
-#'  \url{http://www.sciencedirect.com/science/article/pii/0034425788900193}
+#'  \url{http://www.sciencedirect.com/science/article/pii/0034425788900193}.
 #'  
 #' Chavez Jr PS (1996) Image-based atmospheric corrections revisited and
 #' improved. Photogrammetric Engineering and Remote Sensing 62/9,
 #' available online at 
-#' \url{http://www.asprs.org/PE-RS-Journals-1996/PE-RS-September-1996.html}
+#' \url{http://www.asprs.org/PE-RS-Journals-1996/PE-RS-September-1996.html}.
 #'  
 #' Goslee SC (2011) Analyzing Remote Sensing Data in R: The landsat 
-#' Package. Journal of Statistical Software,43/4, 1-25. URL 
+#' Package. Journal of Statistical Software,43/4, 1-25, available online at 
 #' \url{http://www.jstatsoft.org/v43/i04/}.
 #' 
 #' Moran MS, Jackson RD, Slater PN, Teillet PM (1992) Evlauation of simplified
 #' procedures for rretrieval of land surface reflectane factors from satellite
 #' sensor output.Remote Sensing of Environment 41/2-3, 169-184, 
-#' doi:10.1016/0034-4257(92)90076-V, 
-#' URL \url{http://www.sciencedirect.com/science/article/pii/003442579290076V}.
+#' doi:10.1016/0034-4257(92)90076-V, available online at
+#' \url{http://www.sciencedirect.com/science/article/pii/003442579290076V}.
 #' 
 #' Song C, Woodcock CE, Seto KC, Lenney MP, Macomber SA (2001) Classification 
 #' and Change Detection Using Landsat TM Data: When and How to Correct 
 #' Atmospheric Effects? Remote Sensing of Environment 75/2, 
-#' doi:10.1016/S0034-4257(00)00169-3, URL
+#' doi:10.1016/S0034-4257(00)00169-3, available online at
 #' \url{http://www.sciencedirect.com/science/article/pii/S0034425700001693}
 #'
 #' If you refer to Sawyer and Stephen 2014, please note that eq. 5 is wrong.
@@ -116,8 +116,8 @@ if ( !isGeneric("calcPathRadDOS") ) {
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' sat <- satellite(files)
-#' 
 #' satPathRadDOSModel(sat)
+#' 
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' sat <- satellite(files)  
@@ -129,7 +129,7 @@ if ( !isGeneric("calcPathRadDOS") ) {
 #' sat <- satTOAIrrad(sat, method = "Model")
 #' 
 #' bcde <- "B002n"
-#' calcPathRadDOS(DNmin = min(getValues(getSatDataLayer(sat, bcde))),
+#' calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bcde))),
 #'                bnbr = getSatLNBR(sat, bcde),
 #'                band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)), 
 #'                                      LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
