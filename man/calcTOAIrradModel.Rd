@@ -45,18 +45,18 @@ functions.
 \details{
 Computation of ESun is taken from Updike and Comp (2011).
 
-Tabulated values for mean earth sun distance are taken from the
-data sources mentionend in the references.
+Tabulated values for mean earth-sun distance are taken from the
+data sources mentioned in the references.
 
-If results should not be normalized to a mean earth sun distance, the
-actual earth sun distance is approximated by the day of the year using
-\code{\link{calcEartSunDist}}.
+If results should not be normalized to a mean earth-sun distance, the
+actual earth-sun distance is approximated by the day of the year using
+\code{\link{calcEarthSunDist}}.
 
 Relative spectral response values have to be supplied as a data frame
-which has at least these three columns: (i) a column "Band" for the sensor
-band number (i.e. 1, 2, etc.), (ii) a column "WAVELENGTH" for the WAVELENGTH
-data in full nm steps, and (iii) a column "RSR" for the
-response information [0...1].
+which has at least the following three columns: (i) a column "Band" for the
+sensor band number (i.e. 1, 2, etc.), (ii) a column "WAVELENGTH" for the
+WAVELENGTH data in full nm steps, and (iii) a column "RSR" for the response
+information [0...1].
 }
 \examples{
 path <- system.file("extdata", package = "satellite")

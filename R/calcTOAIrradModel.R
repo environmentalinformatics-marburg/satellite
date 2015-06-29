@@ -26,18 +26,18 @@ if ( !isGeneric("calcTOAIrradModel") ) {
 #' 
 #' @details Computation of ESun is taken from Updike and Comp (2011).
 #' 
-#' Tabulated values for mean earth sun distance are taken from the 
-#' data sources mentionend in the references. 
+#' Tabulated values for mean earth-sun distance are taken from the 
+#' data sources mentioned in the references. 
 #' 
-#' If results should not be normalized to a mean earth sun distance, the 
-#' actual earth sun distance is approximated by the day of the year using
-#' \code{\link{calcEartSunDist}}.
+#' If results should not be normalized to a mean earth-sun distance, the 
+#' actual earth-sun distance is approximated by the day of the year using
+#' \code{\link{calcEarthSunDist}}.
 #' 
 #' Relative spectral response values have to be supplied as a data frame
-#' which has at least these three columns: (i) a column "Band" for the sensor
-#' band number (i.e. 1, 2, etc.), (ii) a column "WAVELENGTH" for the WAVELENGTH 
-#' data in full nm steps, and (iii) a column "RSR" for the 
-#' response information [0...1].
+#' which has at least the following three columns: (i) a column "Band" for the 
+#' sensor band number (i.e. 1, 2, etc.), (ii) a column "WAVELENGTH" for the 
+#' WAVELENGTH data in full nm steps, and (iii) a column "RSR" for the response 
+#' information [0...1].
 #' 
 #' @references 
 #' Updike T, Comp C (2011) Radiometric use of WorldView-2 imagery. 
@@ -85,9 +85,10 @@ setMethod("calcTOAIrradModel",
           signature(x = "Satellite"), 
           function(x, model = "MNewKur", normalize = TRUE, esd){
             if(normalize == FALSE & missing(esd)){
-              esd = getSatESD(x)
+              esd <- getSatESD(x)
               if(is.na(esd)){
-                esd = calcEartSunDist(date)
+                doy <- getSatDATE(sat)
+                esd <- calcEarthSunDist(doy)
               } 
             }
             rsr <- lutInfoRSRromSID(sid = getSatSID(x))
@@ -98,7 +99,7 @@ setMethod("calcTOAIrradModel",
               esun <- calcTOAIrradModel(x = rsr, model = model, 
                                         normalize = normalize, esd = esd)
             }
-            bcde = names(esun)
+            bcde <- names(esun)
             
             x <- addSatMetaParam(x, 
                                  meta_param = data.frame(
