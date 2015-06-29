@@ -14,18 +14,19 @@
   normalize = TRUE, esd)
 }
 \arguments{
-\item{x}{An object of type Satellite or the relative spectral response
-function for the respective band as data.frame (see details for structure)}
+\item{x}{A Satellite object or the relative spectral response function for
+the respective band as \code{data.frame} (see details for structure).}
 
-\item{model}{Tabulated solar radiation model to be used}
+\item{model}{Tabulated solar radiation model to be used.}
 
-\item{normalize}{Normalize ESun to mean earth sun distance, TRUE or FALSE}
+\item{normalize}{Logical; if \code{TRUE}, ESun is normalized to mean
+earth-sun distance.}
 
 \item{esd}{Earth-sun distance (AU, can be estimated using
 \code{\link{calcEarthSunDist}}). If x is a Satellite object and esd is not
 supplied and necessary for normalization, it is tried to take it from the
 metadata, otherwise it is estimated by the day of the year using
-\code{\link{calcEartSunDist}}.}
+\code{\link{calcEarthSunDist}}.}
 }
 \value{
 Satellite object with ESun information added to the metadata
@@ -34,8 +35,8 @@ Vector object containing ESun for the respective band(s)
 }
 \description{
 Compute mean extraterrestrial solar irradiance (ESun) using tabulated mean
-solar spectral data and the band specifiv relative spectral response
-functions (rsr).
+solar spectral data and the band specific relative spectral response (rsr)
+functions.
 
 
 
