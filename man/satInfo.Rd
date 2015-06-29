@@ -121,7 +121,7 @@ getSatRefMin(sat, bcde)
 
 getSatESD(sat)
 
-getSatESUN(sat, bcde)
+getSatESUN(sat, bcde, estimate = TRUE, ...)
 
 getSatSZEN(sat, bcde)
 
