@@ -10,7 +10,7 @@ if ( !isGeneric("calcPathRadDOS") ) {
 #' radiance estimation is based on a dark object method.
 #'
 #' @param x A Satellite object or the value (scaled count) of a dark object in 
-#' \code{\bnbr} (e.g. minimum raw count of selected raster \code{bnbr}). If x is 
+#' \code{bnbr} (e.g. minimum raw count of selected raster \code{bnbr}). If x is 
 #' a Satellite object, the value is computed using \code{\link{calcDODN}}.
 #' @param bnbr Band number for which DNmin is valid.
 #' @param band_wls Band wavelengths to be corrected; \code{data.frame} with min 
@@ -152,7 +152,10 @@ NULL
 #'
 setMethod("calcPathRadDOS", 
           signature(x = "Satellite"), 
-          function(x, model = "DOS2", esun_method = "RadRef"){
+          function(x, model = c("DOS2", "DOS4"), esun_method = "RadRef"){
+
+            # if not supplied, model defaults to DOS2
+            model <- model[1]
             
             # Compute TOA solar irradiance information if necessary
             if(any(is.na(getSatESUN(x, getSatBCDESolar(x))))){
@@ -202,8 +205,12 @@ setMethod("calcPathRadDOS",
 setMethod("calcPathRadDOS", 
           signature(x = "numeric"), 
           function(x, bnbr, band_wls, radm, rada, szen, esun,
-                   model = "DOS2", scat_coef = c(-4.0, -2.0, -1.0, -0.7, -0.5), 
+                   model = c("DOS2", "DOS4"), 
+                   scat_coef = c(-4.0, -2.0, -1.0, -0.7, -0.5), 
                    dos_adjust = 0.01){
+            
+            # if not supplied, model defaults to DOS2
+            model <- model[1]
             
             # if not supplied, scat_coef defaults to -4.0
             scat_coef <- scat_coef[1]

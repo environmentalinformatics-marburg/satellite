@@ -7,16 +7,16 @@
 \alias{calcPathRadDOS,numeric-method}
 \title{Compute path radiance based on the dark object method}
 \usage{
-\S4method{calcPathRadDOS}{Satellite}(x, model = "DOS2",
+\S4method{calcPathRadDOS}{Satellite}(x, model = c("DOS2", "DOS4"),
   esun_method = "RadRef")
 
 \S4method{calcPathRadDOS}{numeric}(x, bnbr, band_wls, radm, rada, szen, esun,
-  model = "DOS2", scat_coef = c(-4, -2, -1, -0.7, -0.5),
+  model = c("DOS2", "DOS4"), scat_coef = c(-4, -2, -1, -0.7, -0.5),
   dos_adjust = 0.01)
 }
 \arguments{
 \item{x}{A Satellite object or the value (scaled count) of a dark object in
-\code{\bnbr} (e.g. minimum raw count of selected raster \code{bnbr}). If x is
+\code{bnbr} (e.g. minimum raw count of selected raster \code{bnbr}). If x is
 a Satellite object, the value is computed using \code{\link{calcDODN}}.}
 
 \item{model}{Model to be used to correct for 1\% scattering (DOS2, DOS4; must
@@ -66,7 +66,9 @@ radiance estimation is based on a dark object method.
 \details{
 If x is a Satellite object, the minimum raw count value (x) is computed using
 \code{\link{calcDODN}}. If the TOA solar irradiance is not part of the
-Satellite object's metadata, it is computed using \code{\link{satTOAIrrad}}.
+Satellite object's metadata, it is computed using
+\code{\link{calcTOAIrradRadRef}}, \code{\link{calcTOAIrradTable}} or
+\code{\link{calcTOAIrradModel}}.
 
 The dark object subtraction approach is based on an approximation
 of the atmospheric path radiance (i.e. upwelling radiation which is
@@ -74,17 +76,17 @@ scattered into the sensors field of view, aka haze) using the reflectance of a
 dark object (i.e. reflectance ~1\%).
 
 Chavez (1988) proposed a method which uses the dark object reflectance
-in one band to predict the corresponding path radiances in all other band_wls
-using a relative radiance model which depends on the wavlelength and overall
-atmospheric optical thickness (which is estimated based on the dark object's
-DN value). This has the advantage that the path radiance is actually
-correlated across different sensor band_wls and not computed individuall for
-each band using independent dark objects. He proposed a relative radiance
-model which follows a wavelength dependent scattering that ranges from a
-power of -4 over -2, -1, -0.7 to -0.5 for very clear over clear, moderate,
-hazy to very hazy conditions. The relative factors are computed individually
-for each 1/1000 wavelength within each band range and subsequently averaged
-over the band as proposed by Goslee (2011).
+in one band to predict the corresponding path radiances in all other
+\code{band_wls}. This is done using a relative radiance model which depends on
+the wavelength and overall atmospheric optical thickness (which is estimated
+based on the dark object's DN value). This has the advantage that the path
+radiance is actually correlated across different sensor \code{band_wls} and
+not computed individually for each band using independent dark objects. He
+proposed a relative radiance model which follows a wavelength dependent
+scattering that ranges from a power of -4 over -2, -1, -0.7 to -0.5 for very
+clear over clear, moderate, hazy to very hazy conditions. The relative
+factors are computed individually for each 1/1000 wavelength within each band
+range and subsequently averaged over the band as proposed by Goslee (2011).
 
 The atmospheric transmittance towards the sensor (Tv) is approximated by
 1.0 (DOS2, Chavez 1996) or rayleigh scattering (DOS4, Moran et al. 1992)
