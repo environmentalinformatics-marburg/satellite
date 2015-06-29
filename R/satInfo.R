@@ -491,16 +491,8 @@ getSatESD <- function(sat){
 #'
 #' @rdname satInfo
 #' 
-getSatESUN <- function(sat, bcde, estimate = TRUE, ...) {
-  esun <- getSatParam(sat, "ESUN", bcde)
- 
-  ## try to estimate earth-sun distance if not included in satellite metadata
-  if (all(is.na(esun)) & estimate) {
-    doy <- getSatDATE(sat)
-    esun <- calcEarthSunDist(doy, ...)
-  }
-  
-  return(esun)
+getSatESUN <- function(sat, bcde) {
+  getSatParam(sat, "ESUN", bcde)
 }
 
 
