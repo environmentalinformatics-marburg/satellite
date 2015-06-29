@@ -14,8 +14,7 @@ if ( !isGeneric("calcAtmosCorr") ) {
 #' }
 #'
 #' @param x Satellite or Raster* object providing the radiance at the sensor.
-#' @param model Model to be used to correct for 1\% scattering (DOS2, DOS4; must 
-#' be the same as used by \code{\link{calcAtmosCorr}}).
+#' @param model Model to be used to correct for 1\% scattering (DOS2, DOS4).
 #' @param esun_method If x is a Satellite object, name of the method to be used 
 #' to compute \code{esun} using one of \code{\link{calcTOAIrradRadRef}} 
 #' ("RadRef"), \code{\link{calcTOAIrradTable}} ("Table") or 
