@@ -38,7 +38,9 @@ if ( !isGeneric("calcPathRadDOS") ) {
 #' @details 
 #' If x is a Satellite object, the minimum raw count value (x) is computed using
 #' \code{\link{calcDODN}}. If the TOA solar irradiance is not part of the 
-#' Satellite object's metadata, it is computed using \code{\link{satTOAIrrad}}.
+#' Satellite object's metadata, it is computed using 
+#' \code{\link{calcTOAIrradRadRef}}, \code{\link{calcTOAIrradTable}} or 
+#' \code{\link{calcTOAIrradModel}}.
 #'  
 #' The dark object subtraction approach is based on an approximation 
 #' of the atmospheric path radiance (i.e. upwelling radiation which is 
