@@ -29,9 +29,9 @@ metadata, otherwise it is estimated by the day of the year using
 \code{\link{calcEarthSunDist}}.}
 }
 \value{
-Satellite object with ESun information added to the metadata
-
-Vector object containing ESun for the respective band(s)
+If x is a satellite object, a Satellite object with ESun information
+added to the metadata; if x is a \code{data.frame}, a vector containing ESun
+for the respective band(s).
 }
 \description{
 Compute mean extraterrestrial solar irradiance (ESun) using tabulated mean
@@ -52,7 +52,7 @@ If results should not be normalized to a mean earth-sun distance, the
 actual earth-sun distance is approximated by the day of the year using
 \code{\link{calcEarthSunDist}}.
 
-Relative spectral response values have to be supplied as a data frame
+Relative spectral response values have to be supplied as a \code{data.frame}
 which has at least the following three columns: (i) a column "Band" for the
 sensor band number (i.e. 1, 2, etc.), (ii) a column "WAVELENGTH" for the
 WAVELENGTH data in full nm steps, and (iii) a column "RSR" for the response
@@ -67,18 +67,17 @@ getSatESUN(sat)
 
 lut <- lutInfo()
 calcTOAIrradModel(lut$L8_RSR, model = "MNewKur", normalize = FALSE,
-  esd = calcEartSunDist("2015-01-01"))
+  esd = calcEarthSunDist("2015-01-01"))
 }
 \references{
 Updike T, Comp C (2011) Radiometric use of WorldView-2 imagery.
-Technical Note, URL
-\url{https://goo.gl/np4Bwm}.
+Technical Note, available online at \url{https://goo.gl/np4Bwm}.
 
 Tabulated relative spectral response functions (nm-1) are taken from taken from the
 \href{http://landsat.usgs.gov/instructions.php}{spectral viewer}
 of the USGS Landsat FAQ.
 
-Tabulated solar irradiance (W m-2 nm-1) is taken from taken from the
+Tabulated solar irradiance (W m-2 nm-1) is taken from the
 \href{http://rredc.nrel.gov/solar/spectra/am0/modtran.html}{National Renewable
 Energy Laboratory}.
 }
@@ -90,6 +89,6 @@ values of the dataset.
 
 See \code{\link{calcEarthSunDist}} for calculating the earth-sun
 distance based on the day of the year which is called by this function if
-ESun should be corrected for actual earth sun distance.
+ESun should be corrected for actual earth-sun distance.
 }
 
