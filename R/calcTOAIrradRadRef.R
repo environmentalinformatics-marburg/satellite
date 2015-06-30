@@ -8,15 +8,16 @@ if ( !isGeneric("calcTOAIrradRadRef") ) {
 #' Compute extraterrestrial solar irradiance (ESun) using the actual
 #' maximum radiation and reflection values within each band.
 #' 
-#' @param x An object of type Satellite or the maximum radiance of satellite 
-#' band(s) as numeric object
-#' @param rad_min minimum radiance of satellite band(s)
-#' @param normalize Normalize ESun to mean earth sun distance, TRUE or FALSE
+#' @param x A Satellite object or the maximum radiance of satellite 
+#' band(s) as numeric object. 
+#' @param rad_min Minimum radiance of satellite band(s). 
+#' @param normalize Logical; if \code{TRUE}, ESun is normalized to mean 
+#' earth-sun distance. 
 #' @param esd Earth-sun distance (AU, can be estimated using 
 #' \code{\link{calcEarthSunDist}}). If x is a Satellite object and esd is not 
 #' supplied and necessary for normalization, it is tried to take it from the 
 #' metadata, otherwise it is estimated by the day of the year using 
-#' \code{\link{calcEartSunDist}}.
+#' \code{\link{calcEarthSunDist}}.
 #'
 #' @export calcTOAIrradRadRef
 #' 

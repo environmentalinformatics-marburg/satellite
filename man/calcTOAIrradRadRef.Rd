@@ -12,18 +12,19 @@
 \S4method{calcTOAIrradRadRef}{numeric}(x, ref_max, normalize = TRUE, esd)
 }
 \arguments{
-\item{x}{An object of type Satellite or the maximum radiance of satellite
-band(s) as numeric object}
+\item{x}{A Satellite object or the maximum radiance of satellite
+band(s) as numeric object.}
 
-\item{normalize}{Normalize ESun to mean earth sun distance, TRUE or FALSE}
+\item{normalize}{Logical; if \code{TRUE}, ESun is normalized to mean
+earth-sun distance.}
 
 \item{esd}{Earth-sun distance (AU, can be estimated using
 \code{\link{calcEarthSunDist}}). If x is a Satellite object and esd is not
 supplied and necessary for normalization, it is tried to take it from the
 metadata, otherwise it is estimated by the day of the year using
-\code{\link{calcEartSunDist}}.}
+\code{\link{calcEarthSunDist}}.}
 
-\item{rad_min}{minimum radiance of satellite band(s)}
+\item{rad_min}{Minimum radiance of satellite band(s).}
 }
 \value{
 Satellite object with ESun information added to the metadata
