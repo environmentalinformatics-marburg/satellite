@@ -27,9 +27,9 @@ metadata, otherwise it is estimated by the day of the year using
 \item{rad_min}{Minimum radiance of satellite band(s).}
 }
 \value{
-Satellite object with ESun information added to the metadata
-
-Vector object containing ESun for the respective band(s)
+If x is a Satellite object, a Satellite object with ESun information
+added to the metadata; if x is numeric, a vector containing ESun for the
+respective band(s).
 }
 \description{
 Compute extraterrestrial solar irradiance (ESun) using the actual
@@ -40,16 +40,16 @@ maximum radiation and reflection values within each band.
 
 }
 \details{
-The actual solar irradiance is compute using the following formula
-taken from GRASS GIS'
-\href{http://grass.osgeo.org/grass65/manuals/i.landsat.toar.html}{i.landsat.toar module}
+The actual solar irradiance is computed using the following formula
+taken from the GRASS GIS
+\href{http://grass.osgeo.org/grass65/manuals/i.landsat.toar.html}{i.landsat.toar} module
 \deqn{ESun = (pi d^2) RADIANCE_MAXIMUM / REFLECTANCE_MAXIMUM}
-where d is the sun-earth distance in astronomical units and RADIANCE_MAXIMUM
+where d is the earth-sun distance (in AU) and RADIANCE_MAXIMUM
 and REFLECTANCE_MAXIMUM are the maximum radiance and reflection values of the
 respective band. All these parameters are taken from the scene's metadata
 file if a Satellite object is passed to the function.
 
-By default, the resulting actual ESun will be normalized to a mean earth sun
+By default, the resulting actual ESun will be normalized to a mean earth-sun
 distance to be compatible with other default results from \code{\link{eSun}}.
 }
 \examples{
@@ -59,19 +59,19 @@ sat <- satellite(files)
 sat <- calcTOAIrradModel(sat)
 getSatESUN(sat)
 
-calcTOAIrradRadRef(x = getSatRadMax(x, getSatBCDESolar(x)),
-                   ref_max = getSatRefMax(x, getSatBCDESolar(x)),
+calcTOAIrradRadRef(x = getSatRadMax(sat, getSatBCDESolar(sat)),
+                   ref_max = getSatRefMax(sat, getSatBCDESolar(sat)),
                    normalize = FALSE,
-                   esd = calcEartSunDist("2015-01-01"))
+                   esd = calcEarthSunDist("2015-01-01"))
 }
 \seealso{
 \code{\link{calcTOAIrradTable}} for tabulated solar irradiance
 values from the literature or \code{\link{calcTOAIrradModel}} for the
 computation of the solar irradiance based on look-up tables for the sensor's
-relative spectral resonse and solar irradiation spectral data.
+relative spectral response and solar irradiation spectral data.
 
 See \code{\link{calcEarthSunDist}} for calculating the earth-sun
 distance based on the day of the year which is called by this function if
-ESun should be corrected for actual earth sun distance.
+ESun should be corrected for actual earth-sun distance.
 }
 
