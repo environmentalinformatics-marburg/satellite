@@ -7,30 +7,30 @@
 convRef2RadLinear(band, refm, refa, radm, rada, szen)
 }
 \arguments{
-\item{band}{raster::RasterStack or raster::RasterLayer containing reflectance}
+\item{band}{raster::RasterStack or raster::RasterLayer containing reflectance.}
 
-\item{REFM}{multiplication coefficient for reflectance conversion}
+\item{refm}{Multiplication coefficient for reflectance conversion.}
 
-\item{REFA}{addtition coefficient for reflectance conversion}
+\item{refa}{Addtition coefficient for reflectance conversion.}
 
-\item{RADM}{multiplication coefficient for radiance conversion}
+\item{radm}{Multiplication coefficient for radiance conversion.}
 
-\item{RADA}{addtition coefficient for radiance conversion}
+\item{rada}{Addition coefficient for radiance conversion.}
 
-\item{SZEN}{sun zenith angle}
+\item{szen}{Sun zenith angle.}
 }
 \value{
-Raster object with converted values
+\code{raster::Raster*} object with converted values.
 }
 \description{
-The function converts the relfectance (ref) back to radiance (rad) given that
-linear conversion coefficients for both, radiance and reflectance are
+The function converts the reflectance (ref) back to radiance (rad) given that
+linear conversion coefficients for both radiance and reflectance are
 available.
 }
 \details{
 The conversion functions are taken from USGS' Landsat 8 manual
 which is available online at
-\url{http://landsat.usgs.gov/Landsat8_Using_Product.php}
+\url{http://landsat.usgs.gov/Landsat8_Using_Product.php}.
 }
 \examples{
 Not run:
