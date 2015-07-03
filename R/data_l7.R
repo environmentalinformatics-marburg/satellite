@@ -1,4 +1,4 @@
-#' Landast 7 raster stack.
+#' Landsat 7 sample data
 #'
 #' This dataset comes from the USGS. It contains part of the Landsat scene
 #' LE71950252001211EDC00 from 2001-07-30 over Maburg, Germany.
@@ -9,8 +9,8 @@
 #' }
 #' @section Use:
 #' Use of this data requires your agreement to the USGS regulations on using
-#' Landat data.
-#' @format RasterLayer with 8 bands of 41 by 41 pixels.
+#' Landsat data.
+#' @format \code{raster::RasterStack} with 8 bands of 41 by 41 pixels.
 #' @source
 #' \url{http://earthexplorer.usgs.gov/}
 "l7"

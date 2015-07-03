@@ -1,4 +1,4 @@
-#' Landast 8 raster stack.
+#' Landsat 8 sample data
 #'
 #' This dataset comes from the USGS. It contains part of the Landsat scene
 #' LC81950252013188LGN00 from 2013-07-07 over Maburg, Germany.
@@ -9,8 +9,8 @@
 #' }
 #' @section Use:
 #' Use of this data requires your agreement to the USGS regulations on using
-#' Landat data.
-#' @format RasterLayer with 10 bands of 41 by 41 pixels.
+#' Landsat data.
+#' @format \code{raster::RasterStack} with 10 bands of 41 by 41 pixels.
 #' @source
 #' \url{http://earthexplorer.usgs.gov/}
 "l8"

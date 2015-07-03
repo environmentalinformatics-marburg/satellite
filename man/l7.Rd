@@ -3,8 +3,8 @@
 \docType{data}
 \name{l7}
 \alias{l7}
-\title{Landast 7 raster stack.}
-\format{RasterLayer with 8 bands of 41 by 41 pixels.}
+\title{Landsat 7 sample data}
+\format{\code{raster::RasterStack} with 8 bands of 41 by 41 pixels.}
 \source{
 \url{http://earthexplorer.usgs.gov/}
 }
@@ -25,7 +25,7 @@ LE71950252001211EDC00 from 2001-07-30 over Maburg, Germany.
 \section{Use}{
 
 Use of this data requires your agreement to the USGS regulations on using
-Landat data.
+Landsat data.
 }
 \keyword{datasets}
 
