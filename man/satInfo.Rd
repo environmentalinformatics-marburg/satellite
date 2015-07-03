@@ -156,12 +156,12 @@ getSatDATE(sat, bcde)
 getSatPRAD(sat, bcde)
 }
 \arguments{
-\item{sat}{Satellite object (see \code{\link{satellite}})}
+\item{sat}{Satellite object (see \code{\link{satellite}}).}
 
-\item{bcde}{band code}
+\item{bcde}{Band code.}
 }
 \value{
-Objects of respective type (see \code{\link{satellite}})
+Objects of respective type (see \code{\link{satellite}}).
 }
 \description{
 Get information from class Satellite.
@@ -171,11 +171,11 @@ Get information from class Satellite.
 
 }
 \details{
-The functions are generally self explaining in that sence that
+The functions are generally self-explaining in that sence that
 \code{get*} returns the respective information and \code{set*} sets the
 respective information from/in the Satellite object.
 
-\code{addSatLog} adds a log entry to the Satellite object
+\code{addSatLog} adds a log entry to the Satellite object.
 }
 \examples{
 # List of input files

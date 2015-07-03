@@ -3,15 +3,15 @@
 #' @description
 #' Get information from class Satellite.
 #' 
-#' @param sat Satellite object (see \code{\link{satellite}})
+#' @param sat Satellite object (see \code{\link{satellite}}).
 #' 
-#' @return Objects of respective type (see \code{\link{satellite}})
+#' @return Objects of respective type (see \code{\link{satellite}}). 
 #'
-#' @details The functions are generally self explaining in that sence that
+#' @details The functions are generally self-explaining in that sence that
 #' \code{get*} returns the respective information and \code{set*} sets the
 #' respective information from/in the Satellite object.
 #'  
-#' \code{addSatLog} adds a log entry to the Satellite object
+#' \code{addSatLog} adds a log entry to the Satellite object. 
 #' 
 #' @name satInfo
 #' 
@@ -186,7 +186,7 @@ addSatDataLayer <- function(sat, bcde, data, meta_param, info, in_bcde){
 ################################################################################
 
 # Return parameter (general method implemented by the specific functions below)-
-#' @param bcde band code
+#' @param bcde Band code.
 #' @export getSatParam
 #'
 #' @rdname satInfo
