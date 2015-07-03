@@ -3,11 +3,12 @@
 #' @description
 #' The function estimates the DN value of a "dark object" which is used for 
 #' atmospheric correction using the DOS2 and DOS4 model. Therefore, the 
-#' frequency distribution of the smalest 1% of the data values is analyzed 
+#' frequency distribution of the smallest 1\% of the data values is analyzed 
 #' and the value for which the first derivate has the absolute maximum is
 #' taken as the DN for a dark object.
 #'
-#' @param band satellite sensor band data (raster::RasterLayer)
+#' @param band raster::RasterLayer with sensor band data, e.g. returned by 
+#' \code{\link{getSatDataLayer}}. 
 #'
 #' @return Numeric value of the DN for the dark object.
 #'
@@ -32,6 +33,11 @@
 #' calcDODN(getSatDataLayer(sat, bcde = "B002n"))
 #' 
 calcDODN <- function(band){
+  
+  ## stop if a multi-layer raster is supplied
+  if (class(band) != "RasterLayer")
+    stop("Please supply a single-layer object.")
+  
   vals <- raster::getValues(band)
   #use only values > 0 (if using whole satellite images e.g. landsat no data values
   #may be zero or negative, which will lead to a value of zero in calcDODN function)

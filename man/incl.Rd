@@ -7,14 +7,13 @@
 incl(x)
 }
 \arguments{
-\item{pred}{raster object containing the predicted values}
+\item{pred,}{ref raster object containing the predicted and referen values respectivly.}
 
-\item{ref}{spatial polygon object containing the reference values for certain
-locations}
+\item{win}{max window size. For now defaults to 3.}
 
-\item{win}{max window size. For now defaults to 3}
+\item{lweights}{vector with weights for layers of each window.}
 
-\item{weights}{vector with weights for layers of each window}
+\item{cweights}{matrix with weights for class changes.}
 }
 \value{
 similarity index

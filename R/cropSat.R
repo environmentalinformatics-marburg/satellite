@@ -3,38 +3,43 @@ if ( !isGeneric("cropSat") ) {
     standardGeneric("cropSat"))
 }
 
-#' Crop satellite object.
+#' Crop satellite object
 #'
 #' @description
-#' The function is a wrapper around the raster::crop function to easily crop
-#' a satellite object by an extent object.
+#' The function is a wrapper around the \code{\link{raster::crop}} function to 
+#' easily crop a Satellite object by an \code{raster::extent} object.
 #'
-#' @param x object of type Satellite
-#' @param y Extent object
-#' @param subset logical, defaults to TRUE. Drops all layers but the cropped ones.
-#' If set to false appends cropped layers to Satellite object.
+#' @param x Satellite object.
+#' @param y \code{raster::Extent} object. 
+#' @param subset Logical; if \code{TRUE} (default), all layers but the cropped 
+#' ones are being dropped; if \code{FALSE}, cropped layers are appended to the 
+#' Satellite object.
 #'
-#' @return Satellite object cropped layers
+#' @return A Satellite object consisting of cropped layers only. If 
+#' \code{subset = FALSE}, a Satellite object with the cropped layers appended.
 #' 
 #' @export cropSat
 #' 
 #' @name cropSat
 #'
-#' @details Crop layers of a Satellite object to the size of a given Extent object.
+#' @details Crop layers of a Satellite object to the size of a given 
+#' \code{raster::extent} object.
 #' 
 #' @references Please refer to the respective functions for references.
 #'  
-#' @seealso This function is a wrapper for \code{\link[raster]{crop}}.
+#' @seealso This function is a wrapper for \code{\link{raster::crop}}.
 #'
 #' @examples
-# #' EXAMPLE STILL NEEDS DATA (i.e. the crop template)
-#'
+#' ## sample data
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LE7*.tif"), full.names = TRUE)
 #' sat <- satellite(files)
-#' crop_template <- raster(paste0(path,crop_template))
+#'
+#' ## geographic extent of georg-gassmann-stadium (utm 32-n)
+#' ext_ggs <- raster::extent(484015, 484143, 5627835, 5628020)
 #' 
-#' sat <- crop(sat, crop_template)
+#' ## crop satellite object by specified extent
+#' sat <- cropSat(sat, ext_ggs)
 #' 
 setMethod("cropSat", 
           signature(x = "Satellite"), 

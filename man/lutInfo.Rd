@@ -28,48 +28,48 @@ lutInfoSIDfromFilename(files)
 lutInfoSGRPfromFilename(file)
 }
 \arguments{
-\item{sid}{sensor id as returned e.g. from \code{lutInfoSensorFromSID}}
+\item{sid}{Sensor id as returned e.g. from \code{\link{lutInfoSensorFromSID}}.}
 
-\item{bid}{band id  as returned e.g. from \code{lutInfoBIDFromBCDE}}
+\item{bid}{Band id as returned e.g. from \code{\link{lutInfoBIDFromBCDE}}.}
 
-\item{bcde}{band code  as returned e.g. from \code{lutInfoBCDEFromBID}}
+\item{bcde}{Band code as returned e.g. from \code{\link{lutInfoBCDEFromBID}}.}
 }
 \value{
-List containing several data frames with LUT values
+List containing several \code{data.frame} objects with LUT values.
 }
 \description{
-Get internal LUT values from sysdata.rda which have been compiled using
-data-raw/lut_data.R. Metadata is stored in lut$meta.
+Get internal look-up table (LUT) values from sysdata.rda which have been
+compiled using data-raw/lut_data.R. Metadata is stored in \code{lut$meta}.
 }
 \details{
 The functions above return the following information:
 \itemize{
-  \item \code{lutInfoBandsFromSID} returns the band info block
-  \item \code{lutInfoBCDEFromBID} returns the band code
-  \item \code{lutInfoBIDFromBCDE} returns the band ids
-  \item \code{lutInfoRSRromSID} returns the rsr for the sensor
-  \item \code{lutInfoSensorFromSID} returns the sensor name
-
+  \item \code{lutInfoBandsFromSID} returns the band info block.
+  \item \code{lutInfoBCDEFromBID} returns the band code.
+  \item \code{lutInfoBIDFromBCDE} returns the band ids.
+  \item \code{lutInfoRSRromSID} returns the relative spectral response (rsr)
+        for the sensor.
+  \item \code{lutInfoSensorFromSID} returns the sensor name.
 }
 
 The LUT contains the following information:
 \describe{
   \item{l4_band_wl}{Minimum/maximum wavelength for Landsat 4 bands taken from the
 \href{http://landsat.usgs.gov/band_designations_landsat_satellites.php}{band info}
-of the }
-  \item{l5_band_wl}{ Minimum/maximum wavelength for Landsat 5 bands taken from the
+of the USGS Landsat FAQ.}
+  \item{l5_band_wl}{Minimum/maximum wavelength for Landsat 5 bands taken from the
 \href{http://landsat.usgs.gov/band_designations_landsat_satellites.php}{band info}
 of the USGS Landsat FAQ.}
   \item{l7_band_wl}{Minimum/maximum wavelength for Landsat 7 bands taken from the
 \href{http://landsat.usgs.gov/band_designations_landsat_satellites.php}{band info}
 of the USGS Landsat FAQ.}
-\item{l8_band_wl}{Minimum/maximum wavelength for Landsat 8 bandstaken from the
+\item{l8_band_wl}{Minimum/maximum wavelength for Landsat 8 bands taken from the
 \href{http://landsat.usgs.gov/band_designations_landsat_satellites.php}{band info}
 of the USGS Landsat FAQ.}
-\item{l7_rsr}{Landat 7 relative spectral response (nm-1) taken from taken from the
+\item{l7_rsr}{Landat 7 rsr (nm-1) taken from taken from the
 \href{http://landsat.usgs.gov/instructions.php}{spectral viewer}
 of the USGS Landsat FAQ.}
-\item{l8_rsr}{Landat 8 relative spectral response (nm-1) taken from taken from the
+\item{l8_rsr}{Landat 8 rsr (nm-1) taken from taken from the
 \href{http://landsat.usgs.gov/instructions.php}{spectral viewer}
 of the USGS Landsat FAQ.}
 \item{solar}{Solar irradiance (W m-2 nm-1) taken from the
@@ -82,12 +82,12 @@ Energy Laboratory}.}
 \href{http://landsathandbook.gsfc.nasa.gov/pdfs/L5TMLUTIEEE2003.pdf}{Chander
 G, Markham B (2003) Revised Landsat-5 TM radiometric calibration procedures
 and postcalibration dynamic ranges.  IEEE Transaction on Geoscience and
-Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285}}
+Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285}.}
 \item{l4_esun}{Tabulated ESun values from
 \href{http://landsathandbook.gsfc.nasa.gov/pdfs/L5TMLUTIEEE2003.pdf}{Chander
 G, Markham B (2003) Revised Landsat-5 TM radiometric calibration procedures
 and postcalibration dynamic ranges.  IEEE Transaction on Geoscience and
-Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285}}
+Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285}.}
 }
 }
 \section{Functions}{

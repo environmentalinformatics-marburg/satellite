@@ -6,14 +6,15 @@ if ( !isGeneric("satSubset") ) {
 #' Subset a Satellite object
 #'
 #' @description
-#' Method to subset a Satellite Object. IMPORTANT: if name of target variable where subset is to be stored is the
-#' same as the old one all other information will be lost!
+#' Method to subset a Satellite object. \cr
+#' IMPORTANT: if the name of the target variable where subset is to be stored is 
+#' the same as the old one all other information will be lost!
 #' 
-#' @param x vector of one or more satellite data files, raster::RasterStack
-#' @param subset name of the computed instance (e.g. SC, cropped, REF_AtmosCorr etc.) or
-#' row numbers of layers to be selected.
+#' @param x A Satellite object.
+#' @param subset Name of the computed instance (e.g. SC, cropped, REF_AtmosCorr 
+#' etc.) or row numbers of layers to be selected.
 #' 
-#' @return Satellite object
+#' @return A Satellite object.
 #' 
 #' @export satSubset
 #' 
@@ -22,7 +23,21 @@ if ( !isGeneric("satSubset") ) {
 #' @name satSubset
 #' 
 #' @examples
-#' new_sat <- satSubset(old_sat,subset = "cropped")
+#' ## sample data
+#' path <- system.file("extdata", package = "satellite")
+#' files <- list.files(path, pattern = glob2rx("LE7*.tif"), full.names = TRUE)
+#' sat <- satellite(files)
+#'
+#' ## geographic extent of georg-gassmann-stadium (utm 32-n)
+#' ext_ggs <- raster::extent(484015, 484143, 5627835, 5628020)
+#' 
+#' ## crop satellite object by specified extent
+#' sat <- cropSat(sat, ext_ggs, subset = FALSE)
+#' length(attr(sat, "layers"))
+#' 
+#' ## select cropped layers only
+#' sat_sub <- satSubset(sat, subset = "cropped")
+#' length(attr(sat_sub, "layers"))
 #' 
 setMethod("satSubset", 
           signature(x = "Satellite"), 

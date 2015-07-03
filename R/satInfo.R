@@ -491,7 +491,7 @@ getSatESD <- function(sat){
 #'
 #' @rdname satInfo
 #' 
-getSatESUN <- function(sat, bcde){
+getSatESUN <- function(sat, bcde) {
   getSatParam(sat, "ESUN", bcde)
 }
 

@@ -8,28 +8,29 @@ calcHistMatch(x, target, mask, ttab = FALSE, minv = NULL, maxv = NULL,
   step = NULL)
 }
 \arguments{
-\item{x}{A Satellite object or a raster::RasterStack or raster::RasterLayer
-providing the source band(s) which should be adjusted.}
+\item{x}{Satellite or raster::Raster* object providing the source band(s) to
+be adjusted.}
 
-\item{target}{The target band as raster::RasterLayer}
+\item{target}{The target band as raster::RasterLayer.}
 
-\item{mask}{An invariant feature mask as raster::RasterLayer}
+\item{mask}{An invariant feature mask as raster::RasterLayer.}
 
-\item{ttab}{Logical, whether to return the transformation table}
+\item{ttab}{Logical. If TRUE, the transformation table is being returned.}
 
-\item{minv}{Lower bound of the possible range for transformation
-(if not provided, the minimum of both layers)}
+\item{minv}{Lower limit of the possible range for transformation (if not
+provided, defaults to the minimum of both layers).}
 
-\item{maxv}{Upper bound of the possible range for transformation
-(if not provided, the maximum of both layers)}
+\item{maxv}{Upper limit of the possible range for transformation (if not
+provided, defaults to the maximum of both layers).}
 
-\item{by}{Step size used to build the new historgram
-(if not provided, 1 for integer master layer, 0.01 for float master layer)}
+\item{by}{Step size used to build the new histogram
+(if not provided, defaults to 1 for integer master layer and 0.01 for float
+master layer).}
 }
 \value{
-if \code{ttab = FALSE} a RasterLayer, if \code{ttab = TRUE} a list
-with components
-\code{recode} the trasnsformation table used to match the histograms
+If \code{ttab = FALSE} a RasterLayer; \cr
+if \code{ttab = TRUE} a list containing
+\code{recode} the transformation table used to match the histograms
 \code{newraster} the transformed RasterLayer
 }
 \description{
@@ -37,18 +38,22 @@ This function adjusts the illumination of individual bands across two scenes
 using a histogram match.
 }
 \examples{
+## sample data
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 sat <- satellite(files)
 
+## extraction of source and targed bands
+x <- getSatDataLayer(sat, "B004n")
+target <- getSatDataLayer(sat, "B005n")
 
-x = getSatDataLayer(sat, "B004n")
-target = getSatDataLayer(sat, "B005n")
+## histogram matching
+calcHistMatch(x, target)
 }
 \references{
-This function is taken and only slightly adapted from the histmatch
-function of Sarah C. Goslee (2011). Analyzing Remote Sensing Data in R: The
-landsat Package. Journal of Statistical Software,43(4), 1-25. URL
-\url{http://www.jstatsoft.org/v43/i04/}.
+This function is taken and only slightly adapted from the
+\code{\link{histmatch}} function by Sarah C. Goslee (2011). Analyzing Remote
+Sensing Data in R: The landsat Package. Journal of Statistical Software,
+43(4), 1-25. URL \url{http://www.jstatsoft.org/v43/i04/}.
 }
 

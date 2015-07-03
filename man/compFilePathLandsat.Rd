@@ -2,20 +2,21 @@
 % Please edit documentation in R/compFilePathLandsat.R
 \name{compFilePathLandsat}
 \alias{compFilePathLandsat}
-\title{Get filename, bands and meta file for Landsat 7 and 8 standard 1B/T format.}
+\title{Get filename, bands and metadata file for Landsat 7 and 8 standard 1B/T format}
 \usage{
 compFilePathLandsat(files)
 }
 \arguments{
-\item{files}{path and filename of one or more Landsat band files or
-alternatively one or more Landsat metadata files}
+\item{files}{Path and filename(s) of one or more Landsat band files or,
+alternatively, one or more Landsat metadata files.}
 }
 \value{
-Data frame containing filepathes, band numbers and metafilepathes
+\code{data.frame} containing filepaths, band numbers and metadata
+filepaths.
 }
 \description{
-The function compiles the sensor, band, filename and metafilename information
-for standard level 1B/T Landsat filenames.
+The function compiles the sensor, band, filename and metadata filename information
+for standard level 1B/T Landsat files.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")

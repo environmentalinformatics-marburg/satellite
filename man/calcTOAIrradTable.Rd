@@ -15,15 +15,16 @@
 \S4method{calcTOAIrradTable}{character}(x, normalize = TRUE, esd)
 }
 \arguments{
-\item{x}{An object of type Satellite or sensor id ("LC4/5/7") as character}
+\item{x}{A Satellite object or sensor id ("LC4/5/7") as character.}
 
-\item{normalize}{Normalize ESun to mean earth sun distance, TRUE or FALSE}
+\item{normalize}{Logical; if \code{TRUE}, ESun is normalized to mean
+earth-sun distance.}
 
 \item{esd}{Earth-sun distance (AU, can be estimated using
 \code{\link{calcEarthSunDist}}). If x is a Satellite object and esd is not
 supplied and necessary for normalization, it is tried to take it from the
 metadata, otherwise it is estimated by the day of the year using
-\code{\link{calcEartSunDist}}.}
+\code{\link{calcEarthSunDist}}.}
 }
 \value{
 Satellite object with ESun information added to the metadata
@@ -44,9 +45,9 @@ Get mean extraterrestrial solar irradiance (ESun) using published values.
 \details{
 Currently implemented sensors are Landsat 4, 5 and 7.
 
-If results should not be normalized to a mean earth sun distance, the
-actual earth sun distance is approximated by the day of the year using
-\code{\link{calcEartSunDist}}.
+If results should not be normalized to a mean earth-sun distance, the
+actual earth-sun distance is approximated by the day of the year using
+\code{\link{calcEarthSunDist}}.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
@@ -54,29 +55,29 @@ files <- list.files(path, pattern = glob2rx("LE7*.tif"), full.names = TRUE)
 sat <- satellite(files)
 calcTOAIrradTable(sat)
 
-calcTOAIrradTable(sensor = "LC7", normalize = FALSE,
-calcEartSunDist("2015-01-01"))
+calcTOAIrradTable(x = "LC7", normalize = FALSE,
+                  calcEarthSunDist("2015-01-01"))
 }
 \references{
 Tabulated values of the solar irradiance for Landsat 4 and 5 are
 taken from Chander G, Markham B (2003) Revised Landsat-5 TM radiometric
-calibration procedures and postcalibration dynamic ranges.  IEEE Transaction
-on Geoscience and Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285, URL
-\url{http://landsathandbook.gsfc.nasa.gov/pdfs/L5TMLUTIEEE2003.pdf}.
+calibration procedures and postcalibration dynamic ranges.  IEEE Transactions
+on Geoscience and Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285, online
+available at \url{http://landsathandbook.gsfc.nasa.gov/pdfs/L5TMLUTIEEE2003.pdf}.
 
 Tabulated values of the solar irradiance for Landsat 7 are taken from
 \href{http://landsathandbook.gsfc.nasa.gov/pdfs/Landsat7_Handbook.pdf}{NASA's
-Landsat7 handbook, tab 11.3 (Thuillier spectrum)}
+Landsat7 handbook, tab 11.3 (Thuillier spectrum)}.
 }
 \seealso{
 \code{\link{calcTOAIrradRadRef}} for the computation of the solar
 irradiance based on maximum radiation and reflection values of the dataset or
 \code{\link{calcTOAIrradModel}} for the computation of the solar irradiance
-based on look-up tables for the sensor's relative spectral resonse and solar
+based on look-up tables for the sensor's relative spectral response and solar
 irradiation spectral data.
 
 See \code{\link{calcEarthSunDist}} for calculating the earth-sun
 distance based on the day of the year which is called by this function if
-ESun should be corrected for actual earth sun distance.
+ESun should be corrected for actual earth-sun distance.
 }
 

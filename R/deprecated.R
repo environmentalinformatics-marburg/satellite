@@ -1,21 +1,21 @@
-#' Depricated functions
+#' Deprecated functions
 #' 
-#' @name depricated
+#' @name deprecated
 #'
 #' @description
-#' The functions have been implemented in the very beginging of the package
-#' development, mainly to be used within a course on remote sensing at
+#' The functions have been implemented in the very beginning of the package
+#' development, mainly to be used within the scope of a remote sensing course at 
 #' Marburg University. To ensure that the scripts developed within this course
 #' will still work after the next major revision, they are still part of this
-#' package but they will mainly just foreward the respective call to the
+#' package, but they will mainly just foreward the respective call to the
 #' more up-to-date function.
 #' 
 NULL
 
-# Depricated satCalib ----------------------------------------------------------
+# Deprecated satCalib ----------------------------------------------------------
 #' @export satCalib
 #'
-#' @rdname depricated
+#' @rdname deprecated
 #'
 satCalib <- function(x, convert = "all", szen_correction = "TRUE"){
   .Deprecated("convDN2RU")
@@ -23,10 +23,10 @@ satCalib <- function(x, convert = "all", szen_correction = "TRUE"){
 }
 
 
-# Depricated calibLinear -------------------------------------------------------
+# Deprecated calibLinear -------------------------------------------------------
 #' @export calibLinear
 #'
-#' @rdname depricated
+#' @rdname deprecated
 #'
 calibLinear <- function(band, mult, add, szen, k1, k2){
   .Deprecated("convDN2RU")
@@ -47,10 +47,10 @@ calibLinear <- function(band, mult, add, szen, k1, k2){
 }
 
 
-# Depricated satTOAIrrad -------------------------------------------------------
+# Deprecated satTOAIrrad -------------------------------------------------------
 #' @export satTOAIrrad
 #'
-#' @rdname depricated
+#' @rdname deprecated
 #'
 satTOAIrrad <- function(x, method = "Table", model = "MNewKur", 
                         normalize = TRUE, esd){
@@ -58,7 +58,7 @@ satTOAIrrad <- function(x, method = "Table", model = "MNewKur",
        (method == "RadRef" & normalize == TRUE & missing(esd))){
     esd = getSatESD(x)
     if(is.na(esd)){
-      esd = calcEartSunDist(date)
+      esd = calcEarthSunDist(date)
     } 
   }
   if(method == "Table"){
@@ -103,30 +103,30 @@ satTOAIrrad <- function(x, method = "Table", model = "MNewKur",
 }
 
 
-# Depricated satTOAIrrad -------------------------------------------------------
+# Deprecated satTOAIrrad -------------------------------------------------------
 #' @export satPathRadDOS
 #'
-#' @rdname depricated
+#' @rdname deprecated
 #'
 satPathRadDOS <- function(x, atmos_model = "DOS2", esun_mode = "RadRef"){
   calcPathRadDOS(x, model = atmos_model, esun_method = esun_mode)
 }
 
 
-# Depricated satAtmosCorr ------------------------------------------------------
+# Deprecated satAtmosCorr ------------------------------------------------------
 #' @export satAtmosCorr
 #'
-#' @rdname depricated
+#' @rdname deprecated
 #'
 satAtmosCorr <- function(x, atmos_model = "DOS2", esun_mode = "RadRef"){
   calcAtmosCorr(x, model = atmos_model, esun_method = esun_mode)
 }
 
 
-# Depricated calibLinearInverse ------------------------------------------------
+# Deprecated calibLinearInverse ------------------------------------------------
 #' @export calibLinearInverse
 #'
-#' @rdname depricated
+#' @rdname deprecated
 #'
 calibLinearInverse <- function(band, ref_mult, ref_add, rad_mult, rad_add, 
                                szen){
@@ -138,10 +138,10 @@ calibLinearInverse <- function(band, ref_mult, ref_add, rad_mult, rad_add,
 }
 
 
-# Depricated satInvarFeatures --------------------------------------------------
+# Deprecated satInvarFeatures --------------------------------------------------
 #' @export satInvarFeatures
 #'
-#' @rdname depricated
+#' @rdname deprecated
 #'
 satInvarFeatures <- function(x){
   maskInvarFeatures(x)

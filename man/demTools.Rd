@@ -13,28 +13,26 @@
   method = "hillShade")
 }
 \arguments{
-\item{x}{An object of type Satellite containing a DEM or a DEM provided as
-RasterLayer.}
+\item{x}{A DEM provided as an object of class Satellite or RasterLayer.}
 
-\item{method}{currently "slope", "aspect" and "hillshade" are implemented}
+\item{method}{Currently "slope", "aspect" and "hillshade" are implemented.}
 
 \item{bcde}{The name of the DEM layer in the satellite object.}
 
-\item{sunElev}{if \code{method = "hillShade"}: The the elevation angle of the
-sun in degrees.
-See parameter angle in \code{\link{hillShade}}}
+\item{sunElev}{If \code{method = "hillShade"}, the elevation angle of the
+sun in degrees. See parameter \code{angle} in \code{\link{hillShade}}.}
 
-\item{sunAzim}{if \code{method = "hillShade"}: The sun azimuth angle in
-degree. See parameter direction in \code{\link{hillShade}}}
+\item{sunAzim}{If \code{method = "hillShade"}, the sun azimuth angle in
+degree. See parameter \code{direction} in \code{\link{hillShade}}.}
 }
 \value{
-Satellite object with added Layer of calculated terrain information
-
-raster::RasterLayer object of calculated terrain information
+If x is a Satellite object, a Satellite object with added layer containing calculated
+terrain information; if x is a \code{raster::RasterLayer} object, a
+\code{raster::RasterLayer} object with calculated terrain information.
 }
 \description{
-Compute terrain characteristics from digital elevation models using the
-raster::terrain function or raster::hillSahde function.
+Compute terrain characteristics from digital elevation models (DEM) using
+\code{\link{raster::terrain}} or \code{\link{raster::hillShade}}.
 
 
 
@@ -49,5 +47,8 @@ sat <- satellite(files)
 sat <- addSatDataLayer(sat, method, data = DEM, info = NULL, in_bcde = NULL)
 sat <- demTools(sat)
 }
+}
+\seealso{
+\code{\link{raster::terrain}}, \code{\link{raster::hillShade}}.
 }
 

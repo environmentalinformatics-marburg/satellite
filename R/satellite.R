@@ -5,16 +5,16 @@ if ( !isGeneric("satellite") ) {
 #' Create a Satellite object
 #'
 #' @description
-#' Method to create a Satellite Object
+#' Method to create a Satellite object.
 #' 
-#' @param x A vector of one or more satellite data files or a 
-#' raster::RasterStack
-#' @param meta Optional supply a metadata object (e.g. returned from 
-#' \code{\link{compMetaLandsat}}). If x is a satellite data file and recognised
-#' as "Landsat", then the meta data is automatically extracted from the 
-#' respective meta information file if both the satellite data and the meta
-#' data file follow the naming from the USGS Earth Explorer.
-#' #' @param log Optional supply a log entry.
+#' @param x A vector of filenames (see \code{\link{raster::raster}}) or a 
+#' \code{raster::RasterStack}.
+#' @param meta Optional metadata object (e.g. returned from 
+#' \code{\link{compMetaLandsat}}). If x is a satellite dataset and recognised
+#' as "Landsat", then the metadata is automatically extracted from the 
+#' respective meta information file if both the satellite data and the metadata 
+#' file follow the USGS Earth Explorer's naming convention.
+#' @param log Optionally supply a log entry.
 #' 
 #' @return Satellite object
 #' 
@@ -22,10 +22,10 @@ if ( !isGeneric("satellite") ) {
 #' 
 #' @details A satellite object consists of three data sections:
 #' (i) a raster data section which holds the actual data values of the 
-#' respective sensor bands, (ii) a meta data grid which holds meta information
-#' for each of the sensor band layers (e.g. calibration coefficients, type of
-#' sensor band etc.) and (iii) a list of log information which records the
-#' processing history of the entire data set.
+#' respective sensor bands, (ii) a metadata grid which holds meta information
+#' for each sensor band (e.g. calibration coefficients, type of sensor band 
+#' etc.) and (iii) a list of log information which records the processing 
+#' history of the entire dataset.
 #' 
 #' @seealso \code{\link{compMetaLandsat}} to get more information about the
 #' structure of the metadata component.

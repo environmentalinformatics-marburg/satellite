@@ -1,24 +1,24 @@
 #' Convert reflectance to radiance using linear function coefficients
 #' 
 #' @description 
-#' The function converts the relfectance (ref) back to radiance (rad) given that
-#' linear conversion coefficients for both, radiance and reflectance are 
+#' The function converts the reflectance (ref) back to radiance (rad) given that
+#' linear conversion coefficients for both radiance and reflectance are 
 #' available.
 #'
-#' @param band raster::RasterStack or raster::RasterLayer containing reflectance
-#' @param REFM multiplication coefficient for reflectance conversion
-#' @param REFA addtition coefficient for reflectance conversion
-#' @param RADM multiplication coefficient for radiance conversion
-#' @param RADA addtition coefficient for radiance conversion
-#' @param SZEN sun zenith angle
+#' @param band raster::RasterStack or raster::RasterLayer containing reflectance.
+#' @param refm Multiplication coefficient for reflectance conversion.
+#' @param refa Addtition coefficient for reflectance conversion.
+#' @param radm Multiplication coefficient for radiance conversion.
+#' @param rada Addition coefficient for radiance conversion.
+#' @param szen Sun zenith angle.
 #'   
-#' @return Raster object with converted values
+#' @return \code{raster::Raster*} object with converted values.
 #'
 #' @export convRef2RadLinear
 #' 
 #' @details The conversion functions are taken from USGS' Landsat 8 manual
 #' which is available online at 
-#' \url{http://landsat.usgs.gov/Landsat8_Using_Product.php}
+#' \url{http://landsat.usgs.gov/Landsat8_Using_Product.php}.
 #'
 #' @examples
 #' Not run:
