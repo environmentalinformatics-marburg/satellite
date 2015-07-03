@@ -6,7 +6,7 @@
 \alias{TopoCorr,RasterLayer-method}
 \alias{TopoCorr,RasterStack-method}
 \alias{TopoCorr,Satellite-method}
-\title{Correct for topographic effects}
+\title{Correct for topographic effects.}
 \usage{
 \S4method{TopoCorr}{Satellite}(x, mask = TRUE)
 
@@ -15,26 +15,24 @@
 \S4method{TopoCorr}{RasterLayer}(x, hillsh, cloudmask = NULL)
 }
 \arguments{
-\item{x}{Object of class satellite}
+\item{x}{Satellite object.}
 
-\item{mask}{Logical. If TRUE then the cloudmask from the
-satellite object (if available) will be considered in the regression model.}
+\item{mask}{Logical. If \code{TRUE}, the cloudmask from the Satellite object
+(if available) will be considered in the regression model.}
 
-\item{hillsh}{A rasterLayer created with \code{\link{hillShade}}}
+\item{hillsh}{A \code{raster::RasterLayer} created with
+\code{\link{raster::hillShade}}.}
 
-\item{cloudmask}{A rasterLayer in which clouds are masked with NA values}
+\item{cloudmask}{A \code{raster::RasterLayer} in which clouds are masked with
+NA values.}
 }
 \value{
-Satellite object with added, topographic corrected layers
-
-Satellite object with added converted layers
-
-raster::RasterStack object with converted layers
-
-raster::RasterLayer object with converted layer
+If x is a Satellite object, a Satellite object with added,
+topographic corrected layers; if x is a \code{raster::Raster*} object, a
+\code{raster::Raster*} object with converted layer(s).
 }
 \description{
-Correct for topographic effects
+Correct for topographic effects.
 
 
 
@@ -43,29 +41,29 @@ Correct for topographic effects
 
 }
 \details{
-The method of Civco (1989) is applied on Atmospherically corrected bands
-(if not already available in the satellite object,
-\code{\link{calcAtmosCorr}} is performed with its default settings.:
+The method of Civco (1989) is applied on atmospherically corrected bands
+(if not already available in the Satellite object,
+\code{\link{calcAtmosCorr}} is performed with its default settings.):
 First, an analytical hillshade image is created based on a DEM and sun
 elevation and sun zenith information from the metadata. A regression between
 the hillshade (independent variable) and each channel is then calculated
 with consideration of a cloudmask (if available).
 The regression coefficents are used to calibrate the hillshade raster
 (for each channel individually).
-Finally the calibrated hillshade image is substracted from the corresponding
+Finally, the calibrated hillshade image is subtracted from the corresponding
 channel and the mean value of the channel is added.
 }
 \examples{
 #' \dontrun{
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
-x<-satellite(files)
+x <- satellite(files)
 TopoCorr(x)
 }
 }
 \references{
 CIVCO, D.L. (1989): Topographic normalization of Landsat Thematic
-Mapper digitalimagery.In: Photogrammetric Engineering & Remote Sensing, 55,
+Mapper digitalimagery. In: Photogrammetric Engineering & Remote Sensing, 55,
 S. 1303–1309.
 }
 

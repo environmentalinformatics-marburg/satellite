@@ -2,48 +2,48 @@ if ( !isGeneric("TopoCorr") ) {
   setGeneric("TopoCorr", function(x, ...)
     standardGeneric("TopoCorr"))
 }
-#' Correct for topographic effects
+#' Correct for topographic effects.
 #' 
-#' @param x Object of class satellite
-#' @param mask Logical. If TRUE then the cloudmask from the 
-#' satellite object (if available) will be considered in the regression model.
+#' @param x Satellite object.
+#' @param mask Logical. If \code{TRUE}, the cloudmask from the Satellite object 
+#' (if available) will be considered in the regression model.
 #' 
 #' @details 
-#' The method of Civco (1989) is applied on Atmospherically corrected bands 
-#' (if not already available in the satellite object, 
-#' \code{\link{calcAtmosCorr}} is performed with its default settings.:
+#' The method of Civco (1989) is applied on atmospherically corrected bands 
+#' (if not already available in the Satellite object, 
+#' \code{\link{calcAtmosCorr}} is performed with its default settings.):
 #' First, an analytical hillshade image is created based on a DEM and sun 
 #' elevation and sun zenith information from the metadata. A regression between
 #' the hillshade (independent variable) and each channel is then calculated 
 #' with consideration of a cloudmask (if available).
 #' The regression coefficents are used to calibrate the hillshade raster 
 #' (for each channel individually). 
-#' Finally the calibrated hillshade image is substracted from the corresponding
+#' Finally, the calibrated hillshade image is subtracted from the corresponding
 #' channel and the mean value of the channel is added.
 #' 
-#' @return Satellite object with added, topographic corrected layers
+#' @return If x is a Satellite object, a Satellite object with added, 
+#' topographic corrected layers; if x is a \code{raster::Raster*} object, a 
+#' \code{raster::Raster*} object with converted layer(s).
 #' 
 #' @export TopoCorr
 #' 
 #' @name TopoCorr
 #' 
 #' @references CIVCO, D.L. (1989): Topographic normalization of Landsat Thematic
-#' Mapper digitalimagery.In: Photogrammetric Engineering & Remote Sensing, 55, 
+#' Mapper digitalimagery. In: Photogrammetric Engineering & Remote Sensing, 55, 
 #' S. 1303–1309.
 #' 
 #' @examples
 #' #' \dontrun{
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
-#' x<-satellite(files)
+#' x <- satellite(files)
 #' TopoCorr(x)
 #' }
 NULL
 
 
 # Function using satellite object ----------------------------------------------
-#' 
-#' @return Satellite object with added converted layers
 #' 
 #' @rdname TopoCorr
 #'
@@ -83,7 +83,6 @@ setMethod("TopoCorr",
 
 # Function using raster::RasterStack object ------------------------------------
 #' 
-#' @return raster::RasterStack object with converted layers
 #' @rdname TopoCorr
 #'
 setMethod("TopoCorr", 
@@ -99,9 +98,10 @@ setMethod("TopoCorr",
 
 # Function using raster::RasterLayer object ------------------------------------
 #' 
-#' @return raster::RasterLayer object with converted layer
-#' @param hillsh A rasterLayer created with \code{\link{hillShade}}
-#' @param cloudmask A rasterLayer in which clouds are masked with NA values
+#' @param hillsh A \code{raster::RasterLayer} created with 
+#' \code{\link{raster::hillShade}}. 
+#' @param cloudmask A \code{raster::RasterLayer} in which clouds are masked with 
+#' NA values. 
 #' @rdname TopoCorr
 #'
 setMethod("TopoCorr", 
