@@ -15,26 +15,26 @@
 \S4method{convSC2Rad}{RasterLayer}(x, mult, add, szen)
 }
 \arguments{
-\item{x}{An object of type Satellite,  raster::RasterStack or
-raster::RasterLayer providing scaled counts (DNs)}
+\item{x}{An object of class Satellite, raster::RasterStack or
+raster::RasterLayer providing scaled counts (DNs).}
 
-\item{szen_correction}{Apply sun zenith correction, TRUE or FALSE}
+\item{szen_correction}{Logical; if \code{TRUE}, sun zenith correction is
+being applied.}
 
-\item{mult}{multiplicative coefficient for value transformation (i.e. slope)}
+\item{mult}{Multiplicative coefficient for value transformation (i.e. slope).}
 
-\item{add}{additive coefficient for value transformation (i.e. offset)}
+\item{add}{Additive coefficient for value transformation (i.e. offset).}
 
-\item{szen}{cosine of solar zenith angle}
+\item{szen}{Cosine of solar zenith angle.}
 }
 \value{
-Satellite object with added converted layers
-
-raster::RasterStack object with converted layers
-
-raster::RasterLayer object with converted layer
+If x is a Satellite object, a Satellite object with added converted
+layers; \cr
+if x is a \code{raster::Raster*} object, a \code{raster::Raster*} object with
+converted layer(s).
 }
 \description{
-Convert a band's scalled counts to radiance using a simple linear conversion
+Convert a band's scaled counts to radiance using a simple linear conversion
 without any kind of atmospheric correction etc.
 
 
@@ -46,7 +46,7 @@ without any kind of atmospheric correction etc.
 \details{
 The conversion functions are taken from USGS' Landsat 8 manual
 which is available online at
-\url{http://landsat.usgs.gov/Landsat8_Using_Product.php}
+\url{http://landsat.usgs.gov/Landsat8_Using_Product.php}.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
@@ -56,12 +56,12 @@ sat <- convSC2Rad(sat)
 
 # If you use a raster layer, supply required meta information
 bcde <- "B002n"
-convSC2Rad(band = getSatDataLayer(sat, bcde),
-            mult = getSatRADM(sat, bcde),
-            add = getSatRADA(sat, bcde))
+convSC2Rad(x = getSatDataLayer(sat, bcde),
+           mult = getSatRADM(sat, bcde),
+           add = getSatRADA(sat, bcde))
 }
 \seealso{
-\code{\link{calcAtmosCorr}} for converions of scaled counts
+\code{\link{calcAtmosCorr}} for conversions of scaled counts
 to physical units including a scene-based atmospheric correction.
 }
 
