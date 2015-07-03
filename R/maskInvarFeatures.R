@@ -2,19 +2,19 @@ if ( !isGeneric("maskInvarFeatures") ) {
   setGeneric("maskInvarFeatures", function(x, ...)
     standardGeneric("maskInvarFeatures"))
 }
-#' Identify pseudi-invariant features from a satellite scene
+#' Identify pseudo-invariant features from a satellite scene
 #'
 #' @description
-#' Identify pseudi-invariant features from a satellite scene based on a 
-#' vis, near-infravis and short-wave infravis band.
+#' Identify pseudo-invariant features from a satellite scene based on a 
+#' vis, near infravis and short-wave infravis band.
 #'
-#' @param x A Satellite object or a raster::RasterLayer providing the sensor's 
-#' vis band
-#' @param nir a raster of the sensor's nir band
-#' @param swir a raster of the sensor's swir band
-#' @param quant a value v = [0...1] which is used to define the percentage
+#' @param x A Satellite object or a \code{raster::RasterLayer} providing the 
+#' sensor's vis band.
+#' @param nir A \code{raster::RasterLayer} containing the sensor's nir band.
+#' @param swir A \code{raster::RasterLayer} containing the sensor's swir band.
+#' @param quant A value v = [0...1] which is used to define the percentage
 #' threshold values (thv) for invariant features (nir/vis ratio < thv, 
-#' swir band values > 1-thv)
+#' swir band values > 1-thv). 
 #' 
 #' @export maskInvarFeatures
 #' 
@@ -22,18 +22,18 @@ if ( !isGeneric("maskInvarFeatures") ) {
 #' 
 #' @details Invariant features are identified as pixels which belong to the 
 #' group of (i) the n lowest VIS/NIR ratios and of (ii) the highest n
-#' SWIR values. The value of n is given by the parameter quant (0...1).
+#' SWIR values. The value of n is given by the parameter quant = [0...1].
 #' 
-#' @references This function is taken and only slightly adapted from the PIF
-#' function of Sarah C. Goslee (2011). Analyzing Remote Sensing Data in R: The 
+#' @references This function is taken and only slightly modified from the PIF
+#' function by Sarah C. Goslee (2011). Analyzing Remote Sensing Data in R: The 
 #' landsat Package. Journal of Statistical Software,43(4), 1-25. URL 
 #' \url{http://www.jstatsoft.org/v43/i04/}.
 #' 
-#' The underlaying theory has been published by Schott RJ, Salvaggio C and 
+#' The underlying theory has been published by Schott RJ, Salvaggio C and 
 #' Volchok WJ (1988) Radiometric scene normalization using pseudoinvariant 
 #' features. Remote Sensing of Environment 26/1, 
 #' doi:10.1016/0034-4257(88)90116-2, available online at
-#'  \url{http://www.sciencedirect.com/science/article/pii/0034425788901162}
+#' \url{http://www.sciencedirect.com/science/article/pii/0034425788901162}.
 #'
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
@@ -45,12 +45,18 @@ if ( !isGeneric("maskInvarFeatures") ) {
 #'                   nir = getSatDataLayer(sat, "B005n"), 
 #'                   swir = getSatDataLayer(sat, "B007n"))
 #'
+#' ## when dealing with a 'RasterStack'
+#' rst <- stack(files[c(6, 7, 9)])
+#' maskInvarFeatures(rst)
+#' 
 NULL
 
 
 # Function using satellite object ----------------------------------------------
 #' 
-#' @return Satellite object with added layer (invariant pixels 1, 0 otherwise)
+#' @return If x is a Satellite object, a Satellite object with added layer; \cr
+#' if x is a \code{raster::RasterLayer} object, a a \code{raster::RasterLayer} 
+#' object with added layers (1 indicates invariant pixels, 0 otherwise). 
 #' 
 #' @rdname maskInvarFeatures
 #'
@@ -84,8 +90,6 @@ setMethod("maskInvarFeatures",
 
 # Function using raster::RasterLayer object ------------------------------------
 #' 
-#' @return raster::RasterLayer object with invariant pixels as 1, 0 otherwise
-#' 
 #' @rdname maskInvarFeatures
 #'
 setMethod("maskInvarFeatures", 
@@ -94,6 +98,33 @@ setMethod("maskInvarFeatures",
             ratio_nir_vis <- nir/x
             ratio_nir_vis_quant <- quantile(ratio_nir_vis, probs = quant, na.rm=TRUE)
             swir_quant <- quantile(swir, probs = 1-quant, na.rm=TRUE)
+            
+            invar_feats <- ratio_nir_vis < ratio_nir_vis_quant & swir > swir_quant
+            invar_feats[invar_feats == 0] <- NA
+            return(invar_feats)
+          })
+
+# Function using raster::RasterStack object ------------------------------------
+#' 
+#' @param id_vis Index of the visible band. 
+#' @param id_nir Index of the near infravis band.
+#' @param id_swir Index of the short-wave infravis band. 
+#' 
+#' @rdname maskInvarFeatures
+#'
+setMethod("maskInvarFeatures", 
+          signature(x = "RasterStack"), 
+          function(x, quant = 0.01, id_vis = 1L, id_nir = 2L, id_swir = 3L) {
+            
+            ## split 'RasterStack' into single layers
+            vis <- x[[id_vis]]
+            nir <- x[[id_nir]]
+            swir <- x[[id_swir]]
+
+            ratio_nir_vis <- nir/vis
+            ratio_nir_vis_quant <- quantile(ratio_nir_vis, probs = quant, 
+                                            na.rm = TRUE)
+            swir_quant <- quantile(swir, probs = 1-quant, na.rm = TRUE)
             
             invar_feats <- ratio_nir_vis < ratio_nir_vis_quant & swir > swir_quant
             invar_feats[invar_feats == 0] <- NA

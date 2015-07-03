@@ -4,33 +4,45 @@
 \name{maskInvarFeatures}
 \alias{maskInvarFeatures}
 \alias{maskInvarFeatures,RasterLayer-method}
+\alias{maskInvarFeatures,RasterStack-method}
 \alias{maskInvarFeatures,Satellite-method}
-\title{Identify pseudi-invariant features from a satellite scene}
+\title{Identify pseudo-invariant features from a satellite scene}
 \usage{
 \S4method{maskInvarFeatures}{Satellite}(x)
 
 \S4method{maskInvarFeatures}{RasterLayer}(x, nir, swir, quant = 0.01)
+
+\S4method{maskInvarFeatures}{RasterStack}(x, quant = 0.01, id_vis = 1L,
+  id_nir = 2L, id_swir = 3L)
 }
 \arguments{
-\item{x}{A Satellite object or a raster::RasterLayer providing the sensor's
-vis band}
+\item{x}{A Satellite object or a \code{raster::RasterLayer} providing the
+sensor's vis band.}
 
-\item{nir}{a raster of the sensor's nir band}
+\item{nir}{A \code{raster::RasterLayer} containing the sensor's nir band.}
 
-\item{swir}{a raster of the sensor's swir band}
+\item{swir}{A \code{raster::RasterLayer} containing the sensor's swir band.}
 
-\item{quant}{a value v = [0...1] which is used to define the percentage
+\item{quant}{A value v = [0...1] which is used to define the percentage
 threshold values (thv) for invariant features (nir/vis ratio < thv,
-swir band values > 1-thv)}
+swir band values > 1-thv).}
+
+\item{id_vis}{Index of the visible band.}
+
+\item{id_nir}{Index of the near infravis band.}
+
+\item{id_swir}{Index of the short-wave infravis band.}
 }
 \value{
-Satellite object with added layer (invariant pixels 1, 0 otherwise)
-
-raster::RasterLayer object with invariant pixels as 1, 0 otherwise
+If x is a Satellite object, a Satellite object with added layer; \cr
+if x is a \code{raster::RasterLayer} object, a a \code{raster::RasterLayer}
+object with added layers (1 indicates invariant pixels, 0 otherwise).
 }
 \description{
-Identify pseudi-invariant features from a satellite scene based on a
-vis, near-infravis and short-wave infravis band.
+Identify pseudo-invariant features from a satellite scene based on a
+vis, near infravis and short-wave infravis band.
+
+
 
 
 
@@ -39,7 +51,7 @@ vis, near-infravis and short-wave infravis band.
 \details{
 Invariant features are identified as pixels which belong to the
 group of (i) the n lowest VIS/NIR ratios and of (ii) the highest n
-SWIR values. The value of n is given by the parameter quant (0...1).
+SWIR values. The value of n is given by the parameter quant = [0...1].
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
@@ -50,17 +62,21 @@ sat <- maskInvarFeatures(sat)
 maskInvarFeatures(x = getSatDataLayer(sat, "B004n"),
                   nir = getSatDataLayer(sat, "B005n"),
                   swir = getSatDataLayer(sat, "B007n"))
+
+## when dealing with a 'RasterStack'
+rst <- stack(files[c(6, 7, 9)])
+maskInvarFeatures(rst)
 }
 \references{
-This function is taken and only slightly adapted from the PIF
-function of Sarah C. Goslee (2011). Analyzing Remote Sensing Data in R: The
+This function is taken and only slightly modified from the PIF
+function by Sarah C. Goslee (2011). Analyzing Remote Sensing Data in R: The
 landsat Package. Journal of Statistical Software,43(4), 1-25. URL
 \url{http://www.jstatsoft.org/v43/i04/}.
 
-The underlaying theory has been published by Schott RJ, Salvaggio C and
+The underlying theory has been published by Schott RJ, Salvaggio C and
 Volchok WJ (1988) Radiometric scene normalization using pseudoinvariant
 features. Remote Sensing of Environment 26/1,
 doi:10.1016/0034-4257(88)90116-2, available online at
- \url{http://www.sciencedirect.com/science/article/pii/0034425788901162}
+\url{http://www.sciencedirect.com/science/article/pii/0034425788901162}.
 }
 
