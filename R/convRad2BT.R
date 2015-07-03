@@ -8,9 +8,9 @@ if (!isGeneric("convRad2BT") ) {
 #' Convert a band's radiance values to brightness temperature without
 #' any kind of atmospheric correction etc.
 #' 
-#' @param x An object of type Satellite, raster::RasterStack or 
-#' raster::RasterLayer providing radiance values
-#' @param k1,k2 temperature correction parameters
+#' @param x An object of class Satellite, raster::RasterStack or 
+#' raster::RasterLayer providing radiance values.
+#' @param k1,k2 Temperature correction parameters. 
 #'   
 #' @export convRad2BT
 #' 
@@ -19,7 +19,7 @@ if (!isGeneric("convRad2BT") ) {
 #' @details 
 #' The conversion functions are taken from USGS' Landsat 8 manual
 #' which is available online at 
-#' \url{http://landsat.usgs.gov/Landsat8_Using_Product.php}
+#' \url{http://landsat.usgs.gov/Landsat8_Using_Product.php}.
 #' 
 #' @seealso \code{\link{calcAtmosCorr}} for converions of scaled counts 
 #' to physical units including a scene-based atmospheric correction.
@@ -30,18 +30,15 @@ if (!isGeneric("convRad2BT") ) {
 #' sat <- satellite(files)  
 #' sat <- convRad2BT(sat)
 #' 
-#' # If you use a raster layer, supply required meta information
-#' bcde <- "B002n"
-#' convRad2BT(band = getSatDataLayer(sat, bcde),
-#'             mult = getSatRADM(sat, bcde),
-#'             add = getSatRADA(sat, bcde))
-#' 
 NULL
 
 
 # Function using satellite object ----------------------------------------------
 #' 
-#' @return Satellite object with added converted layers
+#' @return If x is a Satellite object, a Satellite object with added converted 
+#' layers; \cr
+#' if x is a \code{raster::Raster*} object, a \code{raster::Raster*} object with
+#' converted layer(s).
 #' 
 #' @rdname convRad2BT
 #'
@@ -77,8 +74,6 @@ setMethod("convRad2BT",
 
 # Function using raster::RasterStack object ------------------------------------
 #' 
-#' @return raster::RasterStack object with converted layers
-#' 
 #' @rdname convRad2BT
 #'
 setMethod("convRad2BT", 
@@ -92,8 +87,6 @@ setMethod("convRad2BT",
 
 
 # Function using raster::RasterLayer object ------------------------------------
-#' 
-#' @return raster::RasterLayer object with converted layer
 #' 
 #' @rdname convRad2BT
 #'
