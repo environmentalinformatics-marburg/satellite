@@ -5,15 +5,16 @@ if (!isGeneric("convRad2Ref") ) {
 #' Convert a band's scaled counts or radiance values to reflectance
 #'
 #' @description
-#' Convert a band's scalled counts to reflectance using a simple linear 
+#' Convert a band's scaled counts to reflectance using a simple linear 
 #' conversion without any kind of atmospheric correction etc.
 #' 
-#' @param x An object of type Satellite,  raster::RasterStack or 
-#' raster::RasterLayer providing radiance values
-#' @param add additive coefficient for value transformation (i.e. offset)
-#' @param mult multiplicative coefficient for value transformation (i.e. slope)
-#' @param szen cosine of solar zenith angle
-#' @param szen_correction Apply sun zenith correction, TRUE or FALSE
+#' @param x An object of class Satellite, raster::RasterStack or 
+#' raster::RasterLayer providing radiance values.
+#' @param add Additive coefficient for value transformation (i.e. offset)
+#' @param mult Multiplicative coefficient for value transformation (i.e. slope).
+#' @param szen Cosine of solar zenith angle.
+#' @param szen_correction Logical; if \code{TRUE}, sun zenith correction is 
+#' being applied.
 #' 
 #'   
 #' @export convRad2Ref
@@ -23,15 +24,15 @@ if (!isGeneric("convRad2Ref") ) {
 #' @details 
 #' The conversion functions are taken from USGS' Landsat 8 manual
 #' which is available online at 
-#' \url{http://landsat.usgs.gov/Landsat8_Using_Product.php}
+#' \url{http://landsat.usgs.gov/Landsat8_Using_Product.php}.
 #' 
 #' If the sensor does not provide linear conversion coefficients for reflectance
 #' computation, the reflectance is calculated using the solar irradiance 
 #' following the functions taken from USGS' Landsat 7 manual, chapter 11.3.2,
 #' which is available online at 
-#' \url{http://landsathandbook.gsfc.nasa.gov/data_prod/prog_sect11_3.html}
+#' \url{http://landsathandbook.gsfc.nasa.gov/data_prod/prog_sect11_3.html}.
 #' 
-#' @seealso \code{\link{calcAtmosCorr}} for converions of scaled counts 
+#' @seealso \code{\link{calcAtmosCorr}} for conversions of scaled counts 
 #' to physical units including a scene-based atmospheric correction.
 #' 
 #' @examples
@@ -42,7 +43,7 @@ if (!isGeneric("convRad2Ref") ) {
 #' 
 #' # If you use a raster layer, supply required meta information
 #' bcde <- "B002n"
-#' convRad2Ref(band = getSatDataLayer(sat, bcde),
+#' convRad2Ref(x = getSatDataLayer(sat, bcde),
 #'             mult = getSatRADM(sat, bcde),
 #'             add = getSatRADA(sat, bcde))
 #' 
@@ -51,7 +52,10 @@ NULL
 
 # Function using satellite object ----------------------------------------------
 #' 
-#' @return Satellite object with added converted layers
+#' @return If x is a Satellite object, a Satellite object with added converted 
+#' layers; \cr
+#' if x is a \code{raster::Raster*} object, a \code{raster::Raster*} object with 
+#' converted layer(s).
 #' 
 #' @rdname convRad2Ref
 #'
@@ -95,8 +99,6 @@ setMethod("convRad2Ref",
 
 # Function using raster::RasterStack object ------------------------------------
 #' 
-#' @return raster::RasterStack object with converted layers
-#' 
 #' @rdname convRad2Ref
 #'
 setMethod("convRad2Ref", 
@@ -110,8 +112,6 @@ setMethod("convRad2Ref",
 
 
 # Function using raster::RasterLayer object ------------------------------------
-#' 
-#' @return raster::RasterLayer object with converted layer
 #' 
 #' @rdname convRad2Ref
 #'

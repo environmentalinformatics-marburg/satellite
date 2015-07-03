@@ -15,26 +15,26 @@
 \S4method{convRad2Ref}{RasterLayer}(x, mult, add, szen)
 }
 \arguments{
-\item{x}{An object of type Satellite,  raster::RasterStack or
-raster::RasterLayer providing radiance values}
+\item{x}{An object of class Satellite, raster::RasterStack or
+raster::RasterLayer providing radiance values.}
 
-\item{szen_correction}{Apply sun zenith correction, TRUE or FALSE}
+\item{szen_correction}{Logical; if \code{TRUE}, sun zenith correction is
+being applied.}
 
-\item{mult}{multiplicative coefficient for value transformation (i.e. slope)}
+\item{mult}{Multiplicative coefficient for value transformation (i.e. slope).}
 
-\item{add}{additive coefficient for value transformation (i.e. offset)}
+\item{add}{Additive coefficient for value transformation (i.e. offset)}
 
-\item{szen}{cosine of solar zenith angle}
+\item{szen}{Cosine of solar zenith angle.}
 }
 \value{
-Satellite object with added converted layers
-
-raster::RasterStack object with converted layers
-
-raster::RasterLayer object with converted layer
+If x is a Satellite object, a Satellite object with added converted
+layers; \cr
+if x is a \code{raster::Raster*} object, a \code{raster::Raster*} object with
+converted layer(s).
 }
 \description{
-Convert a band's scalled counts to reflectance using a simple linear
+Convert a band's scaled counts to reflectance using a simple linear
 conversion without any kind of atmospheric correction etc.
 
 
@@ -46,13 +46,13 @@ conversion without any kind of atmospheric correction etc.
 \details{
 The conversion functions are taken from USGS' Landsat 8 manual
 which is available online at
-\url{http://landsat.usgs.gov/Landsat8_Using_Product.php}
+\url{http://landsat.usgs.gov/Landsat8_Using_Product.php}.
 
 If the sensor does not provide linear conversion coefficients for reflectance
 computation, the reflectance is calculated using the solar irradiance
 following the functions taken from USGS' Landsat 7 manual, chapter 11.3.2,
 which is available online at
-\url{http://landsathandbook.gsfc.nasa.gov/data_prod/prog_sect11_3.html}
+\url{http://landsathandbook.gsfc.nasa.gov/data_prod/prog_sect11_3.html}.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
@@ -62,12 +62,12 @@ sat <- convRad2Ref(sat)
 
 # If you use a raster layer, supply required meta information
 bcde <- "B002n"
-convRad2Ref(band = getSatDataLayer(sat, bcde),
+convRad2Ref(x = getSatDataLayer(sat, bcde),
             mult = getSatRADM(sat, bcde),
             add = getSatRADA(sat, bcde))
 }
 \seealso{
-\code{\link{calcAtmosCorr}} for converions of scaled counts
+\code{\link{calcAtmosCorr}} for conversions of scaled counts
 to physical units including a scene-based atmospheric correction.
 }
 
