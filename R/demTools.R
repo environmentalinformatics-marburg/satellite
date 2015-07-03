@@ -6,12 +6,15 @@ if ( !isGeneric("demTools") ) {
 #' Compute terrain characteristics from digital elevation models
 #'
 #' @description
-#' Compute terrain characteristics from digital elevation models using the 
-#' raster::terrain function or raster::hillSahde function.
-#' @param x An object of type Satellite containing a DEM or a DEM provided as 
-#' RasterLayer.
-#' @param method currently "slope", "aspect" and "hillshade" are implemented
+#' Compute terrain characteristics from digital elevation models (DEM) using 
+#' \code{\link{raster::terrain}} or \code{\link{raster::hillShade}}.
+#' @param x A DEM provided as an object of class Satellite or RasterLayer.
+#' @param method Currently "slope", "aspect" and "hillshade" are implemented.
 #' @param bcde The name of the DEM layer in the satellite object. 
+#' 
+#' @seealso 
+#' \code{\link{raster::terrain}}, \code{\link{raster::hillShade}}.
+#' 
 #' @export demTools
 #' @name demTools
 #' @examples
@@ -31,7 +34,9 @@ NULL
 
 # Function using satellite object ----------------------------------------------
 #' 
-#' @return Satellite object with added Layer of calculated terrain information
+#' @return If x is a Satellite object, a Satellite object with added layer containing calculated 
+#' terrain information; if x is a \code{raster::RasterLayer} object, a 
+#' \code{raster::RasterLayer} object with calculated terrain information.
 #' 
 #' @rdname demTools
 #'
@@ -60,12 +65,10 @@ setMethod("demTools",
 
 # Function using raster::RasterLayer object ------------------------------------
 #' 
-#' @return raster::RasterLayer object of calculated terrain information
-#' @param sunElev if \code{method = "hillShade"}: The the elevation angle of the 
-#' sun in degrees. 
-#' See parameter angle in \code{\link{hillShade}}
-#' @param sunAzim if \code{method = "hillShade"}: The sun azimuth angle in 
-#' degree. See parameter direction in \code{\link{hillShade}}
+#' @param sunElev If \code{method = "hillShade"}, the elevation angle of the 
+#' sun in degrees. See parameter \code{angle} in \code{\link{hillShade}}. 
+#' @param sunAzim If \code{method = "hillShade"}, the sun azimuth angle in 
+#' degree. See parameter \code{direction} in \code{\link{hillShade}}.
 #' 
 #' @rdname demTools
 #'
