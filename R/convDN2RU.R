@@ -5,19 +5,18 @@ if (!isGeneric("convDN2RU") ) {
 #' Convert a band's scaled counts to radiance, reflectance and/or temperature
 #'
 #' @description
-#' Convert a band's scalled counts to radiance, reflectance
-#' and or brightness temperature, using a simple linear conversion without
+#' Convert a band's scaled counts to radiance, reflectance
+#' and/or brightness temperature using a simple linear conversion without
 #' any kind of atmospheric correction etc.
 #' 
-#' @param x An object of type Satellite,  raster::RasterStack or 
-#' raster::RasterLayer
-#' @param convert Type of physical output, one of "rad", "ref", "bt" or "all"
-#' @param szen_cor Apply sun zenith correction, TRUE or FALSE
-#' @param band raster, rasterstack or data frame object of the sensor band
-#' @param mult multiplicative coefficient for value transformation (i.e. slope)
-#' @param add additive coefficient for value transformation (i.e. offset)
-#' @param szen cosine of solar zenith angle
-#' @param k1,k2 temperature correction parameters
+#' @param x An object of class Satellite, raster::RasterStack or 
+#' raster::RasterLayer. 
+#' @param convert Type of physical output; one of "rad", "ref", "bt" or "all". 
+#' @param szen_cor Logical; if \code{TRUE}, sun zenith correction is being applied.
+#' @param mult Multiplicative coefficient for value transformation (i.e. slope).
+#' @param add Additive coefficient for value transformation (i.e. offset).
+#' @param szen Cosine of solar zenith angle.
+#' @param k1,k2 Temperature correction parameters.
 #'   
 #' @export convDN2RU
 #' 
@@ -26,9 +25,9 @@ if (!isGeneric("convDN2RU") ) {
 #' @details 
 #' The conversion functions are taken from USGS' Landsat 8 manual
 #' which is available online at 
-#' \url{http://landsat.usgs.gov/Landsat8_Using_Product.php}
+#' \url{http://landsat.usgs.gov/Landsat8_Using_Product.php}.
 #' 
-#' @seealso \code{\link{calcAtmosCorr}} for converions of scaled counts 
+#' @seealso \code{\link{calcAtmosCorr}} for conversions of scaled counts 
 #' to physical units including a scene-based atmospheric correction.
 #' 
 #' @examples
@@ -39,16 +38,19 @@ if (!isGeneric("convDN2RU") ) {
 #' 
 #' # If you use a raster layer, supply required meta information
 #' bcde <- "B002n"
-#' convDN2RU(band = getSatDataLayer(sat, bcde),
-#'             mult = getSatRADM(sat, bcde),
-#'             add = getSatRADA(sat, bcde))
+#' convDN2RU(x = getSatDataLayer(sat, bcde),
+#'           mult = getSatRADM(sat, bcde),
+#'           add = getSatRADA(sat, bcde))
 #' 
 NULL
 
 
 # Function using satellite object ----------------------------------------------
 #' 
-#' @return Satellite object with added converted layers
+#' @return If x is a Satellite object, a Satellite object with added converted 
+#' layers; \cr 
+#' if x is a \code{raster::Raster*} object, a \code{raster::Raster*} 
+#' object with converted layer(s).
 #' 
 #' @rdname convDN2RU
 #'
@@ -149,8 +151,6 @@ setMethod("convDN2RU",
 
 # Function using raster::RasterStack object ------------------------------------
 #' 
-#' @return raster::RasterStack object with converted layers
-#' 
 #' @rdname convDN2RU
 #'
 setMethod("convDN2RU", 
@@ -165,8 +165,6 @@ setMethod("convDN2RU",
 
 
 # Function using raster::RasterLayer object ------------------------------------
-#' 
-#' @return raster::RasterLayer object with converted layer
 #' 
 #' @rdname convDN2RU
 #'
