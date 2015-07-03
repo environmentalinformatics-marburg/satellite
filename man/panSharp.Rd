@@ -16,28 +16,26 @@
 \S4method{panSharp}{RasterLayer}(x, pan, filter = "mean", winsize = 3)
 }
 \arguments{
-\item{x}{Object of type Satellite}
+\item{x}{Satellite or \code{raster::Raster*} object.}
 
-\item{filter}{type of filter to be used for smoothing the PAN raster (e.g. mean (default), Gauss, median).}
+\item{filter}{Type of filter to be used for smoothing the PAN raster; one of
+mean (default), Gauss, median.}
 
-\item{winsize}{with n integer size of filter window n x n in pixels. Defaults to 3.
-#}
+\item{winsize}{Size of the filter window in x and y direction; defaults to 3.}
 
-\item{subset}{logical, defaults to TRUE. Drops all layers but the cropped ones.
-If set to false appends cropped layers to Satellite object.}
+\item{subset}{Logical; if \code{TRUE}, all layers except for the cropped ones
+are being dropped; if \code{FALSE}, the cropped layers are being appended to
+the Satellite object.}
 }
 \value{
-Satellite object
-
-Satellite object with added pansharpened layers
-
-raster::RasterStack object with pansharpened layers
-
-raster::RasterLayer object with pansharpened layer
+If x is a Satellite object, a Satellite object (with added
+pansharpened layers); if x is a \code{raster::Raster*} object, a
+\code{raster::Raster*} with pansharpened layer(s).
 }
 \description{
-The function PAN sharpens the low resolution channels with the pachromatic channel.
-This is done by multiplying the normlized XS channel with the PAN channel (see Details).
+The function PAN sharpens the low resolution channels with the
+panchromatic channel. This is done by multiplying the normlized XS channel
+with the PAN channel (see Details).
 
 
 
@@ -69,9 +67,8 @@ Randen, Trygve, and John Hakon Husoy. "Filtering for texture classification: A c
 Pattern Analysis and Machine Intelligence, IEEE Transactions on 21.4 (1999): 291-310.
 \url{http://dx.doi.org/10.1109/34.761261}.
 
-PAN Sharpening articles
-http://remotesensing.spiedigitallibrary.org/article.aspx?articleid=1726558
-
-http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=1368950&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D1368950
+PAN sharpening articles \cr
+- \url{http://remotesensing.spiedigitallibrary.org/article.aspx?articleid=1726558} \cr
+- \url{http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=1368950&url=http\%3A\%2F\%2Fieeexplore.ieee.org\%2Fxpls\%2Fabs_all.jsp\%3Farnumber\%3D1368950}
 }
 

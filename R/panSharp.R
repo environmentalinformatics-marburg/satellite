@@ -5,17 +5,21 @@ if ( !isGeneric("panSharp") ) {
 
 #' Pan sharpen low resolution satellite channels by using the high resolution panchromatic channel.
 #'
-#' @description The function PAN sharpens the low resolution channels with the pachromatic channel.
-#' This is done by multiplying the normlized XS channel with the PAN channel (see Details).
-#' 
+#' @description The function PAN sharpens the low resolution channels with the 
+#' panchromatic channel. This is done by multiplying the normlized XS channel 
+#' with the PAN channel (see Details).
 #'
-#' @param x Object of type Satellite
-#' @param filter type of filter to be used for smoothing the PAN raster (e.g. mean (default), Gauss, median).
-#' @param winsize with n integer size of filter window n x n in pixels. Defaults to 3.
-# #' @param subset logical, defaults to TRUE. Drops all layers but the cropped ones.
-#' If set to false appends cropped layers to Satellite object.
+#' @param x Satellite or \code{raster::Raster*} object.
+#' @param filter Type of filter to be used for smoothing the PAN raster; one of 
+#' mean (default), Gauss, median.
+#' @param winsize Size of the filter window in x and y direction; defaults to 3.
+#' @param subset Logical; if \code{TRUE}, all layers except for the cropped ones 
+#' are being dropped; if \code{FALSE}, the cropped layers are being appended to
+#' the Satellite object.
 #'
-#' @return Satellite object
+#' @return If x is a Satellite object, a Satellite object (with added 
+#' pansharpened layers); if x is a \code{raster::Raster*} object, a 
+#' \code{raster::Raster*} with pansharpened layer(s).
 #' 
 #' @export panSharp
 #' 
@@ -38,10 +42,9 @@ if ( !isGeneric("panSharp") ) {
 #' Pattern Analysis and Machine Intelligence, IEEE Transactions on 21.4 (1999): 291-310.
 #' \url{http://dx.doi.org/10.1109/34.761261}.
 #' 
-#' PAN Sharpening articles
-#' http://remotesensing.spiedigitallibrary.org/article.aspx?articleid=1726558
-#' 
-#' http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=1368950&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D1368950
+#' PAN sharpening articles \cr
+#' - \url{http://remotesensing.spiedigitallibrary.org/article.aspx?articleid=1726558} \cr
+#' - \url{http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=1368950&url=http\%3A\%2F\%2Fieeexplore.ieee.org\%2Fxpls\%2Fabs_all.jsp\%3Farnumber\%3D1368950}
 #'
 #' @examples 
 #' path <- system.file("extdata", package = "satellite")
@@ -52,8 +55,6 @@ if ( !isGeneric("panSharp") ) {
 NULL
 
 # Function using satellite object ----------------------------------------------
-#' 
-#' @return Satellite object with added pansharpened layers
 #' 
 #' @rdname panSharp
 #'
@@ -97,8 +98,6 @@ setMethod("panSharp",
 
 # Function using raster::RasterStack object ------------------------------------
 #' 
-#' @return raster::RasterStack object with pansharpened layers
-#' 
 #' @rdname panSharp
 #'
 setMethod("panSharp", 
@@ -116,8 +115,6 @@ setMethod("panSharp",
 
 
 # Function using raster::RasterLayer object ------------------------------------
-#' 
-#' @return raster::RasterLayer object with pansharpened layer
 #' 
 #' @rdname panSharp
 #'
