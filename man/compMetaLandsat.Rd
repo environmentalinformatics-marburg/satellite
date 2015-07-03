@@ -2,15 +2,16 @@
 % Please edit documentation in R/compMetaLandsat.R
 \name{compMetaLandsat}
 \alias{compMetaLandsat}
-\title{Get calibration information from Landsat 8 standard level 1B/T filename.}
+\title{Get calibration information from Landsat 8 standard level 1B/T filename}
 \usage{
 compMetaLandsat(files)
 }
 \arguments{
-\item{filepath}{Path and filename to the landsat metadata file}
+\item{files}{Path and filename of the Landsat metadata file.}
 }
 \value{
-Dataframe containing the following information for each band/layer
+\code{data.frame} containing the following information for each
+band/layer:
 \itemize{
   \item DATE date (e.g. 2013-07-07)
   \item SID sensor id (e.g. LC8)
@@ -31,7 +32,7 @@ Dataframe containing the following information for each band/layer
   \item SZEN sun zenith angle
   \item SAZM sun azimuth angle
   \item SELV sun elevation angle
-  \item ESD earth sun distance
+  \item ESD earth-sun distance (AU)
   \item LMIN Minimum wavelength of the band (micrometer)
   \item LMAX Maximum wavelength of the band (micrometer)
   \item RADMIN Minimum radiance recorded by the band

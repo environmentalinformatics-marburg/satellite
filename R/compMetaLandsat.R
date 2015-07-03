@@ -1,12 +1,13 @@
-#' Get calibration information from Landsat 8 standard level 1B/T filename.
+#' Get calibration information from Landsat 8 standard level 1B/T filename
 #'
 #' @description
 #' The function scans a Lansat metadata file for various calibration 
 #' and orbit coefficients as well as some sensor specific data.
 #'
-#' @param filepath Path and filename to the landsat metadata file
+#' @param files Path and filename of the Landsat metadata file. 
 #'
-#' @return Dataframe containing the following information for each band/layer
+#' @return \code{data.frame} containing the following information for each 
+#' band/layer: 
 #' \itemize{
 #'   \item DATE date (e.g. 2013-07-07)
 #'   \item SID sensor id (e.g. LC8)
@@ -27,7 +28,7 @@
 #'   \item SZEN sun zenith angle
 #'   \item SAZM sun azimuth angle
 #'   \item SELV sun elevation angle
-#'   \item ESD earth sun distance
+#'   \item ESD earth-sun distance (AU)
 #'   \item LMIN Minimum wavelength of the band (micrometer)
 #'   \item LMAX Maximum wavelength of the band (micrometer)
 #'   \item RADMIN Minimum radiance recorded by the band
