@@ -255,20 +255,26 @@
 # intensity <- readBin(t(allbytes[, 13:14]), "integer", size = 2, n = numberPointRecords, signed = FALSE, endian = "little")
 # classification <- readBin(t(allbytes[, 16]), "integer", size = 1, n = numberPointRecords, signed = FALSE, endian = "little")
 # 
-# rm(allbytes, gpstime, mm, intensity, classification)
-# 
-# 
 # mmtest <- data.frame(X = mm[,1],
 #                      Y = mm[,2],
 #                      Z = mm[,3],
 #                      INT = intensity,
 #                      CLASS = classification)
 # 
-# mmtest_sp <- SpatialPoints(mmtest)
+# rm(allbytes, gpstime, mm, intensity, classification)
+# 
+# mmtest13 <- mmtest[mmtest$INT == 13,]
+# mmtest13_sp <- SpatialPoints(mmtest13)
+# coordinates(mmtest13) <- ~X + Y
+# mmtest13@proj4string <- CRS("+proj=utm +zone=32 +ellps=GRS80 +units=m +north")
+# spplot(mmtest13)
 # 
 # 
-# coordinates(mmtest) <- ~X + Y
-# mmtest@proj4string <- CRS("+proj=utm +zone=32 +ellps=GRS80 +units=m +north")
+# mmtest02 <- mmtest[mmtest$INT == 2,]
+# mmtest13_sp <- SpatialPoints(mmtest13)
+# coordinates(mmtest13) <- ~X + Y
+# mmtest13@proj4string <- CRS("+proj=utm +zone=32 +ellps=GRS80 +units=m +north")
+# spplot(mmtest13)
 # 
 # 
 # sort( sapply(ls(),function(x){object.size(get(x))}))    
