@@ -98,6 +98,8 @@ setMethod("panSharp",
 
 # Function using raster::RasterStack object ------------------------------------
 #' 
+#' @param pan if a raster stack object is used the panchromatic image needs to be explicitly be specified
+#' 
 #' @rdname panSharp
 #'
 setMethod("panSharp", 
@@ -115,6 +117,9 @@ setMethod("panSharp",
 
 
 # Function using raster::RasterLayer object ------------------------------------
+#' 
+#'  
+#' @param pan if a raster layer object is used the panchromatic image needs to be explicitly be specified
 #' 
 #' @rdname panSharp
 #'
