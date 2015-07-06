@@ -38,7 +38,7 @@ if ( !isGeneric("calcAtmosCorr") ) {
 #' irradiance by calling \code{\link{calcTOAIrradModel}}, 
 #' \code{\link{calcTOAIrradRadRef}} or \code{\link{calcTOAIrradTable}} 
 #' (depending on \code{esun_method}) if necessary. The bands' scaled counts are 
-#' converted to radiance using \code{\link{convertSCLinear}}.
+#' converted to radiance using \code{\link{convSC2Rad}}.
 #'  
 #' The radiometric correction is based on a dark object approach using
 #' either the DOS2 (Chavez 1996) or DOS4 (Moran et al. 1992) model.
@@ -91,8 +91,6 @@ if ( !isGeneric("calcAtmosCorr") ) {
 #' doi:10.1016/S0034-4257(00)00169-3, URL
 #' \url{http://www.sciencedirect.com/science/article/pii/S0034425700001693}
 #' 
-#' @seealso \code{\link{satAtmosCorr}} which can be used as a wrapper function 
-#' if the data is organized as a Satellite object.
 #'
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
@@ -101,6 +99,9 @@ if ( !isGeneric("calcAtmosCorr") ) {
 #' sat_atmos <- calcAtmosCorr(sat, model = "DOS2", esun_method = "RadRef")
 #' 
 #' bcde <- "B002n"
+#' 
+#' sat <- calcTOAIrradRadRef(sat, normalize = FALSE)
+#' 
 #' path_rad <- calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bcde))),
 #'                            bnbr = getSatLNBR(sat, bcde),
 #'                            band_wls = 
@@ -116,9 +117,9 @@ if ( !isGeneric("calcAtmosCorr") ) {
 #'                            esun = getSatESUN(sat, getSatBCDESolar(sat)),
 #'                            model = "DOS2")
 #' 
-#' sensor_rad <- convertSCLinear(x = getSatDataLayer(sat, bcde),
-#'                               mult = getSatRADM(sat, bcde),
-#'                               add = getSatRADA(sat, bcde))
+#' sensor_rad <- convSC2Rad(x = getSatDataLayer(sat, bcde), 
+#'                          mult = getSatRADM(sat, bcde), 
+#'                          add = getSatRADA(sat, bcde), getSatSZEN(sat, bcde))
 #' 
 #' ref_atmos <- calcAtmosCorr(x = sensor_rad,
 #'                            path_rad = path_rad[names(path_rad) == bcde],
@@ -153,7 +154,7 @@ setMethod("calcAtmosCorr",
             
             # Radiance conversion if necessary
             if(any(is.na(getSatBCDESolarCalib(x, id = "RAD")))){
-              x <- convDN2RU(x, convert = "Rad", szen_correction = "TRUE")
+              x <- convSC2Rad(x, szen_correction = "TRUE")
             }
             
             # Compute atmospheric correction (reflectance)

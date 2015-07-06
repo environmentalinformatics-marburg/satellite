@@ -26,6 +26,8 @@ mean (default), Gauss, median.}
 \item{subset}{Logical; if \code{TRUE}, all layers except for the cropped ones
 are being dropped; if \code{FALSE}, the cropped layers are being appended to
 the Satellite object.}
+
+\item{pan}{if a raster layer object is used the panchromatic image needs to be explicitly be specified}
 }
 \value{
 If x is a Satellite object, a Satellite object (with added

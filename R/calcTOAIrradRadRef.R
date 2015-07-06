@@ -10,7 +10,7 @@ if ( !isGeneric("calcTOAIrradRadRef") ) {
 #' 
 #' @param x A Satellite object or the maximum radiance of satellite 
 #' band(s) as numeric object. 
-#' @param rad_min Minimum radiance of satellite band(s). 
+#' @param ref_max Maximum reflextance of satellite band(s). 
 #' @param normalize Logical; if \code{TRUE}, ESun is normalized to mean 
 #' earth-sun distance. 
 #' @param esd Earth-sun distance (AU, can be estimated using 
@@ -33,7 +33,8 @@ if ( !isGeneric("calcTOAIrradRadRef") ) {
 #' file if a Satellite object is passed to the function.
 #' 
 #' By default, the resulting actual ESun will be normalized to a mean earth-sun 
-#' distance to be compatible with other default results from \code{\link{eSun}}.
+#' distance to be compatible with other default results from 
+#' \code{\link{calcTOAIrradTable}} or \code{\link{calcTOAIrradModel}}.
 #' 
 #' @seealso \code{\link{calcTOAIrradTable}} for tabulated solar irradiance
 #' values from the literature or \code{\link{calcTOAIrradModel}} for the 

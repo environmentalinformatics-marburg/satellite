@@ -17,7 +17,9 @@
 \item{x}{A Satellite object or the relative spectral response function for
 the respective band as \code{data.frame} (see details for structure).}
 
-\item{model}{Tabulated solar radiation model to be used.}
+\item{model}{Tabulated solar radiation model to be used (one of
+MCebKur_MChKur, MNewKur,  MthKur, MoldKur, MODWherli_WMO, NN, see reference
+on tabulated solar irradiance below).}
 
 \item{normalize}{Logical; if \code{TRUE}, ESun is normalized to mean
 earth-sun distance.}

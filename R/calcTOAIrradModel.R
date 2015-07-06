@@ -11,7 +11,9 @@ if ( !isGeneric("calcTOAIrradModel") ) {
 #' 
 #' @param x A Satellite object or the relative spectral response function for 
 #' the respective band as \code{data.frame} (see details for structure).
-#' @param model Tabulated solar radiation model to be used.
+#' @param model Tabulated solar radiation model to be used (one of 
+#' MCebKur_MChKur, MNewKur,  MthKur, MoldKur, MODWherli_WMO, NN, see reference
+#' on tabulated solar irradiance below).
 #' @param normalize Logical; if \code{TRUE}, ESun is normalized to mean 
 #' earth-sun distance. 
 #' @param esd Earth-sun distance (AU, can be estimated using 

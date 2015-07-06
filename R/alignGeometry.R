@@ -14,9 +14,11 @@ if ( !isGeneric("alignGeometry") ) {
 #' @param x Satellite or Raster* object to be resampled.
 #' @param template Raster* or spatial data set from which geometry can be 
 #' extracted.
-#' @param band_codes Band ID(s) to be resampled. If not supplied, all bands will 
-#' be considered for resampling.
-#' @param type (Missing)
+#' @param type Type of bands (e.g. VIS, NIR) which should be considered. If not 
+#' supplied, all types will be processed depending and bands to be processed can
+#' be defined by band_codes.
+#' @param band_codes Band ID(s) to be resampled. If not supplied and type is 
+#' not given, too, all bands will be considered for resampling.
 #' @param method Method for resampling; "bilinear" for bilinear interpolation 
 #' (default) or "ngb" for nearest neighbor interpolation. See e.g. 
 #' \code{\link{resample}}, \code{\link{projectRaster}}.
@@ -40,8 +42,7 @@ if ( !isGeneric("alignGeometry") ) {
 
 # Function using satellite object ----------------------------------------------
 #' 
-#' @return Satellite object with path radiance for each band in the metadata
-#' (W m-2 micrometer-1)
+#' @return Satellite object with alligned geometries.
 #' 
 #' @rdname alignGeometry
 #'
@@ -76,7 +77,7 @@ setMethod("alignGeometry",
 
 # Function using raster::RasterStack object ------------------------------------
 #' 
-#' @return raster::RasterStack object with converted layers
+#' @return raster::RasterStack object with alligned layers
 #' 
 #' @rdname alignGeometry
 #'
@@ -93,7 +94,7 @@ setMethod("alignGeometry",
 
 # Function using raster::RasterLayer object ------------------------------------
 #' 
-#' @return raster::RasterLayer object with converted layer
+#' @return raster::RasterLayer object with alligned layer
 #' 
 #' @rdname alignGeometry
 #'

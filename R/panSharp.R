@@ -10,6 +10,7 @@ if ( !isGeneric("panSharp") ) {
 #' with the PAN channel (see Details).
 #'
 #' @param x Satellite or \code{raster::Raster*} object.
+#' @param pan if a raster layer object is used the panchromatic image needs to be explicitly be specified
 #' @param filter Type of filter to be used for smoothing the PAN raster; one of 
 #' mean (default), Gauss, median.
 #' @param winsize Size of the filter window in x and y direction; defaults to 3.
@@ -98,8 +99,6 @@ setMethod("panSharp",
 
 # Function using raster::RasterStack object ------------------------------------
 #' 
-#' @param pan if a raster stack object is used the panchromatic image needs to be explicitly be specified
-#' 
 #' @rdname panSharp
 #'
 setMethod("panSharp", 
@@ -117,9 +116,6 @@ setMethod("panSharp",
 
 
 # Function using raster::RasterLayer object ------------------------------------
-#' 
-#'  
-#' @param pan if a raster layer object is used the panchromatic image needs to be explicitly be specified
 #' 
 #' @rdname panSharp
 #'

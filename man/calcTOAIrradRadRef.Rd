@@ -24,7 +24,7 @@ supplied and necessary for normalization, it is tried to take it from the
 metadata, otherwise it is estimated by the day of the year using
 \code{\link{calcEarthSunDist}}.}
 
-\item{rad_min}{Minimum radiance of satellite band(s).}
+\item{ref_max}{Maximum reflextance of satellite band(s).}
 }
 \value{
 If x is a Satellite object, a Satellite object with ESun information
@@ -50,7 +50,8 @@ respective band. All these parameters are taken from the scene's metadata
 file if a Satellite object is passed to the function.
 
 By default, the resulting actual ESun will be normalized to a mean earth-sun
-distance to be compatible with other default results from \code{\link{eSun}}.
+distance to be compatible with other default results from
+\code{\link{calcTOAIrradTable}} or \code{\link{calcTOAIrradModel}}.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")

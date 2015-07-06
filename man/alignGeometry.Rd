@@ -22,22 +22,23 @@
 \item{template}{Raster* or spatial data set from which geometry can be
 extracted.}
 
-\item{band_codes}{Band ID(s) to be resampled. If not supplied, all bands will
-be considered for resampling.}
+\item{band_codes}{Band ID(s) to be resampled. If not supplied and type is
+not given, too, all bands will be considered for resampling.}
 
-\item{type}{(Missing)}
+\item{type}{Type of bands (e.g. VIS, NIR) which should be considered. If not
+supplied, all types will be processed depending and bands to be processed can
+be defined by band_codes.}
 
 \item{method}{Method for resampling; "bilinear" for bilinear interpolation
 (default) or "ngb" for nearest neighbor interpolation. See e.g.
 \code{\link{resample}}, \code{\link{projectRaster}}.}
 }
 \value{
-Satellite object with path radiance for each band in the metadata
-(W m-2 micrometer-1)
+Satellite object with alligned geometries.
 
-raster::RasterStack object with converted layers
+raster::RasterStack object with alligned layers
 
-raster::RasterLayer object with converted layer
+raster::RasterLayer object with alligned layer
 }
 \description{
 Align raster data by bringing it in the same geometry and extent.
