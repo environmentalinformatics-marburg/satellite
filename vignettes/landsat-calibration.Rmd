@@ -34,7 +34,10 @@ is in accordance with the USGS conventions.
 ## Converting Landsat 8 scaled counts to physical units
 
 In order to convert scaled counts of a satellite object to radiance, reflectance
-and/or temperature, just supply it to the `convertLinear` function.
+and/or temperature, just supply it to the `convSC2Rad`, `convSC2Ref` or
+`convRad2BT` function.
 ```{r}
-sat <- convertSCLinear(sat)
+sat <- convSC2Rad(sat)
+sat <- convSC2Ref(sat)
+sat <- convRad2BT(sat)
 ```

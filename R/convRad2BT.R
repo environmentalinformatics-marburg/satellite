@@ -49,8 +49,6 @@ setMethod("convRad2BT",
             for(bcde in band_codes){
               if(!any(is.na(getSatRADM(x, bcde)), is.na(getSatBTK1(x, bcde)))){
                 sensor_ref <- convRad2BT(x = getSatDataLayer(x, bcde),
-                                         mult = getSatRADM(x, bcde),
-                                         add = getSatRADA(x, bcde),
                                          k1 = getSatBTK1(x, bcde),
                                          k2 = getSatBTK2(x, bcde))
                 layer_bcde <- paste0(bcde, "_BT")

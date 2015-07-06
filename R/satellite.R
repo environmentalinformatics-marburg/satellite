@@ -56,8 +56,10 @@ setMethod("satellite",
                                    FILE = x)
               }
             }
-            layers <- lapply(meta$FILE, function(y){
-              raster(y)
+            layers <- lapply(seq(nrow(meta)), function(y){
+              act_layer <- raster(meta$FILE[y])
+              names(act_layer) <- meta$BCDE[y]
+              return(act_layer)
             })
             if(missing(log)){
               ps <- list(time = Sys.time(), info = "Initial import", 
