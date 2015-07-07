@@ -1,3 +1,7 @@
+if ( !isGeneric("calcHistMatch") ) {
+  setGeneric("calcHistMatch", function(x, ...)
+    standardGeneric("calcHistMatch"))
+}
 #' Illumination correction across scenes using histogram matching
 #'
 #' @description
@@ -42,123 +46,138 @@
 #' 
 #' ## histogram matching
 #' calcHistMatch(x, target)
+NULL
 
-calcHistMatch <- function(x, target, mask, ttab = FALSE, 
-                          minv = NULL, maxv = NULL, step = NULL){
-  
-  #   x <- getSatDataLayer(sat, "B002n")
-  #   target <- getSatDataLayer(sat, "B003n")
-  #   target <- getSatDataLayer(sat, "B002n")*1.12
-  
-  n <- 500
-  nmin <- 1
-  nmax <- 500
-  m <- 500
-  
-  x <- round((x - minValue(x)) * (nmax - nmin) / (maxValue(x) - minValue(x)) + nmin)
-  
-  #   target <- (target - minValue(target)) * 
-  #     (nmax - nmin) / (maxValue(target) - minValue(target)) + nmin
-  #   
-  
-  ho <- hist(x, maxpixels = 1000000, 
-             breaks = seq(minValue(x), maxValue(x), length.out = n+1))
-  ht <- hist(target, maxpixels = 1000000, 
-             breaks = seq(minValue(target), maxValue(target), length.out = m+1))
-  
-  t <- matrix(data = 0, nrow = length(ho$counts), ncol = length(ht$counts))
-  for(j in seq(length(ht$counts))){
-    for(i in seq(length(ho$counts))){
-      pixelsreq <- ht$counts[j] - sum(t[1:i,j], na.rm = TRUE)
-      pixelsrem <- ho$counts[i] - sum(t[i,1:j], na.rm = TRUE)
-      t[i,j] <- min(pixelsreq, pixelsrem)
-    }
-  }
-  
-  df <-getValues(x)
-  df[which(df <= 1)] <- 1
-  for(i in seq(length(df))){
-    cpf <- cumsum(t[df[i],])
-    set.seed(1)
-    p <- sample(1:max(cpf), 1)
-    j <- which(p <= cpf)[1]
-    df[i] <- ht$breaks[j]
-    t[v,j] <- t[v,j]
-  }
-  df
-  x <- round(setValues(x, df))
-  plot(x)
-  plot(target)
-  hist(target)
-  hist(x)
-  
-  
-  
-  if (missing(minv)) {
-    minv <- floor(min(minValue(x), minValue(target), na.rm = TRUE))
-  }
-  
-  if (missing(maxv)) {
-    maxval <- ceiling(max(maxValue(x), maxValue(target), na.rm = TRUE))
-  }
-  
-  if (missing(step)) {
-    step <- switch(typeof(minValue(x)),
-                   double = 0.01,
-                   integer = 1L)
-  }
-  
-  minv <- round_any(minv, step, f = floor)
-  maxv <- round_any(maxv, step, f = ceiling)
-  
-  
-  results <- tofix
-  master <- as.vector(as.matrix(master))
-  tofix <- as.vector(as.matrix(tofix))
-  if (missing(mask)) 
-    mask <- rep(NA, length(master))
-  else mask <- as.vector(as.matrix(mask))
-  results.final <- rep(NA, length(mask))
-  master <- master[is.na(mask)]
-  tofix <- tofix[is.na(mask)]
-  breaks <- seq(minval, maxval, by = by)
-  master.cdf <- hist(master, breaks = breaks, plot = FALSE)
-  master.cdf <- c(0, cumsum(master.cdf$counts/sum(master.cdf$counts)))
-  tofix.cdf <- hist(tofix, breaks = breaks, plot = FALSE)
-  tofix.cdf <- c(0, cumsum(tofix.cdf$counts/sum(tofix.cdf$counts)))
-  results.recode <- breaks
-  results.values <- rep(NA, length(tofix))
-  for (i in 2:length(breaks)) {
-    testvals <- breaks[master.cdf < tofix.cdf[i]]
-    if (length(testvals) > 0) 
-      results.recode[i] <- max(testvals)
-    results.values[tofix > breaks[i - 1] & tofix <= breaks[i]] <- results.recode[i]
-  }
-  results.final[is.na(mask)] <- results.values
-  if (class(results) == "SpatialGridDataFrame") 
-    results@data[, 1] <- results.final
-  else if (is.data.frame(results)) 
-    results <- data.frame(matrix(results.final, nrow = nrow(results), 
-                                 ncol = ncol(results)))
-  else if (is.matrix(results)) 
-    results <- matrix(results.final, nrow = nrow(results), 
-                      ncol = ncol(results))
-  else results <- results.final
-  list(recode = results.recode, newimage = results)
-  
-  
-  
-  
-  
-  
-  fix <- histmatch(target, x, minval = minv,
-                   maxval = maxv, by = step, ...)
-  fix_rst <- raster(fix$newimage)
-  
-  if (ttab) {
-    return(list(recode = fix$recode,
-                newraster = fix_rst))
-  } else {
-    return(fix_rst)
-  }
-}
+
+# Function using satellite object ----------------------------------------------
+#' 
+#' @return Satellite object with added atmospheric corrected layers
+#' 
+#' @rdname calcHistMatch
+#'
+setMethsd("calcHistMatch", 
+          signature(x = "Satellite"), 
+          function(x, target, bcde = NULL, minv = NULL, maxv = NULL, step = NULL, 
+                   ttab = FALSE){
+            
+            if(bcde = NULL){
+              bcde = c(as.character(getSatBCDESolar(x)), 
+                       as.character(getSatBCDEThermal(x)))
+            }
+            
+            for(act_bcde in bcde){
+              hm <- calcHistMatch(x = getSatDataLayer(x, act_bcde),
+                                  target = target,
+                                  bcde = act_bcde,
+                                  minv = minv,
+                                  maxv = maxv,
+                                  step = step,
+                                  ttab = ttab)
+              
+              layer_bcde <- paste0(substr(bcde_rad, 1, nchar(bcde_rad) - 4),
+                                   "_REF_AtmosCorr")
+              meta_param <- data.frame(getSatSensorInfo(x),
+                                       getSatBandInfo(x, bcde_rad, 
+                                                      return_calib = FALSE),
+                                       CALIB = "REF_AtmosCorr")
+              info <- sys.calls()[[1]]
+              info <- paste0("Add layer from ", info[1], "(", 
+                             toString(info[2:length(info)]), ")")
+              x <- addSatDataLayer(x, bcde = layer_bcde, data = ref,
+                                   meta_param = meta_param,
+                                   info = info, in_bcde = bcde_rad)
+            }
+            return(x)
+})
+
+
+# Function using raster::RasterStack object ------------------------------------
+#' 
+#' @return raster::RasterStack object with atmospheric corrected layers
+#' 
+#' @rdname calcHistMatch
+#'
+setMethsd("calcHistMatch", 
+          signature(x = "RasterStack"), 
+          function(x, target, bcde = NULL, minv = NULL, maxv = NULL, step = NULL, 
+                   ttab = FALSE){
+            # If not supplied, 'model' defaults to DOS2
+            model <- model[1]
+            
+            for(l in seq(nlayers(x))){
+              x[[l]] <- calcAtmosCorr(x, path_rad, esun, szen, model = "DOS2")
+            }
+            return(x)
+          })
+
+
+
+
+
+
+
+
+
+# Function using raster::RasterLayer object ------------------------------------
+#' 
+#' @return raster::RasterLayer object with atmospheric corrected layer
+#' 
+#' @rdname calcHistMatch
+#'
+setMethsd("calcHistMatch", 
+          signature(x = "RasterLayer"), 
+          function(x, target, bcde = NULL, minv = NULL, maxv = NULL,
+                   step = NULL, ttab = FALSE){
+            
+            
+            path <- system.file("extdata", package = "satellite")
+            files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+            sat <- satellite(files)
+            
+            x <- getSatDataLayer(sat, "B004n")
+            target <- x * sample(100, ncell(x), replace = TRUE)/100
+#             target <- getSatDataLayer(sat, "B005n")
+            
+            minv = 1
+            maxv = 256
+            x <- round((x - minValue(x)) * (maxv - minv) / 
+                         (maxValue(x) - minValue(x)) + minv)
+            
+            target <- round((target - minValue(target)) * (maxv - minv) / 
+                         (maxValue(target) - minValue(target)) + minv)
+            
+            hs <- hist(x, maxpixels = 1000000, 
+                       breaks = seq(minValue(x), maxValue(x), 
+                                    length.out = 256))
+            ht <- hist(target, maxpixels = 1000000, 
+                       breaks = seq(minValue(target), maxValue(target), 
+                                    length.out = 256))
+            t <- matrix(data = 0, nrow = length(hs$counts), 
+                        ncol = length(ht$counts))
+            
+            for(j in seq(length(ht$counts))){
+              for(i in seq(length(hs$counts))){
+                pixelsreq <- ht$counts[j] - sum(t[1:i,j], na.rm = TRUE)
+                pixelsrem <- hs$counts[i] - sum(t[i,1:j], na.rm = TRUE)
+                t[i,j] <- min(pixelsreq, pixelsrem)
+              }
+            }
+            
+            df <-getValues(x)
+            df[which(df <= 1)] <- 1
+            for(i in seq(length(df))){
+              cpf <- cumsum(t[df[i],])
+              set.seed(1)
+              p <- sample(1:max(cpf), 1)
+              j <- which(p <= cpf)[1]
+              df[i] <- ht$breaks[j]
+              t[i,j] <- t[i,j]
+            }
+            
+            df
+            x <- round(setValues(x, df))
+            plot(x)
+            plot(target)
+            hist(target)
+            hist(x)
+          })  
