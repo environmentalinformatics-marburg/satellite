@@ -1,6 +1,6 @@
-if ( !isGeneric("TopoCorr") ) {
-  setGeneric("TopoCorr", function(x, ...)
-    standardGeneric("TopoCorr"))
+if ( !isGeneric("calcTopoCorr") ) {
+  setGeneric("calcTopoCorr", function(x, ...)
+    standardGeneric("calcTopoCorr"))
 }
 #' Correct for topographic effects.
 #' 
@@ -25,9 +25,9 @@ if ( !isGeneric("TopoCorr") ) {
 #' topographic corrected layers; if x is a \code{raster::Raster*} object, a 
 #' \code{raster::Raster*} object with converted layer(s).
 #' 
-#' @export TopoCorr
+#' @export calcTopoCorr
 #' 
-#' @name TopoCorr
+#' @name calcTopoCorr
 #' 
 #' @references CIVCO, D.L. (1989): Topographic normalization of Landsat Thematic
 #' Mapper digitalimagery. \emph{Photogrammetric Engineering & Remote Sensing}, 
@@ -38,16 +38,16 @@ if ( !isGeneric("TopoCorr") ) {
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' x <- satellite(files)
-#' TopoCorr(x)
+#' calcTopoCorr(x)
 #' }
 NULL
 
 
 # Function using satellite object ----------------------------------------------
 #' 
-#' @rdname TopoCorr
+#' @rdname calcTopoCorr
 #'
-setMethod("TopoCorr", 
+setMethod("calcTopoCorr", 
           signature(x = "Satellite"), 
           function(x, mask=TRUE){
             if (is.null(getSatDataLayer(x, "hillShade"))){
@@ -68,11 +68,11 @@ setMethod("TopoCorr",
               if (mask){
                 cloudmask <- getSatDataLayer(x, "cloudmask")[[1]]
               }
-              layer_bcde <- gsub("AtmosCorr","TopoCorr",getSatBCDE(x)[
+              layer_bcde <- gsub("AtmosCorr","calcTopoCorr",getSatBCDE(x)[
                 grepl("_REF_AtmosCorr$", getSatBCDE(x))][i])
-              tmp  <- TopoCorr(atmoscbands[[i]], hillsh, cloudmask)
+              tmp  <- calcTopoCorr(atmoscbands[[i]], hillsh, cloudmask)
               x <- addSatDataLayer(x, bcde = layer_bcde, data = tmp, 
-                                   info="Add layer from TopoCorr(x)", 
+                                   info="Add layer from calcTopoCorr(x)", 
                                    in_bcde=getSatBCDE(x)[
                                      grepl("_REF_AtmosCorr$", 
                                            getSatBCDE(x))][i])
@@ -83,13 +83,13 @@ setMethod("TopoCorr",
 
 # Function using raster::RasterStack object ------------------------------------
 #' 
-#' @rdname TopoCorr
+#' @rdname calcTopoCorr
 #'
-setMethod("TopoCorr", 
+setMethod("calcTopoCorr", 
           signature(x = "RasterStack"), 
           function(x, hillsh, cloudmask=NULL){
             for(l in seq(nlayers(x))){
-              x[[l]] <- TopoCorr(x[[l]], hillsh, cloudmask)
+              x[[l]] <- calcTopoCorr(x[[l]], hillsh, cloudmask)
             }
             return(x)
           })
@@ -102,9 +102,9 @@ setMethod("TopoCorr",
 #' \code{\link{raster::hillShade}}. 
 #' @param cloudmask A \code{raster::RasterLayer} in which clouds are masked with 
 #' NA values. 
-#' @rdname TopoCorr
+#' @rdname calcTopoCorr
 #'
-setMethod("TopoCorr", 
+setMethod("calcTopoCorr", 
           signature(x = "RasterLayer"), 
           function(x, hillsh, cloudmask=NULL){
             xtmp <- x
