@@ -21,6 +21,7 @@ if ( !isGeneric("cropSat") ) {
 #' @export cropSat
 #' 
 #' @name cropSat
+#' @aliases cropSat,Satellite-method
 #'
 #' @details Crop layers of a Satellite object to the size of a given 
 #' \code{raster::extent} object.

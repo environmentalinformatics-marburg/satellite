@@ -3,6 +3,7 @@
 \docType{methods}
 \name{cropSat}
 \alias{cropSat}
+\alias{cropSat,Satellite-method}
 \title{Crop satellite object}
 \usage{
 \S4method{cropSat}{Satellite}(x, y, subset = TRUE)

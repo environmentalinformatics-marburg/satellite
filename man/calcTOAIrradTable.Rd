@@ -55,7 +55,7 @@ files <- list.files(path, pattern = glob2rx("LE7*.tif"), full.names = TRUE)
 sat <- satellite(files)
 calcTOAIrradTable(sat)
 
-calcTOAIrradTable(x = "LC7", normalize = FALSE,
+calcTOAIrradTable(x = "LE7", normalize = FALSE,
                   calcEarthSunDist("2015-01-01"))
 }
 \references{

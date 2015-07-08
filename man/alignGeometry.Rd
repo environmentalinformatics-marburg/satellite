@@ -5,6 +5,7 @@
 \alias{alignGeometry}
 \alias{alignGeometry,RasterLayer-method}
 \alias{alignGeometry,RasterStack-method}
+\alias{alignGeometry,Satellite-method}
 \title{Align raster geometry between two data sets}
 \usage{
 \S4method{alignGeometry}{Satellite}(x, template, band_codes, type,

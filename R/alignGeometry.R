@@ -26,6 +26,7 @@ if ( !isGeneric("alignGeometry") ) {
 #' @export alignGeometry
 #' 
 #' @name alignGeometry
+#' @aliases alignGeometry,Satellite-method
 #' 
 #' @examples
 #' ## sample data

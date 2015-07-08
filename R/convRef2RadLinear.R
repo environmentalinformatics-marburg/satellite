@@ -20,9 +20,6 @@
 #' which is available online at 
 #' \url{http://landsat.usgs.gov/Landsat8_Using_Product.php}.
 #'
-#' @examples
-#' Not run:
-#' 
 convRef2RadLinear <- function(band, refm, refa, radm, rada, szen){
   if(!missing(szen)){
     band <- band * cos(szen * pi / 180.0)

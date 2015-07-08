@@ -52,7 +52,7 @@ if ( !isGeneric("calcTOAIrradTable") ) {
 #' sat <- satellite(files)
 #' calcTOAIrradTable(sat)
 #'  
-#' calcTOAIrradTable(x = "LC7", normalize = FALSE, 
+#' calcTOAIrradTable(x = "LE7", normalize = FALSE, 
 #'                   calcEarthSunDist("2015-01-01"))
 #' 
 NULL

@@ -63,7 +63,7 @@
 #' @examples
 #' lutInfo()
 #' 
-lutInfo <- function(...){
+lutInfo <- function(){
   return(lut)
 }
 

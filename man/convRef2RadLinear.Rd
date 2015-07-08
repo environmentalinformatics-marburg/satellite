@@ -32,7 +32,4 @@ The conversion functions are taken from USGS' Landsat 8 manual
 which is available online at
 \url{http://landsat.usgs.gov/Landsat8_Using_Product.php}.
 }
-\examples{
-Not run:
-}
 

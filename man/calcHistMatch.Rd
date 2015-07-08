@@ -78,8 +78,8 @@ calcHistMatch(x, target)
 }
 \references{
 This function is taken and only slightly adapted from the
-\code{\link{histmatch}} function by Sarah C. Goslee (2011). Analyzing Remote
-Sensing Data in R: The landsat Package. Journal of Statistical Software,
-43(4), 1-25. URL \url{http://www.jstatsoft.org/v43/i04/}.
+\code{\link{landsat::histmatch}} function by Sarah C. Goslee (2011).
+Analyzing Remote Sensing Data in R: The landsat Package. Journal of
+Statistical Software, 43(4), 1-25. URL \url{http://www.jstatsoft.org/v43/i04/}.
 }
 

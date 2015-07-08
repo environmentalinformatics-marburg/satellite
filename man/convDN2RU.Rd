@@ -21,6 +21,9 @@ raster::RasterLayer.}
 
 \item{convert}{Type of physical output; one of "rad", "ref", "bt" or "all".}
 
+\item{szen_correction}{Logical; if \code{TRUE}, sun zenith correction is
+being applied.}
+
 \item{mult}{Multiplicative coefficient for value transformation (i.e. slope).}
 
 \item{add}{Additive coefficient for value transformation (i.e. offset).}
@@ -28,8 +31,6 @@ raster::RasterLayer.}
 \item{szen}{Cosine of solar zenith angle.}
 
 \item{k1,k2}{Temperature correction parameters.}
-
-\item{szen_cor}{Logical; if \code{TRUE}, sun zenith correction is being applied.}
 }
 \value{
 If x is a Satellite object, a Satellite object with added converted

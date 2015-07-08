@@ -21,7 +21,8 @@ if ( !isGeneric("satSubset") ) {
 #' @details Subsetting of computation stages.
 #' 
 #' @name satSubset
-#' 
+#' @aliases satSubset,Satellite-method
+#'
 #' @examples
 #' ## sample data
 #' path <- system.file("extdata", package = "satellite")

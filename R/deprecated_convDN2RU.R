@@ -12,7 +12,8 @@ if (!isGeneric("convDN2RU") ) {
 #' @param x An object of class Satellite, raster::RasterStack or 
 #' raster::RasterLayer. 
 #' @param convert Type of physical output; one of "rad", "ref", "bt" or "all". 
-#' @param szen_cor Logical; if \code{TRUE}, sun zenith correction is being applied.
+#' @param szen_correction Logical; if \code{TRUE}, sun zenith correction is 
+#' being applied.
 #' @param mult Multiplicative coefficient for value transformation (i.e. slope).
 #' @param add Additive coefficient for value transformation (i.e. offset).
 #' @param szen Cosine of solar zenith angle.

@@ -131,3 +131,4 @@ test_that("Depricated satCalib and calibLinear works as expected", {
     expect_equal(round(raster::getValues(t3)[50],3), round(62.959,3))
     expect_equal(round(raster::getValues(t4)[50],3), round(303.5775,3))
   })
+})

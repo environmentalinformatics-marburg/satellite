@@ -11,7 +11,7 @@
 \alias{lutInfoSensorFromSID}
 \title{Get or access internal LUT values used by various functions}
 \usage{
-lutInfo(...)
+lutInfo()
 
 lutInfoBandsFromSID(sid)
 

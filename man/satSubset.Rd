@@ -3,6 +3,7 @@
 \docType{methods}
 \name{satSubset}
 \alias{satSubset}
+\alias{satSubset,Satellite-method}
 \title{Subset a Satellite object}
 \usage{
 \S4method{satSubset}{Satellite}(x, subset)
