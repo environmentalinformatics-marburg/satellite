@@ -55,14 +55,14 @@ NULL
 #' 
 #' @rdname calcHistMatch
 #'
-setMethsd("calcHistMatch", 
+setMethod("calcHistMatch", 
           signature(x = "Satellite"), 
           function(x, target, bcde = NULL, minv = NULL, maxv = NULL, step = NULL, 
                    ttab = FALSE){
             
-            if(bcde = NULL){
-              bcde = c(as.character(getSatBCDESolar(x)), 
-                       as.character(getSatBCDEThermal(x)))
+            if(is.null(bcde)){
+              bcde <- c(as.character(getSatBCDESolar(x)), 
+                        as.character(getSatBCDEThermal(x)))
             }
             
             for(act_bcde in bcde){
@@ -97,7 +97,7 @@ setMethsd("calcHistMatch",
 #' 
 #' @rdname calcHistMatch
 #'
-setMethsd("calcHistMatch", 
+setMethod("calcHistMatch", 
           signature(x = "RasterStack"), 
           function(x, target, bcde = NULL, minv = NULL, maxv = NULL, step = NULL, 
                    ttab = FALSE){
@@ -124,22 +124,23 @@ setMethsd("calcHistMatch",
 #' 
 #' @rdname calcHistMatch
 #'
-setMethsd("calcHistMatch", 
+setMethod("calcHistMatch", 
           signature(x = "RasterLayer"), 
           function(x, target, bcde = NULL, minv = NULL, maxv = NULL,
                    step = NULL, ttab = FALSE){
             
             
-            path <- system.file("extdata", package = "satellite")
-            files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
-            sat <- satellite(files)
+            # path <- system.file("extdata", package = "satellite")
+            # files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+            # sat <- satellite(files)
+            # x <- getSatDataLayer(sat, "B004n")
             
-            x <- getSatDataLayer(sat, "B004n")
-            target <- x * sample(100, ncell(x), replace = TRUE)/100
-#             target <- getSatDataLayer(sat, "B005n")
+            # target <- x * sample(100, ncell(x), replace = TRUE)/100
             
-            minv = 1
-            maxv = 256
+            # target <- getSatDataLayer(sat, "B005n")
+            
+            minv <- 1L
+            maxv <- 256L
             x <- round((x - minValue(x)) * (maxv - minv) / 
                          (maxValue(x) - minValue(x)) + minv)
             
