@@ -9,7 +9,9 @@ Maintainer: Environmental Informatics
 Description: The package provides a variety of functions which are useful for
     handling, manipulating and visualizing remote sensing data.
 Depends: 
-    raster
+    raster, 
+    Rcpp (>= 0.10.3), 
+    methods
 Imports: 
     tools
 License: GPL-3
@@ -18,3 +20,4 @@ Suggests:
     knitr
 LazyData: true
 VignetteBuilder: knitr
+LinkingTo: Rcpp
