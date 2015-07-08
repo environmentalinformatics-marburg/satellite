@@ -63,7 +63,7 @@ single <- function(pred, ref, w, lweig, lookup){
              "2" = {m <- matrix(c(1,1,1,1,0,1,1,1,1),nrow=3)},
              "3" = {m <- matrix(c(1,1,1,1,1,1,2,2,2,1,1,2,0,2,1,1,2,2,2,1,1,1,1,1,1),nrow=5)}
       )
-      df <- as.data.frame(adjacent(pred, pred_cells$cell, direction = m, pairs = TRUE))
+      df <- as.data.frame(adjacent(pred, pred_cells$cell, directions = m, pairs = TRUE))
       #get raster values
       df$pred_val <- pred[df$to]
       #merge ref values into df
