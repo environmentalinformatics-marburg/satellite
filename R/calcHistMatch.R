@@ -20,7 +20,11 @@ if ( !isGeneric("calcHistMatch") ) {
 #' @param by Step size used to build the new histogram
 #' (if not provided, defaults to 1 for integer master layer and 0.01 for float 
 #' master layer).
+#' @param use_cpp Logical. If \code{TRUE}, C++ functionality (via \strong{Rcpp}) 
+#' is enabled, which leads to a considerable reduction of both computation time
+#' and memory usage.
 #'
+#' @name calcHistMatch
 #' @export calcHistMatch
 #' 
 #' @return
@@ -58,7 +62,7 @@ NULL
 setMethod("calcHistMatch", 
           signature(x = "Satellite"), 
           function(x, target, bcde = NULL, minv = NULL, maxv = NULL, step = NULL, 
-                   ttab = FALSE){
+                   ttab = FALSE, use_cpp = TRUE){
             
             if(is.null(bcde)){
               bcde <- c(as.character(getSatBCDESolar(x)), 
@@ -72,7 +76,8 @@ setMethod("calcHistMatch",
                                   minv = minv,
                                   maxv = maxv,
                                   step = step,
-                                  ttab = ttab)
+                                  ttab = ttab, 
+                                  use_cpp = use_cpp)
               
               layer_bcde <- paste0(substr(bcde_rad, 1, nchar(bcde_rad) - 4),
                                    "_REF_AtmosCorr")
@@ -100,7 +105,7 @@ setMethod("calcHistMatch",
 setMethod("calcHistMatch", 
           signature(x = "RasterStack"), 
           function(x, target, bcde = NULL, minv = NULL, maxv = NULL, step = NULL, 
-                   ttab = FALSE){
+                   ttab = FALSE, use_cpp = TRUE){
             # If not supplied, 'model' defaults to DOS2
             model <- model[1]
             
@@ -127,7 +132,7 @@ setMethod("calcHistMatch",
 setMethod("calcHistMatch", 
           signature(x = "RasterLayer"), 
           function(x, target, bcde = NULL, minv = NULL, maxv = NULL,
-                   step = NULL, ttab = FALSE){
+                   step = NULL, ttab = FALSE, use_cpp = TRUE){
             
             
             # path <- system.file("extdata", package = "satellite")
@@ -153,32 +158,40 @@ setMethod("calcHistMatch",
             ht <- hist(target, maxpixels = 1000000, 
                        breaks = seq(minValue(target), maxValue(target), 
                                     length.out = 256))
-            t <- matrix(data = 0, nrow = length(hs$counts), 
-                        ncol = length(ht$counts))
             
-            for(j in seq(length(ht$counts))){
-              for(i in seq(length(hs$counts))){
-                pixelsreq <- ht$counts[j] - sum(t[1:i,j], na.rm = TRUE)
-                pixelsrem <- hs$counts[i] - sum(t[i,1:j], na.rm = TRUE)
-                t[i,j] <- min(pixelsreq, pixelsrem)
+            ## enable c++ functionality
+            if (use_cpp) {
+              t <- insertMinReqRem(hs$counts, ht$counts)
+              
+            ## or stick to base-r version  
+            } else {
+              t <- matrix(data = 0, nrow = length(hs$counts), 
+                          ncol = length(ht$counts))
+              
+              for(j in seq(length(ht$counts))){
+                for(i in seq(length(hs$counts))){
+                  pixelsreq <- ht$counts[j] - sum(t[1:i,j], na.rm = TRUE)
+                  pixelsrem <- hs$counts[i] - sum(t[i,1:j], na.rm = TRUE)
+                  t[i,j] <- min(pixelsreq, pixelsrem)
+                }
               }
             }
             
-            df <-getValues(x)
-            df[which(df <= 1)] <- 1
-            for(i in seq(length(df))){
-              cpf <- cumsum(t[df[i],])
-              set.seed(1)
-              p <- sample(1:max(cpf), 1)
-              j <- which(p <= cpf)[1]
-              df[i] <- ht$breaks[j]
-              t[i,j] <- t[i,j]
-            }
-            
-            df
-            x <- round(setValues(x, df))
-            plot(x)
-            plot(target)
-            hist(target)
-            hist(x)
+            #             df <-getValues(x)
+            #             df[which(df <= 1)] <- 1
+            #             for(i in seq(length(df))){
+            #               cpf <- cumsum(t[df[i],])
+            #               set.seed(1)
+            #               p <- sample(1:max(cpf), 1)
+            #               j <- which(p <= cpf)[1]
+            #               df[i] <- ht$breaks[j]
+            #               t[i,j] <- t[i,j]
+            #             }
+            #             
+            #             df
+            #             x <- round(setValues(x, df))
+            #             plot(x)
+            #             plot(target)
+            #             hist(target)
+            #             hist(x)
           })  
