@@ -1,6 +1,26 @@
 #' Deprecated functions
 #' 
 #' @name deprecated
+#' 
+#' @param x Satellite object
+#' @param convert Convert dataset to radiance/reflectance/temperature
+#' @param szen_correction Compute sun zenith correction
+#' @param band Band of the sensor
+#' @param mult Multiplicative calibration coefficient
+#' @param add Additive multiplication coefficient
+#' @param szen Sun zenith angle
+#' @param k1 BTT calibration coefficient
+#' @param k2 BTT calibration coefficient
+#' @param method Method used for computation
+#' @param model Model used for computation 
+#' @param normalize Normalize earth-sun distance
+#' @param esd Earth sun distance
+#' @param atmos_model Atmospheric model to be used
+#' @param esun_mode Earth sun distance computation method to be used
+#' @param ref_mult Multiplicative reflection calibration coefficient
+#' @param ref_add Additive reflection calibration coefficient
+#' @param rad_mult Multiplicative radiance calibration coefficient
+#' @param rad_add Additive radiance calibration coefficient
 #'
 #' @description
 #' The functions have been implemented in the very beginning of the package
@@ -131,9 +151,9 @@ satAtmosCorr <- function(x, atmos_model = "DOS2", esun_mode = "RadRef"){
 calibLinearInverse <- function(band, ref_mult, ref_add, rad_mult, rad_add, 
                                szen){
   if(missing(szen)){
-    convertRef2Rad(band, ref_mult, ref_add, rad_mult, rad_add)
+    convRef2RadLinear(band, ref_mult, ref_add, rad_mult, rad_add)
   } else {
-    convertRef2Rad(band, ref_mult, ref_add, rad_mult, rad_add, szen)  
+    convRef2RadLinear(band, ref_mult, ref_add, rad_mult, rad_add, szen)  
   }
 }
 

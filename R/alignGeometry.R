@@ -29,14 +29,10 @@ if ( !isGeneric("alignGeometry") ) {
 #' @aliases alignGeometry,Satellite-method
 #' 
 #' @examples
-#' ## sample data
 #' path <- system.file("extdata", package = "satellite")
-#' files <- list.files(path, pattern = glob2rx("LE7*.tif"), full.names = TRUE)
-#' 
-#' ## import as 'Satellite' object
+#' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' sat <- satellite(files)
 #' 
-#' ## align geometry
 #' alignGeometry(sat, template = getSatDataLayer(sat, "B008n"), 
 #'                band_codes = "B001n")
 
@@ -103,18 +99,18 @@ setMethod("alignGeometry",
           signature(x = "RasterLayer"),
           function(x, template, method = c("bilinear", "ngb")){
             method <- method[1]
-            if(projection(x) == projection(template)){
-              x <- crop(x, template, snap = "out")
+            if(raster::projection(x) == raster::projection(template)){
+              x <- raster::crop(x, template, snap = "out")
               if(class(template) == "RasterLayer"){
                 if(x@ncols / template@ncols >= 2){
                   factor <- floor(x@ncols/template@ncols)
-                  x <- aggregate(x, fact = factor, fun = mean, 
+                  x <- raster::aggregate(x, fact = factor, fun = mean, 
                                  expand = TRUE)
                 }
-                x <- resample(x, template, method = method)
+                x <- raster::resample(x, template, method = method)
               }
             } else {
-              x <- projectRaster(x, template, method = method)
+              x <- raster::projectRaster(x, template, method = method)
             }
             return(x)
           })

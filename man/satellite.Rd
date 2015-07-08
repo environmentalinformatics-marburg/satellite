@@ -12,7 +12,7 @@
 \S4method{satellite}{RasterStack}(x, meta, log)
 }
 \arguments{
-\item{x}{A vector of filenames (see \code{\link{raster::raster}}) or a
+\item{x}{A vector of filenames (see \code{raster::raster}) or a
 \code{raster::RasterStack}.}
 
 \item{meta}{Optional metadata object (e.g. returned from

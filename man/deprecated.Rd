@@ -25,6 +25,45 @@ calibLinearInverse(band, ref_mult, ref_add, rad_mult, rad_add, szen)
 
 satInvarFeatures(x)
 }
+\arguments{
+\item{x}{Satellite object}
+
+\item{convert}{Convert dataset to radiance/reflectance/temperature}
+
+\item{szen_correction}{Compute sun zenith correction}
+
+\item{band}{Band of the sensor}
+
+\item{mult}{Multiplicative calibration coefficient}
+
+\item{add}{Additive multiplication coefficient}
+
+\item{szen}{Sun zenith angle}
+
+\item{k1}{BTT calibration coefficient}
+
+\item{k2}{BTT calibration coefficient}
+
+\item{method}{Method used for computation}
+
+\item{model}{Model used for computation}
+
+\item{normalize}{Normalize earth-sun distance}
+
+\item{esd}{Earth sun distance}
+
+\item{atmos_model}{Atmospheric model to be used}
+
+\item{esun_mode}{Earth sun distance computation method to be used}
+
+\item{ref_mult}{Multiplicative reflection calibration coefficient}
+
+\item{ref_add}{Additive reflection calibration coefficient}
+
+\item{rad_mult}{Multiplicative radiance calibration coefficient}
+
+\item{rad_add}{Additive radiance calibration coefficient}
+}
 \description{
 The functions have been implemented in the very beginning of the package
 development, mainly to be used within the scope of a remote sensing course at

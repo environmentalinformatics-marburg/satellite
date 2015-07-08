@@ -7,6 +7,9 @@
 #' @param bcde Band code as returned e.g. from \code{\link{lutInfoBCDEFromBID}}.
 #' @param bid Band id as returned e.g. from \code{\link{lutInfoBIDFromBCDE}}.
 #' @param sid Sensor id as returned e.g. from \code{\link{lutInfoSensorFromSID}}.
+#' @param file Filename of a remote sensing data file
+#' @param files Filename (or filepath) of one or more remote sensing data 
+#' filenames
 #'
 #' @return List containing several \code{data.frame} objects with LUT values.
 #'

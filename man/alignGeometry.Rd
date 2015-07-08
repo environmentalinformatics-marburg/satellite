@@ -53,14 +53,10 @@ in order to reduce computation time.
 
 }
 \examples{
-## sample data
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LE7*.tif"), full.names = TRUE)
-
-## import as 'Satellite' object
+files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 sat <- satellite(files)
 
-## align geometry
 alignGeometry(sat, template = getSatDataLayer(sat, "B008n"),
                band_codes = "B001n")
 }

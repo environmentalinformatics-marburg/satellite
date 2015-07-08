@@ -10,18 +10,14 @@
 \usage{
 \S4method{maskInvarFeatures}{Satellite}(x)
 
-\S4method{maskInvarFeatures}{RasterLayer}(x, nir, swir, quant = 0.01)
-
 \S4method{maskInvarFeatures}{RasterStack}(x, quant = 0.01, id_vis = 1L,
   id_nir = 2L, id_swir = 3L)
+
+\S4method{maskInvarFeatures}{RasterLayer}(x, nir, swir, quant = 0.01)
 }
 \arguments{
 \item{x}{A Satellite object or a \code{raster::RasterLayer} providing the
 sensor's vis band.}
-
-\item{nir}{A \code{raster::RasterLayer} containing the sensor's nir band.}
-
-\item{swir}{A \code{raster::RasterLayer} containing the sensor's swir band.}
 
 \item{quant}{A value v = [0...1] which is used to define the percentage
 threshold values (thv) for invariant features (nir/vis ratio < thv,
@@ -32,6 +28,10 @@ swir band values > 1-thv).}
 \item{id_nir}{Index of the near infravis band.}
 
 \item{id_swir}{Index of the short-wave infravis band.}
+
+\item{nir}{A \code{raster::RasterLayer} containing the sensor's nir band.}
+
+\item{swir}{A \code{raster::RasterLayer} containing the sensor's swir band.}
 }
 \value{
 If x is a Satellite object, a Satellite object with added layer; \cr

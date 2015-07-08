@@ -33,6 +33,11 @@ lutInfoSGRPfromFilename(file)
 \item{bid}{Band id as returned e.g. from \code{\link{lutInfoBIDFromBCDE}}.}
 
 \item{bcde}{Band code as returned e.g. from \code{\link{lutInfoBCDEFromBID}}.}
+
+\item{files}{Filename (or filepath) of one or more remote sensing data
+filenames}
+
+\item{file}{Filename of a remote sensing data file}
 }
 \value{
 List containing several \code{data.frame} objects with LUT values.

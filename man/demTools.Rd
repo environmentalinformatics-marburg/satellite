@@ -32,7 +32,7 @@ terrain information; if x is a \code{raster::RasterLayer} object, a
 }
 \description{
 Compute terrain characteristics from digital elevation models (DEM) using
-\code{\link{raster::terrain}} or \code{\link{raster::hillShade}}.
+\code{raster::terrain} or \code{raster::hillShade}.
 
 
 
@@ -47,6 +47,6 @@ sat <- addSatDataLayer(sat, data = DEM, info = NULL, bcde = "DEM", in_bcde="DEM"
 sat <- demTools(sat)
 }
 \seealso{
-\code{\link{raster::terrain}}, \code{\link{raster::hillShade}}.
+\code{raster::terrain}, \code{raster::hillShade}.
 }
 

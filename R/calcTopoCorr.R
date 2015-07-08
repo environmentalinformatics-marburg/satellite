@@ -119,7 +119,7 @@ setMethod("calcTopoCorr",
 # Function using raster::RasterLayer object ------------------------------------
 #' 
 #' @param hillsh A \code{raster::RasterLayer} created with 
-#' \code{\link{raster::hillShade}}. 
+#' \code{raster::hillShade}. 
 #' @param cloudmask A \code{raster::RasterLayer} in which clouds are masked with 
 #' NA values. 
 #' @rdname calcTopoCorr

@@ -159,6 +159,26 @@ getSatPRAD(sat, bcde)
 \item{sat}{Satellite object (see \code{\link{satellite}}).}
 
 \item{bcde}{Band code.}
+
+\item{meta_param}{Metadata parameters used to document new data layer}
+
+\item{info}{Log information added to metadata}
+
+\item{in_bcde}{BCDE of layer used as input dataset}
+
+\item{out_bcde}{BCDE of layer used as output dataset}
+
+\item{data}{Data layer of a satellite object}
+
+\item{param}{Parameter of the metadata set (i.e. colname)}
+
+\item{return_bcde}{Return bcde as attribute (TRUE/FALSE)}
+
+\item{id}{Type of the sensor band}
+
+\item{return_calib}{Return calibration information (TRUE/FALSE)}
+
+\item{nbr}{Return specific data layer selected by number}
 }
 \value{
 Objects of respective type (see \code{\link{satellite}}).

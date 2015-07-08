@@ -88,21 +88,7 @@ setMethod("maskInvarFeatures",
             return(x)
           })
 
-# Function using raster::RasterLayer object ------------------------------------
-#' 
-#' @rdname maskInvarFeatures
-#'
-setMethod("maskInvarFeatures", 
-          signature(x = "RasterLayer"), 
-          function(x, nir, swir, quant=0.01) {
-            ratio_nir_vis <- nir/x
-            ratio_nir_vis_quant <- quantile(ratio_nir_vis, probs = quant, na.rm=TRUE)
-            swir_quant <- quantile(swir, probs = 1-quant, na.rm=TRUE)
-            
-            invar_feats <- ratio_nir_vis < ratio_nir_vis_quant & swir > swir_quant
-            invar_feats[invar_feats == 0] <- NA
-            return(invar_feats)
-          })
+
 
 # Function using raster::RasterStack object ------------------------------------
 #' 
@@ -120,11 +106,28 @@ setMethod("maskInvarFeatures",
             vis <- x[[id_vis]]
             nir <- x[[id_nir]]
             swir <- x[[id_swir]]
-
+            
             ratio_nir_vis <- nir/vis
             ratio_nir_vis_quant <- quantile(ratio_nir_vis, probs = quant, 
                                             na.rm = TRUE)
             swir_quant <- quantile(swir, probs = 1-quant, na.rm = TRUE)
+            
+            invar_feats <- ratio_nir_vis < ratio_nir_vis_quant & swir > swir_quant
+            invar_feats[invar_feats == 0] <- NA
+            return(invar_feats)
+          })
+
+
+# Function using raster::RasterLayer object ------------------------------------
+#' 
+#' @rdname maskInvarFeatures
+#'
+setMethod("maskInvarFeatures", 
+          signature(x = "RasterLayer"), 
+          function(x, nir, swir, quant=0.01) {
+            ratio_nir_vis <- nir/x
+            ratio_nir_vis_quant <- quantile(ratio_nir_vis, probs = quant, na.rm=TRUE)
+            swir_quant <- quantile(swir, probs = 1-quant, na.rm=TRUE)
             
             invar_feats <- ratio_nir_vis < ratio_nir_vis_quant & swir > swir_quant
             invar_feats[invar_feats == 0] <- NA

@@ -10,14 +10,14 @@ if ( !isGeneric("calcHistMatch") ) {
 #'
 #' @param x Satellite or raster::Raster* object providing the source band(s) to 
 #' be adjusted.
+#' @param bcde Band code which should be alligned
 #' @param target The target band as raster::RasterLayer.
-#' @param mask An invariant feature mask as raster::RasterLayer.
 #' @param ttab Logical. If TRUE, the transformation table is being returned.
 #' @param minv Lower limit of the possible range for transformation (if not 
 #' provided, defaults to the minimum of both layers).
 #' @param maxv Upper limit of the possible range for transformation (if not 
 #' provided, defaults to the maximum of both layers).
-#' @param by Step size used to build the new histogram
+#' @param step Step size used to build the new histogram
 #' (if not provided, defaults to 1 for integer master layer and 0.01 for float 
 #' master layer).
 #' @param use_cpp Logical. If \code{TRUE}, C++ functionality (via \strong{Rcpp}) 
@@ -34,7 +34,7 @@ if ( !isGeneric("calcHistMatch") ) {
 #' \code{newraster} the transformed RasterLayer
 #'
 #' @references This function is taken and only slightly adapted from the 
-#' \code{\link{landsat::histmatch}} function by Sarah C. Goslee (2011). 
+#' \code{landsat::histmatch} function by Sarah C. Goslee (2011). 
 #' Analyzing Remote Sensing Data in R: The landsat Package. Journal of 
 #' Statistical Software, 43(4), 1-25. URL \url{http://www.jstatsoft.org/v43/i04/}.
 #'

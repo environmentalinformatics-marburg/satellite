@@ -34,11 +34,11 @@ test_that("satellite works as expected for Landsat 8 files", {
                       full.names = TRUE)
   sat <- satellite(files)
   
-  expect_equal(names(getSatDataLayers(sat)[[1]]), "LC81950252013188LGN00_B1")
-  expect_equal(names(getSatDataLayers(sat)[[2]]), "LC81950252013188LGN00_B2")
-  expect_equal(names(getSatDataLayers(sat)[[8]]), "LC81950252013188LGN00_B8")
-  expect_equal(names(getSatDataLayers(sat)[[10]]), "LC81950252013188LGN00_B10")
-  expect_equal(names(getSatDataLayers(sat)[[12]]), "LC81950252013188LGN00_BQA")
+  expect_equal(names(getSatDataLayers(sat)[[1]]), "B001n")
+  expect_equal(names(getSatDataLayers(sat)[[2]]), "B002n")
+  expect_equal(names(getSatDataLayers(sat)[[8]]), "B008n")
+  expect_equal(names(getSatDataLayers(sat)[[10]]), "B010n")
+  expect_equal(names(getSatDataLayers(sat)[[12]]), "B0QAn")
   
   expect_equal(as.character(getSatMeta(sat)$BID[[1]]), "1")
   expect_equal(as.character(getSatMeta(sat)$BID[[2]]), "2")
