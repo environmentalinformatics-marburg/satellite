@@ -75,7 +75,7 @@ The minimum reflectance values for the dark object are identified using the
 approximation of Chavez (1988, see \code{\link{calcPathRadDOS}} for details).
 
 The estimated values of the solar irradiance required for the path radiance
-can be computed by one of \code{\link{calcTOAIrradRadTable}} which is used to
+can be computed by one of \code{\link{calcTOAIrradTable}} which is used to
 get readily published values of ESun, \code{\link{calcTOAIrradRadRef}} which
 computes ESun based on the actual radiance and reflectance in the scene, or
 \code{\link{calcTOAIrradModel}} which computes ESun based on  look-up tables
