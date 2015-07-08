@@ -54,12 +54,12 @@ Finally, the calibrated hillshade image is subtracted from the corresponding
 channel and the mean value of the channel is added.
 }
 \examples{
-#' \dontrun{
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
-x <- satellite(files)
-calcTopoCorr(x)
-}
+sat <- satellite(files)
+DEM=raster("inst/extdata/DEM.tif")
+sat <- addSatDataLayer(sat, data = DEM, info = NULL, bcde = "DEM", in_bcde="DEM")
+sat <- calcTopoCorr(sat)
 }
 \references{
 CIVCO, D.L. (1989): Topographic normalization of Landsat Thematic

@@ -74,7 +74,7 @@ setMethod("calcTopoCorr",
               if (mask){
                 cloudmask <- getSatDataLayer(x, "cloudmask")[[1]]
               }
-              layer_bcde <- gsub("AtmosCorr","calcTopoCorr",getSatBCDE(x)[
+              layer_bcde <- gsub("AtmosCorr","TopoCorr",getSatBCDE(x)[
                 grepl("_REF_AtmosCorr$", getSatBCDE(x))][i])
               
               meta_param <- data.frame(getSatSensorInfo(x),
