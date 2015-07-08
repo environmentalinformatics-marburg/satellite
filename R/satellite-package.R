@@ -11,7 +11,7 @@
 #' \cr
 #' \emph{Maintainer:} Environmental Informatics \email{admin@@environmentalinformatics-marburg.de}
 #'
-#' @import raster
+#' @import raster Rcpp
 #' 
 #' @references Some functions are taken and/or adopted from Sarah C. Goslee 
 #' (2011). Analyzing Remote Sensing Data in R: The landsat Package. Journal of 
@@ -20,4 +20,28 @@
 #' 
 #' @keywords package
 #'
+NULL
+#' 
+#' @docType data
+#' @name l7
+#' @title Landsat 7 sample data
+#' @description This dataset comes from the USGS. It contains part of the 
+#' Landsat scene LE71950252001211EDC00 from 2001-07-30 over Maburg, Germany.
+#' @details Use of this data requires your agreement to the USGS regulations on 
+#' using Landsat data.
+#' @format \code{raster::RasterStack} with 8 bands of 41 by 41 pixels.
+#' @source
+#' \url{http://earthexplorer.usgs.gov/}
+NULL
+#'
+#' @docType data
+#' @name l8
+#' @title Landsat 8 sample data
+#' @description This dataset comes from the USGS. It contains part of the 
+#' Landsat scene LC81950252013188LGN00 from 2013-07-07 over Maburg, Germany.
+#' @details Use of this data requires your agreement to the USGS regulations on 
+#' using Landsat data.
+#' @format \code{raster::RasterStack} with 10 bands of 41 by 41 pixels.
+#' @source
+#' \url{http://earthexplorer.usgs.gov/}
 NULL
