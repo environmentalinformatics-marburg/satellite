@@ -39,14 +39,12 @@ Compute terrain characteristics from digital elevation models (DEM) using
 
 }
 \examples{
-\dontrun{
-## Only works with a dem
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 sat <- satellite(files)
-sat <- addSatDataLayer(sat, method, data = DEM, info = NULL, in_bcde = NULL)
+DEM=raster("inst/extdata/DEM.tif")
+sat <- addSatDataLayer(sat, data = DEM, info = NULL, bcde = "DEM", in_bcde="DEM")
 sat <- demTools(sat)
-}
 }
 \seealso{
 \code{\link{raster::terrain}}, \code{\link{raster::hillShade}}.

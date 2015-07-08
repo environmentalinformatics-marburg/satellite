@@ -34,12 +34,12 @@ if ( !isGeneric("calcTopoCorr") ) {
 #' 55, 1303-1309.
 #' 
 #' @examples
-#' #' \dontrun{
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
-#' x <- satellite(files)
-#' calcTopoCorr(x)
-#' }
+#' sat <- satellite(files)
+#' DEM=raster("inst/extdata/DEM.tif")
+#' sat <- addSatDataLayer(sat, data = DEM, info = NULL, bcde = "DEM", in_bcde="DEM")
+#' sat <- calcTopoCorr(sat)
 NULL
 
 
@@ -55,24 +55,40 @@ setMethod("calcTopoCorr",
                 "please provide a DEM in the satellite object")}
               x <- demTools(x, method = "hillShade")
             }
-            atmoscbands <- getSatDataLayers(x)[grepl("_REF_AtmosCorr$", 
-                                                     getSatBCDE(x))]
-            if (length(atmoscbands)==0){
+            
+            if(any(is.na(getSatBCDESolarCalib(x, id = "AtmosCorr")))){
               x <- calcAtmosCorr(x)
-              atmoscbands <- getSatDataLayers(x)[grepl("_REF_AtmosCorr$", 
-                                                       getSatBCDE(x))]
             }
-            for(i in 1:length(atmoscbands)){
+            
+      #      atmoscbands <- getSatDataLayers(x)[grepl("_REF_AtmosCorr$", 
+      #                                               getSatBCDE(x))]
+            
+            atmos_bands <- getSatBCDESolarCalib(x, id = "AtmosCorr")
+            
+           
+            for(i in 1:length(atmos_bands)){
               hillsh <- getSatDataLayer(x, "hillShade")
-              hillsh <- raster::resample (hillsh, atmoscbands[[i]])
+              #hillsh <- raster::resample (hillsh, atmoscbands[[i]])
+              hillsh <- raster::resample (hillsh, getSatDataLayer(x, atmos_bands[i]))
+              
               if (mask){
                 cloudmask <- getSatDataLayer(x, "cloudmask")[[1]]
               }
               layer_bcde <- gsub("AtmosCorr","calcTopoCorr",getSatBCDE(x)[
                 grepl("_REF_AtmosCorr$", getSatBCDE(x))][i])
-              tmp  <- calcTopoCorr(atmoscbands[[i]], hillsh, cloudmask)
+              
+              meta_param <- data.frame(getSatSensorInfo(x),
+                                       getSatBandInfo(x, atmos_bands[i], 
+                                                      return_calib = FALSE),
+                                       CALIB = "REF_TopoCorr")
+              
+              tmp  <- calcTopoCorr(getSatDataLayer(x, atmos_bands[[i]]), hillsh, cloudmask)
+              
+              
+              
               x <- addSatDataLayer(x, bcde = layer_bcde, data = tmp, 
                                    info="Add layer from calcTopoCorr(x)", 
+                                   meta_param = meta_param,
                                    in_bcde=getSatBCDE(x)[
                                      grepl("_REF_AtmosCorr$", 
                                            getSatBCDE(x))][i])
