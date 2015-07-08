@@ -46,7 +46,7 @@
 #' \href{http://rredc.nrel.gov/solar/spectra/am0/modtran.html}{National Renewable 
 #' Energy Laboratory}.}
 #' \item{l7_esun}{Tabulated ESun values from 
-#' \href{from http://landsathandbook.gsfc.nasa.gov/pdfs/Landsat7_Handbook.pdf}{tab 11.3 (Thuillier spectrum)}
+#' \href{http://landsathandbook.gsfc.nasa.gov/pdfs/Landsat7_Handbook.pdf}{tab 11.3 (Thuillier spectrum)}
 #'  of the Landsat7 handbook.}
 #' \item{l5_esun}{Tabulated ESun values from 
 #' \href{http://landsathandbook.gsfc.nasa.gov/pdfs/L5TMLUTIEEE2003.pdf}{Chander
