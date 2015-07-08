@@ -30,8 +30,8 @@ if ( !isGeneric("TopoCorr") ) {
 #' @name TopoCorr
 #' 
 #' @references CIVCO, D.L. (1989): Topographic normalization of Landsat Thematic
-#' Mapper digitalimagery. In: Photogrammetric Engineering & Remote Sensing, 55, 
-#' S. 1303–1309.
+#' Mapper digitalimagery. \emph{Photogrammetric Engineering & Remote Sensing}, 
+#' 55, 1303–1309.
 #' 
 #' @examples
 #' #' \dontrun{
