@@ -6,27 +6,45 @@
 \alias{plot,Satellite,ANY-method}
 \title{Plot a 'Satellite' object}
 \usage{
-\S4method{plot}{Satellite,ANY}(x, bcde = NULL, ...)
+\S4method{plot}{Satellite,ANY}(x, bcde = NULL, col = grey.colors(100), ...)
 }
 \arguments{
 \item{x}{A 'Satellite' object, usually returned by \code{\link{satellite}}.}
 
-\item{bcde}{Band codes to be visualized. If not supplied, the initial (up to)
-16 layers are being visualized.}
+\item{bcde}{Band codes to be visualized, e.g. returned by
+\code{\link{getSatBCDE}}. If not supplied, the initial (up to) 16 layers are
+being visualized.}
 
-\item{...}{Further arguments passed on to \code{\link{plot}}.}
+\item{col}{Color scheme.}
+
+\item{...}{Further arguments passed on to \code{\link{plot.default}}.}
 }
 \description{
 This is the standard plotting routine for the 'Satellite' class. Layers are
 drawn either from the start (default; limited to a maximum of 16 sub-plots
-similar to \code{\link{raster::plot}}) or according to the speficied band
+similar to \code{\link{plot.raster}}) or according to the speficied band
 codes.
 }
 \examples{
+## sample data
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 sat <- satellite(files)
 
+\dontrun{
+## pan-sharpening
 sat_ps <- panSharp(sat)
+
+## draw initial 16 layers (raw and pan-sharpened)
+library(RColorBrewer)
+plot(sat_ps, col = brewer.pal(9, "Reds"))
+
+## draw first and second band incl. pan-sharpened versions only
+plot(sat_ps, bcde = c("B001n", "B001_PAN_sharpend",
+                      "B002n", "B002_PAN_sharpend"))
+}
+}
+\seealso{
+\code{\link{plot.default}}, \code{\link{par}}.
 }
 
