@@ -23,23 +23,23 @@ be adjusted.}
 
 \item{target}{The target band as raster::RasterLayer.}
 
+\item{bcde}{Band code which should be alligned}
+
 \item{minv}{Lower limit of the possible range for transformation (if not
 provided, defaults to the minimum of both layers).}
 
 \item{maxv}{Upper limit of the possible range for transformation (if not
 provided, defaults to the maximum of both layers).}
 
+\item{step}{Step size used to build the new histogram
+(if not provided, defaults to 1 for integer master layer and 0.01 for float
+master layer).}
+
 \item{ttab}{Logical. If TRUE, the transformation table is being returned.}
 
 \item{use_cpp}{Logical. If \code{TRUE}, C++ functionality (via \strong{Rcpp})
 is enabled, which leads to a considerable reduction of both computation time
 and memory usage.}
-
-\item{mask}{An invariant feature mask as raster::RasterLayer.}
-
-\item{by}{Step size used to build the new histogram
-(if not provided, defaults to 1 for integer master layer and 0.01 for float
-master layer).}
 }
 \value{
 If \code{ttab = FALSE} a RasterLayer; \cr
@@ -78,7 +78,7 @@ calcHistMatch(x, target)
 }
 \references{
 This function is taken and only slightly adapted from the
-\code{\link{landsat::histmatch}} function by Sarah C. Goslee (2011).
+\code{landsat::histmatch} function by Sarah C. Goslee (2011).
 Analyzing Remote Sensing Data in R: The landsat Package. Journal of
 Statistical Software, 43(4), 1-25. URL \url{http://www.jstatsoft.org/v43/i04/}.
 }

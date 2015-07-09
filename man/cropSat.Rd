@@ -22,7 +22,7 @@ A Satellite object consisting of cropped layers only. If
 \code{subset = FALSE}, a Satellite object with the cropped layers appended.
 }
 \description{
-The function is a wrapper around the \code{\link{raster::crop}} function to
+The function is a wrapper around the \code{raster::crop} function to
 easily crop a Satellite object by an \code{raster::extent} object.
 }
 \details{
@@ -45,6 +45,6 @@ sat <- cropSat(sat, ext_ggs)
 Please refer to the respective functions for references.
 }
 \seealso{
-This function is a wrapper for \code{\link{raster::crop}}.
+This function is a wrapper for \code{raster::crop}.
 }
 

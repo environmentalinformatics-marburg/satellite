@@ -7,7 +7,7 @@ if ( !isGeneric("satellite") ) {
 #' @description
 #' Method to create a Satellite object.
 #' 
-#' @param x A vector of filenames (see \code{\link{raster::raster}}) or a 
+#' @param x A vector of filenames (see \code{raster::raster}) or a 
 #' \code{raster::RasterStack}.
 #' @param meta Optional metadata object (e.g. returned from 
 #' \code{\link{compMetaLandsat}}). If x is a satellite dataset and recognised

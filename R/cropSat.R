@@ -6,7 +6,7 @@ if ( !isGeneric("cropSat") ) {
 #' Crop satellite object
 #'
 #' @description
-#' The function is a wrapper around the \code{\link{raster::crop}} function to 
+#' The function is a wrapper around the \code{raster::crop} function to 
 #' easily crop a Satellite object by an \code{raster::extent} object.
 #'
 #' @param x Satellite object.
@@ -28,7 +28,7 @@ if ( !isGeneric("cropSat") ) {
 #' 
 #' @references Please refer to the respective functions for references.
 #'  
-#' @seealso This function is a wrapper for \code{\link{raster::crop}}.
+#' @seealso This function is a wrapper for \code{raster::crop}.
 #'
 #' @examples
 #' ## sample data

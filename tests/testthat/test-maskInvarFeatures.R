@@ -8,7 +8,7 @@ test_that("maskInvarFeatures works as expected", {
                       full.names = TRUE)
   sat <- satellite(files)
 
-  t <- maskInvarFeatures(vis = getSatDataLayer(sat, "B004n"), 
+  t <- maskInvarFeatures(x = getSatDataLayer(sat, "B004n"), 
                     nir = getSatDataLayer(sat, "B005n"), 
                     swir = getSatDataLayer(sat, "B007n"))
 })

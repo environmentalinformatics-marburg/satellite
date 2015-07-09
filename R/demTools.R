@@ -2,18 +2,17 @@ if ( !isGeneric("demTools") ) {
   setGeneric("demTools", function(x, ...)
     standardGeneric("demTools"))
 }
-
 #' Compute terrain characteristics from digital elevation models
 #'
 #' @description
 #' Compute terrain characteristics from digital elevation models (DEM) using 
-#' \code{\link{raster::terrain}} or \code{\link{raster::hillShade}}.
+#' \code{raster::terrain} or \code{raster::hillShade}.
 #' @param x A DEM provided as an object of class Satellite or RasterLayer.
 #' @param method Currently "slope", "aspect" and "hillshade" are implemented.
 #' @param bcde The name of the DEM layer in the satellite object. 
 #' 
 #' @seealso 
-#' \code{\link{raster::terrain}}, \code{\link{raster::hillShade}}.
+#' \code{raster::terrain}, \code{raster::hillShade}.
 #' 
 #' @export demTools
 #' @name demTools
@@ -28,7 +27,6 @@ if ( !isGeneric("demTools") ) {
 #'
 #' sat <- addSatDataLayer(sat, data = DEM, info = NULL, bcde = "DEM", in_bcde="DEM")
 #' sat <- demTools(sat)
-
 NULL
 
 

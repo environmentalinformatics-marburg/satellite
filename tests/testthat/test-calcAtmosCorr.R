@@ -24,7 +24,7 @@ test_that("calcAtmosCorr for RasterLayers works as expected", {
                              esun = getSatESUN(sat, getSatBCDESolar(sat)),
                              model = "DOS2")
   
-  sensor_rad <- convertSCLinear(x = getSatDataLayer(sat, bcde),
+  sensor_rad <- convSC2Rad(x = getSatDataLayer(sat, bcde),
                                 mult = getSatRADM(sat, bcde),
                                 add = getSatRADA(sat, bcde))
   
@@ -34,7 +34,7 @@ test_that("calcAtmosCorr for RasterLayers works as expected", {
                              szen = getSatSZEN(sat, bcde), 
                              model = "DOS2")
   
-  expect_equal(round(raster::getValues(ref_atmos)[50],4), round(0.04668206, 4))
+  expect_equal(round(raster::getValues(ref_atmos)[50],4), round(0.0455, 4))
 })
 
 
@@ -49,7 +49,7 @@ test_that("calcAtmosCorr for Satellite works as expected", {
   expect_equal(
     round(raster::getValues(
       getSatDataLayer(sat_atmos, bcde = "B002n_REF_AtmosCorr"))[50],4), 
-    round(0.04524408, 4))
+    round(0.0441, 4))
 })
 
 
@@ -63,5 +63,5 @@ test_that("Depricated satAtmosCorr for Satellite works as expected", {
   expect_equal(
     round(raster::getValues(
       getSatDataLayer(sat_atmos, bcde = "B002n_REF_AtmosCorr"))[50],4), 
-    round(0.04524408, 4))
+    round(0.0441, 4))
 })

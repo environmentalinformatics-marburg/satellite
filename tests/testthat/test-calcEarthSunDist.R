@@ -2,12 +2,12 @@
 context("calcEartSunDist")
 
 test_that("calcEartSunDist works as expected", {
-  t1 <- calcEartSunDist(date = "2015-01-01", formula = "Spencer")
-  t2 <- calcEartSunDist(date = "2015-01-01", formula = "Mather")
-  t3 <- calcEartSunDist(date = "2015-01-01", formula = "ESA")
-  t4 <- calcEartSunDist(date = "2015-07-01", formula = "Spencer")
-  t5 <- calcEartSunDist(date = "2015-07-01", formula = "Mather")
-  t6 <- calcEartSunDist(date = "2015-07-01", formula = "ESA")
+  t1 <- calcEarthSunDist(date = "2015-01-01", formula = "Spencer")
+  t2 <- calcEarthSunDist(date = "2015-01-01", formula = "Mather")
+  t3 <- calcEarthSunDist(date = "2015-01-01", formula = "ESA")
+  t4 <- calcEarthSunDist(date = "2015-07-01", formula = "Spencer")
+  t5 <- calcEarthSunDist(date = "2015-07-01", formula = "Mather")
+  t6 <- calcEarthSunDist(date = "2015-07-01", formula = "ESA")
   
   expect_equal(round(t1, 4), round(0.9829226, 4))
   expect_equal(round(t2, 4), round(0.9838219, 4))

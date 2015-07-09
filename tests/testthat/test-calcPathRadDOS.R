@@ -95,9 +95,9 @@ test_that("calcPathRadDOS for Satellite works as expected", {
   sat_pathrad <- calcPathRadDOS(sat, model = "DOS2", esun_method = "RadRef")
   
   expect_equal(round(getSatPRAD(sat_pathrad, bcde = "B002n"),3), 
-               round(c(B002n = 42.21805), 3))
+               round(c(B002n = 42.064), 3))
   expect_equal(round(getSatPRAD(sat_pathrad, bcde = "B009n"),3), 
-               round(c(B009n = -0.1560062), 3))
+               round(c(B009n = -0.185), 3))
 })
 
 
@@ -111,7 +111,7 @@ test_that("calcPathRadDOS for Satellite works as expected", {
                                  esun_mode = "RadRef")
     
     expect_equal(round(getSatPRAD(sat_pathrad, bcde = "B002n"),3), 
-                 round(c(B002n = 42.21805), 3))
+                 round(c(B002n = 42.064), 3))
     expect_equal(round(getSatPRAD(sat_pathrad, bcde = "B009n"),3), 
-                 round(c(B009n = -0.1560062), 3))
+                 round(c(B009n = -0.185), 3))
   })

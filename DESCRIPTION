@@ -3,7 +3,7 @@ Type: Package
 Title: Various Functions for Handling and Manipulating Remote Sensing Data
 Version: 0.0.0.9035
 Date: 2015-07-08
-Author: Thomas Nauss, Hanna Meyer, Florian Detsch
+Author: Thomas Nauss, Hanna Meyer, Florian Detsch, Tim Appelhans
 Maintainer: Environmental Informatics
     <admin@environmentalinformatics-marburg.de>
 Description: This smorgasbord provides a variety of functions which are useful 
@@ -17,8 +17,10 @@ Imports:
     tools
 License: GPL-3
 Suggests: 
-    testthat,
-    knitr
+    devtools,
+    knitr,
+    rgdal,
+    testthat
 LazyData: true
 VignetteBuilder: knitr
 LinkingTo: Rcpp

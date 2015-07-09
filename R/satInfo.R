@@ -3,7 +3,18 @@
 #' @description
 #' Get information from class Satellite.
 #' 
+#' @param data Data layer of a satellite object
+#' @param id Type of the sensor band
+#' @param in_bcde BCDE of layer used as input dataset
+#' @param info Log information added to metadata
+#' @param meta_param Metadata parameters used to document new data layer
+#' @param nbr Return specific data layer selected by number
+#' @param out_bcde BCDE of layer used as output dataset
+#' @param param Parameter of the metadata set (i.e. colname)
+#' @param return_bcde Return bcde as attribute (TRUE/FALSE)
+#' @param return_calib Return calibration information (TRUE/FALSE)
 #' @param sat Satellite object (see \code{\link{satellite}}).
+#' 
 #' 
 #' @return Objects of respective type (see \code{\link{satellite}}). 
 #'

@@ -15,7 +15,7 @@ test_that("calcHistMatch for raster works as expected", {
   x <- getSatDataLayer(l7, "B002n")
   target <- getSatDataLayer(l8, "B003n")
 
-  Rsenal::histmatchRaster(x, target)
+#   Rsenal::histmatchRaster(x, target)
   
   
   })
