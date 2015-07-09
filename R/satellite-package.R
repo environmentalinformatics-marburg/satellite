@@ -11,7 +11,9 @@
 #' \cr
 #' \emph{Maintainer:} Environmental Informatics \email{admin@@environmentalinformatics-marburg.de}
 #'
-#' @import raster Rcpp
+#' @import methods raster Rcpp
+#' 
+#' @useDynLib satellite
 #' 
 #' @references Some functions are taken and/or adopted from Sarah C. Goslee 
 #' (2011). Analyzing Remote Sensing Data in R: The landsat Package. Journal of 
