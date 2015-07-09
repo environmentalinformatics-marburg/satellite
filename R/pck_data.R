@@ -23,6 +23,7 @@ pck_data_l8 <- function(){
 
 # Datasets in inst/exdata ------------------------------------------------------
 pck_data_exdata <- function(){
+  l8 <- raster::stack("inst/extdata/l8_2013-07-07_30m_crop_R_satellite.tif")
   mask <- l8[[2]]
   inpath <- "D:/active/moc/am-remote-sensing/examples/data/landsat/l8_2013-07-07"
   files <- list.files(inpath, pattern = glob2rx("*.TIF"), full.names = TRUE)
