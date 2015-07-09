@@ -74,7 +74,9 @@ setMethod("demTools",
 #'
 setMethod("demTools", 
           signature(x  =  "RasterLayer"), 
-          function(x, sunElev = NULL, sunAzim = NULL, method = "hillShade"){
+          function(x, sunElev, sunAzim, method = "hillShade"){
+            if(missing(sunElev) | missing(sunAzim))
+              stop("Parameters 'sunElev' and/or 'sunAzim' missing.\n")
             if (method == "slope"){
               result <- raster::terrain(x, opt = "slope") 
             }

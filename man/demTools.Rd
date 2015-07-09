@@ -9,8 +9,7 @@
 \usage{
 \S4method{demTools}{Satellite}(x, method = "hillShade", bcde = "DEM")
 
-\S4method{demTools}{RasterLayer}(x, sunElev = NULL, sunAzim = NULL,
-  method = "hillShade")
+\S4method{demTools}{RasterLayer}(x, sunElev, sunAzim, method = "hillShade")
 }
 \arguments{
 \item{x}{A DEM provided as an object of class Satellite or RasterLayer.}
