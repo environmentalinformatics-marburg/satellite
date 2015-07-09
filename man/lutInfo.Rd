@@ -112,6 +112,7 @@ Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285}.}
 \item \code{lutInfoSGRPfromFilename}: 
 }}
 \examples{
-lutInfo()
+ls_li <- lutInfo()
+str(ls_li)
 }
 
