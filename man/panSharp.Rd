@@ -56,14 +56,16 @@ path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 sat <- satellite(files)
 
-# ## Not run: using 'satellite' object
-# sat_ps <- panSharp(sat)
-#
-# par(mfrow = c(1, 2))
-# plot(getSatDataLayer(sat_ps, "B001n"), main = "raw", legend = FALSE)
-# plot(getSatDataLayer(sat_ps, "B001_PAN_sharpend"),
-#      main = "pan-sharpened", legend = FALSE)
-# dev.off()
+\dontrun{
+## using 'satellite' object
+sat_ps <- panSharp(sat)
+
+par(mfrow = c(1, 2))
+plot(getSatDataLayer(sat_ps, "B001n"), main = "raw", legend = FALSE)
+plot(getSatDataLayer(sat_ps, "B001_PAN_sharpend"),
+     main = "pan-sharpened", legend = FALSE)
+dev.off()
+}
 
 ## using 'RasterLayer' object
 rst_b001n <- getSatDataLayer(sat, "B001n")
