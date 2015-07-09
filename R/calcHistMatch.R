@@ -25,23 +25,23 @@ if ( !isGeneric("calcHistMatch") ) {
 #' and memory usage.
 #'
 #' @name calcHistMatch
+#' 
 #' @export calcHistMatch
 #' 
-#' @references This function is taken and only slightly adapted from the 
-#' \code{landsat::histmatch} function by Sarah C. Goslee (2011). 
-#' Analyzing Remote Sensing Data in R: The landsat Package. Journal of 
-#' Statistical Software, 43(4), 1-25. URL \url{http://www.jstatsoft.org/v43/i04/}.
+#' @details The function is based on a histogram matching technique described
+#' by Morovic et al. (2002).
+#' 
+#' @references Morovic J, Shaw J, Sun P-L (2002) A fast, non-iterative and exact 
+#' histogram matching algorithm. Pattern Recognition Letters 23/1-3: 127-135, 
+#' doi:10.1016/S0167-8655(01)00107-6.
 #'
 #' @examples
-#' ## sample data
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' sat <- satellite(files)
-#' 
-#' ## extraction of source and targed bands
-#' x <- getSatDataLayer(sat, "B004n")
-#' target <- getSatDataLayer(sat, "B005n")
-#' 
+#' x <- getSatDataLayer(sat, "B002n")
+#' target <- getSatDataLayer(sat, "B003n")
+#' #' 
 #' ## histogram matching
 #' calcHistMatch(x, target)
 NULL
@@ -110,13 +110,6 @@ setMethod("calcHistMatch",
           })
 
 
-
-
-
-
-
-
-
 # Function using raster::RasterLayer object ------------------------------------
 #' 
 #' @return raster::RasterLayer object with atmospheric corrected layer
@@ -125,20 +118,15 @@ setMethod("calcHistMatch",
 #'
 setMethod("calcHistMatch", 
           signature(x = "RasterLayer"), 
-          function(x, target, bcde = NULL, minv = NULL, maxv = NULL,
-                   step = NULL, ttab = FALSE, use_cpp = TRUE){
+          function(x, target, bcde = NULL, minv = 0L, maxv = 1023L,
+                   use_cpp = TRUE){
             
             
-            path <- system.file("extdata", package = "satellite")
-            files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
-            sat <- satellite(files)
-            x <- getSatDataLayer(sat, "B002n")
-            plot(x)
-            target <- x * sample(seq(98, 102), ncell(x), replace = TRUE)/100
-            plot(target)
+
+            
             
             minv <- 0L
-            maxv <- 255L
+            maxv <- 1023L
             x <- round((x - minValue(x)) * (maxv - minv) / 
                          (maxValue(x) - minValue(x)) + minv)
             
@@ -147,10 +135,10 @@ setMethod("calcHistMatch",
             
             hs <- hist(x, maxpixels = 1000000, 
                        breaks = seq(minValue(x), maxValue(x), 
-                                    length.out = 256))
+                                    length.out = 1024))
             ht <- hist(target, maxpixels = 1000000, 
                        breaks = seq(minValue(target), maxValue(target), 
-                                    length.out = 256))
+                                    length.out = 1024))
             
             ## enable c++ functionality
             if (use_cpp) {
@@ -169,28 +157,21 @@ setMethod("calcHistMatch",
                 }
               }
               df <-getValues(x)
-              #               df[which(df <= 1)] <- 1
               for(i in seq(length(df))){
                 i_t <- df[i]
-                if(!is.na(i_t)){
                   cpf <- cumsum(t[i_t,])
                   set.seed(1)
-                  p <- sample(seq(0, cpf[length(cpf)]), 1)
-                  j <- which(p < cpf)[1]
-                  #if(is.na(j)){
-                  #  j <- which(p <= cpf)[1]
-                  #}
-                  df[i] <- ht$breaks[j]
-                  print(paste0(i, " ", i_t, " ", j))
+                  p <- sample(seq(1, cpf[length(cpf)]), 1)
+                  j <- which(p <= cpf)[1]
+                  df[i] <- j #ht$mids[j] + 0.5
                   t[i_t,j] <- t[i_t,j] - 1
-                }
               }
               df
-              x1 <- round(setValues(x, df))
+              x1 <- setValues(x, df)
               plot(x1)
               plot(target)
               hist(x, breaks = 256)
-              hist(x1, breaks = 256)
-              hist(target, breaks = 256)
+              hist(x1, breaks = 256, ylim = c(0,50))
+              hist(target, breaks = 256, ylim = c(0,50))
             }
           })  

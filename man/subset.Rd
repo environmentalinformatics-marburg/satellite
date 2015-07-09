@@ -7,7 +7,7 @@
 \alias{subset,Satellite-method}
 \title{Subset Satellite object data layers}
 \usage{
-\S4method{subset}{Satellite}(x, subset)
+\S4method{subset}{Satellite}(x, sid, cid)
 
 \S4method{[[}{Satellite,ANY,ANY}(x, i)
 }
@@ -15,7 +15,10 @@
 \item{x}{Satellite or raster::Raster* object providing the source band(s) to
 be adjusted.}
 
-\item{subset}{Band numbers or bcde which should be extracted}
+\item{sid}{Band numbers or bcde which should be extracted}
+
+\item{cid}{Calibration information used for subsetting (only works if sid is
+not supplied to the function)}
 }
 \value{
 A Satellite object
@@ -38,6 +41,7 @@ path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 sat <- satellite(files)
 
-sat[[2:3]]
+sat[[2:5]]
+subset(sat, cid = "SC")
 }
 
