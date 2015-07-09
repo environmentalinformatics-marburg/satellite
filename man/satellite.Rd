@@ -5,11 +5,14 @@
 \alias{satellite}
 \alias{satellite,RasterStack-method}
 \alias{satellite,character-method}
+\alias{satellite,list-method}
 \title{Create a Satellite object}
 \usage{
 \S4method{satellite}{character}(x, meta, log)
 
 \S4method{satellite}{RasterStack}(x, meta, log)
+
+\S4method{satellite}{list}(x, meta, log)
 }
 \arguments{
 \item{x}{A vector of filenames (see \code{raster::raster}) or a
@@ -28,6 +31,8 @@ Satellite object
 }
 \description{
 Method to create a Satellite object.
+
+
 
 
 

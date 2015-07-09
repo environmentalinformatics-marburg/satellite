@@ -42,11 +42,6 @@ is enabled, which leads to a considerable reduction of both computation time
 and memory usage.}
 }
 \value{
-If \code{ttab = FALSE} a RasterLayer; \cr
-if \code{ttab = TRUE} a list containing
-\code{recode} the transformation table used to match the histograms
-\code{newraster} the transformed RasterLayer
-
 Satellite object with added atmospheric corrected layers
 
 raster::RasterStack object with atmospheric corrected layers

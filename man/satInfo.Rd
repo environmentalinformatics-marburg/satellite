@@ -81,7 +81,7 @@ countSatDataLayers(sat)
 
 getSatParam(sat, param, bcde, return_bcde = TRUE)
 
-getSatBCDE(sat)
+getSatBCDE(sat, lnbr)
 
 getSatBID(sat, bcde)
 
@@ -179,6 +179,8 @@ getSatPRAD(sat, bcde)
 \item{param}{Parameter of the metadata set (i.e. colname)}
 
 \item{return_bcde}{Return bcde as attribute (TRUE/FALSE)}
+
+\item{lnbr}{Layer number}
 
 \item{id}{Type of the sensor band}
 

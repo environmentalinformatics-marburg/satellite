@@ -27,12 +27,6 @@ if ( !isGeneric("calcHistMatch") ) {
 #' @name calcHistMatch
 #' @export calcHistMatch
 #' 
-#' @return
-#' If \code{ttab = FALSE} a RasterLayer; \cr 
-#' if \code{ttab = TRUE} a list containing
-#' \code{recode} the transformation table used to match the histograms
-#' \code{newraster} the transformed RasterLayer
-#'
 #' @references This function is taken and only slightly adapted from the 
 #' \code{landsat::histmatch} function by Sarah C. Goslee (2011). 
 #' Analyzing Remote Sensing Data in R: The landsat Package. Journal of 

@@ -91,3 +91,24 @@ setMethod("satellite",
             }
             return(new("Satellite", layers = layers, meta = meta, log = log))
           })
+
+
+# Function using list of raster layers -----------------------------------------
+#' 
+#' @rdname satellite
+#' 
+setMethod("satellite", 
+          signature(x = "list"), 
+          function(x, meta, log){
+            if(missing(meta)){
+              meta <- data.frame(DATE = as.POSIXlt(Sys.Date(), tz = "UTC"),
+                                 FILE = names(x))
+            }
+            layers <- x
+            if(missing(log)){
+              ps <- list(time = Sys.time(), info = "Initial import", 
+                         layers = "all", output = "all")
+              log <- list(ps0001 = ps)
+            }
+            return(new("Satellite", layers = layers, meta = meta, log = log))
+          })

@@ -5,6 +5,7 @@
 #' 
 #' @param data Data layer of a satellite object
 #' @param id Type of the sensor band
+#' @param lnbr Layer number
 #' @param in_bcde BCDE of layer used as input dataset
 #' @param info Log information added to metadata
 #' @param meta_param Metadata parameters used to document new data layer
@@ -77,7 +78,7 @@ getSatMeta <- function(sat, bcde){
   if(missing(bcde)){
     return(sat@meta)
   } else {
-    return(sat@meta[sat@meta$BCDE == bcde, ])
+    return(sat@meta[sat@meta$BCDE %in% bcde, ])
   }
 }
 
@@ -267,8 +268,12 @@ getSatParam <- function(sat, param, bcde, return_bcde = TRUE){
 #'
 #' @rdname satInfo
 #' 
-getSatBCDE <- function(sat){
-  getSatParam(sat, "BCDE", return_bcde = FALSE)
+getSatBCDE <- function(sat, lnbr){
+  if(missing(lnbr)){
+    getSatParam(sat, "BCDE", return_bcde = FALSE)  
+  } else {
+    getSatParam(sat, "BCDE", return_bcde = FALSE)[lnbr]
+  }
 }
 
 
