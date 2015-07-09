@@ -5,6 +5,7 @@
 \alias{addSatLog}
 \alias{addSatMetaEntry}
 \alias{addSatMetaParam}
+\alias{countSatDataLayers}
 \alias{getSatBCDE}
 \alias{getSatBCDECalib}
 \alias{getSatBCDESolar}
@@ -52,6 +53,7 @@
 \alias{getSatSpectrum}
 \alias{getSatType}
 \alias{satInfo}
+\alias{setSatBCDE}
 \title{Get or access Satellite object information used by various functions}
 \usage{
 getSatDataLayers(sat)
@@ -64,6 +66,8 @@ getSatMetaBCDETemplate(sat, bcde)
 
 getSatLog(sat)
 
+setSatBCDE(sat, bcde)
+
 addSatMetaParam(sat, meta_param)
 
 addSatMetaEntry(sat, meta_param)
@@ -72,6 +76,8 @@ addSatLog(sat, info = NA_character_, in_bcde = NA_character_,
   out_bcde = NA_character_)
 
 addSatDataLayer(sat, bcde, data, meta_param, info, in_bcde)
+
+countSatDataLayers(sat)
 
 getSatParam(sat, param, bcde, return_bcde = TRUE)
 

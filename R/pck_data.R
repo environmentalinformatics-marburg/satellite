@@ -41,3 +41,21 @@ pck_data_exdata <- function(){
                 filename = paste0("inst/extdata/",basename(x)), format = "GTiff")
   })
 }
+
+# DEM in inst/exdata ------------------------------------------------------
+pck_data_exdata_DEM <- function(){
+  path <- system.file("extdata", package = "satellite")
+  files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+  sat <- satellite(files)
+  sat_ll <- projectRaster(sat@layers[[1]], crs = "+init=epsg:4326")
+  
+  # len <- length(coordinates(sat_ll)[, 1]) / 2
+  # lon <- coordinates(sat_ll)[len, 1]
+  # lat <- coordinates(sat_ll)[len, 2]
+  # srtm <- getData('SRTM', lon = lon, lat = lat, path = "/home/ede")
+  
+  ## getData did not work properly, so downloaded manually
+  srtm <- raster("/home/ede/Downloads/srtm_38_02/srtm_38_02.tif")
+  srtm_sat <- projectRaster(srtm, sat@layers[[1]])
+  writeRaster(srtm_sat, "inst/extdata/DEM.tif")
+}

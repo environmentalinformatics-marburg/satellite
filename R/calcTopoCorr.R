@@ -47,7 +47,6 @@ if ( !isGeneric("calcTopoCorr") ) {
 #' \dontrun{
 #' sat <- calcTopoCorr(sat)
 #' }
-
 NULL
 
 
