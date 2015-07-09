@@ -47,8 +47,14 @@ NULL
 #'
 #' @rdname satInfo
 #'
-getSatDataLayers <- function(sat){
-  return(sat@layers)
+getSatDataLayers <- function(sat, bcde = NULL){
+  if (is.null(bcde)) {
+    return(sat@layers)
+  } else {
+    ls_lyr <- sat@layers
+    ch_lyr_nms <- sapply(ls_lyr, names)
+    return(ls_lyr[ch_lyr_nms %in% bcde])
+  }
 }
 
 

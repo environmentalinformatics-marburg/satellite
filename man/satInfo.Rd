@@ -56,7 +56,7 @@
 \alias{setSatBCDE}
 \title{Get or access Satellite object information used by various functions}
 \usage{
-getSatDataLayers(sat)
+getSatDataLayers(sat, bcde = NULL)
 
 getSatDataLayer(sat, bcde)
 
