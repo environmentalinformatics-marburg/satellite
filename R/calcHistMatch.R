@@ -93,7 +93,7 @@ setMethod("calcHistMatch",
                                    info = info, in_bcde = bcde_rad)
             }
             return(x)
-})
+          })
 
 
 # Function using raster::RasterStack object ------------------------------------
@@ -135,22 +135,21 @@ setMethod("calcHistMatch",
                    step = NULL, ttab = FALSE, use_cpp = TRUE){
             
             
-            # path <- system.file("extdata", package = "satellite")
-            # files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
-            # sat <- satellite(files)
-            # x <- getSatDataLayer(sat, "B004n")
+            path <- system.file("extdata", package = "satellite")
+            files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+            sat <- satellite(files)
+            x <- getSatDataLayer(sat, "B002n")
+            plot(x)
+            target <- x * sample(seq(98, 102), ncell(x), replace = TRUE)/100
+            plot(target)
             
-            # target <- x * sample(100, ncell(x), replace = TRUE)/100
-            
-            # target <- getSatDataLayer(sat, "B005n")
-            
-            minv <- 1L
-            maxv <- 256L
+            minv <- 0L
+            maxv <- 255L
             x <- round((x - minValue(x)) * (maxv - minv) / 
                          (maxValue(x) - minValue(x)) + minv)
             
             target <- round((target - minValue(target)) * (maxv - minv) / 
-                         (maxValue(target) - minValue(target)) + minv)
+                              (maxValue(target) - minValue(target)) + minv)
             
             hs <- hist(x, maxpixels = 1000000, 
                        breaks = seq(minValue(x), maxValue(x), 
@@ -163,7 +162,7 @@ setMethod("calcHistMatch",
             if (use_cpp) {
               t <- insertMinReqRem(hs$counts, ht$counts)
               
-            ## or stick to base-r version  
+              ## or stick to base-r version  
             } else {
               t <- matrix(data = 0, nrow = length(hs$counts), 
                           ncol = length(ht$counts))
@@ -176,21 +175,28 @@ setMethod("calcHistMatch",
                 }
               }
               df <-getValues(x)
-              df[which(df <= 1)] <- 1
+              #               df[which(df <= 1)] <- 1
               for(i in seq(length(df))){
-                cpf <- cumsum(t[df[i],])
-                set.seed(1)
-                p <- sample(1:max(cpf), 1)
-                j <- which(p <= cpf)[1]
-                df[i] <- ht$breaks[j]
-                t[i,j] <- t[i,j]
+                i_t <- df[i]
+                if(!is.na(i_t)){
+                  cpf <- cumsum(t[i_t,])
+                  set.seed(1)
+                  p <- sample(seq(0, cpf[length(cpf)]), 1)
+                  j <- which(p < cpf)[1]
+                  #if(is.na(j)){
+                  #  j <- which(p <= cpf)[1]
+                  #}
+                  df[i] <- ht$breaks[j]
+                  print(paste0(i, " ", i_t, " ", j))
+                  t[i_t,j] <- t[i_t,j] - 1
+                }
               }
-              
               df
-              x <- round(setValues(x, df))
-              plot(x)
+              x1 <- round(setValues(x, df))
+              plot(x1)
               plot(target)
-              hist(target)
-              hist(x)
+              hist(x, breaks = 256)
+              hist(x1, breaks = 256)
+              hist(target, breaks = 256)
             }
           })  
