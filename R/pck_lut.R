@@ -3,11 +3,11 @@
 #' @description
 #' Function which has been used to create the LUT data of this package.
 #' 
-#' @name pckdat_lut
+#' @name pck_lut
 #' 
 NULL
 
-pckdat_lut <- function(){
+pck_lut <- function(){
   # Sensor id patterns
   sensor_id_pattern <- do.call("rbind", sensor_ids_list <- list(
     data.frame(SID = "LE4",

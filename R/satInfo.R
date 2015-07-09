@@ -100,6 +100,23 @@ getSatLog <- function(sat){
   return(sat@log)
 }
 
+################################################################################
+# Set entries to the Satellite object
+################################################################################
+
+# Set BCDE/data layer names of a Satellite object ------------------------------
+#' @export setSatBCDE
+#'
+#' @rdname satInfo
+#'
+setSatBCDE <- function(sat, bcde){
+  sat@meta$BCDE <- bcde
+  for(i in seq(countSatDataLayers(sat))){
+    names(sat@layers[[i]]) <- bcde[i]
+  }
+  return(sat)
+}
+
 
 ################################################################################
 # Add entries to the Satellite object
@@ -195,6 +212,16 @@ addSatDataLayer <- function(sat, bcde, data, meta_param, info, in_bcde){
 ################################################################################
 # Return individual entries of the Satellite object
 ################################################################################
+
+# Return number of Satellite data layers ---------------------------------------
+#' @export countSatDataLayers
+#'
+#' @rdname satInfo
+#'
+countSatDataLayers <- function(sat){
+  return(length(sat@layers))
+}
+
 
 # Return parameter (general method implemented by the specific functions below)-
 #' @param bcde Band code.

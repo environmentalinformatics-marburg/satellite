@@ -175,23 +175,22 @@ setMethod("calcHistMatch",
                   t[i,j] <- min(pixelsreq, pixelsrem)
                 }
               }
+              df <-getValues(x)
+              df[which(df <= 1)] <- 1
+              for(i in seq(length(df))){
+                cpf <- cumsum(t[df[i],])
+                set.seed(1)
+                p <- sample(1:max(cpf), 1)
+                j <- which(p <= cpf)[1]
+                df[i] <- ht$breaks[j]
+                t[i,j] <- t[i,j]
+              }
+              
+              df
+              x <- round(setValues(x, df))
+              plot(x)
+              plot(target)
+              hist(target)
+              hist(x)
             }
-            
-            #             df <-getValues(x)
-            #             df[which(df <= 1)] <- 1
-            #             for(i in seq(length(df))){
-            #               cpf <- cumsum(t[df[i],])
-            #               set.seed(1)
-            #               p <- sample(1:max(cpf), 1)
-            #               j <- which(p <= cpf)[1]
-            #               df[i] <- ht$breaks[j]
-            #               t[i,j] <- t[i,j]
-            #             }
-            #             
-            #             df
-            #             x <- round(setValues(x, df))
-            #             plot(x)
-            #             plot(target)
-            #             hist(target)
-            #             hist(x)
           })  
