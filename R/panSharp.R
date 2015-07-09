@@ -51,8 +51,26 @@ if ( !isGeneric("panSharp") ) {
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' sat <- satellite(files)
-#' panSharp(sat)
 #' 
+#' # ## Not run: using 'satellite' object
+#' # sat_ps <- panSharp(sat)
+#' #
+#' # par(mfrow = c(1, 2))
+#' # plot(getSatDataLayer(sat_ps, "B001n"), main = "raw", legend = FALSE)
+#' # plot(getSatDataLayer(sat_ps, "B001_PAN_sharpend"), 
+#' #      main = "pan-sharpened", legend = FALSE)
+#' # dev.off()      
+#' 
+#' ## using 'RasterLayer' object
+#' rst_b001n <- getSatDataLayer(sat, "B001n")
+#' rst_panch <- getSatDataLayer(sat, getSatBCDEType(sat, id = "PCM"))
+#' rst_b001n_ps <- panSharp(rst_b001n, rst_panch)
+#' 
+#' par(mfrow = c(1, 2))
+#' plot(rst_b001n, main = "raw", legend = FALSE)
+#' plot(rst_b001n_ps, main = "pan-sharpened", legend = FALSE)
+#' dev.off()      
+
 NULL
 
 # Function using satellite object ----------------------------------------------
