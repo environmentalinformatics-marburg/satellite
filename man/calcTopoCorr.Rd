@@ -63,11 +63,10 @@ files_dem <- list.files(path, pattern = "DEM", full.names = TRUE)
 DEM <- raster(files_dem)
 
 sat <- addSatDataLayer(sat, data = DEM, info = NULL, bcde = "DEM", in_bcde="DEM")
-sat <- calcTopoCorr(sat)
 
-# rst_b001n <- getSatDataLayer(sat, "B001n")
-# rst_hillsh <- demTools(DEM, method = "hillShade")
-# rst_b001n_tc <- calcTopoCorr(rst_b001n, rst_hillsh)
+\dontrun{
+sat <- calcTopoCorr(sat)
+}
 }
 \references{
 CIVCO, D.L. (1989): Topographic normalization of Landsat Thematic
