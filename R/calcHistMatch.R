@@ -12,14 +12,10 @@ if ( !isGeneric("calcHistMatch") ) {
 #' be adjusted.
 #' @param bcde Band code which should be alligned
 #' @param target The target band as raster::RasterLayer.
-#' @param ttab Logical. If TRUE, the transformation table is being returned.
 #' @param minv Lower limit of the possible range for transformation (if not 
 #' provided, defaults to the minimum of both layers).
 #' @param maxv Upper limit of the possible range for transformation (if not 
 #' provided, defaults to the maximum of both layers).
-#' @param step Step size used to build the new histogram
-#' (if not provided, defaults to 1 for integer master layer and 0.01 for float 
-#' master layer).
 #' @param use_cpp Logical. If \code{TRUE}, C++ functionality (via \strong{Rcpp}) 
 #' is enabled, which leads to a considerable reduction of both computation time
 #' and memory usage.
@@ -55,8 +51,8 @@ NULL
 #'
 setMethod("calcHistMatch", 
           signature(x = "Satellite"), 
-          function(x, target, bcde = NULL, minv = NULL, maxv = NULL, step = NULL, 
-                   ttab = FALSE, use_cpp = TRUE){
+          function(x, target, bcde = NULL, minv = 0L, maxv = 1023L,
+                   use_cpp = TRUE){
             
             if(is.null(bcde)){
               bcde <- c(as.character(getSatBCDESolar(x)), 
@@ -98,8 +94,8 @@ setMethod("calcHistMatch",
 #'
 setMethod("calcHistMatch", 
           signature(x = "RasterStack"), 
-          function(x, target, bcde = NULL, minv = NULL, maxv = NULL, step = NULL, 
-                   ttab = FALSE, use_cpp = TRUE){
+          function(x, target, bcde = NULL, minv = 0L, maxv = 1023L,
+                   use_cpp = TRUE){
             # If not supplied, 'model' defaults to DOS2
             model <- model[1]
             
@@ -120,11 +116,7 @@ setMethod("calcHistMatch",
           signature(x = "RasterLayer"), 
           function(x, target, bcde = NULL, minv = 0L, maxv = 1023L,
                    use_cpp = TRUE){
-            
-            
 
-            
-            
             minv <- 0L
             maxv <- 1023L
             x <- round((x - minValue(x)) * (maxv - minv) / 
@@ -134,11 +126,9 @@ setMethod("calcHistMatch",
                               (maxValue(target) - minValue(target)) + minv)
             
             hs <- hist(x, maxpixels = 1000000, 
-                       breaks = seq(minValue(x), maxValue(x), 
-                                    length.out = 1024))
+                       breaks = seq(minv, maxv))
             ht <- hist(target, maxpixels = 1000000, 
-                       breaks = seq(minValue(target), maxValue(target), 
-                                    length.out = 1024))
+                       breaks = seq(minv, maxv))
             
             ## enable c++ functionality
             if (use_cpp) {
@@ -160,7 +150,7 @@ setMethod("calcHistMatch",
               for(i in seq(length(df))){
                 i_t <- df[i]
                   cpf <- cumsum(t[i_t,])
-                  set.seed(1)
+                  set.seed(i)
                   p <- sample(seq(1, cpf[length(cpf)]), 1)
                   j <- which(p <= cpf)[1]
                   df[i] <- j #ht$mids[j] + 0.5
