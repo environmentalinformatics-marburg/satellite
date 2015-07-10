@@ -117,8 +117,8 @@ setMethod("calcHistMatch",
           function(x, target, bcde = NULL, minv = 0L, maxv = 1023L,
                    use_cpp = TRUE){
 
-            minv <- 0L
-            maxv <- 1023L
+            minv <- 1L
+            maxv <- 1024L
             x <- round((x - minValue(x)) * (maxv - minv) / 
                          (maxValue(x) - minValue(x)) + minv)
             
@@ -129,6 +129,11 @@ setMethod("calcHistMatch",
                        breaks = seq(minv, maxv))
             ht <- hist(target, maxpixels = 1000000, 
                        breaks = seq(minv, maxv))
+            
+            
+            x <- c(0,0,1,1,1,2,2,3,3,3,3,3)
+            target <- c(0,0,0,1,1,2,2,2,2,3,3,3)
+            hs <- hist(x, breaks = c(0.25, seq(1, 4)))
             
             ## enable c++ functionality
             if (use_cpp) {
