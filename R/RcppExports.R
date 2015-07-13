@@ -5,3 +5,11 @@ insertMinReqRem <- function(anHs, anHt) {
     .Call('satellite_insertMinReqRem', PACKAGE = 'satellite', anHs, anHt)
 }
 
+seqC <- function(from_, to_, by_ = 1.0) {
+    .Call('satellite_seqC', PACKAGE = 'satellite', from_, to_, by_)
+}
+
+ScatteringModel <- function(mnBandWls, dScatCoef) {
+    .Call('satellite_ScatteringModel', PACKAGE = 'satellite', mnBandWls, dScatCoef)
+}
+

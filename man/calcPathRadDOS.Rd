@@ -8,11 +8,11 @@
 \title{Compute path radiance based on the dark object method}
 \usage{
 \S4method{calcPathRadDOS}{Satellite}(x, model = c("DOS2", "DOS4"),
-  esun_method = "RadRef")
+  esun_method = "RadRef", use_cpp = TRUE)
 
 \S4method{calcPathRadDOS}{numeric}(x, bnbr, band_wls, radm, rada, szen, esun,
   model = c("DOS2", "DOS4"), scat_coef = c(-4, -2, -1, -0.7, -0.5),
-  dos_adjust = 0.01)
+  dos_adjust = 0.01, use_cpp = TRUE)
 }
 \arguments{
 \item{x}{A Satellite object or the value (scaled count) of a dark object in
@@ -26,6 +26,10 @@ be the same as used by \code{\link{calcAtmosCorr}}).}
 to compute esun using one of \code{\link{calcTOAIrradRadRef}} ("RadRef"),
 \code{\link{calcTOAIrradTable}} ("Table") or \code{\link{calcTOAIrradModel}}
 ("Model")}
+
+\item{use_cpp}{Logical. If \code{TRUE}, C++ functionality (via \strong{Rcpp})
+is enabled, which leads to a considerable reduction of both computation time
+and memory usage.}
 
 \item{bnbr}{Band number for which DNmin is valid.}
 
@@ -114,16 +118,34 @@ bcde <- "B002n"
 
 sat <- calcTOAIrradRadRef(sat, normalize = FALSE)
 
-calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bcde))),
-               bnbr = getSatLNBR(sat, bcde),
-               band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)),
-                                     LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
-               radm = getSatRADM(sat, getSatBCDESolar(sat)),
-               rada = getSatRADA(sat, getSatBCDESolar(sat)),
-               szen = getSatSZEN(sat, getSatBCDESolar(sat)),
-               esun = getSatESUN(sat, getSatBCDESolar(sat)),
-               model = "DOS2",
-               scat_coef = -4)
+## performance of base-R
+library(microbenchmark)
+microbenchmark(
+ val1 <- calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bcde))),
+                bnbr = getSatLNBR(sat, bcde),
+                band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)),
+                                      LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
+                radm = getSatRADM(sat, getSatBCDESolar(sat)),
+                rada = getSatRADA(sat, getSatBCDESolar(sat)),
+                szen = getSatSZEN(sat, getSatBCDESolar(sat)),
+                esun = getSatESUN(sat, getSatBCDESolar(sat)),
+                model = "DOS2",
+                scat_coef = -4, use_cpp = FALSE)
+, times = 10L)
+
+## and Rcpp version
+microbenchmark(
+ val2 <- calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bcde))),
+                bnbr = getSatLNBR(sat, bcde),
+                band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)),
+                                      LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
+                radm = getSatRADM(sat, getSatBCDESolar(sat)),
+                rada = getSatRADA(sat, getSatBCDESolar(sat)),
+                szen = getSatSZEN(sat, getSatBCDESolar(sat)),
+                esun = getSatESUN(sat, getSatBCDESolar(sat)),
+                model = "DOS2",
+                scat_coef = -4, use_cpp = TRUE)
+, times = 10L)
 }
 \references{
 Chavez Jr PS (1988) An improved dark-object subtraction technique

@@ -17,3 +17,28 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// seqC
+Rcpp::NumericVector seqC(double from_, double to_, double by_);
+RcppExport SEXP satellite_seqC(SEXP from_SEXP, SEXP to_SEXP, SEXP by_SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< double >::type from_(from_SEXP);
+    Rcpp::traits::input_parameter< double >::type to_(to_SEXP);
+    Rcpp::traits::input_parameter< double >::type by_(by_SEXP);
+    __result = Rcpp::wrap(seqC(from_, to_, by_));
+    return __result;
+END_RCPP
+}
+// ScatteringModel
+NumericVector ScatteringModel(NumericMatrix mnBandWls, double dScatCoef);
+RcppExport SEXP satellite_ScatteringModel(SEXP mnBandWlsSEXP, SEXP dScatCoefSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericMatrix >::type mnBandWls(mnBandWlsSEXP);
+    Rcpp::traits::input_parameter< double >::type dScatCoef(dScatCoefSEXP);
+    __result = Rcpp::wrap(ScatteringModel(mnBandWls, dScatCoef));
+    return __result;
+END_RCPP
+}
