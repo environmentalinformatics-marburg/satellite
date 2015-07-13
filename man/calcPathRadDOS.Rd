@@ -119,8 +119,7 @@ bcde <- "B002n"
 sat <- calcTOAIrradRadRef(sat, normalize = FALSE)
 
 ## performance of base-R
-library(microbenchmark)
-microbenchmark(
+system.time(
  val1 <- calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bcde))),
                 bnbr = getSatLNBR(sat, bcde),
                 band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)),
@@ -131,10 +130,10 @@ microbenchmark(
                 esun = getSatESUN(sat, getSatBCDESolar(sat)),
                 model = "DOS2",
                 scat_coef = -4, use_cpp = FALSE)
-, times = 10L)
+)
 
 ## and Rcpp version
-microbenchmark(
+system.time(
  val2 <- calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bcde))),
                 bnbr = getSatLNBR(sat, bcde),
                 band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)),
@@ -145,7 +144,7 @@ microbenchmark(
                 esun = getSatESUN(sat, getSatBCDESolar(sat)),
                 model = "DOS2",
                 scat_coef = -4, use_cpp = TRUE)
-, times = 10L)
+)
 }
 \references{
 Chavez Jr PS (1988) An improved dark-object subtraction technique
