@@ -7,9 +7,8 @@ if ( !isGeneric('plot') ) {
 #' 
 #' @description
 #' This is the standard plotting routine for the 'Satellite' class. Layers are 
-#' drawn either from the start (default; limited to a maximum of 16 sub-plots 
-#' similar to \code{\link{raster::plot}}) or according to the speficied band 
-#' codes.
+#' drawn either from the start (default; limited to a maximum of 16 sub-plots) 
+#' or according to the speficied band codes.
 #' 
 #' @param x A 'Satellite' object, usually returned by \code{\link{satellite}}. 
 #' @param bcde Band codes to be visualized, e.g. returned by 
