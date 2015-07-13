@@ -19,6 +19,8 @@ be adjusted.}
 
 \item{cid}{Calibration information used for subsetting (only works if sid is
 not supplied to the function)}
+
+\item{i}{Layer index(es) for subsetting.}
 }
 \value{
 A Satellite object

@@ -13,9 +13,11 @@ if ( !isGeneric("subset") ) {
 #' @param sid Band numbers or bcde which should be extracted
 #' @param cid Calibration information used for subsetting (only works if sid is
 #' not supplied to the function)
+#' @param i Layer index(es) for subsetting.
 #'
 #' @name subset
 #' @export subset
+#' @aliases subset,Satellite-method
 #' 
 #' @return A Satellite object
 #' 
