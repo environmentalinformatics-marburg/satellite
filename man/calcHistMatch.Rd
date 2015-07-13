@@ -11,11 +11,11 @@
 \S4method{calcHistMatch}{Satellite}(x, target, bcde = NULL, minv = 0L,
   maxv = 1023L, use_cpp = TRUE)
 
-\S4method{calcHistMatch}{RasterStack}(x, target, bcde = NULL, minv = 0L,
-  maxv = 1023L, use_cpp = TRUE)
+\S4method{calcHistMatch}{RasterStack}(x, target, minv = 0L, maxv = 1023L,
+  use_cpp = TRUE)
 
-\S4method{calcHistMatch}{RasterLayer}(x, target, bcde = NULL, minv = 0L,
-  maxv = 1023L, use_cpp = TRUE)
+\S4method{calcHistMatch}{RasterLayer}(x, target, minv = 0L, maxv = 1023L,
+  use_cpp = TRUE)
 }
 \arguments{
 \item{x}{Satellite or raster::Raster* object providing the source band(s) to
