@@ -8,14 +8,14 @@
 \alias{calcHistMatch,Satellite-method}
 \title{Illumination correction across scenes using histogram matching}
 \usage{
-\S4method{calcHistMatch}{Satellite}(x, target, bcde = NULL, minv = NULL,
-  maxv = NULL, step = NULL, ttab = FALSE, use_cpp = TRUE)
+\S4method{calcHistMatch}{Satellite}(x, target, bcde = NULL, minv = 0L,
+  maxv = 1023L, use_cpp = TRUE)
 
-\S4method{calcHistMatch}{RasterStack}(x, target, bcde = NULL, minv = NULL,
-  maxv = NULL, step = NULL, ttab = FALSE, use_cpp = TRUE)
+\S4method{calcHistMatch}{RasterStack}(x, target, bcde = NULL, minv = 0L,
+  maxv = 1023L, use_cpp = TRUE)
 
-\S4method{calcHistMatch}{RasterLayer}(x, target, bcde = NULL, minv = NULL,
-  maxv = NULL, step = NULL, ttab = FALSE, use_cpp = TRUE)
+\S4method{calcHistMatch}{RasterLayer}(x, target, bcde = NULL, minv = 0L,
+  maxv = 1023L, use_cpp = TRUE)
 }
 \arguments{
 \item{x}{Satellite or raster::Raster* object providing the source band(s) to
@@ -30,12 +30,6 @@ provided, defaults to the minimum of both layers).}
 
 \item{maxv}{Upper limit of the possible range for transformation (if not
 provided, defaults to the maximum of both layers).}
-
-\item{step}{Step size used to build the new histogram
-(if not provided, defaults to 1 for integer master layer and 0.01 for float
-master layer).}
-
-\item{ttab}{Logical. If TRUE, the transformation table is being returned.}
 
 \item{use_cpp}{Logical. If \code{TRUE}, C++ functionality (via \strong{Rcpp})
 is enabled, which leads to a considerable reduction of both computation time
@@ -58,23 +52,23 @@ using a histogram match.
 
 
 }
+\details{
+The function is based on a histogram matching technique described
+by Morovic et al. (2002).
+}
 \examples{
-## sample data
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 sat <- satellite(files)
-
-## extraction of source and targed bands
-x <- getSatDataLayer(sat, "B004n")
-target <- getSatDataLayer(sat, "B005n")
-
+x <- getSatDataLayer(sat, "B002n")
+target <- getSatDataLayer(sat, "B003n")
+#'
 ## histogram matching
 calcHistMatch(x, target)
 }
 \references{
-This function is taken and only slightly adapted from the
-\code{landsat::histmatch} function by Sarah C. Goslee (2011).
-Analyzing Remote Sensing Data in R: The landsat Package. Journal of
-Statistical Software, 43(4), 1-25. URL \url{http://www.jstatsoft.org/v43/i04/}.
+Morovic J, Shaw J, Sun P-L (2002) A fast, non-iterative and exact
+histogram matching algorithm. Pattern Recognition Letters 23/1-3: 127-135,
+doi:10.1016/S0167-8655(01)00107-6.
 }
 
