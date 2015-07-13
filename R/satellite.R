@@ -66,7 +66,9 @@ setMethod("satellite",
                          layers = "all", output = "all")
               log <- list(ps0001 = ps)
             }
-            return(new("Satellite", layers = layers, meta = meta, log = log))
+            #return(new("Satellite", layers = layers, meta = meta, log = log))
+            tmp <- new("Satellite", layers = layers, meta = meta, log = log)
+            return(addRasterMeta2Sat(tmp))
           })
 
 
@@ -89,7 +91,9 @@ setMethod("satellite",
                          layers = "all", output = "all")
               log <- list(ps0001 = ps)
             }
-            return(new("Satellite", layers = layers, meta = meta, log = log))
+            #return(new("Satellite", layers = layers, meta = meta, log = log))
+            tmp <- new("Satellite", layers = layers, meta = meta, log = log)
+            return(addRasterMeta2Sat(tmp))
           })
 
 
@@ -110,5 +114,7 @@ setMethod("satellite",
                          layers = "all", output = "all")
               log <- list(ps0001 = ps)
             }
-            return(new("Satellite", layers = layers, meta = meta, log = log))
+            #return(new("Satellite", layers = layers, meta = meta, log = log))
+            tmp <- new("Satellite", layers = layers, meta = meta, log = log)
+            return(addRasterMeta2Sat(tmp))
           })

@@ -82,36 +82,42 @@ NULL
 setMethod("panSharp", 
           signature(x = "Satellite"), 
           function(x, filter = "mean", winsize = 3, subset = FALSE){
-            pan <- getSatDataLayer(x, getSatBCDEType(x, id = "PCM"))
+            pan <- getSatDataLayer(x, getSatBCDEFromType(x, type = "PCM"))
             #create low frequency component of pan
-            pan_lf <- panlf(pan, filter, winsize)
+            pan_lf <- satellite:::panlf(pan, filter, winsize)
             
-            #pan sharpen all low resolution channels of sat object
-            #todo: - make id for resolution more general (e.g. scan meta data of sat object for min/ max resolution!?)
-            res_bands <- getSatBCDESres(x, id = "30")
-            #maybe loop can be generalizd since it is similar to loops found in other function e.g. satAtmosCorr
-            #maybe building raster brick instead of looping over layers of sat object will speed up processing?
-            for(bcde_res in res_bands){
+            sol_indx <- getSatBCDEFromSpectrum(x, spectrum = "solar")
+            sol_indx <- sol_indx[!sol_indx %in% getSatBCDEFromType(x, type = "PCM")]
+            sol_bands <- getSatDataLayers(x, sol_indx)
+#             #pan sharpen all low resolution channels of sat object
+#             #todo: - make id for resolution more general (e.g. scan meta data of sat object for min/ max resolution!?)
+#             res_bands <- getSatBCDESres(x, id = "30")
+#             #maybe loop can be generalizd since it is similar to loops found in other function e.g. satAtmosCorr
+#             #maybe building raster brick instead of looping over layers of sat object will speed up processing?
+            for(i in seq(sol_bands)){
               #pan sharpen
-              ref <- sharp(getSatDataLayer(x, bcde_res), pan, pan_lf)
-              layer_bcde <- paste0(substr(bcde_res, 1, nchar(bcde_res) - 1),
+              ref <- satellite:::sharp(sol_bands[[i]], pan, pan_lf)
+              layer_bcde <- paste0(substr(sol_indx[[i]], 1, 
+                                          nchar(sol_indx[[i]]) - 1),
                                    "_PAN_sharpend")
               meta_param <- data.frame(getSatSensorInfo(x),
-                                       getSatBandInfo(x, bcde_res, 
+                                       getSatBandInfo(x, sol_indx[[i]], 
                                                       return_calib = FALSE),
-                                       CALIB = "PAN_sharpend")
+                                       CALIB = "PAN_sharpend",
+                                       createRasterMetaData(ref))
               info <- sys.calls()[[1]]
               info <- paste0("Add layer from ", info[1], "(", 
                              toString(info[2:length(info)]), ")")
               x <- addSatDataLayer(x, bcde = layer_bcde, data = ref,
                                    meta_param = meta_param,
-                                   info = info, in_bcde = bcde_res)
+                                   info = info, in_bcde = sol_indx[[i]])
             }
             if(subset == TRUE){
-              x <- satSubset(x,"PAN_sharpend")
+              x <- subset(x, cid = "PAN_sharpend")
             }
-            #set new resolution to old column (dirty hack)
-            x@meta$SRES[x@meta$CALIB == "PAN_sharpend"] <- res(pan)[1]
+#             #set new resolution to old column (dirty hack)
+#             x@meta$XRES[x@meta$CALIB == "PAN_sharpend"] <- raster::xres(pan)
+#             x@meta$YRES[x@meta$CALIB == "PAN_sharpend"] <- raster::yres(pan)
             return(x)
           }
 )

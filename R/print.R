@@ -4,11 +4,13 @@ setMethod ('print' , signature(x= "Satellite"),
              cat(paste("Summary of the Satellite Object\n\n", sep = ""))
              print(getSatMeta(x)[1:10]) 
              cat(paste("\n Layers are projected in:\n",
-                       proj4string(getSatDataLayers(sat)[[1]]), 
+                       getSatProjection(sat, getSatBCDE(sat, 1)), 
                        sep = ""))
-             if (length(unique(lapply(getSatDataLayers(sat),
-                                      proj4string))[[1]])>1){
-               print("Warning: Layers are not in same projection")
+             if (length(unique(as.character(lapply(
+               seq(countSatDataLayers(sat)), 
+               function(i) getSatProjection(sat, 
+                                            getSatBCDE(sat, i)))))) > 1) {
+               cat("\n\nWarning: Not all layers have same projection")
              }
            }
 )

@@ -124,7 +124,7 @@ compMetaLandsat <- function(files){
                          SGRP = bandinfo$SGRP[x],
                          BID = bandinfo$BID.x[x],
                          BCDE = bandinfo$BCDE[x],
-                         SRES = bandinfo$SRES[x],
+                         #SRES = bandinfo$SRES[x],
                          TYPE = bandinfo$TYPE[x],
                          SPECTRUM = bandinfo$SPECTRUM[x],
                          CALIB = bandinfo$CALIB[x],

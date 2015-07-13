@@ -38,7 +38,7 @@ if ( !isGeneric('plot') ) {
 #'                       "B002n", "B002_PAN_sharpend"))
 #' }
 #' 
-#' @export
+#' @export plot
 #' @name plot
 #' @rdname plot
 #' @aliases plot,Satellite,ANY-method

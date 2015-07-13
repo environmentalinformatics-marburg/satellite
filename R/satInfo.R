@@ -216,6 +216,55 @@ addSatDataLayer <- function(sat, bcde, data, meta_param, info, in_bcde){
 }
 
 
+# Add raster meta data to Satellite object meta data ----
+#' @export addRasterMeta2Sat
+#'
+#' @rdname satInfo
+#'
+addRasterMeta2Sat <- function(sat){
+  rst_meta <- data.frame(BCDE = sat@meta$BCDE, 
+                         XRES = sapply(sat@layers, function(x) raster::xres(x)),
+                         YRES = sapply(sat@layers, function(x) raster::yres(x)),
+                         NROW = sapply(sat@layers, function(x) raster::nrow(x)),
+                         NCOL = sapply(sat@layers, function(x) raster::ncol(x)),
+                         NCELL = sapply(sat@layers, function(x) raster::ncell(x)),
+                         XMIN = sapply(sat@layers, function(x) raster::xmin(x)),
+                         XMAX = sapply(sat@layers, function(x) raster::xmax(x)),
+                         YMIN = sapply(sat@layers, function(x) raster::ymin(x)),
+                         YMAX = sapply(sat@layers, function(x) raster::ymax(x)),
+                         PROJ = sapply(sat@layers, function(x) raster::projection(x)),
+                         stringsAsFactors = FALSE)
+  
+  sat <- addSatMetaParam(sat, meta_param = rst_meta)
+  
+  
+  return(sat)
+}
+
+
+# Create raster meta data ------------------------------------------------------
+#' @export createRasterMetaData
+#'
+#' @rdname satInfo
+#'
+createRasterMetaData <- function(x){
+  rst_meta <- data.frame(XRES = raster::xres(x),
+                         YRES = raster::yres(x),
+                         NROW = raster::nrow(x),
+                         NCOL = raster::ncol(x),
+                         NCELL = raster::ncell(x),
+                         XMIN = raster::xmin(x),
+                         XMAX = raster::xmax(x),
+                         YMIN = raster::ymin(x),
+                         YMAX = raster::ymax(x),
+                         PROJ = raster::projection(x),
+                         stringsAsFactors = FALSE)
+  
+  return(rst_meta)
+}
+
+
+
 ################################################################################
 # Return individual entries of the Satellite object
 ################################################################################
@@ -362,13 +411,33 @@ getSatBCDEThermal <- function(sat){
 }
 
 
-# Return sensor resolution -----------------------------------------------------
+# Return sensor x resolution -----------------------------------------------------
+#' @export getSatXRes
+#'
+#' @rdname satInfo
+#' 
+getSatXRes <- function(sat, bcde){
+  getSatParam(sat, "XRES", bcde)
+}
+
+
+# Return sensor y resolution -----------------------------------------------------
+#' @export getSatYRes
+#'
+#' @rdname satInfo
+#' 
+getSatYRes <- function(sat, bcde){
+  getSatParam(sat, "YRES", bcde)
+}
+
+
+# Return mean sensor resolution (mean of x and y res) --------------------------
 #' @export getSatRes
 #'
 #' @rdname satInfo
 #' 
 getSatRes <- function(sat, bcde){
-  getSatParam(sat, "SRES", bcde)
+  mean(getSatXRes(sat, bcde), getSatYRes(sat, bcde), na.rm = TRUE)
 }
 
 
@@ -405,6 +474,27 @@ getSatBCDEType <- function(sat, bcde, id){
   }
   return(result)
 }
+
+
+# Return BCDE matching TYPE ----------------------------------------------------
+#' @export getSatBCDEFromType
+#'
+#' @rdname satInfo
+#' 
+getSatBCDEFromType <- function(sat, type = "VIS"){
+  as.character(na.exclude(sat@meta$BCDE[sat@meta$TYPE == type]))
+}
+
+
+# Return BCDE matching TYPE ----------------------------------------------------
+#' @export getSatBCDEFromSpectrum
+#'
+#' @rdname satInfo
+#' 
+getSatBCDEFromSpectrum <- function(sat, spectrum = "solar"){
+  as.character(na.exclude(sat@meta$BCDE[sat@meta$SPECTRUM == spectrum]))
+}
+
 
 
 # Return SRES band codes matching id ------------------------------------------
@@ -471,13 +561,13 @@ getSatBCDEThermalCalib <- function(sat, bcde, id){
 getSatBandInfo <- function(sat, bcde, return_calib = TRUE){
   if(return_calib){
     result <- data.frame(BID = getSatBID(sat, bcde),
-                         SRES = getSatRes(sat, bcde),
+                         #SRES = getSatRes(sat, bcde),
                          TYPE = getSatType(sat, bcde),
                          SPECTRUM = getSatSpectrum(sat, bcde),
                          CALIB = getSatCalib(sat, bcde))
   } else {
     result <- data.frame(BID = getSatBID(sat, bcde),
-                         SRES = getSatRes(sat, bcde),
+                         #SRES = getSatRes(sat, bcde),
                          TYPE = getSatType(sat, bcde),
                          SPECTRUM = getSatSpectrum(sat, bcde))
   }
@@ -713,4 +803,14 @@ getSatDATE <- function(sat, bcde){
 #' 
 getSatPRAD <- function(sat, bcde){
   getSatParam(sat, "PRAD", bcde)
+}
+
+
+# Return projection ------------------------------------------------------------------
+#' @export getSatProjection
+#'
+#' @rdname satInfo
+#' 
+getSatProjection <- function(sat, bcde){
+  getSatParam(sat, "PROJ", bcde)
 }
