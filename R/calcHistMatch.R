@@ -39,7 +39,7 @@ if ( !isGeneric("calcHistMatch") ) {
 #' target <- getSatDataLayer(sat, "B003n")
 #' #' 
 #' ## histogram matching
-#' calcHistMatch(x, target)
+#' calcHistMatch(sat, target, bcde = "B002n")
 NULL
 
 
@@ -52,7 +52,7 @@ NULL
 setMethod("calcHistMatch", 
           signature(x = "Satellite"), 
           function(x, target, bcde = NULL, minv = 0L, maxv = 1023L,
-                   use_cpp = TRUE){
+                   use_cpp = FALSE){
             
             if(is.null(bcde)){
               bcde <- c(as.character(getSatBCDESolar(x)), 
@@ -60,27 +60,26 @@ setMethod("calcHistMatch",
             }
             
             for(act_bcde in bcde){
+              if(class(target) == "Satellite"){
+                act_target <- getSatDataLayer(target, act_bcde)
+              } else {
+                act_target <- target
+              }
               hm <- calcHistMatch(x = getSatDataLayer(x, act_bcde),
-                                  target = target,
-                                  bcde = act_bcde,
+                                  target = act_target,
                                   minv = minv,
                                   maxv = maxv,
-                                  step = step,
-                                  ttab = ttab, 
                                   use_cpp = use_cpp)
               
-              layer_bcde <- paste0(substr(bcde_rad, 1, nchar(bcde_rad) - 4),
-                                   "_REF_AtmosCorr")
-              meta_param <- data.frame(getSatSensorInfo(x),
-                                       getSatBandInfo(x, bcde_rad, 
-                                                      return_calib = FALSE),
-                                       CALIB = "REF_AtmosCorr")
+              meta_param <- getSatMeta(x, act_bcde)
+              meta_bcde <- paste0(act_bcde, "_histm")
+
               info <- sys.calls()[[1]]
-              info <- paste0("Add layer from ", info[1], "(", 
-                             toString(info[2:length(info)]), ")")
-              x <- addSatDataLayer(x, bcde = layer_bcde, data = ref,
+              info <- paste0("Adjust layer ", act_bcde, 
+                             " using histogram matching.")
+              x <- addSatDataLayer(x, bcde = meta_bcde, data = hm, 
                                    meta_param = meta_param,
-                                   info = info, in_bcde = bcde_rad)
+                                   info = info, in_bcde = act_bcde)
             }
             return(x)
           })
@@ -94,13 +93,14 @@ setMethod("calcHistMatch",
 #'
 setMethod("calcHistMatch", 
           signature(x = "RasterStack"), 
-          function(x, target, bcde = NULL, minv = 0L, maxv = 1023L,
-                   use_cpp = TRUE){
+          function(x, target, minv = 0L, maxv = 1023L, use_cpp = TRUE){
             # If not supplied, 'model' defaults to DOS2
             model <- model[1]
             
             for(l in seq(nlayers(x))){
-              x[[l]] <- calcAtmosCorr(x, path_rad, esun, szen, model = "DOS2")
+              x[[l]] <- calcHistMatch(x = x, target = target, bcde = bcde, 
+                                      minv = minv, maxv = maxv, 
+                                      use_cpp = use_cpp)
             }
             return(x)
           })
@@ -114,26 +114,17 @@ setMethod("calcHistMatch",
 #'
 setMethod("calcHistMatch", 
           signature(x = "RasterLayer"), 
-          function(x, target, bcde = NULL, minv = 0L, maxv = 1023L,
-                   use_cpp = TRUE){
+          function(x, target, minv = 0L, maxv = 1023L, use_cpp = TRUE){
 
-            minv <- 1L
-            maxv <- 1024L
             x <- round((x - minValue(x)) * (maxv - minv) / 
                          (maxValue(x) - minValue(x)) + minv)
             
             target <- round((target - minValue(target)) * (maxv - minv) / 
                               (maxValue(target) - minValue(target)) + minv)
             
-            hs <- hist(x, maxpixels = 1000000, 
-                       breaks = seq(minv, maxv))
-            ht <- hist(target, maxpixels = 1000000, 
-                       breaks = seq(minv, maxv))
-            
-            
-            x <- c(0,0,1,1,1,2,2,3,3,3,3,3)
-            target <- c(0,0,0,1,1,2,2,2,2,3,3,3)
-            hs <- hist(x, breaks = c(0.25, seq(1, 4)))
+            breaks <- seq(minv, maxv + 1)
+            hs <- hist(x, breaks = breaks, right = FALSE)
+            ht <- hist(target, breaks = breaks, right = FALSE)
             
             ## enable c++ functionality
             if (use_cpp) {
@@ -153,20 +144,14 @@ setMethod("calcHistMatch",
               }
               df <-getValues(x)
               for(i in seq(length(df))){
-                i_t <- df[i]
-                  cpf <- cumsum(t[i_t,])
-                  set.seed(i)
-                  p <- sample(seq(1, cpf[length(cpf)]), 1)
-                  j <- which(p <= cpf)[1]
-                  df[i] <- j #ht$mids[j] + 0.5
-                  t[i_t,j] <- t[i_t,j] - 1
+                i_t <- df[i] + 1
+                cpf <- cumsum(t[i_t,])
+                set.seed(i)
+                p <- sample(seq(1, cpf[length(cpf)]), 1)
+                j <- which(p <= cpf)[1]
+                df[i] <- j #ht$mids[j] + 0.5
+                t[i_t,j] <- t[i_t,j] - 1
               }
-              df
-              x1 <- setValues(x, df)
-              plot(x1)
-              plot(target)
-              hist(x, breaks = 256)
-              hist(x1, breaks = 256, ylim = c(0,50))
-              hist(target, breaks = 256, ylim = c(0,50))
+              x <- setValues(x, df - 1)
             }
           })  
