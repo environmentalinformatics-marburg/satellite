@@ -73,7 +73,7 @@ setMethod("calcHistMatch",
               
               meta_param <- getSatMeta(x, act_bcde)
               meta_bcde <- paste0(act_bcde, "_histm")
-
+              
               info <- sys.calls()[[1]]
               info <- paste0("Adjust layer ", act_bcde, 
                              " using histogram matching.")
@@ -115,7 +115,7 @@ setMethod("calcHistMatch",
 setMethod("calcHistMatch", 
           signature(x = "RasterLayer"), 
           function(x, target, minv = 0L, maxv = 1023L, use_cpp = TRUE){
-
+            
             x <- round((x - minValue(x)) * (maxv - minv) / 
                          (maxValue(x) - minValue(x)) + minv)
             
@@ -142,16 +142,17 @@ setMethod("calcHistMatch",
                   t[i,j] <- min(pixelsreq, pixelsrem)
                 }
               }
-              df <-getValues(x)
-              for(i in seq(length(df))){
-                i_t <- df[i] + 1
-                cpf <- cumsum(t[i_t,])
-                set.seed(i)
-                p <- sample(seq(1, cpf[length(cpf)]), 1)
-                j <- which(p <= cpf)[1]
-                df[i] <- j #ht$mids[j] + 0.5
-                t[i_t,j] <- t[i_t,j] - 1
-              }
-              x <- setValues(x, df - 1)
             }
+            
+            df <-getValues(x)
+            for(i in seq(length(df))){
+              i_t <- df[i] + 1
+              cpf <- cumsum(t[i_t,])
+              set.seed(i)
+              p <- sample(seq(1, cpf[length(cpf)]), 1)
+              j <- which(p <= cpf)[1]
+              df[i] <- j #ht$mids[j] + 0.5
+              t[i_t,j] <- t[i_t,j] - 1
+            }
+            x <- setValues(x, df - 1)
           })  
