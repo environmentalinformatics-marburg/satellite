@@ -83,9 +83,10 @@ setMethod("satellite",
               meta <- data.frame(DATE = as.POSIXlt(Sys.Date(), tz = "UTC"),
                                  FILE = names(x))
             }
-            layers <- lapply(seq(nlayers(x)), function(y){
-              x[[y]]
-            })
+            # layers <- lapply(seq(nlayers(x)), function(y){
+            #   x[[y]]
+            # })
+            layers <- raster::unstack(x)
             if(missing(log)){
               ps <- list(time = Sys.time(), info = "Initial import", 
                          layers = "all", output = "all")
