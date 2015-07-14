@@ -35,11 +35,12 @@ if ( !isGeneric("calcHistMatch") ) {
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 #' sat <- satellite(files)
-#' x <- getSatDataLayer(sat, "B002n")
 #' target <- getSatDataLayer(sat, "B003n")
-#' #' 
+#'  
+#' \dontrun{
 #' ## histogram matching
 #' calcHistMatch(sat, target, bcde = "B002n")
+#' }
 NULL
 
 
@@ -52,7 +53,7 @@ NULL
 setMethod("calcHistMatch", 
           signature(x = "Satellite"), 
           function(x, target, bcde = NULL, minv = 0L, maxv = 1023L,
-                   use_cpp = FALSE){
+                   use_cpp = TRUE){
             
             if(is.null(bcde)){
               bcde <- c(as.character(getSatBCDESolar(x)), 
