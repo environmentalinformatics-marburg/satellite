@@ -15,6 +15,8 @@
 #' @param return_bcde Return bcde as attribute (TRUE/FALSE)
 #' @param return_calib Return calibration information (TRUE/FALSE)
 #' @param sat Satellite object (see \code{\link{satellite}}).
+#' @param rst Input raster::Raster* object from which to extract metadata.
+#' @param spectrum Spectral region, e.g. "solar" or "thermal".
 #' 
 #' 
 #' @return Objects of respective type (see \code{\link{satellite}}). 
@@ -247,17 +249,17 @@ addRasterMeta2Sat <- function(sat){
 #'
 #' @rdname satInfo
 #'
-createRasterMetaData <- function(x){
-  rst_meta <- data.frame(XRES = raster::xres(x),
-                         YRES = raster::yres(x),
-                         NROW = raster::nrow(x),
-                         NCOL = raster::ncol(x),
-                         NCELL = raster::ncell(x),
-                         XMIN = raster::xmin(x),
-                         XMAX = raster::xmax(x),
-                         YMIN = raster::ymin(x),
-                         YMAX = raster::ymax(x),
-                         PROJ = raster::projection(x),
+createRasterMetaData <- function(rst){
+  rst_meta <- data.frame(XRES = raster::xres(rst),
+                         YRES = raster::yres(rst),
+                         NROW = raster::nrow(rst),
+                         NCOL = raster::ncol(rst),
+                         NCELL = raster::ncell(rst),
+                         XMIN = raster::xmin(rst),
+                         XMAX = raster::xmax(rst),
+                         YMIN = raster::ymin(rst),
+                         YMAX = raster::ymax(rst),
+                         PROJ = raster::projection(rst),
                          stringsAsFactors = FALSE)
   
   return(rst_meta)
@@ -481,8 +483,8 @@ getSatBCDEType <- function(sat, bcde, id){
 #'
 #' @rdname satInfo
 #' 
-getSatBCDEFromType <- function(sat, type = "VIS"){
-  as.character(na.exclude(sat@meta$BCDE[sat@meta$TYPE == type]))
+getSatBCDEFromType <- function(sat, id = "VIS"){
+  as.character(na.exclude(sat@meta$BCDE[sat@meta$TYPE == id]))
 }
 
 

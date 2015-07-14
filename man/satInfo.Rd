@@ -86,7 +86,7 @@ addSatDataLayer(sat, bcde, data, meta_param, info, in_bcde)
 
 addRasterMeta2Sat(sat)
 
-createRasterMetaData(x)
+createRasterMetaData(rst)
 
 countSatDataLayers(sat)
 
@@ -122,7 +122,7 @@ getSatCalib(sat, bcde)
 
 getSatBCDEType(sat, bcde, id)
 
-getSatBCDEFromType(sat, type = "VIS")
+getSatBCDEFromType(sat, id = "VIS")
 
 getSatBCDEFromSpectrum(sat, spectrum = "solar")
 
@@ -197,6 +197,8 @@ getSatProjection(sat, bcde)
 
 \item{data}{Data layer of a satellite object}
 
+\item{rst}{Input raster::Raster* object from which to extract metadata.}
+
 \item{param}{Parameter of the metadata set (i.e. colname)}
 
 \item{return_bcde}{Return bcde as attribute (TRUE/FALSE)}
@@ -204,6 +206,8 @@ getSatProjection(sat, bcde)
 \item{lnbr}{Layer number}
 
 \item{id}{Type of the sensor band}
+
+\item{spectrum}{Spectral region, e.g. "solar" or "thermal".}
 
 \item{return_calib}{Return calibration information (TRUE/FALSE)}
 
