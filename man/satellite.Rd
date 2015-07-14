@@ -47,9 +47,14 @@ etc.) and (iii) a list of log information which records the processing
 history of the entire dataset.
 }
 \examples{
+## 'character' input (i.e. filenames)
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
-sat <- satellite(files)
+
+satellite(files)
+
+## raster::RasterStack input
+satellite(l8)
 }
 \seealso{
 \code{\link{compMetaLandsat}} to get more information about the

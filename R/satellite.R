@@ -33,9 +33,14 @@ if ( !isGeneric("satellite") ) {
 #' @name satellite
 #' 
 #' @examples
+#' ## 'character' input (i.e. filenames)
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
-#' sat <- satellite(files)
+#' 
+#' satellite(files)
+#' 
+#' ## raster::RasterStack input
+#' satellite(l8)
 #' 
 NULL
 
