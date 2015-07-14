@@ -119,11 +119,29 @@ getSatLog <- function(sat){
 #' @rdname satInfo
 #'
 setSatBCDE <- function(sat, bcde){
+  ## if not supplied, BCDE is being created automatically
+  if (missing(bcde))
+    bcde <- createSatBCDE(sat)
+  
   sat@meta$BCDE <- bcde
   for(i in seq(countSatDataLayers(sat))){
     names(sat@layers[[i]]) <- bcde[i]
   }
   return(sat)
+}
+
+# If not supplied, automatically create BCDE names of a Satellite object -------
+#' @export createSatBCDE
+#'
+#' @rdname satInfo
+#'
+createSatBCDE <- function(sat, width = 3, flag = 0, 
+                          prefix = "B", postfix = "n") {
+  int_nrow <- nrow(sat@meta)
+  int_seq <- 1:int_nrow
+  ch_seq <- formatC(int_seq, width = width, flag = flag)
+  ch_bcde <- paste0(prefix, ch_seq, postfix)
+  return(ch_bcde)
 }
 
 
@@ -144,7 +162,11 @@ addSatMetaParam <- function(sat, meta_param){
     sat@meta[, which(name == colnames(sat@meta))] <- NULL
   } 
   sat@meta <- merge(sat@meta, meta_param, by = id, all.x = TRUE)
-  sat@meta <- sat@meta[order(sat@meta$LNBR),]
+  sat@meta <- if (is.null(sat@meta$LNBR)) {
+    sat@meta[order(sat@meta$BCDE), ]
+    } else {
+      sat@meta[order(sat@meta$LNBR), ]
+    }
   return(sat)
 }
 
@@ -224,7 +246,11 @@ addSatDataLayer <- function(sat, bcde, data, meta_param, info, in_bcde){
 #' @rdname satInfo
 #'
 addRasterMeta2Sat <- function(sat){
-  rst_meta <- data.frame(BCDE = sat@meta$BCDE, 
+  ## if BCDE is not available, it is automatically created 
+  if (is.null(sat@meta$BCDE)) 
+    sat <- setSatBCDE(sat)
+
+    rst_meta <- data.frame(BCDE = sat@meta$BCDE, 
                          XRES = sapply(sat@layers, function(x) raster::xres(x)),
                          YRES = sapply(sat@layers, function(x) raster::yres(x)),
                          NROW = sapply(sat@layers, function(x) raster::nrow(x)),
@@ -814,5 +840,10 @@ getSatPRAD <- function(sat, bcde){
 #' @rdname satInfo
 #' 
 getSatProjection <- function(sat, bcde){
-  getSatParam(sat, "PROJ", bcde)
+  prj <- getSatParam(sat, "PROJ", bcde)
+  
+  if (is.na(prj))
+    prj <- projection(sat@layers[[1]])
+  
+  return(prj)
 }

@@ -8,6 +8,7 @@
 \alias{addSatMetaParam}
 \alias{countSatDataLayers}
 \alias{createRasterMetaData}
+\alias{createSatBCDE}
 \alias{getSatBCDE}
 \alias{getSatBCDECalib}
 \alias{getSatBCDEFromSpectrum}
@@ -74,6 +75,8 @@ getSatMetaBCDETemplate(sat, bcde)
 getSatLog(sat)
 
 setSatBCDE(sat, bcde)
+
+createSatBCDE(sat, width = 3, flag = 0, prefix = "B", postfix = "n")
 
 addSatMetaParam(sat, meta_param)
 
