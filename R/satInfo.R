@@ -17,6 +17,11 @@
 #' @param sat Satellite object (see \code{\link{satellite}}).
 #' @param rst Input raster::Raster* object from which to extract metadata.
 #' @param spectrum Spectral region, e.g. "solar" or "thermal".
+#' @param width,flag Field width and format modifier for automated creation of 
+#' BCDE information, defaults to '3' and '0', respectively. See 
+#' \code{\link{formatC}} for further details.
+#' @param prefix,postfix Prefix and postfix to be added to the created BCDE 
+#' information.
 #' 
 #' 
 #' @return Objects of respective type (see \code{\link{satellite}}). 
