@@ -6,8 +6,7 @@
 \alias{plot,Satellite,ANY-method}
 \title{Plot a 'Satellite' object}
 \usage{
-\S4method{plot}{Satellite,ANY}(x, y, bcde = NULL, col = grey.colors(100),
-  ...)
+\S4method{plot}{Satellite,ANY}(x, bcde = NULL, col = grey.colors(100), ...)
 }
 \arguments{
 \item{x}{A 'Satellite' object, usually returned by \code{\link{satellite}}.}
