@@ -296,6 +296,23 @@ createRasterMetaData <- function(rst){
 }
 
 
+# Update raster meta data ------------------------------------------------------
+#' @export updateRasterMetaData
+#'
+#' @describeIn satInfo Create raster meta data
+#'
+updateRasterMetaData <- function(sat, bcde) {
+  
+  rst_meta <- createRasterMetaData(getSatDataLayer(sat, bcde))
+  
+  for (i in colnames(rst_meta)) {
+    sat@meta[sat@meta$BCDE == bcde, i] <- rst_meta[, i]
+  }
+   
+  return(sat)
+}
+
+
 
 ################################################################################
 # Return individual entries of the Satellite object

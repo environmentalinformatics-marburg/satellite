@@ -61,6 +61,7 @@
 \alias{getSatYRes}
 \alias{satInfo}
 \alias{setSatBCDE}
+\alias{updateRasterMetaData}
 \title{Get or access Satellite object information used by various functions}
 \usage{
 getSatDataLayers(sat, bcde = NULL)
@@ -89,6 +90,8 @@ addSatDataLayer(sat, bcde, data, meta_param, info, in_bcde)
 addRasterMeta2Sat(sat)
 
 createRasterMetaData(rst)
+
+updateRasterMetaData(sat, bcde)
 
 countSatDataLayers(sat)
 
@@ -264,6 +267,8 @@ respective information from/in the Satellite object.
 \item \code{addRasterMeta2Sat}: Add raster meta data to Satellite object meta data
 
 \item \code{createRasterMetaData}: Create raster meta data
+
+\item \code{updateRasterMetaData}: Create raster meta data
 
 \item \code{countSatDataLayers}: Return number of Satellite data layers
 

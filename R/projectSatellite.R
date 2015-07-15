@@ -18,6 +18,7 @@ if ( !isGeneric('projectSatellite') ) {
 #' be defined by band_codes.
 #' @param band_codes Band ID(s) to be resampled. If not supplied and type is 
 #' not given, too, all bands will be considered for resampling.
+#' @param type type of the sensor band regarding wavelength (e.g. VIS).
 #' @param crs character or object of class 'CRS'. 
 #' PROJ.4 description of the coordinate reference system. 
 #' See \code{\link{projectRaster}} for details.
@@ -66,8 +67,8 @@ setMethod('projectSatellite', signature(x = 'Satellite',
                 layer_bcde <- paste0(bcde, "_reprojected")
                 meta_param <- getSatMetaBCDETemplate(x, bcde)
                 meta_param$BCDE <- layer_bcde
-                              meta_param$XRES <- xres(pr)
-                              meta_param$YRES <- yres(pr)
+#                 meta_param$XRES <- xres(pr)
+#                 meta_param$YRES <- yres(pr)
                 
                 info <- sys.calls()[[1]]
                 info <- paste0("Add layer from ", info[1], "(", 
@@ -76,6 +77,8 @@ setMethod('projectSatellite', signature(x = 'Satellite',
                                      meta_param = meta_param,
                                      info = info, in_bcde = bcde)
               }
+              print(layer_bcde)
+              x <- updateRasterMetaData(x, layer_bcde)
             }
             return(x)
           }
