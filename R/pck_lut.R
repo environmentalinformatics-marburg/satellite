@@ -99,16 +99,13 @@ pck_lut <- function(){
   rownames(l8_bands) <-  paste0("Band_", l8_bands$BID)
   
   # Landat 7 relative spectral response (units: nm-1)
-  l7_rsr <- read.table("inst/extdata/landsat_7_relative_spectral_response.csv",
-                       header = TRUE, sep = ";")
+  l7_rsr <- readRDS(system.file("extdata", "l7_rsr.rds", package = "satellite"))
   
   # Landat 8 relative spectral response (units: nm-1)
-  l8_rsr <- read.table("inst/extdata/landsat_8_relative_spectral_response.csv",
-                       header = TRUE, sep = ";")
+  l8_rsr <- readRDS(system.file("extdata", "l8_rsr.rds", package = "satellite"))
   
   # Solar irradiance (units: W m-2 nm-1)
-  solar <- read.table("inst/extdata/mod_etr_solar_irradiance.csv",
-                      header = TRUE, sep = ";")
+  solar <- readRDS(system.file("extdata", "solar.rds", package = "satellite"))
   
   # Tabulated values of ESun (W m-2 micrometer-1)
   l4_esun <- c(1957, 1826, 1554, 1036, 215, NA, 80.67)

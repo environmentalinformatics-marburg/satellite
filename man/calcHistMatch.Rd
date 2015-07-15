@@ -9,7 +9,7 @@
 \title{Illumination correction across scenes using histogram matching}
 \usage{
 \S4method{calcHistMatch}{Satellite}(x, target, bcde = NULL, minv = 0L,
-  maxv = 1023L, use_cpp = FALSE)
+  maxv = 1023L, use_cpp = TRUE)
 
 \S4method{calcHistMatch}{RasterStack}(x, target, minv = 0L, maxv = 1023L,
   use_cpp = TRUE)
@@ -60,11 +60,12 @@ by Morovic et al. (2002).
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
 sat <- satellite(files)
-x <- getSatDataLayer(sat, "B002n")
 target <- getSatDataLayer(sat, "B003n")
-#'
+
+\dontrun{
 ## histogram matching
 calcHistMatch(sat, target, bcde = "B002n")
+}
 }
 \references{
 Morovic J, Shaw J, Sun P-L (2002) A fast, non-iterative and exact

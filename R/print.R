@@ -1,4 +1,4 @@
-setMethod ('print' , signature(x= "Satellite"), 
+setMethod ('print' , signature(x = "Satellite"), 
            function(x)
            {
              cat(paste("Summary of the Satellite Object\n\n", sep = ""))

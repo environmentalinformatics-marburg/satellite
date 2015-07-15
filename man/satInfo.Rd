@@ -190,6 +190,13 @@ getSatProjection(sat, bcde)
 
 \item{bcde}{Band code.}
 
+\item{width,flag}{Field width and format modifier for automated creation of
+BCDE information, defaults to '3' and '0', respectively. See
+\code{\link{formatC}} for further details.}
+
+\item{prefix,postfix}{Prefix and postfix to be added to the created BCDE
+information.}
+
 \item{meta_param}{Metadata parameters used to document new data layer}
 
 \item{info}{Log information added to metadata}
