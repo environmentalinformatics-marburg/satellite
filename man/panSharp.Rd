@@ -8,12 +8,14 @@
 \alias{panSharp,Satellite-method}
 \title{Pan sharpen low resolution satellite channels by using the high resolution panchromatic channel.}
 \usage{
-\S4method{panSharp}{Satellite}(x, filter = "mean", winsize = 3,
-  subset = FALSE)
+\S4method{panSharp}{Satellite}(x, filter = c("mean", "Gauss", "median"),
+  winsize = 1, subset = FALSE)
 
-\S4method{panSharp}{RasterStack}(x, pan, filter = "mean", winsize = 3)
+\S4method{panSharp}{RasterStack}(x, pan, filter = c("mean", "Gauss",
+  "median"), winsize = 1)
 
-\S4method{panSharp}{RasterLayer}(x, pan, filter = "mean", winsize = 3)
+\S4method{panSharp}{RasterLayer}(x, pan, pan_lp, filter = c("mean", "Gauss",
+  "median"), winsize = 1)
 }
 \arguments{
 \item{x}{Satellite or \code{raster::Raster*} object.}
@@ -61,15 +63,15 @@ sat <- satellite(files)
 sat_ps <- panSharp(sat)
 
 par(mfrow = c(1, 2))
-plot(getSatDataLayer(sat_ps, "B001n"), main = "raw", legend = FALSE)
+plot(getSatDataLayer(sat_ps, "B001n"), main = "raw", legend = TRUE)
 plot(getSatDataLayer(sat_ps, "B001_PAN_sharpend"),
-     main = "pan-sharpened", legend = FALSE)
+     main = "pan-sharpened", legend = TRUE)
 dev.off()
 }
 
 ## using 'RasterLayer' object
 rst_b001n <- getSatDataLayer(sat, "B001n")
-rst_panch <- getSatDataLayer(sat, getSatBCDEType(sat, id = "PCM"))
+rst_panch <- getSatDataLayer(sat, getSatBCDEType(sat, type = "PCM"))
 rst_b001n_ps <- panSharp(rst_b001n, rst_panch)
 
 par(mfrow = c(1, 2))
