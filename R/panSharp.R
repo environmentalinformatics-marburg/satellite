@@ -57,9 +57,9 @@ if ( !isGeneric("panSharp") ) {
 #' sat_ps <- panSharp(sat)
 #' 
 #' par(mfrow = c(1, 2))
-#' plot(getSatDataLayer(sat_ps, "B001n"), main = "raw", legend = FALSE)
+#' plot(getSatDataLayer(sat_ps, "B001n"), main = "raw", legend = TRUE)
 #' plot(getSatDataLayer(sat_ps, "B001_PAN_sharpend"), 
-#'      main = "pan-sharpened", legend = FALSE)
+#'      main = "pan-sharpened", legend = TRUE)
 #' dev.off()
 #' }      
 #' 
@@ -81,21 +81,16 @@ NULL
 #'
 setMethod("panSharp", 
           signature(x = "Satellite"), 
-          function(x, filter = "mean", winsize = 3, subset = FALSE){
+          function(x, filter = "mean", winsize = 1, subset = FALSE){
             pan <- getSatDataLayer(x, getSatBCDEFromType(x, type = "PCM"))
-            #create low frequency component of pan
+
             pan_lf <- satellite:::panlf(pan, filter, winsize)
             
             sol_indx <- getSatBCDEFromSpectrum(x, spectrum = "solar")
             sol_indx <- sol_indx[!sol_indx %in% getSatBCDEFromType(x, type = "PCM")]
             sol_bands <- getSatDataLayers(x, sol_indx)
-#             #pan sharpen all low resolution channels of sat object
-#             #todo: - make id for resolution more general (e.g. scan meta data of sat object for min/ max resolution!?)
-#             res_bands <- getSatBCDESres(x, id = "30")
-#             #maybe loop can be generalizd since it is similar to loops found in other function e.g. satAtmosCorr
-#             #maybe building raster brick instead of looping over layers of sat object will speed up processing?
+
             for(i in seq(sol_bands)){
-              #pan sharpen
               ref <- satellite:::sharp(sol_bands[[i]], pan, pan_lf)
               layer_bcde <- paste0(substr(sol_indx[[i]], 1, 
                                           nchar(sol_indx[[i]]) - 1),
@@ -115,9 +110,6 @@ setMethod("panSharp",
             if(subset == TRUE){
               x <- subset(x, cid = "PAN_sharpend")
             }
-#             #set new resolution to old column (dirty hack)
-#             x@meta$XRES[x@meta$CALIB == "PAN_sharpend"] <- raster::xres(pan)
-#             x@meta$YRES[x@meta$CALIB == "PAN_sharpend"] <- raster::yres(pan)
             return(x)
           }
 )
@@ -129,14 +121,12 @@ setMethod("panSharp",
 #'
 setMethod("panSharp", 
           signature(x = "RasterStack"),
-          #if pan is present in stack, it will get sharpened to.
-          #Thus checking for pan in stack would be usefull.
-          function(x, pan, filter = "mean", winsize = 3){
+          function(x, pan, filter = "mean", winsize = 1){
             pan_lf <- panlf(pan, filter, winsize)
             for(l in seq(nlayers(x))){
               x[[l]] <- sharp(x, pan, pan_lf)  
-            return(x)
-          }
+              return(x)
+            }
           }
 )
 
@@ -147,11 +137,12 @@ setMethod("panSharp",
 #'
 setMethod("panSharp", 
           signature(x = "RasterLayer"), 
-          function(x, pan, filter = "mean", winsize = 3){
+          function(x, pan, filter = "mean", winsize = 1){
             ref <- sharp(x, pan, panlf(pan, filter, winsize))  
             return(ref)
           }         
 )
+
 
 #helper functions
 panlf <- function(r, fl, ws){
@@ -160,21 +151,16 @@ panlf <- function(r, fl, ws){
   #ws window size of filter
   d2 <- ws*res(r)[1]
   sigma <- 3
-  #select type of filter for PAN smoothing
   switch(fl,
          mean = {
-           #is used to define the weight matrix for focal.
            ftype <- focalWeight(r, d = d2, type = "rectangle")
-           fun <- sum #sum is default to focal. just set to be sure.
+           fun <- sum
          },
          Gauss = {
-           #set sigma default to 3 for Gauss function. Maybe make sigma subject to user choice?
            ftype <- focalWeight(r, d=c(sigma, d2), type = "Gauss")
            fun <- sum
          },
          median = {
-           #since median filtering can not be defined by the weights matrix for the focal function
-           #the function to be applied when envocing focal is set to median (this is computationally inefficiant see raster::focal)
            ftype <- focalWeight(r, d = d2, type = "rectangle" )
            fun <- median
          }
@@ -188,7 +174,6 @@ panlf <- function(r, fl, ws){
 sharp <- function(rxs, rpan, rpanlf){
   #resample low resolution layer to resolution of panchromatic layer
   interpol <- resample(rxs, rpan, method = "ngb")
-  #pan sharpen
   ref <-  interpol / rpanlf * rpan
   return(ref)
 }
