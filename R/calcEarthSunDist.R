@@ -43,9 +43,9 @@ calcEarthSunDist <- function(date, formula = c("Spencer", "Mather", "ESA")){
   
   day <- as.numeric(strftime(date, format = "%j"))
   if(formula == "Spencer"){
-    T <- 2 * pi * (day - 1) / 365
-    (1/(1.000110 + 0.034221 * cos(T) + 0.001280 * sin(T) + 0.000719 * 
-      cos(2 * T) + 0.000077 * sin(2 * T)))**0.5
+    pos <- 2 * pi * (day - 1) / 365
+    (1/(1.000110 + 0.034221 * cos(pos) + 0.001280 * sin(pos) + 0.000719 * 
+      cos(2 * pos) + 0.000077 * sin(2 * pos)))**0.5
   } else if(formula == "Mather"){
     1/(1 - 0.016729 * cos(0.9856 * (day - 4)))
   } else if(formula == "ESA"){
