@@ -59,9 +59,8 @@ setMethod("alignGeometry",
               layer_bcde <- paste0(bcde, "_AG")
               meta_param <- getSatMetaBCDETemplate(x, bcde)
               meta_param$BCDE <- layer_bcde
-              meta_param$SRES <- xres(template)
-#               meta_param$XRES <- xres(template)
-#               meta_param$YRES <- yres(template)
+              meta_param$XRES <- xres(template)
+              meta_param$YRES <- yres(template)
               
               info <- sys.calls()[[1]]
               info <- paste0("Add layer from ", info[1], "(", 
