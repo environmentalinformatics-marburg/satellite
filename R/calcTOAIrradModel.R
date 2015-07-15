@@ -90,7 +90,7 @@ setMethod("calcTOAIrradModel",
             if(normalize == FALSE & missing(esd)){
               esd <- getSatESD(x)
               if(is.na(esd)){
-                doy <- getSatDATE(sat)
+                doy <- getSatDATE(x)
                 esd <- calcEarthSunDist(doy)
               } 
             }

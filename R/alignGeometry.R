@@ -48,10 +48,10 @@ setMethod("alignGeometry",
           function(x, template, band_codes, type, method = c("bilinear", "ngb")){
             method <- method[1]
             if(!missing(type)){
-              band_codes <- getSatBCDE(x)[which(getSatType(sat) == type)]
+              band_codes <- getSatBCDE(x)[which(getSatType(x) == type)]
             }
             else if(missing(band_codes)){
-              band_codes <- getSatBCDE(sat)
+              band_codes <- getSatBCDE(x)
             } 
             for(bcde in band_codes){
               ag <- alignGeometry(x = getSatDataLayer(x, bcde),
