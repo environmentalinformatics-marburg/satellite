@@ -18,7 +18,6 @@ if ( !isGeneric('projectSatellite') ) {
 #' be defined by band_codes.
 #' @param band_codes Band ID(s) to be resampled. If not supplied and type is 
 #' not given, too, all bands will be considered for resampling.
-#' @param type type of the sensor band regarding wavelength (e.g. VIS).
 #' @param crs character or object of class 'CRS'. 
 #' PROJ.4 description of the coordinate reference system. 
 #' See \code{\link{projectRaster}} for details.
