@@ -33,6 +33,8 @@ be defined by band_codes.}
 \item{method}{Method for resampling; "bilinear" for bilinear interpolation
 (default) or "ngb" for nearest neighbor interpolation. See e.g.
 \code{\link{resample}}, \code{\link{projectRaster}}.}
+
+\item{type}{type of the sensor band regarding wavelength (e.g. VIS).}
 }
 \value{
 Satellite object with alligned geometries.

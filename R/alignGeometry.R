@@ -19,6 +19,7 @@ if ( !isGeneric("alignGeometry") ) {
 #' be defined by band_codes.
 #' @param band_codes Band ID(s) to be resampled. If not supplied and type is 
 #' not given, too, all bands will be considered for resampling.
+#' @param type type of the sensor band regarding wavelength (e.g. VIS).
 #' @param method Method for resampling; "bilinear" for bilinear interpolation 
 #' (default) or "ngb" for nearest neighbor interpolation. See e.g. 
 #' \code{\link{resample}}, \code{\link{projectRaster}}.
@@ -59,9 +60,8 @@ setMethod("alignGeometry",
               layer_bcde <- paste0(bcde, "_AG")
               meta_param <- getSatMetaBCDETemplate(x, bcde)
               meta_param$BCDE <- layer_bcde
-              meta_param$SRES <- xres(template)
-#               meta_param$XRES <- xres(template)
-#               meta_param$YRES <- yres(template)
+              meta_param$XRES <- xres(template)
+              meta_param$YRES <- yres(template)
               
               info <- sys.calls()[[1]]
               info <- paste0("Add layer from ", info[1], "(", 
