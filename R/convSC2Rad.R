@@ -55,7 +55,7 @@ NULL
 setMethod("convSC2Rad", 
           signature(x = "Satellite"), 
           function(x, szen_correction = "TRUE"){
-            band_codes <- getSatBCDECalib(x, id = "SC")
+            band_codes <- getSatBCDECalib(x, calib = "SC")
             for(bcde in band_codes){
               if(!is.na(getSatRADM(x, bcde))){
                 sensor_rad <- convSC2Rad(x = getSatDataLayer(x, bcde),

@@ -45,7 +45,7 @@ NULL
 setMethod("convRad2BT", 
           signature(x = "Satellite"), 
           function(x){
-            band_codes <- getSatBCDEThermalCalib(x, id = "RAD")
+            band_codes <- getSatBCDEThermalCalib(x, calib = "RAD")
             for(bcde in band_codes){
               if(!any(is.na(getSatRADM(x, bcde)), is.na(getSatBTK1(x, bcde)))){
                 sensor_ref <- convRad2BT(x = getSatDataLayer(x, bcde),

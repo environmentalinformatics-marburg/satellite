@@ -22,6 +22,7 @@
 #' \code{\link{formatC}} for further details.
 #' @param prefix,postfix Prefix and postfix to be added to the created BCDE 
 #' information.
+#' @param calib Calibration information.
 #' 
 #' 
 #' @return Objects of respective type (see \code{\link{satellite}}). 
@@ -566,9 +567,9 @@ getSatBCDESres <- function(sat, bcde, type){
 #'
 #' @describeIn satInfo Return calibration level for band codes matching type
 #' 
-getSatBCDECalib <- function(sat, bcde, type){
-  calib <- getSatCalib(sat, bcde)
-  result <- getSatBCDE(sat)[grep(type, calib)]
+getSatBCDECalib <- function(sat, bcde, calib){
+  calib_val <- getSatCalib(sat, bcde)
+  result <- getSatBCDE(sat)[grep(calib, calib_val)]
   if(length(result) == 0){
     result = NA_character_
   }
@@ -581,9 +582,9 @@ getSatBCDECalib <- function(sat, bcde, type){
 #'
 #' @describeIn satInfo Return calibration level for band codes machting type and are solar bands
 #' 
-getSatBCDESolarCalib <- function(sat, bcde, type){
-  calib <- getSatBCDECalib(sat, bcde, type)
-  result <- getSatBCDESolar(sat)[getSatBCDESolar(sat) %in% calib]
+getSatBCDESolarCalib <- function(sat, bcde, calib){
+  calib_val <- getSatBCDECalib(sat, bcde, calib)
+  result <- getSatBCDESolar(sat)[getSatBCDESolar(sat) %in% calib_val]
   if(length(result) == 0){
     result = NA_character_
   }
@@ -596,9 +597,9 @@ getSatBCDESolarCalib <- function(sat, bcde, type){
 #'
 #' @describeIn satInfo Return calibration level for band codes machting type and are thermal bands
 #' 
-getSatBCDEThermalCalib <- function(sat, bcde, type){
-  calib <- getSatBCDECalib(sat, bcde, type)
-  return(getSatBCDEThermal(sat)[getSatBCDEThermal(sat) %in% calib])
+getSatBCDEThermalCalib <- function(sat, bcde, calib){
+  calib_val <- getSatBCDECalib(sat, bcde, calib)
+  return(getSatBCDEThermal(sat)[getSatBCDEThermal(sat) %in% calib_val])
 }
 
 
@@ -834,6 +835,14 @@ getSatBTK2 <- function(sat, bcde){
   getSatParam(sat, "BTK2", bcde)
 }
 
+# Return PRAD ------------------------------------------------------------------
+#' @export getSatPRAD
+#'
+#' @rdname satInfo
+#' 
+getSatPRAD <- function(sat, bcde){
+  getSatParam(sat, "PRAD", bcde)
+}
 
 # Return DATE ------------------------------------------------------------------
 #' @export getSatDATE

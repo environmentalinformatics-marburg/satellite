@@ -63,14 +63,14 @@ setMethod("calcTopoCorr",
               x <- demTools(x, method = "hillShade")
             }
             
-            if(any(is.na(getSatBCDESolarCalib(x, id = "AtmosCorr")))){
+            if(any(is.na(getSatBCDESolarCalib(x, calib = "AtmosCorr")))){
               x <- calcAtmosCorr(x)
             }
             
       #      atmoscbands <- getSatDataLayers(x)[grepl("_REF_AtmosCorr$", 
       #                                               getSatBCDE(x))]
             
-            atmos_bands <- getSatBCDESolarCalib(x, id = "AtmosCorr")
+            atmos_bands <- getSatBCDESolarCalib(x, calib = "AtmosCorr")
             
            
             for(i in 1:length(atmos_bands)){

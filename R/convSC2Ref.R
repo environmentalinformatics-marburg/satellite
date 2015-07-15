@@ -62,7 +62,7 @@ NULL
 setMethod("convSC2Ref", 
           signature(x = "Satellite"), 
           function(x, szen_correction = "TRUE"){
-            band_codes <- getSatBCDESolarCalib(x, id = "SC")
+            band_codes <- getSatBCDESolarCalib(x, calib = "SC")
             for(bcde in band_codes){
               if(!is.na(getSatREFM(x, bcde))){
                 if(szen_correction == TRUE){

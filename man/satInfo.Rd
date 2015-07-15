@@ -37,6 +37,7 @@
 \alias{getSatMeta}
 \alias{getSatMetaBCDETemplate}
 \alias{getSatMetaLayer}
+\alias{getSatPRAD}
 \alias{getSatParam}
 \alias{getSatProjection}
 \alias{getSatRADA}
@@ -133,11 +134,11 @@ getSatBCDEFromSpectrum(sat, spectrum = "solar")
 
 getSatBCDESres(sat, bcde, type)
 
-getSatBCDECalib(sat, bcde, type)
+getSatBCDECalib(sat, bcde, calib)
 
-getSatBCDESolarCalib(sat, bcde, type)
+getSatBCDESolarCalib(sat, bcde, calib)
 
-getSatBCDEThermalCalib(sat, bcde, type)
+getSatBCDEThermalCalib(sat, bcde, calib)
 
 getSatBandInfo(sat, bcde, return_calib = TRUE)
 
@@ -181,6 +182,8 @@ getSatBTK1(sat, bcde)
 
 getSatBTK2(sat, bcde)
 
+getSatPRAD(sat, bcde)
+
 getSatDATE(sat, bcde)
 
 getSatProjection(sat, bcde)
@@ -218,6 +221,8 @@ information.}
 \item{type}{Type of the sensor band}
 
 \item{spectrum}{Spectral region, e.g. "solar" or "thermal".}
+
+\item{calib}{Calibration information.}
 
 \item{return_calib}{Return calibration information (TRUE/FALSE)}
 

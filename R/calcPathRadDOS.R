@@ -179,7 +179,7 @@ setMethod("calcPathRadDOS",
             }
             
             # Get solar bands with calibration information equals scaled counts
-            sc_bands <- getSatBCDESolarCalib(x, id = "SC")
+            sc_bands <- getSatBCDESolarCalib(x, calib = "SC")
             
             # Take care of dark object values
             bcde <- "B002n"

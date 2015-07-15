@@ -64,7 +64,7 @@ setMethod("convDN2RU",
             }
             
             if("Rad" %in% convert){
-              band_codes <- getSatBCDECalib(x, id = "SC")
+              band_codes <- getSatBCDECalib(x, calib = "SC")
               for(bcde in band_codes){
                 if(!is.na(getSatRADM(x, bcde))){
                   sensor_rad <- convDN2RU(x = getSatDataLayer(x, bcde),
@@ -88,7 +88,7 @@ setMethod("convDN2RU",
             }
             
             if("Ref" %in% convert){
-              band_codes <- getSatBCDESolarCalib(x, id = "SC")
+              band_codes <- getSatBCDESolarCalib(x, calib = "SC")
               for(bcde in band_codes){
                 if(!is.na(getSatREFM(x, bcde))){
                   if(szen_correction == TRUE){
@@ -122,7 +122,7 @@ setMethod("convDN2RU",
             }
             
             if("BT" %in% convert){
-              band_codes <- getSatBCDEThermalCalib(x, id = "SC")
+              band_codes <- getSatBCDEThermalCalib(x, calib = "SC")
               for(bcde in band_codes){
                 if(!any(is.na(getSatRADM(x, bcde)), is.na(getSatBTK1(x, bcde)))){
                   sensor_ref <- convDN2RU(x = getSatDataLayer(x, bcde),

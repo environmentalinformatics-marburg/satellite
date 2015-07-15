@@ -144,7 +144,7 @@ setMethod("calcAtmosCorr",
             model <- model[1]
             
             # Get solar bands with calibration information equals scaled counts
-            sc_bands <- getSatBCDESolarCalib(x, id = "SC")
+            sc_bands <- getSatBCDESolarCalib(x, calib = "SC")
             
             # Path radiance computation if necessary (TOA irradiance will be
             # computed, too, if necessary)
@@ -153,12 +153,12 @@ setMethod("calcAtmosCorr",
             }
             
             # Radiance conversion if necessary
-            if(any(is.na(getSatBCDESolarCalib(x, id = "RAD")))){
+            if(any(is.na(getSatBCDESolarCalib(x, calib = "RAD")))){
               x <- convSC2Rad(x, szen_correction = "TRUE")
             }
             
             # Compute atmospheric correction (reflectance)
-            rad_bands <- getSatBCDESolarCalib(x, id = "RAD")
+            rad_bands <- getSatBCDESolarCalib(x, calib = "RAD")
             for(bcde_rad in rad_bands){
               ref <-calcAtmosCorr(getSatDataLayer(x, bcde_rad),
                                   path_rad = getSatPRAD(x, bcde_rad),
