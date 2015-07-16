@@ -50,7 +50,7 @@ setMethod('subset', signature(x = 'Satellite'),
               x <- satellite(data, meta = meta, log = log)
             } else {
               if (is.character(cid)) {
-                i <- subset(x@meta, CALIB == cid)
+                i <- subset(x@meta, x@meta$CALIB == cid)
                 if (length(i)==0) {
                   stop('invalid layer names')
                 } else if (length(i) < length(cid)) {
@@ -59,12 +59,16 @@ setMethod('subset', signature(x = 'Satellite'),
                 meta_cid <- i
                 data_cid <- x@layers[as.integer(row.names(i))]
               } else {
-                #cidting by row/list numbers makes only sense for multiples of channel numbers in case all channels
-                #are submitted to the satellite object in the first place. Therefore maybe checking for correct selection
-                #would need to be implemented for user friendlyness.
-                #Maybe defining sat object as list of obejcts, where each
-                #object is an instance of the sat object as it is now defined would make handling complete instances of sat
-                #objects on which some computation was applied easier to handle (instead of appending them directly to the list and the meta data frame)?
+                # cidting by row/list numbers makes only sense for multiples of 
+                # channel numbers in case all channels are submitted to the 
+                # satellite object in the first place. Therefore maybe checking 
+                # for correct selection would need to be implemented for user 
+                # friendlyness. Maybe defining sat object as list of obejcts, 
+                # where each object is an instance of the sat object as it is 
+                # now defined would make handling complete instances of sat 
+                # objects on which some computation was applied easier to handle
+                # (instead of appending them directly to the list and the meta 
+                # data frame)?
                 cid <- as.integer(cid)
                 if (! all(cid %in% 1:length(x@layers))) {
                   stop('not a valid cid')

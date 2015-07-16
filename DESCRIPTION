@@ -11,7 +11,11 @@ Description: This smorgasbord provides a variety of functions which are useful
 Depends: 
     raster, 
     Rcpp (>= 0.10.3), 
-    methods
+    methods,
+    utils,
+    stats,
+    grDevices,
+    graphics    
 Imports: 
     plyr,
     tools

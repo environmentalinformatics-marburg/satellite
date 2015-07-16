@@ -11,10 +11,11 @@ if ( !isGeneric("panSharp") ) {
 #' with the PAN channel (see Details).
 #'
 #' @param x Satellite or \code{raster::Raster*} object.
-#' @param pan if a raster layer object is used the panchromatic image needs to 
-#' be explicitly be specified
+#' @param pan A raster::RasterLayer object of the panchromatic channel
+#' @param pan_lp A raster::RasterLayer object containing a lowpass filtering of
+#' pan 
 #' @param filter Type of filter to be used for smoothing the PAN raster; one of 
-#' mean (default), Gauss, median.
+#'  mean (default), Gauss, median.
 #' @param winsize Size of the filter window in x and y direction; defaults to 3.
 #' @param subset Logical; if \code{TRUE}, all layers except for the cropped ones 
 #' are being dropped; if \code{FALSE}, the cropped layers are being appended to
@@ -183,7 +184,7 @@ pan_lpf <- function(pan, filter, winsize){
          median = {
            ftype <- raster::focalWeight(pan, d = filter_size, 
                                         type = "rectangle" )
-           fun <- median
+           fun <- stats::median
          }
   )
   ref <- raster::focal(pan, w = ftype, fun = fun)

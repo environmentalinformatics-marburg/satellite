@@ -6,7 +6,8 @@
 \alias{panSharp,RasterLayer-method}
 \alias{panSharp,RasterStack-method}
 \alias{panSharp,Satellite-method}
-\title{Pan sharpen low resolution satellite channels by using the high resolution panchromatic channel.}
+\title{Pan sharpen low resolution satellite channels by using the high resolution
+panchromatic channel.}
 \usage{
 \S4method{panSharp}{Satellite}(x, filter = c("mean", "Gauss", "median"),
   winsize = 1, subset = FALSE)
@@ -29,7 +30,10 @@ mean (default), Gauss, median.}
 are being dropped; if \code{FALSE}, the cropped layers are being appended to
 the Satellite object.}
 
-\item{pan}{if a raster layer object is used the panchromatic image needs to be explicitly be specified}
+\item{pan}{A raster::RasterLayer object of the panchromatic channel}
+
+\item{pan_lp}{A raster::RasterLayer object containing a lowpass filtering of
+pan}
 }
 \value{
 If x is a Satellite object, a Satellite object (with added
@@ -48,10 +52,13 @@ with the PAN channel (see Details).
 
 }
 \details{
-Pan sharpen low resolution satellite channels by using the high resolution panchromatic channel. This function uses
-the same algorithm as the OTB Toolbox where "The idea is to apply a low pass filter to the panchromatic band to give it a spectral
-content (in the Fourier domain) equivalent to the XS data. Then we normalize the XS data with this low-pass panchromatic and multiply
-the result with the original panchromatic band." (see \url{https://www.orfeo-toolbox.org/SoftwareGuide/SoftwareGuidech13.html#x41-2140011}).
+Pan sharpen low resolution satellite channels by using the high
+resolution panchromatic channel. This function uses the same algorithm as the
+OTB Toolbox where "The idea is to apply a low pass filter to the
+panchromatic band to give it a spectral content (in the Fourier domain)
+equivalent to the XS data. Then we normalize the XS data with this low-pass
+panchromatic and multiplythe result with the original panchromatic band."
+(see \url{https://www.orfeo-toolbox.org/SoftwareGuide/SoftwareGuidech13.html#x41-2140011}).
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
@@ -63,15 +70,15 @@ sat <- satellite(files)
 sat_ps <- panSharp(sat)
 
 par(mfrow = c(1, 2))
-plot(getSatDataLayer(sat_ps, "B001n"), main = "raw", legend = TRUE)
-plot(getSatDataLayer(sat_ps, "B001_PAN_sharpend"),
+plot(getSatDataLayer(sat_ps, "B002n"), main = "raw", legend = TRUE)
+plot(getSatDataLayer(sat_ps, "B002n_PAN_sharpend"),
      main = "pan-sharpened", legend = TRUE)
 dev.off()
 }
 
 ## using 'RasterLayer' object
 rst_b001n <- getSatDataLayer(sat, "B001n")
-rst_panch <- getSatDataLayer(sat, getSatBCDEType(sat, type = "PCM"))
+rst_panch <- getSatDataLayer(sat, getSatBCDEFromType(sat, type = "PCM"))
 rst_b001n_ps <- panSharp(rst_b001n, rst_panch)
 
 par(mfrow = c(1, 2))
@@ -80,16 +87,18 @@ plot(rst_b001n_ps, main = "pan-sharpened", legend = FALSE)
 dev.off()
 }
 \references{
-Al-amri, Salem Saleh, Namdeo V. Kalyankar, and Santosh D. Khamitkar. "A comparative study of removal noise from remote sensing image."
+Al-amri, Salem Saleh, Namdeo V. Kalyankar, and Santosh D. Khamitkar. "A
+comparative study of removal noise from remote sensing image."
 \url{http://ijcsi.org/articles/A-Comparative-Study-of-Removal-Noise-from-Remote-Sensing-Image.php}
 
-Bhattacharya, Amit K., P. K. Srivastava, and Anil Bhagat. "A modified texture filtering technique for satellite images."
+Bhattacharya, Amit K., P. K. Srivastava, and Anil Bhagat. "A modified texture
+filtering technique for satellite images."
 Paper presented at the 22nd Asian Conference on Remote Sensing. Vol. 5. 2001.
 \url{http://a-a-r-s.org/aars/proceeding/ACRS2001/Papers/DPA3-08.pdf}
 
-Randen, Trygve, and John Hakon Husoy. "Filtering for texture classification: A comparative study."
-Pattern Analysis and Machine Intelligence, IEEE Transactions on 21.4 (1999): 291-310.
-\url{http://dx.doi.org/10.1109/34.761261}.
+Randen, Trygve, and John Hakon Husoy. "Filtering for texture classification:
+A comparative study." Pattern Analysis and Machine Intelligence, IEEE
+Transactions on 21.4 (1999): 291-310. \url{http://dx.doi.org/10.1109/34.761261}.
 
 PAN sharpening articles \cr
 - \url{http://remotesensing.spiedigitallibrary.org/article.aspx?articleid=1726558} \cr

@@ -99,7 +99,7 @@ setMethod("calcHistMatch",
             model <- model[1]
             
             for(l in seq(nlayers(x))){
-              x[[l]] <- calcHistMatch(x = x, target = target, bcde = bcde, 
+              x[[l]] <- calcHistMatch(x = x, target = target, 
                                       minv = minv, maxv = maxv, 
                                       use_cpp = use_cpp)
             }

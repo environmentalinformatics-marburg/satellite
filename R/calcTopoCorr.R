@@ -134,7 +134,8 @@ setMethod("calcTopoCorr",
             if (!is.null(cloudmask)){
               xtmp <- raster::mask(x, cloudmask)
             }
-            model <- summary(lm(raster::values(xtmp) ~ raster::values(hillsh)))
+            model <- summary(stats::lm(raster::values(xtmp) ~ 
+                                         raster::values(hillsh)))
             calib <- hillsh * model$coefficients[[2]] + model$coefficients[[1]]
             x <- x - calib + mean(raster::values(xtmp), na.rm=TRUE)
             return(x)

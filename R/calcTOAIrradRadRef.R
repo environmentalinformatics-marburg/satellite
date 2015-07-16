@@ -73,7 +73,7 @@ setMethod("calcTOAIrradRadRef",
             if(normalize == TRUE & missing(esd)){
               esd = getSatESD(x)
               if(is.na(esd)){
-                esd = calcEartSunDist(getSatDATE(x)[1])
+                esd = calcEarthSunDist(getSatDATE(x)[1])
               } 
             }
             if(normalize == TRUE){

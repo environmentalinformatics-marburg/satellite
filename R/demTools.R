@@ -46,7 +46,8 @@ setMethod("demTools",
             sunElev <- NULL
             sunAzim <- NULL
             if (method == "hillShade"){
-              if (sum(complete.cases(unique(getSatSELV(x))))>1||sum(complete.cases(unique(getSatSAZM(x))))>1){
+              if (sum(stats::complete.cases(unique(getSatSELV(x)))) > 1 || 
+                    sum(stats::complete.cases(unique(getSatSAZM(x))))>1){
                 print("Warning: Satellite data have different Sun elevation or 
                       Sun azimuth values. Only the first element is used")}
               sunElev <- as.numeric(getSatSELV(x)[1])

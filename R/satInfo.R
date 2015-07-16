@@ -532,7 +532,7 @@ getSatBCDEType <- function(sat, bcde, type){
 #' @describeIn satInfo Return BCDE matching TYPE
 #' 
 getSatBCDEFromType <- function(sat, type = "VIS"){
-  as.character(na.exclude(sat@meta$BCDE[sat@meta$TYPE == type]))
+  as.character(stats::na.exclude(sat@meta$BCDE[sat@meta$TYPE == type]))
 }
 
 
@@ -542,7 +542,7 @@ getSatBCDEFromType <- function(sat, type = "VIS"){
 #' @describeIn satInfo Return BCDE matching TYPE
 #' 
 getSatBCDEFromSpectrum <- function(sat, spectrum = "solar"){
-  as.character(na.exclude(sat@meta$BCDE[sat@meta$SPECTRUM == spectrum]))
+  as.character(stats::na.exclude(sat@meta$BCDE[sat@meta$SPECTRUM == spectrum]))
 }
 
 

@@ -55,7 +55,7 @@ compMetaLandsat <- function(files){
   bandinfo <- lutInfoBandsFromSID(datafiles$SID[1])
   bandinfo <- merge(bandinfo, datafiles, by = "BCDE")
   
-  metadata <- read.table(as.character(bandinfo$METAFILE[1]), header = FALSE, 
+  metadata <- utils::read.table(as.character(bandinfo$METAFILE[1]), header = FALSE, 
                          sep = "=", fill = TRUE)
   
   search_term_date <- "DATE_ACQUIRED"

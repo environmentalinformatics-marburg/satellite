@@ -26,7 +26,8 @@ pck_data_exdata <- function(){
   l8 <- raster::stack("inst/extdata/l8_2013-07-07_30m_crop_R_satellite.tif")
   mask <- l8[[2]]
   inpath <- "D:/active/moc/am-remote-sensing/examples/data/landsat/l8_2013-07-07"
-  files <- list.files(inpath, pattern = glob2rx("*.TIF"), full.names = TRUE)
+  files <- list.files(inpath, pattern = utils::glob2rx("*.TIF"), 
+                      full.names = TRUE)
   lapply(files, function(x){
     print(x)
     writeRaster(crop(raster(x), mask), 
@@ -34,7 +35,8 @@ pck_data_exdata <- function(){
   })
   
   inpath <- "D:/active/moc/am-remote-sensing/examples/data/landsat/l7_2001-07-30"
-  files <- list.files(inpath, pattern = glob2rx("*.TIF"), full.names = TRUE)
+  files <- list.files(inpath, pattern = utils::glob2rx("*.TIF"), 
+                      full.names = TRUE)
   lapply(files, function(x){
     print(x)
     writeRaster(crop(raster(x), mask), 
@@ -45,7 +47,8 @@ pck_data_exdata <- function(){
 # DEM in inst/exdata ------------------------------------------------------
 pck_data_exdata_DEM <- function(){
   path <- system.file("extdata", package = "satellite")
-  files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+  files <- list.files(path, pattern = utils::glob2rx("LC8*.tif"), 
+                      full.names = TRUE)
   sat <- satellite(files)
   sat_ll <- projectRaster(sat@layers[[1]], crs = "+init=epsg:4326")
   

@@ -49,7 +49,7 @@ setMethod('plot', signature(x = 'Satellite',
                             y = 'ANY'), 
           function(x,
                    bcde = NULL, 
-                   col = grey.colors(100), 
+                   col = grDevices::grey.colors(100), 
                    ...) {
             
             ## if 'bcde' is not supplied, visualize the initial (up to 16)
@@ -80,14 +80,14 @@ setMethod('plot', signature(x = 'Satellite',
             }
             
             # visualize
-            par(mfrow = c(int_nrow, int_ncol))
+            graphics::par(mfrow = c(int_nrow, int_ncol))
             for (i in 1:int_lyr_len) {
-              plot(ls_lyr[[i]], col = col, ...)
-              title(ch_bcde[i], line = .2)
+              graphics::plot(ls_lyr[[i]], col = col, ...)
+              graphics::title(ch_bcde[i], line = .2)
             }
             
             ## reset par settings
-            par(mfrow = c(1, 1))
+            graphics::par(mfrow = c(1, 1))
             
             return(invisible())
           })    
