@@ -1,6 +1,6 @@
 Package: satellite
 Type: Package
-Date: 2015-09-09
+Title: Various Functions for Handling and Manipulating Remote Sensing Data
 Version: 0.1.1
 Date: 2015-09-09
 Author: Thomas Nauss, Hanna Meyer, Florian Detsch, Tim Appelhans
@@ -26,6 +26,6 @@ Suggests:
     knitr,
     rgdal,
     testthat
-Date: 2015-09-09
+LazyData: true
 VignetteBuilder: knitr
 LinkingTo: Rcpp
