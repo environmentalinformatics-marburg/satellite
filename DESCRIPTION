@@ -1,8 +1,8 @@
 Package: satellite
 Type: Package
-Title: Various Functions for Handling and Manipulating Remote Sensing Data
-Version: 0.1.0
-Date: 2015-07-22
+Date: 2015-09-09
+Version: 0.1.1
+Date: 2015-09-09
 Author: Thomas Nauss, Hanna Meyer, Florian Detsch, Tim Appelhans
 Maintainer: Tim Appelhans
     <admin@environmentalinformatics-marburg.de>
@@ -26,6 +26,6 @@ Suggests:
     knitr,
     rgdal,
     testthat
-LazyData: true
+Date: 2015-09-09
 VignetteBuilder: knitr
 LinkingTo: Rcpp
