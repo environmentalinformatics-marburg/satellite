@@ -18,7 +18,8 @@ Depends:
     graphics    
 Imports: 
     plyr,
-    tools
+    tools, 
+    stats4
 License: GPL-3
 Suggests: 
     devtools,

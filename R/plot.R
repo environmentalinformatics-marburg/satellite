@@ -82,7 +82,7 @@ setMethod('plot', signature(x = 'Satellite',
             # visualize
             graphics::par(mfrow = c(int_nrow, int_ncol))
             for (i in 1:int_lyr_len) {
-              graphics::plot(ls_lyr[[i]], col = col, ...)
+              stats4::plot(ls_lyr[[i]], col = col, ...)
               graphics::title(ch_bcde[i], line = .2)
             }
             
