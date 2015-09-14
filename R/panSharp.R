@@ -112,7 +112,7 @@ setMethod("panSharp",
                                                       return_calib = FALSE),
                                        CALIB = "PAN_sharpend",
                                        createRasterMetaData(pan))
-              info <- sys.calls()[[1]]
+              info <- sys.call(-2)
               info <- paste0("Add layer from ", info[1], "(", 
                              toString(info[2:length(info)]), ")")
               x <- addSatDataLayer(x, bcde = layer_bcde, data = act_pan,
