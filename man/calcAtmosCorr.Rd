@@ -95,7 +95,7 @@ Equations are taken from Song et al. (2001).
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
 sat <- satellite(files)
 sat_atmos <- calcAtmosCorr(sat, model = "DOS2", esun_method = "RadRef")
 

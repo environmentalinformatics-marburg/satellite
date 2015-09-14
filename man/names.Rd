@@ -28,7 +28,7 @@ Get/set Satellite data layer names, i.e. the BCDE id.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
 sat <- satellite(files)
 names(sat)
 new_names <- paste0(names(sat), "_test")

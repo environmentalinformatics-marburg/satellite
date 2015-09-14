@@ -5,15 +5,15 @@ test_that("satellite works as expected for Landsat 7  files", {
   path <- system.file("extdata", 
                       package = "satellite")
   files <- list.files(path, 
-                      pattern = glob2rx("LE7*.tif"), 
+                      pattern = glob2rx("LE7*.TIF"), 
                       full.names = TRUE)
   
   sat <- satellite(files)
 
-  expect_equal(basename(attr(getSatDataLayers(sat)[[1]], "file")@name), "LE71950252001211EDC00_B1.tif")
-  expect_equal(basename(attr(getSatDataLayers(sat)[[2]], "file")@name), "LE71950252001211EDC00_B2.tif")
-  expect_equal(basename(attr(getSatDataLayers(sat)[[6]], "file")@name), "LE71950252001211EDC00_B6_VCID_1.tif")
-  expect_equal(basename(attr(getSatDataLayers(sat)[[9]], "file")@name), "LE71950252001211EDC00_B8.tif")
+  expect_equal(basename(attr(getSatDataLayers(sat)[[1]], "file")@name), "LE71950252001211EDC00_B1.TIF")
+  expect_equal(basename(attr(getSatDataLayers(sat)[[2]], "file")@name), "LE71950252001211EDC00_B2.TIF")
+  expect_equal(basename(attr(getSatDataLayers(sat)[[6]], "file")@name), "LE71950252001211EDC00_B6_VCID_1.TIF")
+  expect_equal(basename(attr(getSatDataLayers(sat)[[9]], "file")@name), "LE71950252001211EDC00_B8.TIF")
   
   expect_equal(as.character(getSatMeta(sat)$BID[[1]]), "1")
   expect_equal(as.character(getSatMeta(sat)$BID[[2]]), "2")
@@ -30,7 +30,7 @@ test_that("satellite works as expected for Landsat 8 files", {
   path <- system.file("extdata", 
                       package = "satellite")
   files <- list.files(path, 
-                      pattern = glob2rx("LC8*.tif"), 
+                      pattern = glob2rx("LC8*.TIF"), 
                       full.names = TRUE)
   sat <- satellite(files)
   

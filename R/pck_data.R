@@ -9,21 +9,21 @@ NULL
 
 # Dataset l7 -------------------------------------------------------------------
 pck_data_l7 <- function(){
-  l7 <- raster::stack("inst/extdata/l7_2001-07-30_30m_crop_R_satellite.tif")
+  l7 <- raster::stack("inst/extdata/l7_2001-07-30_30m_crop_R_satellite.TIF")
   devtools::use_data(l7, overwrite = TRUE)
 }
 
 
 # Dataset l8 -------------------------------------------------------------------
 pck_data_l8 <- function(){
-  l8 <- raster::stack("inst/extdata/l8_2013-07-07_30m_crop_R_satellite.tif")
+  l8 <- raster::stack("inst/extdata/l8_2013-07-07_30m_crop_R_satellite.TIF")
   devtools::use_data(l8, overwrite = TRUE)
 }
 
 
 # Datasets in inst/exdata ------------------------------------------------------
 pck_data_exdata <- function(){
-  l8 <- raster::stack("inst/extdata/l8_2013-07-07_30m_crop_R_satellite.tif")
+  l8 <- raster::stack("inst/extdata/l8_2013-07-07_30m_crop_R_satellite.TIF")
   mask <- l8[[2]]
   inpath <- "D:/active/moc/am-remote-sensing/examples/data/landsat/l8_2013-07-07"
   files <- list.files(inpath, pattern = utils::glob2rx("*.TIF"), 
@@ -47,7 +47,7 @@ pck_data_exdata <- function(){
 # DEM in inst/exdata ------------------------------------------------------
 pck_data_exdata_DEM <- function(){
   path <- system.file("extdata", package = "satellite")
-  files <- list.files(path, pattern = utils::glob2rx("LC8*.tif"), 
+  files <- list.files(path, pattern = utils::glob2rx("LC8*.TIF"), 
                       full.names = TRUE)
   sat <- satellite(files)
   sat_ll <- projectRaster(sat@layers[[1]], crs = "+init=epsg:4326")
@@ -58,7 +58,7 @@ pck_data_exdata_DEM <- function(){
   # srtm <- getData('SRTM', lon = lon, lat = lat, path = "/home/ede")
   
   ## getData did not work properly, so downloaded manually
-  srtm <- raster("/home/ede/Downloads/srtm_38_02/srtm_38_02.tif")
+  srtm <- raster("/home/ede/Downloads/srtm_38_02/srtm_38_02.TIF")
   srtm_sat <- projectRaster(srtm, sat@layers[[1]])
-  writeRaster(srtm_sat, "inst/extdata/DEM.tif")
+  writeRaster(srtm_sat, "inst/extdata/DEM.TIF")
 }

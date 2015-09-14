@@ -45,7 +45,7 @@
 #'
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
-#' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+#' files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
 #' compMetaLandsat(files)
 #' 
 compMetaLandsat <- function(files){
