@@ -88,6 +88,17 @@ Bch <- function(x,y,z){
   x - 2/sqrt(6) * y + 0 * z
 }
 
+#function to swap quadrants 1 with 4 and 2 with 3 to get Zero of the frequency
+#domain to the center of the image
+fftshift2=function(x){
+  nd = length(dim(x))
+  sz = dim(x)
+  sz2 = ceiling(sz/2);
+  idx = list()
+  for (i in 1:nd) idx[[i]] = c((sz2[i]+1):sz[i], 1:sz2[i])
+  retval = x[idx[[1]],idx[[2]]];
+  return(retval)
+}
 
 
 library(satellite)
