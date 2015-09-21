@@ -1,8 +1,8 @@
 Package: satellite
 Type: Package
 Title: Various Functions for Handling and Manipulating Remote Sensing Data
-Version: 0.2.0
-Date: 2015-09-10
+Version: 0.2.2
+Date: 2015-09-14
 Author: Thomas Nauss, Hanna Meyer, Florian Detsch, Tim Appelhans
 Maintainer: Tim Appelhans
     <admin@environmentalinformatics-marburg.de>

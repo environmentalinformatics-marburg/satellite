@@ -5,7 +5,7 @@ context("calcPathRadDOS")
 #-------------------------------------------------------------------------------
 test_that("calcPathRadDOS for numeric works as expected", {
   path <- system.file("extdata", package = "satellite")
-  files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+  files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
   sat <- satellite(files)
   sat <- satTOAIrrad(sat, method = "Model")
   
@@ -89,7 +89,7 @@ test_that("calcPathRadDOS for numeric works as expected", {
 #-------------------------------------------------------------------------------
 test_that("calcPathRadDOS for Satellite works as expected", {
   path <- system.file("extdata", package = "satellite")
-  files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+  files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
   sat <- satellite(files)
   
   sat_pathrad <- calcPathRadDOS(sat, model = "DOS2", esun_method = "RadRef")
@@ -104,7 +104,7 @@ test_that("calcPathRadDOS for Satellite works as expected", {
 #-------------------------------------------------------------------------------
   test_that("Deprecated satPathRadDOS for Satellite works as expected", {
     path <- system.file("extdata", package = "satellite")
-    files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+    files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
     sat <- satellite(files)
     
     sat_pathrad <- satPathRadDOS(sat, atmos_model = "DOS2", 

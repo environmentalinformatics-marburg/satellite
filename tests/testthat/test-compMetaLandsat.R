@@ -4,7 +4,7 @@ test_that("compFilePathLandsat works as expected for Landsat 7", {
   path <- system.file("extdata", 
                       package = "satellite")
   files <- list.files(path, 
-                      pattern = glob2rx("LE7*.tif"), 
+                      pattern = glob2rx("LE7*.TIF"), 
                       full.names = TRUE)
   meta <- compFilePathLandsat(files)
   
@@ -17,18 +17,18 @@ test_that("compFilePathLandsat works as expected for Landsat 7", {
   expect_equal(as.character(meta$BCDE[9]), "B008n")
   
   expect_equal(basename(as.character(meta$FILE[2])), 
-               "LE71950252001211EDC00_B2.tif")
+               "LE71950252001211EDC00_B2.TIF")
   expect_equal(basename(as.character(meta$FILE[6])), 
-               "LE71950252001211EDC00_B6_VCID_1.tif")
+               "LE71950252001211EDC00_B6_VCID_1.TIF")
   expect_equal(basename(as.character(meta$FILE[9])), 
-               "LE71950252001211EDC00_B8.tif")
+               "LE71950252001211EDC00_B8.TIF")
 })
 
 test_that("compFilePathLandsat works as expected for Landsat 8", {
   path <- system.file("extdata", 
                       package = "satellite")
   files <- list.files(path, 
-                      pattern = glob2rx("LC8*.tif"), 
+                      pattern = glob2rx("LC8*.TIF"), 
                       full.names = TRUE)
   meta <- compFilePathLandsat(files)
   
@@ -41,11 +41,11 @@ test_that("compFilePathLandsat works as expected for Landsat 8", {
   expect_equal(as.character(meta$BCDE[12]), "B0QAn")
   
   expect_equal(basename(as.character(meta$FILE[2])), 
-               "LC81950252013188LGN00_B10.tif")
+               "LC81950252013188LGN00_B10.TIF")
   expect_equal(basename(as.character(meta$FILE[8])), 
-               "LC81950252013188LGN00_B6.tif")
+               "LC81950252013188LGN00_B6.TIF")
   expect_equal(basename(as.character(meta$FILE[12])), 
-               "LC81950252013188LGN00_BQA.tif")
+               "LC81950252013188LGN00_BQA.TIF")
 })
 
 
@@ -53,7 +53,7 @@ test_that("compMetaLandsat works as expected for Landsat 7", {
   path <- system.file("extdata", 
                       package = "satellite")
   files <- list.files(path, 
-                      pattern = glob2rx("LE7*.tif"), 
+                      pattern = glob2rx("LE7*.TIF"), 
                       full.names = TRUE)
   meta <- compMetaLandsat(files)  
   
@@ -66,18 +66,18 @@ test_that("compMetaLandsat works as expected for Landsat 7", {
   expect_equal(as.character(meta$BCDE[9]), "B008n")
   
   expect_equal(basename(as.character(meta$FILE[2])), 
-               "LE71950252001211EDC00_B2.tif")
+               "LE71950252001211EDC00_B2.TIF")
   expect_equal(basename(as.character(meta$FILE[6])), 
-               "LE71950252001211EDC00_B6_VCID_1.tif")
+               "LE71950252001211EDC00_B6_VCID_1.TIF")
   expect_equal(basename(as.character(meta$FILE[9])), 
-               "LE71950252001211EDC00_B8.tif")
+               "LE71950252001211EDC00_B8.TIF")
 })
 
 test_that("compMetaLandsat works as expected for Landsat 8", {
   path <- system.file("extdata", 
                       package = "satellite")
   files <- list.files(path, 
-                      pattern = glob2rx("LC8*.tif"), 
+                      pattern = glob2rx("LC8*.TIF"), 
                       full.names = TRUE)
   meta <- compMetaLandsat(files)  
   
@@ -90,11 +90,11 @@ test_that("compMetaLandsat works as expected for Landsat 8", {
   expect_equal(as.character(meta$BCDE[12]), "B0QAn")
   
   expect_equal(basename(as.character(meta$FILE[2])), 
-               "LC81950252013188LGN00_B2.tif")
+               "LC81950252013188LGN00_B2.TIF")
   expect_equal(basename(as.character(meta$FILE[10])), 
-               "LC81950252013188LGN00_B10.tif")
+               "LC81950252013188LGN00_B10.TIF")
   expect_equal(basename(as.character(meta$FILE[12])), 
-               "LC81950252013188LGN00_BQA.tif")
+               "LC81950252013188LGN00_BQA.TIF")
 })
 
 test_that("compMetaLandsat works as expected for Landsat 8 metafile", {

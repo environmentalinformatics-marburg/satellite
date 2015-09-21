@@ -48,7 +48,7 @@ if ( !isGeneric("calcTOAIrradTable") ) {
 #' 
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
-#' files <- list.files(path, pattern = glob2rx("LE7*.tif"), full.names = TRUE)
+#' files <- list.files(path, pattern = glob2rx("LE7*.TIF"), full.names = TRUE)
 #' sat <- satellite(files)
 #' calcTOAIrradTable(sat)
 #'  

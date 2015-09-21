@@ -21,7 +21,7 @@ Convert selected layers of a Satellite object to a RasterStack
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
 sat <- satellite(files)
 
 stck <- stack(sat, c("B001n", "B002n", "B003n"))

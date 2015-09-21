@@ -57,7 +57,7 @@ if ( !isGeneric("panSharp") ) {
 #'
 #' @examples 
 #' path <- system.file("extdata", package = "satellite")
-#' files <- list.files(path, pattern = glob2rx("LC8*.tif"), full.names = TRUE)
+#' files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
 #' sat <- satellite(files)
 #' 
 #' \dontrun{
@@ -112,7 +112,7 @@ setMethod("panSharp",
                                                       return_calib = FALSE),
                                        CALIB = "PAN_sharpend",
                                        createRasterMetaData(pan))
-              info <- sys.calls()[[1]]
+              info <- sys.call(-2)
               info <- paste0("Add layer from ", info[1], "(", 
                              toString(info[2:length(info)]), ")")
               x <- addSatDataLayer(x, bcde = layer_bcde, data = act_pan,
