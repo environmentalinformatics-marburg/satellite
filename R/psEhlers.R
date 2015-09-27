@@ -6,7 +6,7 @@ if ( !isGeneric("psEhlers") ) {
 #' Pan sharpen low resolution satellite channels by using the high resolution 
 #' panchromatic channel.
 #'
-#' @description 
+#' @description Pan sharpening using Ehlers algorithm.
 #'
 #' @param x Satellite or \code{raster::Raster*} object.
 
@@ -16,9 +16,12 @@ if ( !isGeneric("psEhlers") ) {
 #' 
 #' @name psEhlers
 #'
-#' @details 
+#' @details test
 #' 
 #' @references 
+#' Klonus, S., and M. Ehlers, 2007: Image Fusion Using the Ehlers Spectral Characteristics Preservation Algorithm. GIScience & Remote Sensing, 44, 93–116, doi:10.2747/1548-1603.44.2.93.
+#' Ling, Y., M. Ehlers, E. L. Usery, and M. Madden, 2007: FFT-enhanced IHS transform method for fusing high-resolution satellite images. ISPRS Journal of Photogrammetry and Remote Sensing, 61, 381–392, doi:10.1016/j.isprsjprs.2006.11.002.
+
 
 #' \url{}
 
@@ -26,22 +29,23 @@ if ( !isGeneric("psEhlers") ) {
 #' 
 #' 
 #' \dontrun{
+#' }
 
 NULL
 
 
 # Function using satellite object ----------------------------------------------
 #' 
-#' @rdname ehlers
+#' @rdname psEhlers
 #'
 setMethod("psEhlers", 
           signature(x = "Satellite"), 
           function(x, res.method = "ngb", filter = list(win = "Han",
-                   frq.lowpass, fr.highpass), padzero = FALSE), subset = FALSE{
+                   frq.lowpass, fr.highpass), padzero = FALSE, subset = FALSE){
             #try getting satellite layers with reflectance values
             subx <- subset(x, cid = "REF")
             #select PAN
-            pan <- getSatDataLayer(x, getSatBCDEFromType(subx, type = "PCM"))
+            pan <- getSatDataLayer(subx, getSatBCDEFromType(subx, type = "PCM"))
             #select all solar layers (possibly obsolete given that all channels
             #for which reflectance can be calculated are solar).
             bcde_solar <- getSatBCDEFromSpectrum(subx, spectrum = "solar")
@@ -53,16 +57,18 @@ setMethod("psEhlers",
             } else {
               #create vector with layer indices recycling indices if number of
               #layers is unequal multiple of 3
-              layerindices <- rep(c(1:length(bcde_solar), length.out = (3*(length(bcde_solar) %/% 3 + 1))))
+              layerindices <- rep(bcde_solar, length.out = (3*(length(bcde_solar) %/% 3 + 1)))
               #loop through layers stacking by layer indices vector and pansharp
+              #create empty stack for loop
+              nstack <- raster::stack()
               for(i in seq(1,length(bcde_solar),3)){
-                tstack <- raster::stack(subx[[bcde_solar[i]]], subx[[bcde_solar[i+1]]], subx[[bcde_solar[i+2]]])
-                tstack <- satellite:::ehlers(tstack, PAN = PAN, res.method = res.method, filter = filter,
+                tstack <- stack(subx, c(layerindices[i], layerindices[i+1], layerindices[i+2]))
+                tstack <- satellite:::ehlers(tstack, PAN = pan, res.method = res.method, filter = filter,
                                              padzero = padzero)
                 nstack <- raster::stack(nstack, tstack)
               }
-              ##add stack to sat object
-              nstack <- nstack[[1:raster::nlayers(subx)]]
+              ##add stack to sat object (length minus one because pcm layer should not be counted)
+              nstack <- nstack[[1:(length(subx@layers)-1)]]
               #get all bcde numbers from subset except for pcm
               layer_bcde <- paste0(subx@meta$BCDE[subx@meta$TYPE != "PCM"], "_PS_EHLERS")
               
@@ -76,7 +82,7 @@ setMethod("psEhlers",
                              toString(info[2:length(info)]), ")")
               x <- addSatDataLayer(x, bcde = layer_bcde, data = nstack,
                                    meta_param = meta_param,
-                                   info = info, in_bcde = act_bcde)
+                                   info = info, in_bcde = bcde_solar)
             }
             
             if(subset == TRUE){
@@ -89,9 +95,9 @@ setMethod("psEhlers",
 
 # Function using raster::RasterStack object ------------------------------------
 #' 
-#' @rdname ehlers
+#' @rdname psEhlers
 #'
-setMethod("psElers", 
+setMethod("psEhlers", 
           signature(x = "RasterStack"),
           function(x, PAN, res.method = "ngb", filter = list(win = "Han",
                    frq.lowpass, fr.highpass), padzero = FALSE){
@@ -100,10 +106,12 @@ setMethod("psElers",
             } else {
               #create vector with layer indices recycling indices if number of
               #layers is unequal multiple of 3
-              layerindices <- rep(c(1:raster::nlayers(x), length.out = (3*(raster::nlayers(x) %/% 3 + 1))))
+              layerindices <- rep(c(1:raster::nlayers(x)), length.out = (3*(raster::nlayers(x) %/% 3 + 1)))
               #loop through layers stacking by layer indices vector and pansharp
+              #create empty stack for loop
+              nstack <- raster::stack()
               for(i in seq(1,raster::nlayers(x),3)){
-                tstack <- raster::stack(x[[layers[i]]], x[[layers[i+1]]], x[[layers[i+2]]])
+                tstack <- stack(x, c(layerindices[i], layerindices[i+1], layerindices[i+2]))
                 tstack <- satellite:::ehlers(tstack, PAN = PAN, res.method = res.method, filter = filter,
                          padzero = padzero)
                 nstack <- raster::stack(nstack, tstack)
@@ -114,15 +122,6 @@ setMethod("psElers",
           
 )
 
-
-# Function using raster::RasterLayer object ------------------------------------
-#' 
-#' @rdname ehlers
-#'
-setMethod("ehlers", 
-          signature(x = "RasterLayer"), 
-          
-)
 
 #functions
 # IHS transformation functions
@@ -276,14 +275,7 @@ normrast <- function(rast, minv = 0, maxv = 1){
   return(nrast)
 }
 
-
-#get 3 layers for rgb stack
-rgb <- stack(getSatDataLayer(sat1, "B002n_REF"),getSatDataLayer(sat1, "B003n_REF"),getSatDataLayer(sat1, "B004n_REF"))
-#get pcm layer
-pcm <- getSatDataLayer(sat1, "B008n_REF")
-
-
-
+#PAN sharpening function using Ehlers algorithm
 ehlers <- function(x, PAN, res.method = "ngb", filter = list(win = "Han",
                      frq.lowpass, fr.highpass), padzero = FALSE){
   #resample low res channels to match pcm channel (if resolution ratio gets "extremely" small it
@@ -304,7 +296,7 @@ ehlers <- function(x, PAN, res.method = "ngb", filter = list(win = "Han",
   #???are there satellite products which have unsimilar resolution in x and y direction? If so
   #???resolution ratio needs to be calculated for both dimensions separately
   res_ratio <- raster::res(PAN)[1]/raster::res(x)[1]
-  image_size <- raster::dim(PAN)
+  image_size <- dim(PAN)
   cut_freq <- image_size[1] * res_ratio
   
   #create filter
@@ -315,19 +307,22 @@ ehlers <- function(x, PAN, res.method = "ngb", filter = list(win = "Han",
   #if raster layer has even number of columns and rows zero padding up to next power of 2
   #can be applied before fft (since extend adds given values on both sides uneven dimensions
   #would need different numbers of rows for each side).
-  if((dim(PAN)[1] %% 2) == 0 && (dim(PAN)[2] %% 2) == 0 ){
-    intens <- satellite:::padzeros(intens_res)
-    pcm <- satellite:::padzeros(pcm_orig)
-    pzero <- 1
-  } else {
-    print("Raster Layer can not be zeropadded because it has uneven dimensions.")
-    print("Continuing without zeropadding, which might take longer.")
-    print("To use zeropadding please crop to even dimension beforehand.")
+  pzero <- 0
+  if(padzero == TRUE){
+    if((dim(PAN)[1] %% 2) == 0 && (dim(PAN)[2] %% 2) == 0 ){
+      intens <- satellite:::padzeros(intens)
+      pcm <- satellite:::padzeros(pcm_orig)
+      pzero <- 1
+    } else {
+      print("Raster Layer can not be zeropadded because it has uneven dimensions.")
+      print("Continuing without zeropadding, which might take longer.")
+      print("To use zeropadding please crop to even dimension beforehand.")
+    }
   }
   
   #fft intensity and pcm
-  intens_fft <- satellite:::ffto(intens_res)
-  pcm_fft <- satellite:::ffto(pcm)
+  intens_fft <- satellite:::ffto(intens)
+  pcm_fft <- satellite:::ffto(pcm_orig)
   
   #filter images: pan high pass, xs low pass
   intens_fft_filter <- intens_fft
@@ -348,7 +343,7 @@ ehlers <- function(x, PAN, res.method = "ngb", filter = list(win = "Han",
   }
   
   #histogram match image (match to old intensity component)
-  nintens2 <- calcHistMatch(nintens, intens)
+  nintens2 <- calcHistMatch(nintens, intens, plot = FALSE)
   #normalize to match orig intensity
   nintens2 <- satellite:::normrast(nintens2, raster::minValue(intens), raster::maxValue(intens))
   

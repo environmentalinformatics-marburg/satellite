@@ -115,7 +115,7 @@ setMethod("calcHistMatch",
 #'
 setMethod("calcHistMatch", 
           signature(x = "RasterLayer"), 
-          function(x, target, minv = 0L, maxv = 1023L, use_cpp = TRUE){
+          function(x, target, minv = 0L, maxv = 1023L, plot = TRUE, use_cpp = TRUE){
             
             x <- round((x - minValue(x)) * (maxv - minv) / 
                          (maxValue(x) - minValue(x)) + minv)
@@ -124,8 +124,8 @@ setMethod("calcHistMatch",
                               (maxValue(target) - minValue(target)) + minv)
             
             breaks <- seq(minv, maxv + 1)
-            hs <- hist(x, breaks = breaks, right = FALSE)
-            ht <- hist(target, breaks = breaks, right = FALSE)
+            hs <- hist(x, breaks = breaks, right = FALSE, plot = plot)
+            ht <- hist(target, breaks = breaks, right = FALSE, plot = plot)
             
             ## enable c++ functionality
             if (use_cpp) {

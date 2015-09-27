@@ -57,6 +57,8 @@ setMethod('subset', signature(x = 'Satellite'),
                   warning('invalid layer names omitted')
                 }
                 meta_cid <- i
+                rownames(meta_cid) <- seq(1:nrow(meta_cid))
+                meta_cid$LNBR <-seq(1:nrow(meta_cid))
                 data_cid <- x@layers[as.integer(row.names(i))]
               } else {
                 # cidting by row/list numbers makes only sense for multiples of 
@@ -74,6 +76,8 @@ setMethod('subset', signature(x = 'Satellite'),
                   stop('not a valid cid')
                 }
                 meta_cid <- x@meta[cid,]
+                rownames(meta_cid) <- seq(1:nrow(meta_cid))
+                meta_cid$LNBR <-seq(1:nrow(meta_cid))
                 data_cid <- x@layers[cid]
               }
               x <- new("Satellite", layers = data_cid, meta = meta_cid)
