@@ -6,11 +6,30 @@ if ( !isGeneric("psEhlers") ) {
 #' Pan sharpen low resolution satellite channels by using the high resolution 
 #' panchromatic channel.
 #'
-#' @description Pan sharpening using Ehlers algorithm.
+#' @description Pan sharpen low resolution satellite channels by using the high resolution 
+#' panchromatic channel using a combination of IHS transformation and 
+#' fourier filtering as proposed by Ehlers (2004).
 #'
 #' @param x Satellite or \code{raster::Raster*} object.
-
-#' @return I
+#' @param PAN A raster::RasterLayer object of the panchromatic channel.
+#' @param res.method resampling method to be used for the xs channels. Currently methods of
+#' \code{\link{raster:resample}}, namely \code{"ngb"} and \code{"bilinear"} are allowed.
+#' @param filter list object for defining filter window type and further filter parameters.
+#' Currently only Han window is implemented and cut of frequency by default is calculated
+#' by resolution ratio of xs to PAN resolution.
+#' @param padzero Logical; defaults to \code{FALSE}. Option to zero pad images before applying FFT.
+#' Currently only images with even number of rows and columns can be zero padded. If zero padding
+#' is choosen images need to be cropped to have even numer of rows and columns (see
+#' \code{\link{satellite::crop}}). By default if number of rows/ columns are uneven but padding
+#' ist set to \code{TRUE} function will warn but continue without padding.
+#' For information on zero padding see for example ??????? in References.
+#' @param subset Logical; if TRUE, all layers except for the cropped ones are being dropped;
+#' if FALSE, the cropped layers are being appended to the Satellite object.
+#' 
+#' 
+#' @return If x is a Satellite object, a Satellite object (with added 
+#' pansharpened layers); if x is a \code{raster::stack*} object, a 
+#' \code{raster::stack*} with pansharpened layer(s).
 #' 
 #' @export psEhlers
 #' 
@@ -75,7 +94,7 @@ setMethod("psEhlers",
               meta_param <- data.frame(getSatSensorInfo(subx),
                                        getSatBandInfo(subx, subx@meta$BCDE[subx@meta$TYPE != "PCM"], 
                                                       return_calib = FALSE),
-                                       CALIB = "PS_Ehlers",
+                                       CALIB = "PS_EHLERS",
                                        createRasterMetaData(pan))
               info <- sys.call(-2)
               info <- paste0("Add layer from ", info[1], "(", 
@@ -100,7 +119,7 @@ setMethod("psEhlers",
 setMethod("psEhlers", 
           signature(x = "RasterStack"),
           function(x, PAN, res.method = "ngb", filter = list(win = "Han",
-                   frq.lowpass, fr.highpass), padzero = FALSE){
+                   frq.lowpass, fr.highpass), padzero = FALSE, subset = FALSE){
             if(raster::nlayers(x) < 3){
               stop("Pansharpening using Ehlers algorithm needs at least 3 raster layers.")
             } else {
