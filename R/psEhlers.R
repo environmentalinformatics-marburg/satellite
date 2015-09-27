@@ -39,14 +39,14 @@ setMethod("psEhlers",
           function(x, res.method = "ngb", filter = list(win = "Han",
                    frq.lowpass, fr.highpass), padzero = FALSE), subset = FALSE{
             #try getting satellite layers with reflectance values
-            sub <- subset(x, cid = "REF")
+            subx <- subset(x, cid = "REF")
             #select PAN
-            pan <- getSatDataLayer(x, getSatBCDEFromType(sub, type = "PCM"))
+            pan <- getSatDataLayer(x, getSatBCDEFromType(subx, type = "PCM"))
             #select all solar layers (possibly obsolete given that all channels
             #for which reflectance can be calculated are solar).
-            bcde_solar <- getSatBCDEFromSpectrum(sub, spectrum = "solar")
+            bcde_solar <- getSatBCDEFromSpectrum(subx, spectrum = "solar")
             bcde_solar <- 
-              bcde_solar[!bcde_solar %in% getSatBCDEFromType(sub, type = "PCM")]
+              bcde_solar[!bcde_solar %in% getSatBCDEFromType(subx, type = "PCM")]
             
             if(length(bcde_solar) < 3){
               stop("Pansharpening using Ehlers algorithm needs at least 3 raster layers.")
@@ -56,17 +56,31 @@ setMethod("psEhlers",
               layerindices <- rep(c(1:length(bcde_solar), length.out = (3*(length(bcde_solar) %/% 3 + 1))))
               #loop through layers stacking by layer indices vector and pansharp
               for(i in seq(1,length(bcde_solar),3)){
-                tstack <- raster::stack(x[[bcde_solar[i]]], x[[bcde_solar[i+1]]], x[[bcde_solar[i+2]]])
+                tstack <- raster::stack(subx[[bcde_solar[i]]], subx[[bcde_solar[i+1]]], subx[[bcde_solar[i+2]]])
                 tstack <- satellite:::ehlers(tstack, PAN = PAN, res.method = res.method, filter = filter,
                                              padzero = padzero)
                 nstack <- raster::stack(nstack, tstack)
-                
-                ##add stack to sat object
               }
+              ##add stack to sat object
+              nstack <- nstack[[1:raster::nlayers(subx)]]
+              #get all bcde numbers from subset except for pcm
+              layer_bcde <- paste0(subx@meta$BCDE[subx@meta$TYPE != "PCM"], "_PS_EHLERS")
+              
+              meta_param <- data.frame(getSatSensorInfo(subx),
+                                       getSatBandInfo(subx, subx@meta$BCDE[subx@meta$TYPE != "PCM"], 
+                                                      return_calib = FALSE),
+                                       CALIB = "PS_Ehlers",
+                                       createRasterMetaData(pan))
+              info <- sys.call(-2)
+              info <- paste0("Add layer from ", info[1], "(", 
+                             toString(info[2:length(info)]), ")")
+              x <- addSatDataLayer(x, bcde = layer_bcde, data = nstack,
+                                   meta_param = meta_param,
+                                   info = info, in_bcde = act_bcde)
             }
             
             if(subset == TRUE){
-              x <- subset(x, cid = "PAN_sharpend")
+              x <- subset(x, cid = "PS_Ehlers")
             }
             return(x)
           }
@@ -95,7 +109,7 @@ setMethod("psElers",
                 nstack <- raster::stack(nstack, tstack)
               }
             }
-            return(nstack[[1:nlayers(x)]])
+            return(nstack[[1:raster::nlayers(x)]])
           }
           
 )
