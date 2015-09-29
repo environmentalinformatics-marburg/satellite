@@ -9,13 +9,13 @@
 \title{Illumination correction across scenes using histogram matching}
 \usage{
 \S4method{calcHistMatch}{Satellite}(x, target, bcde = NULL, minv = 0L,
-  maxv = 1023L, use_cpp = TRUE)
+  maxv = 1023L, plot = TRUE, use_cpp = TRUE)
 
 \S4method{calcHistMatch}{RasterStack}(x, target, minv = 0L, maxv = 1023L,
-  use_cpp = TRUE)
+  plot = TRUE, use_cpp = TRUE)
 
 \S4method{calcHistMatch}{RasterLayer}(x, target, minv = 0L, maxv = 1023L,
-  use_cpp = TRUE)
+  plot = TRUE, use_cpp = TRUE)
 }
 \arguments{
 \item{x}{Satellite or raster::Raster* object providing the source band(s) to
@@ -30,6 +30,9 @@ provided, defaults to the minimum of both layers).}
 
 \item{maxv}{Upper limit of the possible range for transformation (if not
 provided, defaults to the maximum of both layers).}
+
+\item{plot}{Logical. If \code{TRUE}, histogram will be plotted after matching.
+If \code{FALSE}, plotting will be surpressed.}
 
 \item{use_cpp}{Logical. If \code{TRUE}, C++ functionality (via \strong{Rcpp})
 is enabled, which leads to a considerable reduction of both computation time

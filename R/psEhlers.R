@@ -22,7 +22,7 @@ if ( !isGeneric("psEhlers") ) {
 #' is choosen images need to be cropped to have even numer of rows and columns (see
 #' \code{\link{satellite::crop}}). By default if number of rows/ columns are uneven but padding
 #' ist set to \code{TRUE} function will warn but continue without padding.
-#' For information on zero padding see for example ??????? in References.
+#' For information on zero padding see for example Butz (2011) in References.
 #' @param subset Logical; if TRUE, all layers except for the cropped ones are being dropped;
 #' if FALSE, the cropped layers are being appended to the Satellite object.
 #' 
@@ -35,11 +35,26 @@ if ( !isGeneric("psEhlers") ) {
 #' 
 #' @name psEhlers
 #'
-#' @details test
+#' @details This function implements the PAN sharpening algorithm described in Klonus & Ehlers (2007)
+#' and Ling et. al. (2007). It sharpens satellite images by using a combination of IHS transformation
+#' and subsequent filtering of the Intensity component in the frequency domain. After filtering of the
+#' intensity components of PAN and XS the images are reverse FFT transformed and summed up to form the 
+#' new intensity component to be used for the reverse IHS transformation, which results in the new
+#' pansharpened RGB channels. For more detailed description see references. 
 #' 
 #' @references 
+#' Ehlers, M., 2004: Spectral characteristics preserving image fusion based on Fourier domain filtering. Vol. 5574 of, 1–13 http://dx.doi.org/10.1117/12.565160 (Accessed July 26, 2015).
+#' 
 #' Klonus, S., and M. Ehlers, 2007: Image Fusion Using the Ehlers Spectral Characteristics Preservation Algorithm. GIScience & Remote Sensing, 44, 93–116, doi:10.2747/1548-1603.44.2.93.
+#' 
 #' Ling, Y., M. Ehlers, E. L. Usery, and M. Madden, 2007: FFT-enhanced IHS transform method for fusing high-resolution satellite images. ISPRS Journal of Photogrammetry and Remote Sensing, 61, 381–392, doi:10.1016/j.isprsjprs.2006.11.002.
+#' 
+#' Fisher, R, et. al. 2000: HYPERMEDIA IMAGE PROCESSING REFERENCE. \link{http://homepages.inf.ed.ac.uk/rbf/HIPR2/fourier.htm}
+#' 
+#' Weinhaus, F., 2011: ImageMagick v6 Examples -- Fourier Transforms. \link{http://www.imagemagick.org/Usage/fourier/#im_fft}
+#' 
+#' Butz, T., 2011: Fouriertransformation für Fußgänger. 7., aktualisierte Aufl. Vieweg + Teubner, Wiesbaden. (German)
+
 
 
 #' \url{}
@@ -52,6 +67,14 @@ if ( !isGeneric("psEhlers") ) {
 
 NULL
 
+# possible TODOs:
+# - other filter windows (gauss, hamming, etc.)
+# - bicubic convolution resampling (see interp2grid from climates package
+#   https://rforge.net/doc/packages/climates/interp2grid.html or bicubic from akima package
+#   http://www.inside-r.org/packages/cran/akima/docs/bicubic)
+# - zero padding for images with uneven row/ column number
+# - option to use fftw3 library with wrappers from fftwtools package (might speed up
+#   fft with large images)
 
 # Function using satellite object ----------------------------------------------
 #' 

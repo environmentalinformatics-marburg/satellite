@@ -16,6 +16,8 @@ if ( !isGeneric("calcHistMatch") ) {
 #' provided, defaults to the minimum of both layers).
 #' @param maxv Upper limit of the possible range for transformation (if not 
 #' provided, defaults to the maximum of both layers).
+#' @param plot Logical. If \code{TRUE}, histogram will be plotted after matching.
+#' If \code{FALSE}, plotting will be surpressed.
 #' @param use_cpp Logical. If \code{TRUE}, C++ functionality (via \strong{Rcpp}) 
 #' is enabled, which leads to a considerable reduction of both computation time
 #' and memory usage.
@@ -52,7 +54,7 @@ NULL
 #'
 setMethod("calcHistMatch", 
           signature(x = "Satellite"), 
-          function(x, target, bcde = NULL, minv = 0L, maxv = 1023L,
+          function(x, target, bcde = NULL, minv = 0L, maxv = 1023L, plot = TRUE,
                    use_cpp = TRUE){
             
             if(is.null(bcde)){
@@ -94,7 +96,7 @@ setMethod("calcHistMatch",
 #'
 setMethod("calcHistMatch", 
           signature(x = "RasterStack"), 
-          function(x, target, minv = 0L, maxv = 1023L, use_cpp = TRUE){
+          function(x, target, minv = 0L, maxv = 1023L, plot = TRUE, use_cpp = TRUE){
             # If not supplied, 'model' defaults to DOS2
             model <- model[1]
             
