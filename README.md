@@ -1,4 +1,10 @@
-![downloads](http://cranlogs.r-pkg.org/badges/satellite)
+#### Package downloads from the [RStudio CRAN Mirror](http://cran-logs.rstudio.com/)</b>
+
+This month      | In total
+--------------- | -----------
+![month](http://cranlogs.r-pkg.org/badges/satellite) | ![total](http://cranlogs.r-pkg.org/badges/grand-total/satellite)
+
+<hr>
 
 # satellite
 This smorgasbord provides a variety of functions which are useful 
