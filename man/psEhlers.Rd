@@ -19,7 +19,7 @@ panchromatic channel.}
 \item{x}{Satellite or \code{raster::Raster*} object.}
 
 \item{res.method}{resampling method to be used for the xs channels. Currently methods of
-\code{\link{raster:resample}}, namely \code{"ngb"} and \code{"bilinear"} are allowed.}
+\code{\link[raster]{resample}}, namely \code{"ngb"} and \code{"bilinear"} are allowed.}
 
 \item{filter}{list object for defining filter window type and further filter parameters.
 Currently only Han window is implemented and cut of frequency by default is calculated
@@ -28,7 +28,7 @@ by resolution ratio of xs to PAN resolution.}
 \item{padzero}{Logical; defaults to \code{FALSE}. Option to zero pad images before applying FFT.
 Currently only images with even number of rows and columns can be zero padded. If zero padding
 is choosen images need to be cropped to have even numer of rows and columns (see
-\code{\link{satellite::crop}}). By default if number of rows/ columns are uneven but padding
+\code{\link[satellite]{crop}}). By default if number of rows/ columns are uneven but padding
 ist set to \code{TRUE} function will warn but continue without padding.
 For information on zero padding see for example Butz (2011) in References.}
 
@@ -68,9 +68,9 @@ Klonus, S., and M. Ehlers, 2007: Image Fusion Using the Ehlers Spectral Characte
 
 Ling, Y., M. Ehlers, E. L. Usery, and M. Madden, 2007: FFT-enhanced IHS transform method for fusing high-resolution satellite images. ISPRS Journal of Photogrammetry and Remote Sensing, 61, 381–392, doi:10.1016/j.isprsjprs.2006.11.002.
 
-Fisher, R, et. al. 2000: HYPERMEDIA IMAGE PROCESSING REFERENCE. \link{http://homepages.inf.ed.ac.uk/rbf/HIPR2/fourier.htm}
+Fisher, R, et. al. 2000: HYPERMEDIA IMAGE PROCESSING REFERENCE. \url{http://homepages.inf.ed.ac.uk/rbf/HIPR2/fourier.htm}
 
-Weinhaus, F., 2011: ImageMagick v6 Examples -- Fourier Transforms. \link{http://www.imagemagick.org/Usage/fourier/#im_fft}
+Weinhaus, F., 2011: ImageMagick v6 Examples -- Fourier Transforms. \url{http://www.imagemagick.org/Usage/fourier/#im_fft}
 
 Butz, T., 2011: Fouriertransformation für Fußgänger. 7., aktualisierte Aufl. Vieweg + Teubner, Wiesbaden. (German)
 \url{}
