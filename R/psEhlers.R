@@ -105,7 +105,7 @@ setMethod("psEhlers",
               nstack <- raster::stack()
               for(i in seq(1,length(bcde_solar),3)){
                 tstack <- stack(subx, c(layerindices[i], layerindices[i+1], layerindices[i+2]))
-                tstack <- satellite:::ehlers(tstack, PAN = pan, res.method = res.method, filter = filter,
+                tstack <- ehlers(tstack, PAN = pan, res.method = res.method, filter = filter,
                                              padzero = padzero)
                 nstack <- raster::stack(nstack, tstack)
               }
@@ -154,7 +154,7 @@ setMethod("psEhlers",
               nstack <- raster::stack()
               for(i in seq(1,raster::nlayers(x),3)){
                 tstack <- stack(x, c(layerindices[i], layerindices[i+1], layerindices[i+2]))
-                tstack <- satellite:::ehlers(tstack, PAN = PAN, res.method = res.method, filter = filter,
+                tstack <- ehlers(tstack, PAN = PAN, res.method = res.method, filter = filter,
                          padzero = padzero)
                 nstack <- raster::stack(nstack, tstack)
               }
@@ -325,7 +325,7 @@ ehlers <- function(x, PAN, res.method = "ngb", filter = list(win = "Han",
   rgb_res <- raster::resample(x, PAN, method = res.method)
   
   #normalize pcm
-  pcm_orig <- satellite:::normrast(PAN)
+  pcm_orig <- normrast(PAN)
   
   #calculate intensity (IHS trafo)
   intens <- raster::overlay(rgb_res,fun=intensity)
@@ -342,7 +342,7 @@ ehlers <- function(x, PAN, res.method = "ngb", filter = list(win = "Han",
   cut_freq <- image_size[1] * res_ratio
   
   #create filter
-  filter <- satellite:::han2d(2*(floor(cut_freq/2)), targetsizex = image_size[1], targetsizey = image_size[2])
+  filter <- han2d(2*(floor(cut_freq/2)), targetsizex = image_size[1], targetsizey = image_size[2])
   #inverse filter for filtering PAN
   ifilter <- 1-filter
   
@@ -352,8 +352,8 @@ ehlers <- function(x, PAN, res.method = "ngb", filter = list(win = "Han",
   pzero <- 0
   if(padzero == TRUE){
     if((dim(PAN)[1] %% 2) == 0 && (dim(PAN)[2] %% 2) == 0 ){
-      intens <- satellite:::padzeros(intens)
-      pcm <- satellite:::padzeros(pcm_orig)
+      intens <- padzeros(intens)
+      pcm <- padzeros(pcm_orig)
       pzero <- 1
     } else {
       print("Raster Layer can not be zeropadded because it has uneven dimensions.")
@@ -363,18 +363,18 @@ ehlers <- function(x, PAN, res.method = "ngb", filter = list(win = "Han",
   }
   
   #fft intensity and pcm
-  intens_fft <- satellite:::ffto(intens)
-  pcm_fft <- satellite:::ffto(pcm_orig)
+  intens_fft <- ffto(intens)
+  pcm_fft <- ffto(pcm_orig)
   
   #filter images: pan high pass, xs low pass
   intens_fft_filter <- intens_fft
-  intens_fft_filter[[1]] <- satellite:::fftshift2(satellite:::fftshift2(intens_fft[[1]]) * filter)
+  intens_fft_filter[[1]] <- fftshift2(fftshift2(intens_fft[[1]]) * filter)
   pcm_fft_filter <- pcm_fft
-  pcm_fft_filter[[1]] <- satellite:::fftshift2(satellite:::fftshift2(pcm_fft[[1]]) * ifilter)
+  pcm_fft_filter[[1]] <- fftshift2(fftshift2(pcm_fft[[1]]) * ifilter)
   
   #reverse fft both images
-  intens_ifft <- satellite:::iffto(intens_fft_filter)
-  pcm_ifft <- satellite:::iffto(pcm_fft_filter)
+  intens_ifft <- iffto(intens_fft_filter)
+  pcm_ifft <- iffto(pcm_fft_filter)
   
   #add both images and convert back to raster layer
   nintens <- raster::raster(Re(intens_ifft + pcm_ifft), template = rgb_res[[1]])
@@ -387,7 +387,7 @@ ehlers <- function(x, PAN, res.method = "ngb", filter = list(win = "Han",
   #histogram match image (match to old intensity component)
   nintens2 <- calcHistMatch(nintens, intens, plot = FALSE)
   #normalize to match orig intensity
-  nintens2 <- satellite:::normrast(nintens2, raster::minValue(intens), raster::maxValue(intens))
+  nintens2 <- normrast(nintens2, raster::minValue(intens), raster::maxValue(intens))
   
   #use image as new intensity component with old hue and saturation and do reverse ihs transform
   ihs <- raster::stack(nintens2, hue, saturation)

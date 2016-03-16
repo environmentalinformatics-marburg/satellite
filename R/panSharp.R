@@ -93,8 +93,8 @@ setMethod("panSharp",
                    winsize = 1, subset = FALSE){
             
             pan <- getSatDataLayer(x, getSatBCDEFromType(x, type = "PCM"))
-            pan_lp <- satellite:::pan_lpf(pan = pan, filter = filter[1], 
-                                          winsize = winsize)
+            pan_lp <- pan_lpf(pan = pan, filter = filter[1], 
+                              winsize = winsize)
             
             bcde_solar <- getSatBCDEFromSpectrum(x, spectrum = "solar")
             bcde_solar <- 
