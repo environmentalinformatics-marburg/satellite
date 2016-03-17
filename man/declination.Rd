@@ -4,15 +4,20 @@
 \alias{declination}
 \title{Compute declination angle}
 \usage{
-declination(n, formula = c("Cooper", "Spencer"))
+declination(n, formula = c("Cooper", "Spencer"), unit = c("radians",
+  "degrees"))
 }
 \arguments{
 \item{n}{Day of the year (DOY) as \code{integer} or \code{Date} from which to
 derive DOY.}
 
-\item{formula}{Formula to be applied, specified through the name of the 
-author (see References). Currently, the approximation equation of Cooper 
-(1969) and the more accurate estimation of Spencer (1971) are implemented.}
+\item{formula}{\code{character}, formula from which to calculate the angular 
+declination of the sun, specified through the name of the author (see 
+References). Currently, the approximation equation from Cooper (1969) and the 
+more accurate version from Spencer (1971) are available.}
+
+\item{unit}{\code{character}, determines whether to return the declination 
+angle in radians (default) or degrees.}
 }
 \value{
 A \code{numeric} declination angle.
@@ -21,14 +26,16 @@ A \code{numeric} declination angle.
 Compute the declination of the sun at solar noon based on the day of the 
 year.
 }
-\details{
+\note{
 "The declination of the sun is the angle between the equator and a line drawn 
 from the centre of the Earth to the centre of the sun." (directly taken from 
 \url{http://www.pveducation.org/pvcdrom/properties-of-sunlight/declination-angle})
 }
 \examples{
-declination(Sys.Date())
-declination(Sys.Date(), formula = "Spencer")
+## calculate current declination angles
+sapply(c("Cooper", "Spencer"), function(frml) {
+  declination(Sys.Date(), formula = frml)
+})
 
 }
 \references{
