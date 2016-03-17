@@ -23,7 +23,7 @@ year.
 }
 \details{
 "The declination of the sun is the angle between the equator and a line drawn 
-from the centre of the Earth to the centre of the sun." (taken from 
+from the centre of the Earth to the centre of the sun." (directly taken from 
 \url{http://www.pveducation.org/pvcdrom/properties-of-sunlight/declination-angle})
 }
 \examples{
@@ -44,7 +44,9 @@ See also
 \itemize{
   \item Duffie JA, Beckman WA (2013) Solar Engineering of Thermal Processes. 
   Wiley: Hoboken, New Jersey, ISBN: 978-0-470-87366-3,
-  \url{http://eu.wiley.com/WileyCDA/WileyTitle/productCd-0470873663.html}
+  \url{http://eu.wiley.com/WileyCDA/WileyTitle/productCd-0470873663.html} and 
+  \item ITACA (2016) Part 3: Calculating Solar Angles, 
+  \url{http://www.itacanet.org/the-sun-as-a-source-of-energy/part-3-calculating-solar-angles/}
 }
 for further information.
 }

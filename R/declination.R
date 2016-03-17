@@ -15,7 +15,7 @@
 #' 
 #' @details 
 #' "The declination of the sun is the angle between the equator and a line drawn 
-#' from the centre of the Earth to the centre of the sun." (taken from 
+#' from the centre of the Earth to the centre of the sun." (directly taken from 
 #' \url{http://www.pveducation.org/pvcdrom/properties-of-sunlight/declination-angle})
 #' 
 #' @references 
@@ -31,7 +31,9 @@
 #' \itemize{
 #'   \item Duffie JA, Beckman WA (2013) Solar Engineering of Thermal Processes. 
 #'   Wiley: Hoboken, New Jersey, ISBN: 978-0-470-87366-3,
-#'   \url{http://eu.wiley.com/WileyCDA/WileyTitle/productCd-0470873663.html}
+#'   \url{http://eu.wiley.com/WileyCDA/WileyTitle/productCd-0470873663.html} and 
+#'   \item ITACA (2016) Part 3: Calculating Solar Angles, 
+#'   \url{http://www.itacanet.org/the-sun-as-a-source-of-energy/part-3-calculating-solar-angles/}
 #' }
 #' for further information.
 #' 
@@ -49,11 +51,11 @@ declination <- function(n, formula = c("Cooper", "Spencer")) {
   
   ## formula by Cooper 1969  
   if (formula[1] == "Cooper") {
-    23.45 * sin(360 * (284 + n) / 365)
+    23.45 * sin(2 * pi * (284 + n) / 365)
     
   ## formula by Spencer 1971  
   } else if (formula[1] == "Spencer") {
-    B <- (n - 1) * 360 / 365
+    B <- (n - 1) * 2 * pi / 365
     (180 / pi) * (0.006918 - 0.399912 * cos(B) + 0.070257 * sin(B) - 
                     0.006758 * cos(2 * B) + 0.000907 * sin(2 * B) - 
                     0.002697 * cos(3 * B) + 0.00148 * sin(3 * B))
