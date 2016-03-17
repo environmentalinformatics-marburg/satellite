@@ -230,7 +230,16 @@ addSatLog <- function(sat, info = NA_character_, in_bcde = NA_character_,
 #'
 addSatDataLayer <- function(sat, bcde, data, meta_param, info, in_bcde){
   names(data) <- bcde
-  sat@layers[[length(sat@layers) + 1]] <- data
+  
+  if(class(data) == "RasterLayer"){
+    sat@layers[[length(sat@layers) + 1]] <- data
+  } else {
+    entry <- length(sat@layers)
+    for(i in seq(nlayers(s))){
+      entry <- entry + 1
+      sat@layers[[entry]] <- data[[i]]
+    }
+  }
   
   if(missing(meta_param)){
     meta_param = data.frame(BCDE = bcde)
