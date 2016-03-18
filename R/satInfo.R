@@ -160,12 +160,13 @@ createSatBCDE <- function(sat, width = 3, flag = 0,
 #' @describeIn satInfo Add additional or overwrite metainformation parameter to Satellite object
 #'
 addSatMetaParam <- function(sat, meta_param){
-  id <- colnames(meta_param)[1]
-  name <- colnames(meta_param)[2]
+  id <- "BCDE"
+  names <- colnames(sat@meta)
+  names <- names[-which("BCDE" == names)]
+  
   # Parameter already exists: overwrite, otherwise add
-  if(length(which(name == colnames(sat@meta))) > 0){
-    sat@meta[, which(name == colnames(sat@meta))] <- NULL
-  } 
+  meta_param[, colnames(meta_param) %in% names] <- NULL
+  
   sat@meta <- merge(sat@meta, meta_param, by = id, all.x = TRUE)
   sat@meta <- if (is.null(sat@meta$LNBR)) {
     sat@meta[order(sat@meta$BCDE), ]
@@ -235,7 +236,7 @@ addSatDataLayer <- function(sat, bcde, data, meta_param, info, in_bcde){
     sat@layers[[length(sat@layers) + 1]] <- data
   } else {
     entry <- length(sat@layers)
-    for(i in seq(nlayers(s))){
+    for(i in seq(nlayers(data))){
       entry <- entry + 1
       sat@layers[[entry]] <- data[[i]]
     }
@@ -265,6 +266,7 @@ addRasterMeta2Sat <- function(sat){
     sat <- setSatBCDE(sat)
 
     rst_meta <- data.frame(BCDE = sat@meta$BCDE, 
+                           RID = "R00001",
                          XRES = sapply(sat@layers, function(x) raster::xres(x)),
                          YRES = sapply(sat@layers, function(x) raster::yres(x)),
                          NROW = sapply(sat@layers, function(x) raster::nrow(x)),

@@ -19,6 +19,7 @@
 #'   \item TYPE type of the sensor band regarding wavelength (e.g. VIS)
 #'   \item SPECTRUM spectral range regarding radiation source (e.g. solar)
 #'   \item CALIB type of applied calibration (e.g. SC for scaled counts)
+#'   \item RID region id (e.g. R00001) for multi region satellite objects
 #'   \item RADA addtition coefficient for radiance conversion
 #'   \item RADM multiplication coefficient for radiance conversion
 #'   \item REFA addtition coefficient for reflectance conversion
@@ -128,6 +129,7 @@ compMetaLandsat <- function(files){
                          TYPE = bandinfo$TYPE[x],
                          SPECTRUM = bandinfo$SPECTRUM[x],
                          CALIB = bandinfo$CALIB[x],
+                         RID = "R00001",
                          RADA = cal_add_rad,
                          RADM = cal_mult_rad,
                          REFA = cal_add_ref,
