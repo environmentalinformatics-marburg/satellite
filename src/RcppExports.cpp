@@ -5,6 +5,79 @@
 
 using namespace Rcpp;
 
+// difference
+NumericVector difference(double x, NumericVector y);
+RcppExport SEXP satellite_difference(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    __result = Rcpp::wrap(difference(x, y));
+    return __result;
+END_RCPP
+}
+// isNA
+LogicalVector isNA(NumericVector x);
+RcppExport SEXP satellite_isNA(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    __result = Rcpp::wrap(isNA(x));
+    return __result;
+END_RCPP
+}
+// naOmit
+NumericVector naOmit(NumericVector x);
+RcppExport SEXP satellite_naOmit(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    __result = Rcpp::wrap(naOmit(x));
+    return __result;
+END_RCPP
+}
+// whichMin
+int whichMin(NumericVector x);
+RcppExport SEXP satellite_whichMin(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    __result = Rcpp::wrap(whichMin(x));
+    return __result;
+END_RCPP
+}
+// barometricFormula
+double barometricFormula(double z, NumericVector gp, NumericVector ta, IntegerVector p);
+RcppExport SEXP satellite_barometricFormula(SEXP zSEXP, SEXP gpSEXP, SEXP taSEXP, SEXP pSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< double >::type z(zSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type gp(gpSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type ta(taSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type p(pSEXP);
+    __result = Rcpp::wrap(barometricFormula(z, gp, ta, p));
+    return __result;
+END_RCPP
+}
+// run_barometricFormula
+NumericVector run_barometricFormula(NumericMatrix a, NumericMatrix b, NumericVector dem, IntegerVector p);
+RcppExport SEXP satellite_run_barometricFormula(SEXP aSEXP, SEXP bSEXP, SEXP demSEXP, SEXP pSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericMatrix >::type a(aSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type b(bSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type dem(demSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type p(pSEXP);
+    __result = Rcpp::wrap(run_barometricFormula(a, b, dem, p));
+    return __result;
+END_RCPP
+}
 // insertMinReqRem
 NumericMatrix insertMinReqRem(IntegerVector anHs, IntegerVector anHt);
 RcppExport SEXP satellite_insertMinReqRem(SEXP anHsSEXP, SEXP anHtSEXP) {
