@@ -52,7 +52,7 @@ See also
   \item Duffie JA, Beckman WA (2013) Solar Engineering of Thermal Processes. 
   Wiley: Hoboken, New Jersey, ISBN: 978-0-470-87366-3,
   \url{http://eu.wiley.com/WileyCDA/WileyTitle/productCd-0470873663.html} and 
-  \item ITACA (2016) Part 3: Calculating Solar Angles, 
+  \item ITACA (2016) Part 3: Calculating Solar Angles. Available online at  
   \url{http://www.itacanet.org/the-sun-as-a-source-of-energy/part-3-calculating-solar-angles/}
 }
 for further information.
