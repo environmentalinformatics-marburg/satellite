@@ -76,30 +76,13 @@ double barometricFormula(double z, NumericVector gp, NumericVector ta,
   NumericVector differences = difference(z, gp);
   int id = whichMin(differences);
 
-  // if subsequent geopotential is NA, automatically use 1st algorithm 
-  bool isna = (gp[id + 1] != gp[id + 1]);
-  bool smallerThan = false;
-
-  if (isna) {
-    smallerThan = true;
-  } else {
-    smallerThan = differences[id - 1] < differences[id + 1];
-  }
-  
   // base elevation, pressure, and temperature
   double h0, h1, t, p0;
-  if (smallerThan) {
-    h0 = gp[id];
-    h1 = z;
-    t = ta[id];
-    p0 = p[id];
-  } else {
-    h0 = gp[id + 1];
-    h1 = z;
-    t = ta[id + 1];
-    p0 = p[id + 1];
-  }
-
+  h0 = gp[id];
+  h1 = z;
+  t = ta[id];
+  p0 = p[id];
+  
   // calculate pressure at z-level
   double dh, g, M, R;
 
