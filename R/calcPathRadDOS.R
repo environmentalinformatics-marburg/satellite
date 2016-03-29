@@ -87,10 +87,10 @@ if ( !isGeneric("calcPathRadDOS") ) {
 #' Chavez Jr PS (1996) Image-based atmospheric corrections revisited and
 #' improved. Photogrammetric Engineering and Remote Sensing 62/9,
 #' available online at 
-#' \url{http://www.asprs.org/PE-RS-Journals-1996/PE-RS-September-1996.html}.
+#' \url{http://asprs.org/a/publications/pers/96journal/september/1996_sep_1025-1036.pdf}.
 #'  
 #' Goslee SC (2011) Analyzing Remote Sensing Data in R: The landsat 
-#' Package. Journal of Statistical Software,43/4, 1-25, available online at 
+#' Package. Journal of Statistical Software, 43/4, 1-25, available online at 
 #' \url{http://www.jstatsoft.org/v43/i04/}.
 #' 
 #' Moran MS, Jackson RD, Slater PN, Teillet PM (1992) Evlauation of simplified

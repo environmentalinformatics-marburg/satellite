@@ -54,11 +54,7 @@ if ( !isGeneric("psEhlers") ) {
 #' Weinhaus, F., 2011: ImageMagick v6 Examples -- Fourier Transforms. \url{http://www.imagemagick.org/Usage/fourier/#im_fft}
 #' 
 #' Butz, T., 2011: Fouriertransformation für Fußgänger. 7., aktualisierte Aufl. Vieweg + Teubner, Wiesbaden. (German)
-
-
-
-#' \url{}
-
+#' 
 #' @examples 
 #' 
 #' 
