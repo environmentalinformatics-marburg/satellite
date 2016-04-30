@@ -2,7 +2,7 @@ setMethod ('print' , signature(x = "Satellite"),
            function(x)
            {
              cat(paste("Summary of the Satellite Object\n\n", sep = ""))
-             print(getSatMeta(x)[1:10]) 
+             print(getSatMeta(x)[1:11]) 
              cat(paste("\n Layers are projected in:\n",
                        getSatProjection(x, getSatBCDE(x, 1)), 
                        sep = ""))

@@ -160,18 +160,18 @@ createSatBCDE <- function(sat, width = 3, flag = 0,
 #' @describeIn satInfo Add additional or overwrite metainformation parameter to Satellite object
 #'
 addSatMetaParam <- function(sat, meta_param){
-  id <- "BCDE"
+  id <- c("SCENE", "BCDE")
   names <- colnames(sat@meta)
-  names <- names[-which("BCDE" == names)]
-  
+  names <- names[-which(names %in% id)]
+   
   # Parameter already exists: overwrite, otherwise add
-  meta_param[, colnames(meta_param) %in% names] <- NULL
+  meta_param <- meta_param[, !colnames(meta_param) %in% names]
   
   sat@meta <- merge(sat@meta, meta_param, by = id, all.x = TRUE)
   sat@meta <- if (is.null(sat@meta$LNBR)) {
-    sat@meta[order(sat@meta$BCDE), ]
+    sat@meta[order(sat@meta$SCENE, sat@meta$BCDE), ]
     } else {
-      sat@meta[order(sat@meta$LNBR), ]
+      sat@meta[order(sat@meta$SCENE, sat@meta$LNBR), ]
     }
   return(sat)
 }
@@ -262,11 +262,15 @@ addSatDataLayer <- function(sat, bcde, data, meta_param, info, in_bcde){
 #'
 addRasterMeta2Sat <- function(sat){
   ## if BCDE is not available, it is automatically created 
-  if (is.null(sat@meta$BCDE)) 
+  if (is.null(sat@meta$BCDE)) {
     sat <- setSatBCDE(sat)
-
-    rst_meta <- data.frame(BCDE = sat@meta$BCDE, 
-                           RID = "R00001",
+  }
+  if(is.null(sat@meta$SCENE)){
+    sat@meta$SCENE <- 1
+  }
+  rst_meta <- data.frame(SCENE = sat@meta$SCENE,
+                         BCDE = sat@meta$BCDE, 
+                         RID = "R00001",
                          XRES = sapply(sat@layers, function(x) raster::xres(x)),
                          YRES = sapply(sat@layers, function(x) raster::yres(x)),
                          NROW = sapply(sat@layers, function(x) raster::nrow(x)),
