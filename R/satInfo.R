@@ -160,12 +160,16 @@ createSatBCDE <- function(sat, width = 3, flag = 0,
 #' @describeIn satInfo Add additional or overwrite metainformation parameter to Satellite object
 #'
 addSatMetaParam <- function(sat, meta_param){
-  id <- c("SCENE", "BCDE")
-  names <- colnames(sat@meta)
+  if("SCENE" %in% colnames(meta_param)){
+    id <- c("SCENE", "BCDE")
+  } else {
+    id <- "BCDE"
+  }
+  names <- colnames(meta_param)
   names <- names[-which(names %in% id)]
    
   # Parameter already exists: overwrite, otherwise add
-  meta_param <- meta_param[, !colnames(meta_param) %in% names]
+  sat@meta <- sat@meta[, !colnames(sat@meta) %in% colnames(names)]
   
   sat@meta <- merge(sat@meta, meta_param, by = id, all.x = TRUE)
   sat@meta <- if (is.null(sat@meta$LNBR)) {

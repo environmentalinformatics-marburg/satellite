@@ -100,11 +100,11 @@ setMethod("calcTOAIrradTable",
           function(x, normalize = TRUE, esd){
             x <- as.character(x)  
             if(missing(esd)){
-                eSun <- calcTOAIrradTable(x, normalize)
-              } else {
-                eSun <- calcTOAIrradTable(x, normalize, esd)
-              }
-              return(eSun)
+              eSun <- calcTOAIrradTable(x, normalize)
+            } else {
+              eSun <- calcTOAIrradTable(x, normalize, esd)
+            }
+            return(eSun)
           })            
 
 
@@ -123,6 +123,8 @@ setMethod("calcTOAIrradTable",
               eSun <- lut$L5_ESUN
             } else if(x == "LE4") {
               eSun <- lut$L4_ESUN
+            } else if(x == "GLS5") {
+              eSun <- lut$GLS5_ESUN
             } else {
               stop(paste0("Satellite ID ", x, " is not supported, yet."))
             }

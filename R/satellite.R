@@ -55,6 +55,8 @@ setMethod("satellite",
             if(missing(meta)){
               if(lutInfoSGRPfromFilename(x) == "Landsat"){
                 meta <- compMetaLandsat(x)
+              } else if(lutInfoSGRPfromFilename(x) == "GLS"){
+                meta <- compMetaGLS(x)
               } else {
                 meta <- data.frame(BCDE = paste0("Bxx", as.character(seq(length(x)))),
                                    LNBR = seq(length(x)),

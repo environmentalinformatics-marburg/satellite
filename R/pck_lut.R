@@ -25,17 +25,21 @@ pck_lut <- function(){
     data.frame(SID = "LC8",
                PATTERN = c("LC8", "LC9"),
                SGRP = "Landsat",
+               stringsAsFactors = FALSE),
+    data.frame(SID = "L5",
+               PATTERN = c("L5"),
+               SGRP = "GLS",
                stringsAsFactors = FALSE)
   ))
   
   
   # Sensor names
   sensors <- c(LE4 = "Landsat 4", LE5 = "Landsat 5", LE7 = "Landsat 7", 
-               LC8 = "Landsat 8")
+               LC8 = "Landsat 8", L5 = "Global Land Survey L5")
   
   # Sensor band variables
   bands <- c(LE4 = "L4_BANDS", LE5 = "L5_BANDS", LE7 = "L7_BANDS", 
-             LC8 = "L8_BANDS")
+             LC8 = "L8_BANDS", L5 = "GLS5_BANDS")
   
   # Sensor rsr
   rsr <- c(LE7 = "L7_RSR", LC8 = "L8_RSR")
@@ -98,14 +102,33 @@ pck_lut <- function(){
                  "solar", "solar", "thermal", "thermal", NA))
   rownames(l8_bands) <-  paste0("Band_", l8_bands$BID)
   
+  gls5_bands <- data.frame(
+    BID = c(seq(7), "DEM"),
+    BCDE = c(sprintf("B%03dn", seq(7)), "DEM"),
+    LMIN = c(0.45, 0.52, 0.63, 0.76, 1.55, 10.40, 2.08, NA),
+    LMAX = c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 2.35, NA),
+    #SRES = c(30, 30, 30, 30, 30, 30, 30),
+    TYPE = c("VIS", "VIS", "VIS", "NIR", "SWIR", "TIR", 
+             "SWIR", "DEM"),
+    SPECTRUM = c("solar", "solar", "solar", "solar", "solar",
+                 "thermal", "solar", "DEM"),
+    SID = "GLS5",
+    SGRP = "Landsat")
+  rownames(gls5_bands) <- paste0("Band_", gls5_bands$BID)
+  
   # Landat 7 relative spectral response (units: nm-1)
   l7_rsr <- readRDS(system.file("extdata", "l7_rsr.rds", package = "satellite"))
+  l7_rsr$RSR <- as.numeric(as.character(l7_rsr$RSR))
   
   # Landat 8 relative spectral response (units: nm-1)
   l8_rsr <- readRDS(system.file("extdata", "l8_rsr.rds", package = "satellite"))
+  l8_rsr$RSR <- as.numeric(as.character(l8_rsr$RSR))
   
   # Solar irradiance (units: W m-2 nm-1)
   solar <- readRDS(system.file("extdata", "solar.rds", package = "satellite"))
+  for(i in seq(2,8)){
+    solar[, i] <- as.numeric(as.character(solar[, i]))
+  }
   
   # Tabulated values of ESun (W m-2 micrometer-1)
   l4_esun <- c(1957, 1826, 1554, 1036, 215, NA, 80.67)
@@ -116,6 +139,9 @@ pck_lut <- function(){
   
   l7_esun <- c(1997, 1812, 1533, 1039, 230.8, NA, NA, 84.90, 1362)
   attr(l7_esun, "names") <- as.character(l7_bands$BCDE)
+
+  gls5_esun <- c(1957, 1825, 1557, 1033, 214.9, NA, 80.72, NA)
+  attr(gls5_esun, "names") <- as.character(gls5_bands$BCDE)
   
   meta <- list(SENSORS = "Sensor ids and names",
                SENSOR_ID_PATTERN = "Filename patter of sensor",
@@ -125,12 +151,14 @@ pck_lut <- function(){
                L5_BANDS = "Band information for Landsat 5 bands",
                L7_BANDS = "Band information  for Landsat 7 bands",
                L8_BANDS = "Band information  for Landsat 8 bands",
+               GLS5_BANDS = "Band information  for GLS with Landsat 5",
                L7_SRS = "Landat 7 relative spectral response (nm-1) taken from http://landsat.usgs.gov/instructions.php",
                L8_SRS = "Landat 8 relative spectral response (nm-1) taken from http://landsat.usgs.gov/instructions.php",
                SOLAR = "Solar irradiance (units: W m-2 nm-1) from the National Renewable Energy Laboratory taken from http://rredc.nrel.gov/solar/spectra/am0/modtran.html",
                L5_ESUN = "Tabulated ESun values from Chander and Markham (2003), tab. II, taken from http://landsathandbook.gsfc.nasa.gov/pdfs/L5TMLUTIEEE2003.pdf",
                L4_ESUN = "Tabulated ESun values from Chander and Markham (2003), tab. II, taken from http://landsathandbook.gsfc.nasa.gov/pdfs/L5TMLUTIEEE2003.pdf",
-               L7_ESUN = "Tabulated ESun values from Landsat7 handbook, tab 11.3 (Thuillier SPECTRUM), taken from http://landsathandbook.gsfc.nasa.gov/pdfs/Landsat7_Handbook.pdf")
+               L7_ESUN = "Tabulated ESun values from Landsat7 handbook, tab 11.3 (Thuillier SPECTRUM), taken from http://landsathandbook.gsfc.nasa.gov/pdfs/Landsat7_Handbook.pdf",
+               GLS5_ESUN = "Tabulated ESun values from Chander and Markham (2003), tab. II, taken from http://landsathandbook.gsfc.nasa.gov/pdfs/L5TMLUTIEEE2003.pdf")
   
   # Create sysdata.rda
   lut <- list(SENSORS = sensors,
@@ -139,9 +167,10 @@ pck_lut <- function(){
               RSR = rsr,
               L4_BANDS = l4_bands, L5_BANDS = l5_bands, 
               L7_BANDS = l7_bands, L8_BANDS = l8_bands,
+              GLS5_BANDS = gls5_bands,
               L7_RSR = l7_rsr, L8_RSR = l8_rsr, SOLAR = solar, 
               L4_ESUN = l4_esun, L5_ESUN = l5_esun, L7_ESUN = l7_esun,
-              META = meta)
+              GLS5_ESUN = gls5_esun, META = meta)
   
   devtools::use_data(lut, overwrite = TRUE, internal = TRUE)
 }
