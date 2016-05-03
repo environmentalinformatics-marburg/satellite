@@ -150,5 +150,9 @@ lutInfoSIDfromFilename <- function(files){
 #' 
 lutInfoSGRPfromFilename <- function(file){
   sid <- lutInfoSIDfromFilename(file)
-  return(lut$SENSOR_ID_PATTERN$SGRP[lut$SENSOR_ID_PATTERN == sid][1])
+  if(length(sid) == 0){
+    return(FALSE)
+  } else {
+    return(lut$SENSOR_ID_PATTERN$SGRP[lut$SENSOR_ID_PATTERN == sid][1])  
+  }
 }

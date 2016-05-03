@@ -56,13 +56,15 @@ setMethod("satellite",
               if(lutInfoSGRPfromFilename(x) == "Landsat"){
                 meta <- compMetaLandsat(x)
               } else {
-                meta <- data.frame(LAYER = 
+                meta <- data.frame(BCDE = paste0("Bxx", as.character(seq(length(x)))),
+                                   LNBR = seq(length(x)),
+                                   LAYER = 
                                      tools::file_path_sans_ext(basename(x)),
                                    FILE = x)
               }
             }
             layers <- lapply(seq(nrow(meta)), function(y){
-              act_layer <- raster(meta$FILE[y])
+              act_layer <- raster(as.character(meta$FILE)[y])
               names(act_layer) <- meta$BCDE[y]
               return(act_layer)
             })

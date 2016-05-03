@@ -8,7 +8,8 @@
 \alias{convSC2Ref,Satellite-method}
 \title{Convert a band's scaled counts or radiance values to reflectance}
 \usage{
-\S4method{convSC2Ref}{Satellite}(x, szen_correction = "TRUE")
+\S4method{convSC2Ref}{Satellite}(x, szen_correction = "TRUE",
+  subset = FALSE)
 
 \S4method{convSC2Ref}{RasterStack}(x, mult, add, szen)
 
@@ -20,6 +21,10 @@ raster::RasterLayer providing scaled counts (DNs).}
 
 \item{szen_correction}{Logical; if \code{TRUE}, sun zenith correction is 
 being applied.}
+
+\item{subset}{Logical; if \code{TRUE}, all layers but the cropped 
+ones are being dropped; if \code{FALSE} (default), cropped layers are appended to the 
+Satellite object.}
 
 \item{mult}{Multiplicative coefficient for value transformation (i.e. slope).}
 
