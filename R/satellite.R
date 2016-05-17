@@ -57,6 +57,10 @@ setMethod("satellite",
                 meta <- compMetaLandsat(x)
               } else if(lutInfoSGRPfromFilename(x) == "GLS"){
                 meta <- compMetaGLS(x)
+              } else if(lutInfoSGRPfromFilename(x) == "Terra-MODIS"){
+                meta <- compMetaMODIS(x)
+              } else if(lutInfoSGRPfromFilename(x) == "Aqua-MODIS"){
+                meta <- compMetaMODIS(x)
               } else {
                 meta <- data.frame(BCDE = paste0("Bxx", as.character(seq(length(x)))),
                                    LNBR = seq(length(x)),
