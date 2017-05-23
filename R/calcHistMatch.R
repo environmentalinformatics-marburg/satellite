@@ -97,9 +97,7 @@ setMethod("calcHistMatch",
 setMethod("calcHistMatch", 
           signature(x = "RasterStack"), 
           function(x, target, minv = 0L, maxv = 1023L, plot = TRUE, use_cpp = TRUE){
-            # If not supplied, 'model' defaults to DOS2
-            model <- model[1]
-            
+
             for(l in seq(nlayers(x))){
               x[[l]] <- calcHistMatch(x = x, target = target, 
                                       minv = minv, maxv = maxv, 
