@@ -115,3 +115,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+
+static const R_CallMethodDef CallEntries[] = {
+    {"satellite_difference", (DL_FUNC) &satellite_difference, 2},
+    {"satellite_isNA", (DL_FUNC) &satellite_isNA, 1},
+    {"satellite_naOmit", (DL_FUNC) &satellite_naOmit, 1},
+    {"satellite_whichMin", (DL_FUNC) &satellite_whichMin, 1},
+    {"satellite_barometricFormula", (DL_FUNC) &satellite_barometricFormula, 4},
+    {"satellite_run_barometricFormula", (DL_FUNC) &satellite_run_barometricFormula, 4},
+    {"satellite_insertMinReqRem", (DL_FUNC) &satellite_insertMinReqRem, 2},
+    {"satellite_seqC", (DL_FUNC) &satellite_seqC, 3},
+    {"satellite_ScatteringModel", (DL_FUNC) &satellite_ScatteringModel, 2},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_satellite(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+}
