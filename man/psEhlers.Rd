@@ -62,16 +62,16 @@ pansharpened RGB channels. For more detailed description see references.
 }
 }
 \references{
-Ehlers, M., 2004: Spectral characteristics preserving image fusion based on Fourier domain filtering. Vol. 5574 of, 1–13 http://dx.doi.org/10.1117/12.565160 (Accessed July 26, 2015).
+Ehlers, M., 2004: Spectral characteristics preserving image fusion based on Fourier domain filtering. Vol. 5574 of, 1-13 http://dx.doi.org/10.1117/12.565160 (Accessed July 26, 2015).
 
-Klonus, S., and M. Ehlers, 2007: Image Fusion Using the Ehlers Spectral Characteristics Preservation Algorithm. GIScience & Remote Sensing, 44, 93–116, doi:10.2747/1548-1603.44.2.93.
+Klonus, S., and M. Ehlers, 2007: Image Fusion Using the Ehlers Spectral Characteristics Preservation Algorithm. GIScience & Remote Sensing, 44, 93-116, doi:10.2747/1548-1603.44.2.93.
 
-Ling, Y., M. Ehlers, E. L. Usery, and M. Madden, 2007: FFT-enhanced IHS transform method for fusing high-resolution satellite images. ISPRS Journal of Photogrammetry and Remote Sensing, 61, 381–392, doi:10.1016/j.isprsjprs.2006.11.002.
+Ling, Y., M. Ehlers, E. L. Usery, and M. Madden, 2007: FFT-enhanced IHS transform method for fusing high-resolution satellite images. ISPRS Journal of Photogrammetry and Remote Sensing, 61, 381-392, doi:10.1016/j.isprsjprs.2006.11.002.
 
 Fisher, R, et. al. 2000: HYPERMEDIA IMAGE PROCESSING REFERENCE. \url{http://homepages.inf.ed.ac.uk/rbf/HIPR2/fourier.htm}
 
 Weinhaus, F., 2011: ImageMagick v6 Examples -- Fourier Transforms. \url{http://www.imagemagick.org/Usage/fourier/#im_fft}
 
-Butz, T., 2011: Fouriertransformation für Fußgänger. 7., aktualisierte Aufl. Vieweg + Teubner, Wiesbaden. (German)
+Butz, T., 2011: Fouriertransformation fuer Fussgaenger. 7., aktualisierte Aufl. Vieweg + Teubner, Wiesbaden. (German)
 }
 

@@ -1,14 +1,15 @@
 Package: satellite
 Type: Package
 Title: Various Functions for Handling and Manipulating Remote Sensing Data
-Version: 0.3.0
-Date: 2016-03-16
+Version: 0.3.1
+Date: 2017-05-24
 Author: Thomas Nauss, Hanna Meyer, Florian Detsch, Tim Appelhans
-Maintainer: Tim Appelhans
+Maintainer: Thomas Nauss
     <admin@environmentalinformatics-marburg.de>
 Description: This smorgasbord provides a variety of functions which are useful
     for handling, manipulating and visualizing remote sensing data.
 Depends:
+    R (>= 2.10),
     raster,
     Rcpp (>= 0.10.3),
     methods,

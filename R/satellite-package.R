@@ -12,6 +12,7 @@
 #' \emph{Maintainer:} Environmental Informatics \email{admin@@environmentalinformatics-marburg.de}
 #'
 #' @import methods raster Rcpp
+#' @importFrom stats mvfft
 #' @importFrom stats4 plot
 #' 
 #' @useDynLib satellite
