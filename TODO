@@ -1,0 +1,8 @@
+TODO
+=====
+
+General
+* Bug-fix required for 'Objects listed as exports, but not present in namespace: names'
+
+R/psEhlers.R
+* no visible bindings for global variables 'fr.highpass' and 'frq.lowpass'
