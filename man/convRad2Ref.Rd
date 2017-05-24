@@ -46,7 +46,7 @@ If the sensor does not provide linear conversion coefficients for reflectance
 computation, the reflectance is calculated using the solar irradiance 
 following the functions taken from USGS' Landsat 7 manual, chapter 11.3.2,
 which is available online at 
-\url{http://landsathandbook.gsfc.nasa.gov/data_prod/prog_sect11_3.html}.
+\url{https://landsat.gsfc.nasa.gov/wp-content/uploads/2016/08/Landsat7_Handbook.pdf}.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")

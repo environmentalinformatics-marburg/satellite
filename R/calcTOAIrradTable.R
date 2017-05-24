@@ -30,10 +30,10 @@ if ( !isGeneric("calcTOAIrradTable") ) {
 #' taken from Chander G, Markham B (2003) Revised Landsat-5 TM radiometric 
 #' calibration procedures and postcalibration dynamic ranges.  IEEE Transactions 
 #' on Geoscience and Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285, online 
-#' available at \url{http://landsathandbook.gsfc.nasa.gov/pdfs/L5TMLUTIEEE2003.pdf}.
+#' available at \url{ftp://ftp.vt.tpu.ru/study/Tokareva/public/English_prof/GIS/L5TMLUTIEEE2003.pdf}.
 #' 
 #' Tabulated values of the solar irradiance for Landsat 7 are taken from
-#' \href{http://landsathandbook.gsfc.nasa.gov/pdfs/Landsat7_Handbook.pdf}{NASA's
+#' \href{https://landsat.gsfc.nasa.gov/wp-content/uploads/2016/08/Landsat7_Handbook.pdf}{NASA's
 #' Landsat7 handbook, tab 11.3 (Thuillier spectrum)}. 
 #' 
 #' @seealso \code{\link{calcTOAIrradRadRef}} for the computation of the solar 
