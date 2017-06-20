@@ -21,7 +21,7 @@
 (if available) will be considered in the regression model.}
 
 \item{hillsh}{A \code{raster::RasterLayer} created with 
-\code{raster::hillShade}.}
+\code{\link{hillShade}}.}
 
 \item{cloudmask}{A \code{raster::RasterLayer} in which clouds are masked with 
 NA values.}
