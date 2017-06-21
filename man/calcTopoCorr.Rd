@@ -4,27 +4,29 @@
 \name{calcTopoCorr}
 \alias{calcTopoCorr}
 \alias{calcTopoCorr,RasterLayer-method}
-\alias{calcTopoCorr,RasterStack-method}
+\alias{calcTopoCorr,RasterStackBrick-method}
 \alias{calcTopoCorr,Satellite-method}
 \title{Correct for topographic effects.}
 \usage{
 \S4method{calcTopoCorr}{Satellite}(x, mask = TRUE)
 
-\S4method{calcTopoCorr}{RasterStack}(x, hillsh, cloudmask = NULL)
+\S4method{calcTopoCorr}{RasterStackBrick}(x, hillsh, cloudmask = NULL, ...)
 
-\S4method{calcTopoCorr}{RasterLayer}(x, hillsh, cloudmask = NULL)
+\S4method{calcTopoCorr}{RasterLayer}(x, hillsh, cloudmask = NULL, ...)
 }
 \arguments{
-\item{x}{Satellite object.}
+\item{x}{\code{Satellite} or \code{Raster*} object.}
 
-\item{mask}{Logical. If \code{TRUE}, the cloudmask from the Satellite object 
-(if available) will be considered in the regression model.}
+\item{mask}{\code{logical}. If \code{TRUE}, the cloudmask from the 
+\code{Satellite} object (if available) will be considered in the regression 
+model.}
 
-\item{hillsh}{A \code{raster::RasterLayer} created with 
-\code{\link{hillShade}}.}
+\item{hillsh}{A \code{RasterLayer} created with \code{\link{hillShade}}.}
 
-\item{cloudmask}{A \code{raster::RasterLayer} in which clouds are masked with 
-NA values.}
+\item{cloudmask}{A \code{RasterLayer} in which clouds are masked with 
+NA values, passed to \code{\link[raster]{mask}}.}
+
+\item{...}{Additional arguments passed to \code{\link{writeRaster}}.}
 }
 \value{
 If x is a Satellite object, a Satellite object with added, 

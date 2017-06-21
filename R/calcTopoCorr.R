@@ -4,9 +4,10 @@ if ( !isGeneric("calcTopoCorr") ) {
 }
 #' Correct for topographic effects.
 #' 
-#' @param x Satellite object.
-#' @param mask Logical. If \code{TRUE}, the cloudmask from the Satellite object 
-#' (if available) will be considered in the regression model.
+#' @param x \code{Satellite} or \code{Raster*} object.
+#' @param mask \code{logical}. If \code{TRUE}, the cloudmask from the 
+#' \code{Satellite} object (if available) will be considered in the regression 
+#' model.
 #' 
 #' @details 
 #' The method of Civco (1989) is applied on atmospherically corrected bands 
@@ -109,10 +110,10 @@ setMethod("calcTopoCorr",
 #' @rdname calcTopoCorr
 #'
 setMethod("calcTopoCorr", 
-          signature(x = "RasterStack"), 
-          function(x, hillsh, cloudmask=NULL){
-            for(l in seq(nlayers(x))){
-              x[[l]] <- calcTopoCorr(x[[l]], hillsh, cloudmask)
+          signature(x = "RasterStackBrick"), 
+          function(x, hillsh, cloudmask = NULL, ...){
+            for(l in seq(raster::nlayers(x))){
+              x[[l]] <- calcTopoCorr(x[[l]], hillsh, cloudmask, ...)
             }
             return(x)
           })
@@ -121,23 +122,27 @@ setMethod("calcTopoCorr",
 
 # Function using raster::RasterLayer object ------------------------------------
 #' 
-#' @param hillsh A \code{raster::RasterLayer} created with 
-#' \code{\link{hillShade}}. 
-#' @param cloudmask A \code{raster::RasterLayer} in which clouds are masked with 
-#' NA values. 
+#' @param hillsh A \code{RasterLayer} created with \code{\link{hillShade}}. 
+#' @param cloudmask A \code{RasterLayer} in which clouds are masked with 
+#' NA values, passed to \code{\link[raster]{mask}}. 
+#' @param ... Additional arguments passed to \code{\link{writeRaster}}.
 #' @rdname calcTopoCorr
 #'
 setMethod("calcTopoCorr", 
           signature(x = "RasterLayer"), 
-          function(x, hillsh, cloudmask=NULL){
-            xtmp <- x
+          function(x, hillsh, cloudmask = NULL, ...){
             if (!is.null(cloudmask)){
-              xtmp <- raster::mask(x, cloudmask)
+              x <- raster::mask(x, cloudmask)
             }
-            model <- summary(stats::lm(raster::values(xtmp) ~ 
+            model <- summary(stats::lm(raster::values(x) ~ 
                                          raster::values(hillsh)))
-            calib <- hillsh * model$coefficients[[2]] + model$coefficients[[1]]
-            x <- x - calib + mean(raster::values(xtmp), na.rm=TRUE)
-            return(x)
+            
+            calib <- raster::calc(hillsh, fun = function(x) {
+              x * stats::coef(model)[2] + stats::coef(model)[1]
+            })
+            
+            raster::overlay(x, calib, fun = function(y, z) {
+              y - z + mean(y, na.rm = TRUE)
+            }, ...)
           })
 
