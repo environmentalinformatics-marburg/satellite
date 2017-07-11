@@ -1,8 +1,10 @@
 TODO
 =====
 
-General
-* Bug-fix required for 'Objects listed as exports, but not present in namespace: names'
-
 R/psEhlers.R
 * no visible bindings for global variables 'fr.highpass' and 'frq.lowpass'
+* standardize naming (fr or frq)
+* NOTE: Dropping empty section \examples
+
+R/calcPathRadDOS.R
+* Error in esun * cos_szen : non-numeric argument to binary operator
