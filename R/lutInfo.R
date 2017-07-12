@@ -60,7 +60,7 @@
 #'  
 #' @examples
 #' ls_li <- lutInfo()
-#' str(ls_li)
+#' # str(ls_li)
 #' 
 lutInfo <- function(){
   return(lut)

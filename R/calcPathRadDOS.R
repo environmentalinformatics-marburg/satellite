@@ -118,35 +118,17 @@ if ( !isGeneric("calcPathRadDOS") ) {
 #' 
 #' bcde <- "B002n"
 #' 
-#' sat <- calcTOAIrradRadRef(sat, normalize = FALSE)
-#' 
 #' ## performance of base-R
-#' system.time(
-#'  val1 <- calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bcde))),
-#'                 bnbr = getSatLNBR(sat, bcde),
-#'                 band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)), 
-#'                                       LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
-#'                 radm = getSatRADM(sat, getSatBCDESolar(sat)),
-#'                 rada = getSatRADA(sat, getSatBCDESolar(sat)),
-#'                 szen = getSatSZEN(sat, getSatBCDESolar(sat)),
-#'                 esun = getSatESUN(sat, getSatBCDESolar(sat)),
-#'                 model = "DOS2",
-#'                 scat_coef = -4, use_cpp = FALSE)
-#' )
-#' 
-#' ## and Rcpp version
-#' system.time(
-#'  val2 <- calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bcde))),
-#'                 bnbr = getSatLNBR(sat, bcde),
-#'                 band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)), 
-#'                                       LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
-#'                 radm = getSatRADM(sat, getSatBCDESolar(sat)),
-#'                 rada = getSatRADA(sat, getSatBCDESolar(sat)),
-#'                 szen = getSatSZEN(sat, getSatBCDESolar(sat)),
-#'                 esun = getSatESUN(sat, getSatBCDESolar(sat)),
-#'                 model = "DOS2",
-#'                 scat_coef = -4, use_cpp = TRUE)
-#' )
+#' val <- calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bcde))),
+#'                       bnbr = getSatLNBR(sat, bcde),
+#'                       band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)),
+#'                                             LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
+#'                       radm = getSatRADM(sat, getSatBCDESolar(sat)),
+#'                       rada = getSatRADA(sat, getSatBCDESolar(sat)),
+#'                       szen = getSatSZEN(sat, getSatBCDESolar(sat)),
+#'                       esun = getSatESUN(sat, getSatBCDESolar(sat)),
+#'                       model = "DOS2",
+#'                       scat_coef = -4)
 #' 
 NULL
 
