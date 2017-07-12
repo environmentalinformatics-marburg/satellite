@@ -9,11 +9,12 @@
 panchromatic channel.}
 \usage{
 \S4method{psEhlers}{Satellite}(x, res.method = "ngb", filter = list(win =
-  "Han", frq.lowpass, fr.highpass), padzero = FALSE, subset = FALSE)
+  "Han", frq.lowpass = NULL, fr.highpass = NULL), padzero = FALSE,
+  subset = FALSE)
 
 \S4method{psEhlers}{RasterStack}(x, PAN, res.method = "ngb",
-  filter = list(win = "Han", frq.lowpass, fr.highpass), padzero = FALSE,
-  subset = FALSE)
+  filter = list(win = "Han", frq.lowpass = NULL, fr.highpass = NULL),
+  padzero = FALSE, subset = FALSE)
 }
 \arguments{
 \item{x}{Satellite or \code{raster::Raster*} object.}
@@ -22,8 +23,8 @@ panchromatic channel.}
 \code{\link[raster]{resample}}, namely \code{"ngb"} and \code{"bilinear"} are allowed.}
 
 \item{filter}{list object for defining filter window type and further filter parameters.
-Currently only Han window is implemented and cut of frequency by default is calculated
-by resolution ratio of xs to PAN resolution.}
+Currently only Han window is implemented and cut of frequency is calculated
+by resolution ratio of xs to PAN resolution automatically.}
 
 \item{padzero}{Logical; defaults to \code{FALSE}. Option to zero pad images before applying FFT.
 Currently only images with even number of rows and columns can be zero padded. If zero padding
@@ -54,12 +55,6 @@ and subsequent filtering of the Intensity component in the frequency domain. Aft
 intensity components of PAN and XS the images are reverse FFT transformed and summed up to form the 
 new intensity component to be used for the reverse IHS transformation, which results in the new
 pansharpened RGB channels. For more detailed description see references.
-}
-\examples{
-
-
-\dontrun{
-}
 }
 \references{
 Ehlers, M., 2004: Spectral characteristics preserving image fusion based on Fourier domain filtering. Vol. 5574 of, 1-13 http://dx.doi.org/10.1117/12.565160 (Accessed July 26, 2015).

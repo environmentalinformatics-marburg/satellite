@@ -15,8 +15,8 @@ if ( !isGeneric("psEhlers") ) {
 #' @param res.method resampling method to be used for the xs channels. Currently methods of
 #' \code{\link[raster]{resample}}, namely \code{"ngb"} and \code{"bilinear"} are allowed.
 #' @param filter list object for defining filter window type and further filter parameters.
-#' Currently only Han window is implemented and cut of frequency by default is calculated
-#' by resolution ratio of xs to PAN resolution.
+#' Currently only Han window is implemented and cut of frequency is calculated
+#' by resolution ratio of xs to PAN resolution automatically.
 #' @param padzero Logical; defaults to \code{FALSE}. Option to zero pad images before applying FFT.
 #' Currently only images with even number of rows and columns can be zero padded. If zero padding
 #' is choosen images need to be cropped to have even numer of rows and columns (see
@@ -55,12 +55,6 @@ if ( !isGeneric("psEhlers") ) {
 #' 
 #' Butz, T., 2011: Fouriertransformation fuer Fussgaenger. 7., aktualisierte Aufl. Vieweg + Teubner, Wiesbaden. (German)
 #' 
-#' @examples 
-#' 
-#' 
-#' \dontrun{
-#' }
-
 NULL
 
 # possible TODOs:
@@ -79,7 +73,7 @@ NULL
 setMethod("psEhlers", 
           signature(x = "Satellite"), 
           function(x, res.method = "ngb", filter = list(win = "Han",
-                   frq.lowpass, fr.highpass), padzero = FALSE, subset = FALSE){
+                   frq.lowpass = NULL, fr.highpass = NULL), padzero = FALSE, subset = FALSE){
             #try getting satellite layers with reflectance values
             subx <- subset(x, cid = "REF")
             #select PAN
@@ -138,7 +132,7 @@ setMethod("psEhlers",
 setMethod("psEhlers", 
           signature(x = "RasterStack"),
           function(x, PAN, res.method = "ngb", filter = list(win = "Han",
-                   frq.lowpass, fr.highpass), padzero = FALSE, subset = FALSE){
+                   frq.lowpass = NULL, fr.highpass = NULL), padzero = FALSE, subset = FALSE){
             if(raster::nlayers(x) < 3){
               stop("Pansharpening using Ehlers algorithm needs at least 3 raster layers.")
             } else {
@@ -315,7 +309,7 @@ normrast <- function(rast, minv = 0, maxv = 1){
 
 #PAN sharpening function using Ehlers algorithm
 ehlers <- function(x, PAN, res.method = "ngb", filter = list(win = "Han",
-                     frq.lowpass, fr.highpass), padzero = FALSE){
+                     frq.lowpass = NULL, fr.highpass = NULL), padzero = FALSE){
   #resample low res channels to match pcm channel (if resolution ratio gets "extremely" small it
   #might be better to use bilinear interpolation if not bicubic convolution. The latter would need to be implemented)
   rgb_res <- raster::resample(x, PAN, method = res.method)
