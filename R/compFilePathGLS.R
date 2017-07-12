@@ -13,9 +13,11 @@
 #' @export compFilePathGLS
 #'
 #' @examples
+#' \dontrun{
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
 #' compFilePathGLS(files)  
+#' }
 #' 
 compFilePathGLS <- function(files){
   if((length(files) == 1 & grepl("MTL", files[1])) == FALSE){

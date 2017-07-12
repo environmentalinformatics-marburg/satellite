@@ -14,9 +14,11 @@
 #' @export compFilePathMODIS
 #'
 #' @examples
+#' \dontrun{
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
 #' compFilePathMODIS(files)  
+#' }
 #' 
 compFilePathMODIS <- function(files){
   if((length(files) == 1 & grepl("MTL", files[1])) == FALSE){

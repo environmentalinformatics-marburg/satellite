@@ -45,9 +45,11 @@
 #' @export compMetaGLS
 #'
 #' @examples
+#' \dontrun{
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
 #' compMetaGLS(files)
+#' }
 #' 
 compMetaGLS <- function(files){
   

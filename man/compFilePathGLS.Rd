@@ -19,9 +19,11 @@ The function compiles the sensor, band, filename and metadata filename informati
 for standard level 1B/T Global Land Survey (GLS) files.
 }
 \examples{
+\dontrun{
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
 compFilePathGLS(files)  
+}
 
 }
 

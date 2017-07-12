@@ -51,9 +51,11 @@ The function scans a Global Land Survey (GLS) metadata file for various calibrat
 and orbit coefficients as well as some sensor specific data.
 }
 \examples{
+\dontrun{
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
 compMetaMODIS(files)
+}
 
 }
 
