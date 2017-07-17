@@ -7,7 +7,7 @@ test_that("maskInvarFeatures works as expected", {
                       pattern = glob2rx("LC8*.TIF"), 
                       full.names = TRUE)
   sat <- satellite(files)
-  t1 <- satInvarFeatures(sat)
+  t1 <- maskInvarFeatures(sat)
   
   expect_equal(
     raster::getValues(getSatDataLayer(t1, bcde = "M0000_InvarFeatures"))[77],

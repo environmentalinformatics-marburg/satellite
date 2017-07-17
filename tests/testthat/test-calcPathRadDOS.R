@@ -7,7 +7,7 @@ test_that("calcPathRadDOS for numeric works as expected", {
   path <- system.file("extdata", package = "satellite")
   files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
   sat <- satellite(files)
-  sat <- satTOAIrrad(sat, method = "Model")
+  sat <- calcTOAIrradModel(sat)
   
   bcde <- "B002n"
   t1 <- calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bcde))),
@@ -99,19 +99,3 @@ test_that("calcPathRadDOS for Satellite works as expected", {
 #   expect_equal(round(getSatPRAD(sat_pathrad, bcde = "B009n"),3), 
 #                round(c(B009n = -0.185), 3))
 })
-
-
-#-------------------------------------------------------------------------------
-  test_that("Deprecated satPathRadDOS for Satellite works as expected", {
-    path <- system.file("extdata", package = "satellite")
-    files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
-    sat <- satellite(files)
-    
-    sat_pathrad <- satPathRadDOS(sat, atmos_model = "DOS2", 
-                                 esun_mode = "RadRef")
-    
-#     expect_equal(round(getSatPRAD(sat_pathrad, bcde = "B002n"),3), 
-#                  round(c(B002n = 42.064), 3))
-#     expect_equal(round(getSatPRAD(sat_pathrad, bcde = "B009n"),3), 
-#                  round(c(B009n = -0.185), 3))
-  })

@@ -113,13 +113,3 @@ test_that("calcTOAIrradTable for Satellite works as expected", {
   sat <- satellite(files)  
   expect_error(calcTOAIrradTable(sat), "Satellite ID LC8 is not supported, yet.")
 })
-
-
-#-------------------------------------------------------------------------------
-test_that("Depricated satTOAIrrad for Satellite works as expected", {
-  path <- system.file("extdata", package = "satellite")
-  files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
-  sat <- satellite(files)  
-  satTOAIrrad(sat, method = "Model")
-  satTOAIrrad(sat, method = "RadRef")
-})
