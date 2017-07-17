@@ -1,10 +1,10 @@
-#' Function used to create sysdata.rda (i.e. LUT)
-#'
-#' @description
-#' Function which has been used to create the LUT data of this package.
-#' 
-#' @name pck_lut
-#' 
+# Function used to create sysdata.rda (i.e. LUT)
+#
+# @description
+# Function which has been used to create the LUT data of this package.
+# 
+# @name pck_lut
+# 
 NULL
 
 pck_lut <- function(){

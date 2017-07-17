@@ -1,10 +1,10 @@
-#' Package methods used to build datasets
-#'
-#' @description
-#' Functions which have been used to create dataset of this package.
-#' 
-#' @name pck_data
-#' 
+# Package methods used to build datasets
+#
+# @description
+# Functions which have been used to create dataset of this package.
+# 
+# @name pck_data
+# 
 NULL
 
 # Dataset l7 -------------------------------------------------------------------
