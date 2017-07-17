@@ -30,9 +30,6 @@ if ( !isGeneric("calcPathRadDOS") ) {
 #' ("Model")
 #' @param dos_adjust Assumed reflection for dark object adjustment; defaults to 0.01.
 #' @param scat_coef Scattering coefficient; defaults to -4.0. 
-#' @param use_cpp Logical. If \code{TRUE}, C++ functionality (via \strong{Rcpp}) 
-#' is enabled, which leads to a considerable reduction of both computation time
-#' and memory usage.
 #'  
 #' @export calcPathRadDOS
 #' 
@@ -116,11 +113,9 @@ if ( !isGeneric("calcPathRadDOS") ) {
 #' sat <- satellite(files)
 #' sat <- calcTOAIrradModel(sat)
 #' 
-#' bcde <- "B002n"
-#' 
-#' ## performance of base-R
-#' val <- calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bcde))),
-#'                       bnbr = getSatLNBR(sat, bcde),
+#' bds <- "B002n"
+#' val <- calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bds))),
+#'                       bnbr = getSatLNBR(sat, bds),
 #'                       band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)),
 #'                                             LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
 #'                       radm = getSatRADM(sat, getSatBCDESolar(sat)),
@@ -129,7 +124,7 @@ if ( !isGeneric("calcPathRadDOS") ) {
 #'                       esun = getSatESUN(sat, getSatBCDESolar(sat)),
 #'                       model = "DOS2",
 #'                       scat_coef = -4)
-#' 
+#' val
 NULL
 
 
@@ -142,8 +137,7 @@ NULL
 #'
 setMethod("calcPathRadDOS", 
           signature(x = "Satellite"), 
-          function(x, model = c("DOS2", "DOS4"), esun_method = "RadRef", 
-                   use_cpp = TRUE){
+          function(x, model = c("DOS2", "DOS4"), esun_method = "RadRef") {
 
             # if not supplied, model defaults to DOS2
             model <- model[1]
@@ -177,8 +171,7 @@ setMethod("calcPathRadDOS",
                                        rada = getSatRADA(x, sc_bands),
                                        szen = getSatSZEN(x, sc_bands),
                                        esun = getSatESUN(x, sc_bands),
-                                       model = model, 
-                                       use_cpp = use_cpp)
+                                       model = model)
             x <- addSatMetaParam(x, 
                                  meta_param = data.frame(
                                    BCDE = names(path_rad),
@@ -199,7 +192,7 @@ setMethod("calcPathRadDOS",
           function(x, bnbr, band_wls, radm, rada, szen, esun,
                    model = c("DOS2", "DOS4"), 
                    scat_coef = c(-4.0, -2.0, -1.0, -0.7, -0.5), 
-                   dos_adjust = 0.01, use_cpp = TRUE){
+                   dos_adjust = 0.01) {
             
             # if not supplied, model defaults to DOS2
             model <- model[1]
@@ -211,16 +204,9 @@ setMethod("calcPathRadDOS",
             # scattering processes and different atmospheric optical thiknesses. 
             # Resulting  coefficients are the band wavelength to the power of 
             # the respective scattering coefficients defined for the model.
-            if (use_cpp) {
-              band_wls_mat <- as.matrix(band_wls)
-              scattering_model <- ScatteringModel(band_wls_mat, scat_coef)
-            } else {
-              scattering_model <- sapply(seq(nrow(band_wls)), function(y){
-                act_band <- seq(band_wls[y, 1], band_wls[y, 2], by=0.001)
-                mean(act_band ^ scat_coef)
-              })
-            }
-            
+            band_wls_mat <- as.matrix(band_wls)
+            scattering_model <- ScatteringModel(band_wls_mat, scat_coef)
+
             # Compute multiplication factors which relate the scattering model 
             # coefficents between the individual band_wls and the one band which 
             # has been used for the eytraction of the dark object radiation.
