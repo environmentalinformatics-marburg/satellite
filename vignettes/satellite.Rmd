@@ -83,7 +83,10 @@ str(sat@meta)
 Everytime the user performs some calculation on some or all of the layers, this meta information will be updated accordingly. Here's an example:
 
 ```{r}
-sat_ps <- panSharp(sat)
+if (!"satelliteTools" %in% installed.packages())
+  devtools::install_github("environmentalinformatics-marburg/satelliteTools")
+
+sat_ps <- satelliteTools::panSharp(sat)
 sat_ps@meta[, 1:6]
 ```
 
