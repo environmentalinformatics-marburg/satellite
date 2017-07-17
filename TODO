@@ -1,16 +1,12 @@
 TODO
 =====
 
-R/psEhlers.R
-* Possibly standardize parameter names ('fr' vs. 'frq')
-* Add examples
-
-R/calcPathRadDOS.R
-* Error in esun * cos_szen : non-numeric argument to binary operator
-
 R/compFilePathGLS.R
 * Error in lut[which(names(lut) == (lut$BANDS[which(names(lut$BANDS) ==  : subscript out of bounds; 
   sid (ln. 34) of specified files is "LC" (Landsat-8), whereas satellite:::lut$SENSORS indicates that this must be "L5" (also applies to R/compFilePathMODIS.R, R/compMetaGLS.R and R/compMetaMODIS.R)
 
+Short-term
+* Cross-check vignettes
+
 Medium-term
-* Enable support for Global Land Survey, MODIS, WorldView-1, and RapidEye data.
+* Enable support for Global Land Survey, MODIS, WorldView-1, RapidEye, and PROBA-V (and SPOT) data.

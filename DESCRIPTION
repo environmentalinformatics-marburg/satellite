@@ -4,8 +4,7 @@ Title: Various Functions for Handling and Manipulating Remote Sensing Data
 Version: 0.3.1
 Date: 2017-05-24
 Author: Thomas Nauss, Hanna Meyer, Florian Detsch, Tim Appelhans
-Maintainer: Thomas Nauss
-    <admin@environmentalinformatics-marburg.de>
+Maintainer: Florian Detsch <fdetsch@web.de>
 Description: This smorgasbord provides a variety of functions which are useful
     for handling, manipulating and visualizing remote sensing data.
 Depends:
