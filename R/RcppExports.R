@@ -2,38 +2,38 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 difference <- function(x, y) {
-    .Call('satellite_difference', PACKAGE = 'satellite', x, y)
+    .Call('_satellite_difference', PACKAGE = 'satellite', x, y)
 }
 
 isNA <- function(x) {
-    .Call('satellite_isNA', PACKAGE = 'satellite', x)
+    .Call('_satellite_isNA', PACKAGE = 'satellite', x)
 }
 
 naOmit <- function(x) {
-    .Call('satellite_naOmit', PACKAGE = 'satellite', x)
+    .Call('_satellite_naOmit', PACKAGE = 'satellite', x)
 }
 
 whichMin <- function(x) {
-    .Call('satellite_whichMin', PACKAGE = 'satellite', x)
+    .Call('_satellite_whichMin', PACKAGE = 'satellite', x)
 }
 
 barometricFormula <- function(z, gp, ta, p) {
-    .Call('satellite_barometricFormula', PACKAGE = 'satellite', z, gp, ta, p)
+    .Call('_satellite_barometricFormula', PACKAGE = 'satellite', z, gp, ta, p)
 }
 
 run_barometricFormula <- function(a, b, dem, p) {
-    .Call('satellite_run_barometricFormula', PACKAGE = 'satellite', a, b, dem, p)
+    .Call('_satellite_run_barometricFormula', PACKAGE = 'satellite', a, b, dem, p)
 }
 
 insertMinReqRem <- function(anHs, anHt) {
-    .Call('satellite_insertMinReqRem', PACKAGE = 'satellite', anHs, anHt)
+    .Call('_satellite_insertMinReqRem', PACKAGE = 'satellite', anHs, anHt)
 }
 
 seqC <- function(from_, to_, by_ = 1.0) {
-    .Call('satellite_seqC', PACKAGE = 'satellite', from_, to_, by_)
+    .Call('_satellite_seqC', PACKAGE = 'satellite', from_, to_, by_)
 }
 
 ScatteringModel <- function(mnBandWls, dScatCoef) {
-    .Call('satellite_ScatteringModel', PACKAGE = 'satellite', mnBandWls, dScatCoef)
+    .Call('_satellite_ScatteringModel', PACKAGE = 'satellite', mnBandWls, dScatCoef)
 }
 

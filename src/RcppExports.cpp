@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // difference
 NumericVector difference(double x, NumericVector y);
-RcppExport SEXP satellite_difference(SEXP xSEXP, SEXP ySEXP) {
+RcppExport SEXP _satellite_difference(SEXP xSEXP, SEXP ySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -19,7 +19,7 @@ END_RCPP
 }
 // isNA
 LogicalVector isNA(NumericVector x);
-RcppExport SEXP satellite_isNA(SEXP xSEXP) {
+RcppExport SEXP _satellite_isNA(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -30,7 +30,7 @@ END_RCPP
 }
 // naOmit
 NumericVector naOmit(NumericVector x);
-RcppExport SEXP satellite_naOmit(SEXP xSEXP) {
+RcppExport SEXP _satellite_naOmit(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -41,7 +41,7 @@ END_RCPP
 }
 // whichMin
 int whichMin(NumericVector x);
-RcppExport SEXP satellite_whichMin(SEXP xSEXP) {
+RcppExport SEXP _satellite_whichMin(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -52,7 +52,7 @@ END_RCPP
 }
 // barometricFormula
 double barometricFormula(double z, NumericVector gp, NumericVector ta, IntegerVector p);
-RcppExport SEXP satellite_barometricFormula(SEXP zSEXP, SEXP gpSEXP, SEXP taSEXP, SEXP pSEXP) {
+RcppExport SEXP _satellite_barometricFormula(SEXP zSEXP, SEXP gpSEXP, SEXP taSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -66,7 +66,7 @@ END_RCPP
 }
 // run_barometricFormula
 NumericVector run_barometricFormula(NumericMatrix a, NumericMatrix b, NumericVector dem, IntegerVector p);
-RcppExport SEXP satellite_run_barometricFormula(SEXP aSEXP, SEXP bSEXP, SEXP demSEXP, SEXP pSEXP) {
+RcppExport SEXP _satellite_run_barometricFormula(SEXP aSEXP, SEXP bSEXP, SEXP demSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -80,7 +80,7 @@ END_RCPP
 }
 // insertMinReqRem
 NumericMatrix insertMinReqRem(IntegerVector anHs, IntegerVector anHt);
-RcppExport SEXP satellite_insertMinReqRem(SEXP anHsSEXP, SEXP anHtSEXP) {
+RcppExport SEXP _satellite_insertMinReqRem(SEXP anHsSEXP, SEXP anHtSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -92,7 +92,7 @@ END_RCPP
 }
 // seqC
 Rcpp::NumericVector seqC(double from_, double to_, double by_);
-RcppExport SEXP satellite_seqC(SEXP from_SEXP, SEXP to_SEXP, SEXP by_SEXP) {
+RcppExport SEXP _satellite_seqC(SEXP from_SEXP, SEXP to_SEXP, SEXP by_SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -105,7 +105,7 @@ END_RCPP
 }
 // ScatteringModel
 NumericVector ScatteringModel(NumericMatrix mnBandWls, double dScatCoef);
-RcppExport SEXP satellite_ScatteringModel(SEXP mnBandWlsSEXP, SEXP dScatCoefSEXP) {
+RcppExport SEXP _satellite_ScatteringModel(SEXP mnBandWlsSEXP, SEXP dScatCoefSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -117,15 +117,15 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"satellite_difference", (DL_FUNC) &satellite_difference, 2},
-    {"satellite_isNA", (DL_FUNC) &satellite_isNA, 1},
-    {"satellite_naOmit", (DL_FUNC) &satellite_naOmit, 1},
-    {"satellite_whichMin", (DL_FUNC) &satellite_whichMin, 1},
-    {"satellite_barometricFormula", (DL_FUNC) &satellite_barometricFormula, 4},
-    {"satellite_run_barometricFormula", (DL_FUNC) &satellite_run_barometricFormula, 4},
-    {"satellite_insertMinReqRem", (DL_FUNC) &satellite_insertMinReqRem, 2},
-    {"satellite_seqC", (DL_FUNC) &satellite_seqC, 3},
-    {"satellite_ScatteringModel", (DL_FUNC) &satellite_ScatteringModel, 2},
+    {"_satellite_difference", (DL_FUNC) &_satellite_difference, 2},
+    {"_satellite_isNA", (DL_FUNC) &_satellite_isNA, 1},
+    {"_satellite_naOmit", (DL_FUNC) &_satellite_naOmit, 1},
+    {"_satellite_whichMin", (DL_FUNC) &_satellite_whichMin, 1},
+    {"_satellite_barometricFormula", (DL_FUNC) &_satellite_barometricFormula, 4},
+    {"_satellite_run_barometricFormula", (DL_FUNC) &_satellite_run_barometricFormula, 4},
+    {"_satellite_insertMinReqRem", (DL_FUNC) &_satellite_insertMinReqRem, 2},
+    {"_satellite_seqC", (DL_FUNC) &_satellite_seqC, 3},
+    {"_satellite_ScatteringModel", (DL_FUNC) &_satellite_ScatteringModel, 2},
     {NULL, NULL, 0}
 };
 
