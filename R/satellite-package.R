@@ -9,7 +9,7 @@
 #' @title Smorgasboard for remote sensing functions.
 #' @author Thomas Nauss, Hanna Meyer, Florian Detsch, Tim Appelhans \cr
 #' \cr
-#' \emph{Maintainer:} Environmental Informatics \email{admin@@environmentalinformatics-marburg.de}
+#' \emph{Maintainer:} Florian Detsch \email{fdetsch@@web.de}
 #'
 #' @import methods raster Rcpp
 #' @importFrom stats mvfft

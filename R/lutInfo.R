@@ -129,7 +129,18 @@ lutInfoRSRromSID <- function(sid){
 #' @describeIn lutInfo
 #' 
 lutInfoSIDfromFilename <- function(files){
-  test <- sapply(lut$SENSOR_ID_PATTERN$PATTERN, function(x){grepl(x, files)})  
+  ## original sensor pattern
+  test <- sapply(lut$SENSOR_ID_PATTERN$PATTERN, function(x) {
+    grepl(x, basename(files))
+  })
+  
+  ## alternative sensor pattern
+  if (!any(test)) {
+    test <- sapply(lut$SENSOR_ID_PATTERN$PATTERN2, function(x) {
+      grepl(x, basename(files))
+    })
+  }
+  
   if(class(test) == "matrix"){
     return(colnames(test)[test[1, ]])
   } else {
@@ -148,6 +159,7 @@ lutInfoSGRPfromFilename <- function(file){
   if(length(sid) == 0){
     return(FALSE)
   } else {
-    return(lut$SENSOR_ID_PATTERN$SGRP[lut$SENSOR_ID_PATTERN == sid][1])  
+    rid <- apply(lut$SENSOR_ID_PATTERN == sid, 1, FUN = any)
+    return(lut$SENSOR_ID_PATTERN$SGRP[rid])  
   }
 }

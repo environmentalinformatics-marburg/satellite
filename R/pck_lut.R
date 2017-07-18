@@ -10,44 +10,51 @@ NULL
 pck_lut <- function(){
   # Sensor id patterns
   sensor_id_pattern <- do.call("rbind", sensor_ids_list <- list(
-    data.frame(SID = "LE4",
-               PATTERN = c("LE4"),
+    data.frame(SID = "LT4",
+               PATTERN = c("LT4"),
+               PATTERN2 = "LT04",
                SGRP = "Landsat",
                stringsAsFactors = FALSE),
-    data.frame(SID = "LE5",
-               PATTERN = c("LE5"),
+    data.frame(SID = "LT5",
+               PATTERN = c("LT5"),
+               PATTERN2 = "LT05",
                SGRP = "Landsat",
                stringsAsFactors = FALSE),
     data.frame(SID = "LE7",
                PATTERN = c("LE7"),
+               PATTERN2 = "LE07",
                SGRP = "Landsat",
                stringsAsFactors = FALSE),
     data.frame(SID = "LC8",
-               PATTERN = c("LC8", "LC9"),
+               PATTERN = c("LC8"),
+               PATTERN2 = "LC08",
                SGRP = "Landsat",
                stringsAsFactors = FALSE),
     data.frame(SID = "L5",
                PATTERN = c("L5"),
+               PATTERN2 = "N/A",
                SGRP = "GLS",
                stringsAsFactors = FALSE),
     data.frame(SID = "MOD",
                PATTERN = c("MOD"),
+               PATTERN2 = "N/A",
                SGRP = "Terra-MODIS",
                stringsAsFactors = FALSE),
     data.frame(SID = "MYD",
                PATTERN = c("MYD"),
+               PATTERN2 = "N/A",
                SGRP = "Aqua-MODIS",
                stringsAsFactors = FALSE)
   ))
   
   
   # Sensor names
-  sensors <- c(LE4 = "Landsat 4", LE5 = "Landsat 5", LE7 = "Landsat 7", 
+  sensors <- c(LT4 = "Landsat 4", LT5 = "Landsat 5", LE7 = "Landsat 7", 
                LC8 = "Landsat 8", L5 = "Global Land Survey L5",
                MOD = "Terra-MODIS", MYD = "Aqua-MODIS")
   
   # Sensor band variables
-  bands <- c(LE4 = "L4_BANDS", LE5 = "L5_BANDS", LE7 = "L7_BANDS", 
+  bands <- c(LT4 = "L4_BANDS", LT5 = "L5_BANDS", LE7 = "L7_BANDS", 
              LC8 = "L8_BANDS", L5 = "GLS5_BANDS",
              MOD = "MOD_BANDS", MYD = "MYD_BANDS")
   
@@ -67,7 +74,7 @@ pck_lut <- function(){
              "SWIR"),
     SPECTRUM = c("solar", "solar", "solar", "solar", "solar",
                  "thermal", "solar"),
-    SID = "LE4",
+    SID = "LT4",
     SGRP = "Landsat")
   rownames(l4_bands) <- paste0("Band_", l4_bands$BID)
   
@@ -81,7 +88,7 @@ pck_lut <- function(){
              "SWIR"),
     SPECTRUM = c("solar", "solar", "solar", "solar", "solar",
                  "thermal", "solar"),
-    SID = "LE5",
+    SID = "LT5",
     SGRP = "Landsat")
   rownames(l5_bands) <- paste0("Band_", l5_bands$BID)
   

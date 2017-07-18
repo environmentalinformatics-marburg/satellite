@@ -15,11 +15,11 @@
 \S4method{satellite}{list}(x, meta, log)
 }
 \arguments{
-\item{x}{A vector of filenames (see \code{raster::raster}) or a 
-\code{raster::RasterStack}.}
+\item{x}{A vector of filenames (see \code{\link{raster}}) or a 
+\code{RasterStack}.}
 
 \item{meta}{Optional metadata object (e.g. returned from 
-\code{\link{compMetaLandsat}}). If x is a satellite dataset and recognised
+\code{\link{compMetaLandsat}}). If 'x' is a satellite dataset and recognised
 as "Landsat", then the metadata is automatically extracted from the 
 respective meta information file if both the satellite data and the metadata 
 file follow the USGS Earth Explorer's naming convention.}
@@ -27,7 +27,7 @@ file follow the USGS Earth Explorer's naming convention.}
 \item{log}{Optionally supply a log entry.}
 }
 \value{
-Satellite object
+A \code{Satellite} object
 }
 \description{
 Method to create a Satellite object.
@@ -52,7 +52,10 @@ satellite(l8)
 
 }
 \seealso{
-\code{\link{compMetaLandsat}} to get more information about the
-structure of the metadata component.
+(i) \code{\link{compMetaLandsat}} to get more information about the
+structure of the metadata component; and (ii)
+\url{https://landsat.usgs.gov/what-are-naming-conventions-landsat-scene-identifiers} 
+for detailed information about the naming conventions for Landsat scene 
+identifiers.
 }
 

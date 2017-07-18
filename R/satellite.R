@@ -7,16 +7,16 @@ if ( !isGeneric("satellite") ) {
 #' @description
 #' Method to create a Satellite object.
 #' 
-#' @param x A vector of filenames (see \code{raster::raster}) or a 
-#' \code{raster::RasterStack}.
+#' @param x A vector of filenames (see \code{\link{raster}}) or a 
+#' \code{RasterStack}.
 #' @param meta Optional metadata object (e.g. returned from 
-#' \code{\link{compMetaLandsat}}). If x is a satellite dataset and recognised
+#' \code{\link{compMetaLandsat}}). If 'x' is a satellite dataset and recognised
 #' as "Landsat", then the metadata is automatically extracted from the 
 #' respective meta information file if both the satellite data and the metadata 
 #' file follow the USGS Earth Explorer's naming convention.
 #' @param log Optionally supply a log entry.
 #' 
-#' @return Satellite object
+#' @return A \code{Satellite} object
 #' 
 #' @export satellite
 #' 
@@ -27,8 +27,11 @@ if ( !isGeneric("satellite") ) {
 #' etc.) and (iii) a list of log information which records the processing 
 #' history of the entire dataset.
 #' 
-#' @seealso \code{\link{compMetaLandsat}} to get more information about the
-#' structure of the metadata component.
+#' @seealso (i) \code{\link{compMetaLandsat}} to get more information about the
+#' structure of the metadata component; and (ii)
+#' \url{https://landsat.usgs.gov/what-are-naming-conventions-landsat-scene-identifiers} 
+#' for detailed information about the naming conventions for Landsat scene 
+#' identifiers.
 #' 
 #' @name satellite
 #' 

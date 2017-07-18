@@ -15,7 +15,7 @@ handling, manipulating and visualizing remote sensing data.
 \author{
 Thomas Nauss, Hanna Meyer, Florian Detsch, Tim Appelhans \cr
 \cr
-\emph{Maintainer:} Environmental Informatics \email{admin@environmentalinformatics-marburg.de}
+\emph{Maintainer:} Florian Detsch \email{fdetsch@web.de}
 }
 \references{
 Some functions are taken and/or adopted from Sarah C. Goslee 
