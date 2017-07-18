@@ -5,6 +5,9 @@ R/compFilePathGLS.R
 * Error in lut[which(names(lut) == (lut$BANDS[which(names(lut$BANDS) ==  : subscript out of bounds; 
   sid (ln. 34) of specified files is "LC" (Landsat-8), whereas satellite:::lut$SENSORS indicates that this must be "L5" (also applies to R/compFilePathMODIS.R, R/compMetaGLS.R and R/compMetaMODIS.R)
 
+R/satellite.R
+* Implement 'RasterStackBrick'-method
+
 Short-term
 * Cross-check vignettes
 
