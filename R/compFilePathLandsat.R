@@ -28,7 +28,7 @@ compFilePathLandsat <- function(files){
       sid <- substr(basename(x), 1, 3)
       
       ## alternative sensor pattern
-      if (sid == "LC0") {
+      if (sid %in% c("LC0", "LE0", "LT0")) {
         pttrn <- substr(basename(x), 1, 4)
         rid <- apply(lut$SENSOR_ID_PATTERN, 1, FUN = function(x) pttrn %in% x)
         sid <- lut$SENSOR_ID_PATTERN$SID[rid]

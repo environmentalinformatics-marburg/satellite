@@ -65,6 +65,8 @@ pck_lut <- function(){
   # Band wavelengths, bandwith data taken from
   # http://landsat.usgs.gov/band_designations_landsat_satellites.php
   l4_bands <- data.frame(
+    SID = "LT4",
+    SGRP = "Landsat",
     BID = seq(7),
     BCDE = c(sprintf("B%03dn", seq(7))),
     LMIN = c(0.45, 0.52, 0.63, 0.76, 1.55, 10.40, 2.08),
@@ -73,26 +75,26 @@ pck_lut <- function(){
     TYPE = c("VIS", "VIS", "VIS", "NIR", "SWIR", "TIR", 
              "SWIR"),
     SPECTRUM = c("solar", "solar", "solar", "solar", "solar",
-                 "thermal", "solar"),
-    SID = "LT4",
-    SGRP = "Landsat")
+                 "thermal", "solar"))
   rownames(l4_bands) <- paste0("Band_", l4_bands$BID)
   
   l5_bands <- data.frame(
-    BID = seq(7),
-    BCDE = c(sprintf("B%03dn", seq(7))),
-    LMIN = c(0.45, 0.52, 0.63, 0.76, 1.55, 10.40, 2.08),
-    LMAX = c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 2.35),
+    SID = "LT5",
+    SGRP = "Landsat", 
+    BID = c(seq(7), "QA"),
+    BCDE = c(sprintf("B%03dn", seq(7)), "B0QAn"),
+    LMIN = c(0.45, 0.52, 0.63, 0.76, 1.55, 10.40, 2.08, NA),
+    LMAX = c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 2.35, NA),
     #SRES = c(30, 30, 30, 30, 30, 30, 30),
     TYPE = c("VIS", "VIS", "VIS", "NIR", "SWIR", "TIR", 
-             "SWIR"),
+             "SWIR", "QA"),
     SPECTRUM = c("solar", "solar", "solar", "solar", "solar",
-                 "thermal", "solar"),
-    SID = "LT5",
-    SGRP = "Landsat")
+                 "thermal", "solar", NA))
   rownames(l5_bands) <- paste0("Band_", l5_bands$BID)
   
   l7_bands <- data.frame(
+    SID = "LE7",
+    SGRP = "Landsat",
     BID = c(seq(5), "6_VCID_1", "6_VCID_2", 7:8),
     BCDE = c(sprintf("B%03dn", seq(5)), "B0061", "B0062", sprintf("B%03dn", 7:8)),
     LMIN = c(0.45, 0.52, 0.63, 0.77, 1.55, 10.40, 10.40, 2.09, 0.52),
@@ -100,9 +102,7 @@ pck_lut <- function(){
     #SRES = c(30, 30, 30, 30, 30, 30, 30, 30, 15),
     TYPE = c("VIS", "VIS", "VIS", "NIR", "SWIR", "TIR", "TIR", "SWIR", "PCM"),
     SPECTRUM = c("solar", "solar", "solar", "solar", "solar",
-                 "thermal", "thermal", "solar", "solar"),
-    SID = "LE7",
-    SGRP = "Landsat")
+                 "thermal", "thermal", "solar", "solar"))
   rownames(l7_bands) <- paste0("Band_", l7_bands$BID)
   
   l8_bands <- data.frame(
@@ -120,6 +120,8 @@ pck_lut <- function(){
   rownames(l8_bands) <-  paste0("Band_", l8_bands$BID)
   
   gls5_bands <- data.frame(
+    SID = "GLS5",
+    SGRP = "Landsat",
     BID = c(seq(7), "DEM"),
     BCDE = c(sprintf("B%03dn", seq(7)), "DEM"),
     LMIN = c(0.45, 0.52, 0.63, 0.76, 1.55, 10.40, 2.08, NA),
@@ -128,12 +130,12 @@ pck_lut <- function(){
     TYPE = c("VIS", "VIS", "VIS", "NIR", "SWIR", "TIR", 
              "SWIR", "DEM"),
     SPECTRUM = c("solar", "solar", "solar", "solar", "solar",
-                 "thermal", "solar", "DEM"),
-    SID = "GLS5",
-    SGRP = "Landsat")
+                 "thermal", "solar", "DEM"))
   rownames(gls5_bands) <- paste0("Band_", gls5_bands$BID)
   
   mod_bands <- data.frame(
+    SID = "MOD",
+    SGRP = "Terra-MODIS",
     BID = c(seq(10, 120, 10), "131", "132", "141", "142", seq(150, 360, 10)),
     BCDE = c(sprintf("B%03dn", seq(10, 120, 10)), 
              "B131n", "B132n", "B141n", "B142n", 
@@ -161,12 +163,12 @@ pck_lut <- function(){
              "TIR", "TIR", "TIR", "TIR", "TIR", "TIR", 
              "TIR", "TIR"),
     SPECTRUM = c(rep("solar", 21), rep("thermal", 6), "solar", 
-                 rep("thermal", 10)),
-    SID = "MOD",
-    SGRP = "Terra-MODIS")
+                 rep("thermal", 10)))
   rownames(mod_bands) <- paste0("Band_", mod_bands$BID)
   
   myd_bands <- data.frame(
+    SID = "myd",
+    SGRP = "Aqua-MODIS",
     BID = c(seq(10, 120, 10), "131", "132", "141", "142", seq(150, 360, 10)),
     BCDE = c(sprintf("B%03dn", seq(10, 120, 10)), 
              "B131n", "B132n", "B141n", "B142n", 
@@ -194,9 +196,7 @@ pck_lut <- function(){
              "TIR", "TIR", "TIR", "TIR", "TIR", "TIR", 
              "TIR", "TIR"),
     SPECTRUM = c(rep("solar", 21), rep("thermal", 6), "solar", 
-                 rep("thermal", 10)),
-    SID = "myd",
-    SGRP = "Aqua-MODIS")
+                 rep("thermal", 10)))
   rownames(myd_bands) <- paste0("Band_", myd_bands$BID)
   
   # Landat 7 relative spectral response (units: nm-1)

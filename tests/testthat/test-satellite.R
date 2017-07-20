@@ -1,7 +1,36 @@
 # devtools::test(".", "satellite")
 context("satellite")
 
-test_that("satellite works as expected for Landsat 7  files", {
+
+### landsat 5 -----
+
+test_that("satellite works as expected for Landsat 4 files", {
+  path <- system.file("extdata/LT05", package = "satellite")
+  files <- list.files(path, pattern = "^LT05.*.TIF$", full.names = TRUE)
+  
+  sat <- satellite(files)
+  
+  expect_equal(basename(attr(getSatDataLayers(sat)[[1]], "file")@name), "LE71950252001211EDC00_B1.TIF")
+  expect_equal(basename(attr(getSatDataLayers(sat)[[2]], "file")@name), "LE71950252001211EDC00_B2.TIF")
+  expect_equal(basename(attr(getSatDataLayers(sat)[[6]], "file")@name), "LE71950252001211EDC00_B6_VCID_1.TIF")
+  expect_equal(basename(attr(getSatDataLayers(sat)[[9]], "file")@name), "LE71950252001211EDC00_B8.TIF")
+  
+  expect_equal(as.character(getSatMeta(sat)$BID[[1]]), "1")
+  expect_equal(as.character(getSatMeta(sat)$BID[[2]]), "2")
+  expect_equal(as.character(getSatMeta(sat)$BID[[6]]), "6_VCID_1")
+  expect_equal(as.character(getSatMeta(sat)$BID[[9]]), "8")
+  
+  expect_equal(as.character(getSatMeta(sat)$BCDE[[1]]), "B001n")
+  expect_equal(as.character(getSatMeta(sat)$BCDE[[2]]), "B002n")
+  expect_equal(as.character(getSatMeta(sat)$BCDE[[6]]), "B0061")
+  expect_equal(as.character(getSatMeta(sat)$BCDE[[9]]), "B008n")
+})
+
+
+
+### landsat 7 -----
+
+test_that("satellite works as expected for Landsat 7 files", {
   path <- system.file("extdata", 
                       package = "satellite")
   files <- list.files(path, 
@@ -25,6 +54,9 @@ test_that("satellite works as expected for Landsat 7  files", {
   expect_equal(as.character(getSatMeta(sat)$BCDE[[6]]), "B0061")
   expect_equal(as.character(getSatMeta(sat)$BCDE[[9]]), "B008n")
 })
+
+
+### landsat 8 -----
 
 test_that("satellite works as expected for Landsat 8 files", {
   path <- system.file("extdata", 
@@ -54,4 +86,8 @@ test_that("satellite works as expected for Landsat 8 files", {
 
 test_that("satellite works as expected for stacks", {
   sat <- satellite(l8)
+})
+
+test_that("satellite works as expected for lists", {
+  sat <- satellite(raster::unstack(l8))
 })

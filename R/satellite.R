@@ -7,8 +7,8 @@ if ( !isGeneric("satellite") ) {
 #' @description
 #' Method to create a Satellite object.
 #' 
-#' @param x A vector of filenames (see \code{\link{raster}}) or a 
-#' \code{RasterStack}.
+#' @param x A vector of filenames, a (multi-layered) \code{Raster*} object or a 
+#' \code{list} of single \code{RasterLayer} objects (see \code{\link{raster}}).
 #' @param meta Optional metadata object (e.g. returned from 
 #' \code{\link{compMetaLandsat}}). If 'x' is a satellite dataset and recognised
 #' as "Landsat", then the metadata is automatically extracted from the 
@@ -16,7 +16,7 @@ if ( !isGeneric("satellite") ) {
 #' file follow the USGS Earth Explorer's naming convention.
 #' @param log Optionally supply a log entry.
 #' 
-#' @return A \code{Satellite} object
+#' @return A \code{Satellite} object.
 #' 
 #' @export satellite
 #' 
@@ -93,24 +93,17 @@ setMethod("satellite",
 #' @rdname satellite
 #' 
 setMethod("satellite", 
-          signature(x = "RasterStack"), 
+          signature(x = "Raster"), 
           function(x, meta, log){
             if(missing(meta)){
               meta <- data.frame(DATE = as.POSIXlt(Sys.Date(), tz = "UTC"),
                                  FILE = names(x))
             }
-            # layers <- lapply(seq(nlayers(x)), function(y){
-            #   x[[y]]
-            # })
-            layers <- raster::unstack(x)
-            if(missing(log)){
-              ps <- list(time = Sys.time(), info = "Initial import", 
-                         layers = "all", output = "all")
-              log <- list(ps0001 = ps)
-            }
-            #return(new("Satellite", layers = layers, meta = meta, log = log))
-            tmp <- new("Satellite", layers = layers, meta = meta, log = log)
-            return(addRasterMeta2Sat(tmp))
+            layers <- if (raster::nlayers(x) > 1) raster::unstack(x) else x
+            if (missing(log))
+              return(satellite(layers, meta))
+            else 
+              return(satellite(layers, meta, log))
           })
 
 
@@ -123,15 +116,13 @@ setMethod("satellite",
           function(x, meta, log){
             if(missing(meta)){
               meta <- data.frame(DATE = as.POSIXlt(Sys.Date(), tz = "UTC"),
-                                 FILE = names(x))
+                                 FILE = sapply(x, names))
             }
-            layers <- x
             if(missing(log)){
               ps <- list(time = Sys.time(), info = "Initial import", 
                          layers = "all", output = "all")
               log <- list(ps0001 = ps)
             }
-            #return(new("Satellite", layers = layers, meta = meta, log = log))
-            tmp <- new("Satellite", layers = layers, meta = meta, log = log)
+            tmp <- new("Satellite", layers = x, meta = meta, log = log)
             return(addRasterMeta2Sat(tmp))
           })

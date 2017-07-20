@@ -3,20 +3,20 @@
 \docType{methods}
 \name{satellite}
 \alias{satellite}
-\alias{satellite,RasterStack-method}
+\alias{satellite,Raster-method}
 \alias{satellite,character-method}
 \alias{satellite,list-method}
 \title{Create a Satellite object}
 \usage{
 \S4method{satellite}{character}(x, meta, log)
 
-\S4method{satellite}{RasterStack}(x, meta, log)
+\S4method{satellite}{Raster}(x, meta, log)
 
 \S4method{satellite}{list}(x, meta, log)
 }
 \arguments{
-\item{x}{A vector of filenames (see \code{\link{raster}}) or a 
-\code{RasterStack}.}
+\item{x}{A vector of filenames, a (multi-layered) \code{Raster*} object or a 
+\code{list} of single \code{RasterLayer} objects (see \code{\link{raster}}).}
 
 \item{meta}{Optional metadata object (e.g. returned from 
 \code{\link{compMetaLandsat}}). If 'x' is a satellite dataset and recognised
@@ -27,7 +27,7 @@ file follow the USGS Earth Explorer's naming convention.}
 \item{log}{Optionally supply a log entry.}
 }
 \value{
-A \code{Satellite} object
+A \code{Satellite} object.
 }
 \description{
 Method to create a Satellite object.
