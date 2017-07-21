@@ -67,15 +67,15 @@ pck_lut <- function(){
   l4_bands <- data.frame(
     SID = "LT4",
     SGRP = "Landsat",
-    BID = seq(7),
-    BCDE = c(sprintf("B%03dn", seq(7))),
-    LMIN = c(0.45, 0.52, 0.63, 0.76, 1.55, 10.40, 2.08),
-    LMAX = c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 2.35),
+    BID = c(seq(7), "QA"),
+    BCDE = c(sprintf("B%03dn", seq(7)), "B0QAn"),
+    LMIN = c(0.45, 0.52, 0.63, 0.76, 1.55, 10.40, 2.08, NA),
+    LMAX = c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 2.35, NA),
     #SRES = c(30, 30, 30, 30, 30, 30, 30),
     TYPE = c("VIS", "VIS", "VIS", "NIR", "SWIR", "TIR", 
-             "SWIR"),
+             "SWIR", "QA"),
     SPECTRUM = c("solar", "solar", "solar", "solar", "solar",
-                 "thermal", "solar"))
+                 "thermal", "solar", NA))
   rownames(l4_bands) <- paste0("Band_", l4_bands$BID)
   
   l5_bands <- data.frame(
@@ -95,14 +95,14 @@ pck_lut <- function(){
   l7_bands <- data.frame(
     SID = "LE7",
     SGRP = "Landsat",
-    BID = c(seq(5), "6_VCID_1", "6_VCID_2", 7:8),
-    BCDE = c(sprintf("B%03dn", seq(5)), "B0061", "B0062", sprintf("B%03dn", 7:8)),
-    LMIN = c(0.45, 0.52, 0.63, 0.77, 1.55, 10.40, 10.40, 2.09, 0.52),
-    LMAX = c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 12.50, 2.35, 0.90),
+    BID = c(seq(5), "6_VCID_1", "6_VCID_2", 7:8, "QA"),
+    BCDE = c(sprintf("B%03dn", seq(5)), "B0061", "B0062", sprintf("B%03dn", 7:8), "B0QAn"),
+    LMIN = c(0.45, 0.52, 0.63, 0.77, 1.55, 10.40, 10.40, 2.09, 0.52, NA),
+    LMAX = c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 12.50, 2.35, 0.90, NA),
     #SRES = c(30, 30, 30, 30, 30, 30, 30, 30, 15),
-    TYPE = c("VIS", "VIS", "VIS", "NIR", "SWIR", "TIR", "TIR", "SWIR", "PCM"),
+    TYPE = c("VIS", "VIS", "VIS", "NIR", "SWIR", "TIR", "TIR", "SWIR", "PCM", "QA"),
     SPECTRUM = c("solar", "solar", "solar", "solar", "solar",
-                 "thermal", "thermal", "solar", "solar"))
+                 "thermal", "thermal", "solar", "solar", NA))
   rownames(l7_bands) <- paste0("Band_", l7_bands$BID)
   
   l8_bands <- data.frame(
@@ -214,13 +214,13 @@ pck_lut <- function(){
   }
   
   # Tabulated values of ESun (W m-2 micrometer-1)
-  l4_esun <- c(1957, 1826, 1554, 1036, 215, NA, 80.67)
+  l4_esun <- c(1957, 1826, 1554, 1036, 215, NA, 80.67, NA)
   attr(l4_esun, "names") <- as.character(l4_bands$BCDE)
   
-  l5_esun <- c(1957, 1825, 1557, 1033, 214.9, NA, 80.72)
+  l5_esun <- c(1957, 1825, 1557, 1033, 214.9, NA, 80.72, NA)
   attr(l5_esun, "names") <- as.character(l5_bands$BCDE)
   
-  l7_esun <- c(1997, 1812, 1533, 1039, 230.8, NA, NA, 84.90, 1362)
+  l7_esun <- c(1997, 1812, 1533, 1039, 230.8, NA, NA, 84.90, 1362, NA)
   attr(l7_esun, "names") <- as.character(l7_bands$BCDE)
 
   gls5_esun <- c(1957, 1825, 1557, 1033, 214.9, NA, 80.72, NA)
