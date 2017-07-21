@@ -2,9 +2,12 @@
 % Please edit documentation in R/compFilePathLandsat.R
 \name{compFilePathLandsat}
 \alias{compFilePathLandsat}
+\alias{sortFilesLandsat}
 \title{Get filename, bands and metadata file for Landsat 7 and 8 standard 1B/T format}
 \usage{
 compFilePathLandsat(files)
+
+sortFilesLandsat(files)
 }
 \arguments{
 \item{files}{Path and filename(s) of one or more Landsat band files or, 
@@ -18,10 +21,16 @@ filepaths.
 The function compiles the sensor, band, filename and metadata filename information
 for standard level 1B/T Landsat files.
 }
+\section{Functions}{
+\itemize{
+\item \code{sortFilesLandsat}: Sort Landsat band files in ascending order.
+}}
 \examples{
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+
 compFilePathLandsat(files)  
+sortFilesLandsat(files)
 
 }
 

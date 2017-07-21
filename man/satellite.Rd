@@ -16,7 +16,9 @@
 }
 \arguments{
 \item{x}{A vector of filenames, a (multi-layered) \code{Raster*} object or a 
-\code{list} of single \code{RasterLayer} objects (see \code{\link{raster}}).}
+\code{list} of single \code{RasterLayer} objects (see \code{\link{raster}}). 
+In the latter case, be aware that bands must be arranged in ascending order 
+(eg using \code{\link{sortFilesLandsat}}).}
 
 \item{meta}{Optional metadata object (e.g. returned from 
 \code{\link{compMetaLandsat}}). If 'x' is a satellite dataset and recognised
@@ -53,9 +55,10 @@ satellite(l8)
 }
 \seealso{
 (i) \code{\link{compMetaLandsat}} to get more information about the
-structure of the metadata component; and (ii)
+structure of the metadata component; (ii)
 \url{https://landsat.usgs.gov/what-are-naming-conventions-landsat-scene-identifiers} 
 for detailed information about the naming conventions for Landsat scene 
-identifiers.
+identifiers; and (iii) \code{\link{sortFilesLandsat}} for automated 
+rearrangement of Landsat band files.
 }
 

@@ -10,13 +10,17 @@
 #' @return \code{data.frame} containing filepaths, band numbers and metadata 
 #' filepaths. 
 #'
-#' @export compFilePathLandsat
-#'
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
 #' files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
-#' compFilePathLandsat(files)  
 #' 
+#' compFilePathLandsat(files)  
+#' sortFilesLandsat(files)
+#' 
+#' @export compFilePathLandsat
+#' @name compFilePathLandsat
+#' @rdname compFilePathLandsat
+#' @aliases compFilePathLandsat
 compFilePathLandsat <- function(files){
   if((length(files) == 1 & grepl("MTL", files[1])) == FALSE){
     info <- lapply(files, function(x){
@@ -68,4 +72,14 @@ compFilePathLandsat <- function(files){
     rownames(result) <- NULL
     return(result)
   }
+}
+
+
+# Sort Landsat band files -----
+#' @describeIn compFilePathLandsat Sort Landsat band files in ascending order.
+#' @export sortFilesLandsat
+sortFilesLandsat <- function(files) {
+  cfp <- compFilePathLandsat(files)
+  bid <- suppressWarnings(as.integer(cfp$BID))
+  files[order(bid)]
 }
