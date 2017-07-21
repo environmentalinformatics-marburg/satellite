@@ -27,24 +27,11 @@
 NULL
 #' 
 #' @docType data
-#' @name l5
-#' @title Landsat 5 sample data
-#' @description This dataset comes from the USGS. It contains part of the 
-#' Landsat 5 scene LT05_L1TP_167055_20000309_20161214_01_T1 from 2000-03-09 over 
-#' the Bale Mountains, Ethiopia.
-#' @details Use of this data requires your agreement to the USGS regulations on 
-#' using Landsat data.
-#' @format \code{raster::RasterStack} with 8 bands (Landsat 5 bands 1 to 7 plus 
-#' quality layer) of 101 by 101 pixels.
-#' @source
-#' \url{http://earthexplorer.usgs.gov/}
-NULL
-#' 
-#' @docType data
 #' @name l7
 #' @title Landsat 7 sample data
 #' @description This dataset comes from the USGS. It contains part of the 
-#' Landsat scene LE71950252001211EDC00 from 2001-07-30 over Maburg, Germany.
+#' Landsat 7 scene LE71950252001211EDC00 (Pre-Collection Level-1) from 
+#' 2001-07-30 over Maburg, Germany.
 #' @details Use of this data requires your agreement to the USGS regulations on 
 #' using Landsat data.
 #' @format \code{raster::RasterStack} with 8 bands of 41 by 41 pixels.
@@ -56,7 +43,8 @@ NULL
 #' @name l8
 #' @title Landsat 8 sample data
 #' @description This dataset comes from the USGS. It contains part of the 
-#' Landsat scene LC81950252013188LGN00 from 2013-07-07 over Maburg, Germany.
+#' Landsat 8 scene LC81950252013188LGN00 (Pre-Collection Level-1) from 
+#' 2013-07-07 over Maburg, Germany.
 #' @details Use of this data requires your agreement to the USGS regulations on 
 #' using Landsat data.
 #' @format \code{raster::RasterStack} with 10 bands of 41 by 41 pixels.

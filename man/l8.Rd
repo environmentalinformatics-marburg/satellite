@@ -10,7 +10,8 @@
 }
 \description{
 This dataset comes from the USGS. It contains part of the 
-Landsat scene LC81950252013188LGN00 from 2013-07-07 over Maburg, Germany.
+Landsat 8 scene LC81950252013188LGN00 (Pre-Collection Level-1) from 
+2013-07-07 over Maburg, Germany.
 }
 \details{
 Use of this data requires your agreement to the USGS regulations on 
