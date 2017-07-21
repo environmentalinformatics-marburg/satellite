@@ -10,9 +10,8 @@ if ( !isGeneric("names") ) {
 #' @param x A Satellite object.
 #' @param value Band codes of the individual data layers.
 #'
-#' @export names
-#' 
 #' @name names
+#' @aliases names,Satellite-method
 #' 
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
