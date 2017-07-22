@@ -10,7 +10,7 @@ vignette: >
 ---
 
 The following example shows how to read a Landsat-8 data set downloaded from the
-[USGS Earth Explorer](http://earthexplorer.usgs.gov/) and how to convert the 
+[USGS Earth Explorer](https://earthexplorer.usgs.gov/) and how to convert the 
 bands' scaled counts to radiance, reflectance and/or brightness temperature.
 
 

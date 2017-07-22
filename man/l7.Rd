@@ -6,7 +6,7 @@
 \title{Landsat 7 sample data}
 \format{\code{raster::RasterStack} with 8 bands of 41 by 41 pixels.}
 \source{
-\url{http://earthexplorer.usgs.gov/}
+\url{https://earthexplorer.usgs.gov/}
 }
 \description{
 This dataset comes from the USGS. It contains part of the 

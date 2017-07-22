@@ -36,7 +36,7 @@ NULL
 #' using Landsat data.
 #' @format \code{raster::RasterStack} with 8 bands of 41 by 41 pixels.
 #' @source
-#' \url{http://earthexplorer.usgs.gov/}
+#' \url{https://earthexplorer.usgs.gov/}
 NULL
 #'
 #' @docType data
@@ -49,5 +49,5 @@ NULL
 #' using Landsat data.
 #' @format \code{raster::RasterStack} with 10 bands of 41 by 41 pixels.
 #' @source
-#' \url{http://earthexplorer.usgs.gov/}
+#' \url{https://earthexplorer.usgs.gov/}
 NULL
