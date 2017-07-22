@@ -16,6 +16,7 @@ Changes:
   * Mandatory use of **Rcpp** functionality in `calcPathRadDOS`.
   * Index entries for `pck_data` and `pck_lut` disabled.
   * Revised sensor IDs for Landsat 4 (LT4 for 'Landsat Thematic Mapper') and 5 (LT5).
+  * Updated [ESun values](https://landsat.usgs.gov/esun) for Landsat 4, 5 and 7.
 
 
 ## satellite 0.2.0

@@ -7,7 +7,7 @@ if ( !isGeneric("calcTOAIrradTable") ) {
 #' @description
 #' Get mean extraterrestrial solar irradiance (ESun) using published values.
 #' 
-#' @param x A Satellite object or sensor id ("LC4/5/7") as character.
+#' @param x A Satellite object or sensor id ("LT4, LT5, LE7") as character.
 #' @param normalize Logical; if \code{TRUE}, ESun is normalized to mean 
 #' earth-sun distance. 
 #' @param esd Earth-sun distance (AU, can be estimated using 
@@ -26,15 +26,13 @@ if ( !isGeneric("calcTOAIrradTable") ) {
 #' actual earth-sun distance is approximated by the day of the year using
 #' \code{\link{calcEarthSunDist}}.
 #' 
-#' @references  Tabulated values of the solar irradiance for Landsat 4 and 5 are 
-#' taken from Chander G, Markham B (2003) Revised Landsat-5 TM radiometric 
-#' calibration procedures and postcalibration dynamic ranges.  IEEE Transactions 
-#' on Geoscience and Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285, online 
-#' available at \url{ftp://ftp.vt.tpu.ru/study/Tokareva/public/English_prof/GIS/L5TMLUTIEEE2003.pdf}.
+#' Please note that ESun values are not required for converting Landsat 8 data 
+#' to reflectance as the corresponding metadata files provide coefficients 
+#' necessary to convert digital numbers to radiance and reflectance (taken from 
+#' \url{https://landsat.usgs.gov/where-can-i-find-solar-exoatmospheric-spectral-irradiances-esun-values-landsat-8-oli-data}.
 #' 
-#' Tabulated values of the solar irradiance for Landsat 7 are taken from
-#' \href{https://landsat.gsfc.nasa.gov/wp-content/uploads/2016/08/Landsat7_Handbook.pdf}{NASA's
-#' Landsat7 handbook, tab 11.3 (Thuillier spectrum)}. 
+#' @references  Tabulated values of the solar irradiance for all Landsat sensors 
+#' are taken from \url{https://landsat.usgs.gov/esun}. 
 #' 
 #' @seealso \code{\link{calcTOAIrradRadRef}} for the computation of the solar 
 #' irradiance based on maximum radiation and reflection values of the dataset or
@@ -58,11 +56,8 @@ if ( !isGeneric("calcTOAIrradTable") ) {
 NULL
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @return Satellite object with ESun information added to the metadata
-#' 
 #' @rdname calcTOAIrradTable
-#'
 setMethod("calcTOAIrradTable", 
           signature(x = "Satellite"), 
           function(x, normalize = TRUE, esd){
@@ -90,11 +85,8 @@ setMethod("calcTOAIrradTable",
 
 
 # Function using factor --------------------------------------------------------
-#' 
 #' @return Vector object containing ESun for the respective band(s)
-#' 
 #' @rdname calcTOAIrradTable
-#'
 setMethod("calcTOAIrradTable", 
           signature(x = "factor"),
           function(x, normalize = TRUE, esd){
@@ -109,22 +101,21 @@ setMethod("calcTOAIrradTable",
 
 
 # Function using character -----------------------------------------------------
-#' 
 #' @return Vector object containing ESun for the respective band(s)
-#' 
 #' @rdname calcTOAIrradTable
-#'
 setMethod("calcTOAIrradTable", 
           signature(x = "character"),
           function(x, normalize = TRUE, esd){
             if(x == "LE7") {
               eSun <- lut$L7_ESUN
-            } else if(x == "LE5") {
+            } else if(x == "LT5") {
               eSun <- lut$L5_ESUN
-            } else if(x == "LE4") {
+            } else if(x == "LT4") {
               eSun <- lut$L4_ESUN
-            } else if(x == "GLS5") {
-              eSun <- lut$GLS5_ESUN
+            # } else if(x == "GLS5") {
+            #   eSun <- lut$GLS5_ESUN
+            } else if(x == "LC8") {
+              stop("ESun values are not provided for Landsat 8, see ?calcTOAIrradTable.")
             } else {
               stop(paste0("Satellite ID ", x, " is not supported, yet."))
             }

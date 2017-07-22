@@ -15,7 +15,7 @@
 \S4method{calcTOAIrradTable}{character}(x, normalize = TRUE, esd)
 }
 \arguments{
-\item{x}{A Satellite object or sensor id ("LC4/5/7") as character.}
+\item{x}{A Satellite object or sensor id ("LT4, LT5, LE7") as character.}
 
 \item{normalize}{Logical; if \code{TRUE}, ESun is normalized to mean 
 earth-sun distance.}
@@ -42,6 +42,11 @@ Currently implemented sensors are Landsat 4, 5 and 7.
 If results should not be normalized to a mean earth-sun distance, the 
 actual earth-sun distance is approximated by the day of the year using
 \code{\link{calcEarthSunDist}}.
+
+Please note that ESun values are not required for converting Landsat 8 data 
+to reflectance as the corresponding metadata files provide coefficients 
+necessary to convert digital numbers to radiance and reflectance (taken from 
+\url{https://landsat.usgs.gov/where-can-i-find-solar-exoatmospheric-spectral-irradiances-esun-values-landsat-8-oli-data}.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
@@ -54,15 +59,8 @@ calcTOAIrradTable(x = "LE7", normalize = FALSE,
 
 }
 \references{
-Tabulated values of the solar irradiance for Landsat 4 and 5 are 
-taken from Chander G, Markham B (2003) Revised Landsat-5 TM radiometric 
-calibration procedures and postcalibration dynamic ranges.  IEEE Transactions 
-on Geoscience and Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285, online 
-available at \url{ftp://ftp.vt.tpu.ru/study/Tokareva/public/English_prof/GIS/L5TMLUTIEEE2003.pdf}.
-
-Tabulated values of the solar irradiance for Landsat 7 are taken from
-\href{https://landsat.gsfc.nasa.gov/wp-content/uploads/2016/08/Landsat7_Handbook.pdf}{NASA's
-Landsat7 handbook, tab 11.3 (Thuillier spectrum)}.
+Tabulated values of the solar irradiance for all Landsat sensors 
+are taken from \url{https://landsat.usgs.gov/esun}.
 }
 \seealso{
 \code{\link{calcTOAIrradRadRef}} for the computation of the solar 

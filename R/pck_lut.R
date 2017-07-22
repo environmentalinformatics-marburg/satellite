@@ -214,13 +214,13 @@ pck_lut <- function(){
   }
   
   # Tabulated values of ESun (W m-2 micrometer-1)
-  l4_esun <- c(1957, 1826, 1554, 1036, 215, NA, 80.67, NA)
+  l4_esun <- c(1958, 1826, 1554, 1033, 214.7, NA, 80.7, NA)
   attr(l4_esun, "names") <- as.character(l4_bands$BCDE)
   
-  l5_esun <- c(1957, 1825, 1557, 1033, 214.9, NA, 80.72, NA)
+  l5_esun <- c(1958, 1827, 1551, 1036, 214.9, NA, 80.65, NA)
   attr(l5_esun, "names") <- as.character(l5_bands$BCDE)
   
-  l7_esun <- c(1997, 1812, 1533, 1039, 230.8, NA, NA, 84.90, 1362, NA)
+  l7_esun <- c(1970, 1842, 1547, 1044, 225.7, NA, NA, 82.06, 1369, NA)
   attr(l7_esun, "names") <- as.character(l7_bands$BCDE)
 
   gls5_esun <- c(1957, 1825, 1557, 1033, 214.9, NA, 80.72, NA)
