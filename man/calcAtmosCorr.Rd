@@ -3,9 +3,9 @@
 \docType{methods}
 \name{calcAtmosCorr}
 \alias{calcAtmosCorr}
-\alias{calcAtmosCorr,RasterLayer-method}
-\alias{calcAtmosCorr,RasterStack-method}
 \alias{calcAtmosCorr,Satellite-method}
+\alias{calcAtmosCorr,RasterStack-method}
+\alias{calcAtmosCorr,RasterLayer-method}
 \title{Atmospheric correction of remote sensing data}
 \usage{
 \S4method{calcAtmosCorr}{Satellite}(x, model = c("DOS2", "DOS4"),
@@ -150,4 +150,3 @@ Atmospheric Effects? Remote Sensing of Environment 75/2,
 doi:10.1016/S0034-4257(00)00169-3, URL
 \url{http://www.sciencedirect.com/science/article/pii/S0034425700001693}
 }
-

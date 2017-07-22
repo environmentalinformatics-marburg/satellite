@@ -3,8 +3,8 @@
 \docType{methods}
 \name{satellite}
 \alias{satellite}
-\alias{satellite,Raster-method}
 \alias{satellite,character-method}
+\alias{satellite,Raster-method}
 \alias{satellite,list-method}
 \title{Create a Satellite object}
 \usage{
@@ -61,4 +61,3 @@ for detailed information about the naming conventions for Landsat scene
 identifiers; and (iii) \code{\link{sortFilesLandsat}} for automated 
 rearrangement of Landsat band files.
 }
-

@@ -60,13 +60,10 @@ if ( !isGeneric("calcTOAIrradRadRef") ) {
 NULL
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @return If x is a Satellite object, a Satellite object with ESun information 
 #' added to the metadata; if x is numeric, a vector containing ESun for the 
 #' respective band(s).
-#' 
 #' @rdname calcTOAIrradRadRef
-#'
 setMethod("calcTOAIrradRadRef", 
           signature(x = "Satellite"), 
           function(x, normalize = TRUE, esd){
@@ -98,9 +95,7 @@ setMethod("calcTOAIrradRadRef",
 
 
 # Function using numeric -------------------------------------------------------
-#' 
 #' @rdname calcTOAIrradRadRef
-#'
 setMethod("calcTOAIrradRadRef", 
           signature(x = "numeric"), 
           function(x, ref_max, normalize = TRUE, esd){

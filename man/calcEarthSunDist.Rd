@@ -55,4 +55,3 @@ diffuse irradiance on horizontal and tilted planes at the Earth's surface for
 cloudless atmospheres. Task No. 3434.10, Solar Energy Research Institute: 
 Golden, Colorado, \url{http://www.nrel.gov/docs/legosti/old/2436.pdf}.
 }
-

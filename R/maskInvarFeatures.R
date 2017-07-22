@@ -53,13 +53,10 @@ NULL
 
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @return If x is a Satellite object, a Satellite object with added layer; \cr
 #' if x is a \code{raster::RasterLayer} object, a a \code{raster::RasterLayer} 
 #' object with added layers (1 indicates invariant pixels, 0 otherwise). 
-#' 
 #' @rdname maskInvarFeatures
-#'
 setMethod("maskInvarFeatures", 
           signature(x = "Satellite"), 
           function(x){
@@ -91,13 +88,10 @@ setMethod("maskInvarFeatures",
 
 
 # Function using raster::RasterStack object ------------------------------------
-#' 
 #' @param id_vis Index of the visible band. 
 #' @param id_nir Index of the near infravis band.
 #' @param id_swir Index of the short-wave infravis band. 
-#' 
 #' @rdname maskInvarFeatures
-#'
 setMethod("maskInvarFeatures", 
           signature(x = "RasterStack"), 
           function(x, quant = 0.01, id_vis = 1L, id_nir = 2L, id_swir = 3L) {
@@ -119,9 +113,7 @@ setMethod("maskInvarFeatures",
 
 
 # Function using raster::RasterLayer object ------------------------------------
-#' 
 #' @rdname maskInvarFeatures
-#'
 setMethod("maskInvarFeatures", 
           signature(x = "RasterLayer"), 
           function(x, nir, swir, quant=0.01) {

@@ -17,4 +17,3 @@ Landsat 8 scene LC81950252013188LGN00 (Pre-Collection Level-1) from
 Use of this data requires your agreement to the USGS regulations on 
 using Landsat data.
 }
-

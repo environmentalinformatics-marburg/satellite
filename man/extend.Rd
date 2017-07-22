@@ -52,4 +52,3 @@ Please refer to the respective functions for references.
 \seealso{
 This function is a wrapper for \code{raster::extend}.
 }
-

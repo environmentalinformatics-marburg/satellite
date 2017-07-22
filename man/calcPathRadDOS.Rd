@@ -152,4 +152,3 @@ If you refer to Sawyer and Stephen 2014, please note that eq. 5 is wrong.
 This function is used by \code{\link{calcAtmosCorr}} to 
 compute the path radiance.
 }
-

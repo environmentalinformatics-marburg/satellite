@@ -52,9 +52,7 @@ NULL
 
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @rdname calcTopoCorr
-#'
 setMethod("calcTopoCorr", 
           signature(x = "Satellite"), 
           function(x, mask=TRUE){
@@ -106,9 +104,7 @@ setMethod("calcTopoCorr",
 
 
 # Function using raster::RasterStack object ------------------------------------
-#' 
 #' @rdname calcTopoCorr
-#'
 setMethod("calcTopoCorr", 
           signature(x = "RasterStackBrick"), 
           function(x, hillsh, cloudmask = NULL, ...){
@@ -121,13 +117,11 @@ setMethod("calcTopoCorr",
 
 
 # Function using raster::RasterLayer object ------------------------------------
-#' 
 #' @param hillsh A \code{RasterLayer} created with \code{\link{hillShade}}. 
 #' @param cloudmask A \code{RasterLayer} in which clouds are masked with 
 #' NA values, passed to \code{\link[raster]{mask}}. 
 #' @param ... Additional arguments passed to \code{\link{writeRaster}}.
 #' @rdname calcTopoCorr
-#'
 setMethod("calcTopoCorr", 
           signature(x = "RasterLayer"), 
           function(x, hillsh, cloudmask = NULL, ...){

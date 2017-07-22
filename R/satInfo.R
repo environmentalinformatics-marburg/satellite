@@ -50,11 +50,8 @@ NULL
 ################################################################################
 # Return (almost) complete sections of the Satellite object
 ################################################################################
-
 #' @describeIn satInfo Return Satellite data layers
 #' @export getSatDataLayers
-#'
-#'
 getSatDataLayers <- function(sat, bcde = NULL){
   if (is.null(bcde)) {
     return(sat@layers)
@@ -68,9 +65,7 @@ getSatDataLayers <- function(sat, bcde = NULL){
 
 # Return Satellite data layer i ------------------------------------------------
 #' @export getSatDataLayer
-#'
 #' @describeIn satInfo Return Satellite data layer i
-#'
 getSatDataLayer <- function(sat, bcde){
   return(sat@layers[[getSatLNBR(sat, bcde)]])
 }
@@ -78,9 +73,7 @@ getSatDataLayer <- function(sat, bcde){
 
 # Return Satellite object metadata ---------------------------------------------
 #' @export getSatMeta
-#'
 #' @describeIn satInfo Return Satellite object metadata
-#'
 getSatMeta <- function(sat, bcde){
   if(missing(bcde)){
     return(sat@meta)
@@ -92,9 +85,7 @@ getSatMeta <- function(sat, bcde){
 
 # Return template for Satellite object metadata which is based on existing band-
 #' @export getSatMetaBCDETemplate
-#'
 #' @describeIn satInfo  Return template for Satellite object metadata which is based on existing band
-#'
 getSatMetaBCDETemplate <- function(sat, bcde){
   meta_template <- getSatMeta(sat, bcde)
   meta_template$DATE <- NULL
@@ -107,9 +98,7 @@ getSatMetaBCDETemplate <- function(sat, bcde){
 
 # Return Satellite object log info ---------------------------------------------
 #' @export getSatLog
-#'
 #' @describeIn satInfo Return Satellite object log info
-#'
 getSatLog <- function(sat){
   return(sat@log)
 }
@@ -120,9 +109,7 @@ getSatLog <- function(sat){
 
 # Set BCDE/data layer names of a Satellite object ------------------------------
 #' @export setSatBCDE
-#'
 #' @describeIn satInfo Set BCDE/data layer names of a Satellite object
-#'
 setSatBCDE <- function(sat, bcde){
   ## if not supplied, BCDE is being created automatically
   if (missing(bcde))
@@ -137,9 +124,7 @@ setSatBCDE <- function(sat, bcde){
 
 # If not supplied, automatically create BCDE names of a Satellite object -------
 #' @export createSatBCDE
-#'
 #' @describeIn satInfo If not supplied, automatically create BCDE names of a Satellite object
-#'
 createSatBCDE <- function(sat, width = 3, flag = 0, 
                           prefix = "B", postfix = "n") {
   int_nrow <- nrow(sat@meta)
@@ -156,9 +141,7 @@ createSatBCDE <- function(sat, width = 3, flag = 0,
 
 # Add additional or overwrite metainformation parameter to Satellite object ----
 #' @export addSatMetaParam
-#'
 #' @describeIn satInfo Add additional or overwrite metainformation parameter to Satellite object
-#'
 addSatMetaParam <- function(sat, meta_param){
   if("SCENE" %in% colnames(meta_param)){
     id <- c("SCENE", "BCDE")
@@ -183,9 +166,7 @@ addSatMetaParam <- function(sat, meta_param){
 
 # Add metainformation for an additional layer to Satellite object --------------
 #' @export addSatMetaEntry
-#'
 #' @describeIn satInfo Add metainformation for an additional layer to Satellite object
-#'
 addSatMetaEntry <- function(sat, meta_param){
   if(missing(meta_param)){
     meta_param <- data.frame(DATE = as.POSIXlt(Sys.Date(), tz = "UTC"))
@@ -214,9 +195,7 @@ addSatMetaEntry <- function(sat, meta_param){
 
 # Add new log entry to Satellite object ----------------------------------------
 #' @export addSatLog
-#'
 #' @describeIn satInfo Add new log entry to Satellite object
-#'
 addSatLog <- function(sat, info = NA_character_, in_bcde = NA_character_, 
                       out_bcde = NA_character_){
   new_length <- length(getSatLog(sat)) + 1
@@ -230,9 +209,7 @@ addSatLog <- function(sat, info = NA_character_, in_bcde = NA_character_,
 
 # Add new Satellite data layer --------------------------------------------------
 #' @export addSatDataLayer
-#'
 #' @describeIn satInfo Add new Satellite data layer
-#'
 addSatDataLayer <- function(sat, bcde, data, meta_param, info, in_bcde){
   names(data) <- bcde
   
@@ -261,9 +238,7 @@ addSatDataLayer <- function(sat, bcde, data, meta_param, info, in_bcde){
 
 # Add raster meta data to Satellite object meta data ----
 #' @export addRasterMeta2Sat
-#'
 #' @describeIn satInfo Add raster meta data to Satellite object meta data
-#'
 addRasterMeta2Sat <- function(sat){
   ## if BCDE is not available, it is automatically created 
   if (is.null(sat@meta$BCDE)) {
@@ -296,9 +271,7 @@ addRasterMeta2Sat <- function(sat){
 
 # Create raster meta data ------------------------------------------------------
 #' @export createRasterMetaData
-#'
 #' @describeIn satInfo Create raster meta data
-#'
 createRasterMetaData <- function(rst){
   rst_meta <- data.frame(XRES = raster::xres(rst),
                          YRES = raster::yres(rst),
@@ -318,9 +291,7 @@ createRasterMetaData <- function(rst){
 
 # Update raster meta data ------------------------------------------------------
 #' @export updateRasterMetaData
-#'
 #' @describeIn satInfo Create raster meta data
-#'
 updateRasterMetaData <- function(sat, bcde) {
   
   rst_meta <- createRasterMetaData(getSatDataLayer(sat, bcde))
@@ -340,9 +311,7 @@ updateRasterMetaData <- function(sat, bcde) {
 
 # Return number of Satellite data layers ---------------------------------------
 #' @export countSatDataLayers
-#'
 #' @describeIn satInfo Return number of Satellite data layers
-#'
 countSatDataLayers <- function(sat){
   return(length(sat@layers))
 }
@@ -351,9 +320,7 @@ countSatDataLayers <- function(sat){
 # Return parameter (general method implemented by the specific functions below)-
 #' @param bcde Band code.
 #' @export getSatParam
-#'
 #' @describeIn satInfo Return parameter (general method implemented by the specific functions below)
-#' 
 getSatParam <- function(sat, param, bcde, return_bcde = TRUE){
   if(length(which(param == colnames(getSatMeta(sat)))) > 0){
     if(param == "BCDE"){
@@ -381,11 +348,8 @@ getSatParam <- function(sat, param, bcde, return_bcde = TRUE){
 
 
 # Return Band code -------------------------------------------------------------
-#' 
 #' @export getSatBCDE
-#'
 #' @describeIn satInfo Return Band code
-#' 
 getSatBCDE <- function(sat, lnbr){
   if(missing(lnbr)){
     getSatParam(sat, "BCDE", return_bcde = FALSE)  
@@ -396,11 +360,8 @@ getSatBCDE <- function(sat, lnbr){
 
 
 # Return Band IDs --------------------------------------------------------------
-#' 
 #' @export getSatBID
-#'
 #' @describeIn satInfo Return Band IDs
-#' 
 getSatBID <- function(sat, bcde){
   getSatParam(sat, "BID", bcde, return_bcde = FALSE)
 }
@@ -408,9 +369,7 @@ getSatBID <- function(sat, bcde){
 
 # Return sensor ID -------------------------------------------------------------
 #' @export getSatSID
-#'
 #' @describeIn satInfo Return sensor ID
-#' 
 getSatSID <- function(sat){
   getSatParam(sat, "SID", return_bcde = FALSE)[1]
 }
@@ -418,9 +377,7 @@ getSatSID <- function(sat){
 
 # Return sensor ----------------------------------------------------------------
 #' @export getSatSensor
-#'
 #' @describeIn  satInfo Return sensor
-#' 
 getSatSensor <- function(sat){
   getSatParam(sat, "SENSOR", return_bcde = FALSE)[1]
 }
@@ -428,9 +385,7 @@ getSatSensor <- function(sat){
 
 # Return sensor group ----------------------------------------------------------
 #' @export getSatSensorGroup
-#'
 #' @describeIn satInfo Return sensor group
-#' 
 getSatSensorGroup <- function(sat){
   getSatParam(sat, "SGRP", return_bcde = FALSE)[1]
 }
@@ -438,9 +393,7 @@ getSatSensorGroup <- function(sat){
 
 # Return sensor information ----------------------------------------------------
 #' @export getSatSensorInfo
-#'
 #' @describeIn satInfo Return sensor information
-#' 
 getSatSensorInfo <- function(sat){
   data.frame(SID = getSatSID(sat),
              SENSOR = getSatSensor(sat),
@@ -450,9 +403,7 @@ getSatSensorInfo <- function(sat){
 
 # Return spectrum --------------------------------------------------------------
 #' @export getSatSpectrum
-#'
 #' @describeIn satInfo Return spectrum
-#' 
 getSatSpectrum <- function(sat, bcde){
   getSatParam(sat, "SPECTRUM", bcde)
 }
@@ -460,9 +411,7 @@ getSatSpectrum <- function(sat, bcde){
 
 # Return solar band codes ------------------------------------------------------
 #' @export getSatBCDESolar
-#'
 #' @describeIn satInfo Return solar band codes
-#' 
 getSatBCDESolar <- function(sat){
   spectrum <- getSatSpectrum(sat)
   return(getSatBCDE(sat)[grep("solar", spectrum)])
@@ -471,9 +420,7 @@ getSatBCDESolar <- function(sat){
 
 # Return thermal band codes ------------------------------------------------------
 #' @export getSatBCDEThermal
-#'
 #' @describeIn satInfo Return thermal band codes
-#' 
 getSatBCDEThermal <- function(sat){
   spectrum <- getSatSpectrum(sat)
   return(getSatBCDE(sat)[grep("thermal", spectrum)])
@@ -482,9 +429,7 @@ getSatBCDEThermal <- function(sat){
 
 # Return sensor x resolution -----------------------------------------------------
 #' @export getSatXRes
-#'
 #' @describeIn satInfo Return sensor x resolution
-#' 
 getSatXRes <- function(sat, bcde){
   getSatParam(sat, "XRES", bcde)
 }
@@ -492,9 +437,7 @@ getSatXRes <- function(sat, bcde){
 
 # Return sensor y resolution -----------------------------------------------------
 #' @export getSatYRes
-#'
 #' @describeIn satInfo Return sensor y resolution
-#' 
 getSatYRes <- function(sat, bcde){
   getSatParam(sat, "YRES", bcde)
 }
@@ -502,9 +445,7 @@ getSatYRes <- function(sat, bcde){
 
 # Return mean sensor resolution (mean of x and y res) --------------------------
 #' @export getSatRes
-#'
 #' @describeIn satInfo Return mean sensor resolution (mean of x and y res)
-#' 
 getSatRes <- function(sat, bcde){
   mean(getSatXRes(sat, bcde), getSatYRes(sat, bcde), na.rm = TRUE)
 }
@@ -512,9 +453,7 @@ getSatRes <- function(sat, bcde){
 
 # Return sensor type -----------------------------------------------------------
 #' @export getSatType
-#'
 #' @describeIn satInfo Return sensor type
-#' 
 getSatType <- function(sat, bcde){
   getSatParam(sat, "TYPE", bcde)
 }
@@ -522,9 +461,7 @@ getSatType <- function(sat, bcde){
 
 # Return CALIB -----------------------------------------------------------------
 #' @export getSatCalib
-#'
 #' @describeIn satInfo Return calibration level
-#' 
 getSatCalib <- function(sat, bcde){
   getSatParam(sat, "CALIB", bcde)
 }
@@ -532,9 +469,7 @@ getSatCalib <- function(sat, bcde){
 
 # Return TYPE band codes matching id ------------------------------------------
 #' @export getSatBCDEType
-#'
 #' @describeIn satInfo Return TYPE band codes
-#' 
 getSatBCDEType <- function(sat, bcde, type){
   type <- getSatType(sat, bcde)
   result <- getSatBCDE(sat)[grep(type, type)]
@@ -547,9 +482,7 @@ getSatBCDEType <- function(sat, bcde, type){
 
 # Return BCDE matching TYPE ----------------------------------------------------
 #' @export getSatBCDEFromType
-#'
 #' @describeIn satInfo Return BCDE matching TYPE
-#' 
 getSatBCDEFromType <- function(sat, type = "VIS"){
   as.character(stats::na.exclude(sat@meta$BCDE[sat@meta$TYPE == type]))
 }
@@ -557,9 +490,7 @@ getSatBCDEFromType <- function(sat, type = "VIS"){
 
 # Return BCDE matching TYPE ----------------------------------------------------
 #' @export getSatBCDEFromSpectrum
-#'
 #' @describeIn satInfo Return BCDE matching TYPE
-#' 
 getSatBCDEFromSpectrum <- function(sat, spectrum = "solar"){
   as.character(stats::na.exclude(sat@meta$BCDE[sat@meta$SPECTRUM == spectrum]))
 }
@@ -568,9 +499,7 @@ getSatBCDEFromSpectrum <- function(sat, spectrum = "solar"){
 
 # Return SRES band codes matching type ------------------------------------------
 #' @export getSatBCDESres
-#'
 #' @describeIn satInfo Return the mean of x and y resolution for band codes matching type
-#' 
 getSatBCDESres <- function(sat, bcde, type){
   sres <- getSatRes(sat, bcde)
   result <- getSatBCDE(sat)[grep(type, sres)]
@@ -583,9 +512,7 @@ getSatBCDESres <- function(sat, bcde, type){
 
 # Return CALIB band codes matching type ------------------------------------------
 #' @export getSatBCDECalib
-#'
 #' @describeIn satInfo Return calibration level for band codes matching type
-#' 
 getSatBCDECalib <- function(sat, bcde, calib){
   calib_val <- getSatCalib(sat, bcde)
   result <- getSatBCDE(sat)[grep(calib, calib_val)]
@@ -598,9 +525,7 @@ getSatBCDECalib <- function(sat, bcde, calib){
 
 # Return CALIB band codes machting type and are solare bands ---------------------
 #' @export getSatBCDESolarCalib
-#'
 #' @describeIn satInfo Return calibration level for band codes machting type and are solar bands
-#' 
 getSatBCDESolarCalib <- function(sat, bcde, calib){
   calib_val <- getSatBCDECalib(sat, bcde, calib)
   result <- getSatBCDESolar(sat)[getSatBCDESolar(sat) %in% calib_val]
@@ -613,9 +538,7 @@ getSatBCDESolarCalib <- function(sat, bcde, calib){
 
 # Return CALIB band codes machting type and are thermal bands --------------------
 #' @export getSatBCDEThermalCalib
-#'
 #' @describeIn satInfo Return calibration level for band codes machting type and are thermal bands
-#' 
 getSatBCDEThermalCalib <- function(sat, bcde, calib){
   calib_val <- getSatBCDECalib(sat, bcde, calib)
   return(getSatBCDEThermal(sat)[getSatBCDEThermal(sat) %in% calib_val])
@@ -624,9 +547,7 @@ getSatBCDEThermalCalib <- function(sat, bcde, calib){
 
 # Return band information ------------------------------------------------------
 #' @export getSatBandInfo
-#'
 #' @describeIn satInfo Return band information
-#' 
 getSatBandInfo <- function(sat, bcde, return_calib = TRUE){
   if(return_calib){
     result <- data.frame(BID = getSatBID(sat, bcde),
@@ -646,9 +567,7 @@ getSatBandInfo <- function(sat, bcde, return_calib = TRUE){
 
 # Return RAD_MAX ---------------------------------------------------------------
 #' @export getSatRadMax
-#'
 #' @describeIn satInfo Return maximum radiance for bcde
-#' 
 getSatRadMax <- function(sat, bcde){
   getSatParam(sat, "RADMAX", bcde)
 }
@@ -656,9 +575,7 @@ getSatRadMax <- function(sat, bcde){
 
 # Return RAD_MIN ---------------------------------------------------------------
 #' @export getSatRadMin
-#'
 #' @describeIn satInfo Return minimum radiance for bcde
-#' 
 getSatRadMin <- function(sat, bcde){
   getSatParam(sat, "RADMIN", bcde)
 }
@@ -666,9 +583,7 @@ getSatRadMin <- function(sat, bcde){
 
 # Return REF_MAX ---------------------------------------------------------------
 #' @export getSatRefMax
-#'
 #' @describeIn satInfo Return maximum reflectance for bcde
-#' 
 getSatRefMax <- function(sat, bcde){
   getSatParam(sat, "REFMAX", bcde)
 }
@@ -676,9 +591,7 @@ getSatRefMax <- function(sat, bcde){
 
 # Return REF_MIN ---------------------------------------------------------------
 #' @export getSatRefMin
-#'
 #' @describeIn satInfo Return minimum reflectance for bcde
-#' 
 getSatRefMin <- function(sat, bcde){
   getSatParam(sat, "REFMIN", bcde)
 }
@@ -686,9 +599,7 @@ getSatRefMin <- function(sat, bcde){
 
 # Return ESD -------------------------------------------------------------------
 #' @export getSatESD
-#'
 #' @describeIn satInfo Return earth-sun distance
-#' 
 getSatESD <- function(sat){
   getSatParam(sat, "ESD")[1]
 }
@@ -696,9 +607,7 @@ getSatESD <- function(sat){
 
 # Return ESun ------------------------------------------------------------------
 #' @export getSatESUN
-#'
 #' @describeIn satInfo Return actual solar TOA irradiance
-#' 
 getSatESUN <- function(sat, bcde) {
   getSatParam(sat, "ESUN", bcde)
 }
@@ -706,9 +615,7 @@ getSatESUN <- function(sat, bcde) {
 
 # Return SZEN ------------------------------------------------------------------
 #' @export getSatSZEN
-#'
 #' @describeIn satInfo Return sun zenith angle
-#' 
 getSatSZEN <- function(sat, bcde){
   getSatParam(sat, "SZEN", bcde)
 }
@@ -716,9 +623,7 @@ getSatSZEN <- function(sat, bcde){
 
 # Return SAZM ------------------------------------------------------------------
 #' @export getSatSAZM
-#'
 #' @describeIn satInfo Return sun azimuth angle
-#' 
 getSatSAZM <- function(sat, bcde){
   getSatParam(sat, "SAZM", bcde)
 }
@@ -726,18 +631,14 @@ getSatSAZM <- function(sat, bcde){
 
 # Return SELV ------------------------------------------------------------------
 #' @export getSatSELV
-#'
 #' @describeIn satInfo Return Sun elevation
-#' 
 getSatSELV <- function(sat, bcde){
   getSatParam(sat, "SELV", bcde)
 }
 
 # Return Layer name from metadata ----------------------------------------------
 #' @export getSatMetaLayer
-#'
 #' @describeIn satInfo Return Layer name from metadata
-#' 
 getSatMetaLayer <- function(sat, bcde){
   getSatParam(sat, "LAYER", bcde)
 }
@@ -745,9 +646,7 @@ getSatMetaLayer <- function(sat, bcde){
 
 # Return Layer name from data layer --------------------------------------------
 #' @export getSatLayerfromData
-#'
 #' @describeIn satInfo Return Layer name from data layer
-#' 
 getSatLayerfromData <- function(sat, bcde, nbr){
   if(missing(bcde)){
     layers <- sapply(getSatDataLayers(sat), function(x){
@@ -767,9 +666,7 @@ getSatLayerfromData <- function(sat, bcde, nbr){
 
 # Return LNBR ------------------------------------------------------------------
 #' @export getSatLNBR
-#'
-#' @describeIn satInfo Return Layer number
-#' 
+#' @describeIn satInfo Return Layer number 
 getSatLNBR <- function(sat, bcde){
   getSatParam(sat, "LNBR", bcde)
 }
@@ -777,9 +674,7 @@ getSatLNBR <- function(sat, bcde){
 
 # Return LMin ------------------------------------------------------------------
 #' @export getSatLMIN
-#'
 #' @describeIn satInfo Return minimum wavelength of the sensor band
-#' 
 getSatLMIN <- function(sat, bcde){
   getSatParam(sat, "LMIN", bcde)
 }
@@ -787,9 +682,7 @@ getSatLMIN <- function(sat, bcde){
 
 # Return LMAX ------------------------------------------------------------------
 #' @export getSatLMAX
-#'
 #' @describeIn satInfo Return maximum wavelength of the sensor band
-#' 
 getSatLMAX <- function(sat, bcde){
   getSatParam(sat, "LMAX", bcde)
 }
@@ -797,9 +690,7 @@ getSatLMAX <- function(sat, bcde){
 
 # Return RADA ------------------------------------------------------------------
 #' @export getSatRADA
-#'
 #' @describeIn satInfo Return addition coefficient for SC to radiance conversion
-#' 
 getSatRADA <- function(sat, bcde){
   getSatParam(sat, "RADA", bcde)
 }
@@ -807,9 +698,7 @@ getSatRADA <- function(sat, bcde){
 
 # Return RADM ------------------------------------------------------------------
 #' @export getSatRADM
-#'
 #' @describeIn satInfo Return multiplicative coefficient for SC to radiance conversion
-#' 
 getSatRADM <- function(sat, bcde){
   getSatParam(sat, "RADM", bcde)
 }
@@ -817,9 +706,7 @@ getSatRADM <- function(sat, bcde){
 
 # Return REFA ------------------------------------------------------------------
 #' @export getSatREFA
-#'
 #' @describeIn satInfo Return addition coefficient for SC to reflectance
-#' 
 getSatREFA <- function(sat, bcde){
   getSatParam(sat, "REFA", bcde)
 }
@@ -827,9 +714,7 @@ getSatREFA <- function(sat, bcde){
 
 # Return REFM ------------------------------------------------------------------
 #' @export getSatREFM
-#'
 #' @describeIn satInfo Return multiplicative coefficient for SC to reflectance
-#' 
 getSatREFM <- function(sat, bcde){
   getSatParam(sat, "REFM", bcde)
 }
@@ -837,9 +722,7 @@ getSatREFM <- function(sat, bcde){
 
 # Return BTK1 ------------------------------------------------------------------
 #' @export getSatBTK1
-#'
 #' @describeIn satInfo Return calibration coefficent to convert SC to brightness temperature
-#' 
 getSatBTK1 <- function(sat, bcde){
   getSatParam(sat, "BTK1", bcde)
 }
@@ -847,27 +730,21 @@ getSatBTK1 <- function(sat, bcde){
 
 # Return BTK2 ------------------------------------------------------------------
 #' @export getSatBTK2
-#'
 #' @describeIn satInfo Return calibration coefficent to convert SC to brightness temperature
-#' 
 getSatBTK2 <- function(sat, bcde){
   getSatParam(sat, "BTK2", bcde)
 }
 
 # Return PRAD ------------------------------------------------------------------
 #' @export getSatPRAD
-#'
 #' @rdname satInfo
-#' 
 getSatPRAD <- function(sat, bcde){
   getSatParam(sat, "PRAD", bcde)
 }
 
 # Return DATE ------------------------------------------------------------------
 #' @export getSatDATE
-#'
 #' @describeIn satInfo Return DATE
-#' 
 getSatDATE <- function(sat, bcde){
   getSatParam(sat, "DATE", bcde)
 }
@@ -875,9 +752,7 @@ getSatDATE <- function(sat, bcde){
 
 # Return projection ------------------------------------------------------------------
 #' @export getSatProjection
-#'
 #' @describeIn satInfo Return projection
-#' 
 getSatProjection <- function(sat, bcde){
   prj <- getSatParam(sat, "PROJ", bcde)
   

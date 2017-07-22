@@ -3,9 +3,9 @@
 \docType{methods}
 \name{convDN2RU}
 \alias{convDN2RU}
-\alias{convDN2RU,RasterLayer-method}
-\alias{convDN2RU,RasterStack-method}
 \alias{convDN2RU,Satellite-method}
+\alias{convDN2RU,RasterStack-method}
+\alias{convDN2RU,RasterLayer-method}
 \title{Convert a band's scaled counts to radiance, reflectance and/or temperature}
 \usage{
 \S4method{convDN2RU}{Satellite}(x, convert = "all",
@@ -65,4 +65,3 @@ convDN2RU(x = getSatDataLayer(sat, bcde),
 \code{\link{calcAtmosCorr}} for conversions of scaled counts 
 to physical units including a scene-based atmospheric correction.
 }
-

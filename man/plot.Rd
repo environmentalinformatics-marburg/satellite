@@ -41,4 +41,3 @@ plot(sat, bcde = bds)
 \seealso{
 \code{\link{plot.default}}, \code{\link{par}}.
 }
-

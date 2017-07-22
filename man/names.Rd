@@ -4,6 +4,7 @@
 \name{names}
 \alias{names}
 \alias{names,Satellite-method}
+\alias{names,Satellite-method}
 \alias{names<-,Satellite-method}
 \title{Get/set Satellite data layer names}
 \usage{
@@ -30,4 +31,3 @@ names(sat)
 new_names <- paste0(names(sat), "_test")
 names(sat) <- new_names
 }
-

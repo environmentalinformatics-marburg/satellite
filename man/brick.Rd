@@ -28,4 +28,3 @@ brck <- brick(sat, c("B001n", "B002n", "B003n"))
 brck
 
 }
-

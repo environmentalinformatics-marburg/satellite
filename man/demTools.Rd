@@ -3,8 +3,8 @@
 \docType{methods}
 \name{demTools}
 \alias{demTools}
-\alias{demTools,RasterLayer-method}
 \alias{demTools,Satellite-method}
+\alias{demTools,RasterLayer-method}
 \title{Compute terrain characteristics from digital elevation models}
 \usage{
 \S4method{demTools}{Satellite}(x, method = "hillShade", bcde = "DEM")
@@ -48,4 +48,3 @@ sat <- demTools(sat)
 \seealso{
 \code{raster::terrain}, \code{raster::hillShade}.
 }
-

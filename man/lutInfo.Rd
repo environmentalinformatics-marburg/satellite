@@ -2,13 +2,13 @@
 % Please edit documentation in R/lutInfo.R
 \name{lutInfo}
 \alias{lutInfo}
+\alias{lutInfoBandsFromSID}
+\alias{lutInfoSensorFromSID}
 \alias{lutInfoBCDEFromBID}
 \alias{lutInfoBIDFromBCDE}
-\alias{lutInfoBandsFromSID}
 \alias{lutInfoRSRromSID}
-\alias{lutInfoSGRPfromFilename}
 \alias{lutInfoSIDfromFilename}
-\alias{lutInfoSensorFromSID}
+\alias{lutInfoSGRPfromFilename}
 \title{Get or access internal LUT values used by various functions}
 \usage{
 lutInfo()
@@ -106,9 +106,9 @@ Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285}.}
 
 \item \code{lutInfoSGRPfromFilename}: 
 }}
+
 \examples{
 ls_li <- lutInfo()
 # str(ls_li)
 
 }
-

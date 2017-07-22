@@ -2,9 +2,10 @@
 % Please edit documentation in R/subset.R
 \docType{methods}
 \name{subset}
-\alias{[[,Satellite,ANY,ANY-method}
 \alias{subset}
 \alias{subset,Satellite-method}
+\alias{subset,Satellite-method}
+\alias{[[,Satellite,ANY,ANY-method}
 \title{Subset Satellite object data layers}
 \usage{
 \S4method{subset}{Satellite}(x, sid, cid)
@@ -42,4 +43,3 @@ sat <- satellite(files)
 sat[[2:5]]
 subset(sat, cid = "SC")
 }
-

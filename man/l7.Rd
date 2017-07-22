@@ -17,4 +17,3 @@ Landsat 7 scene LE71950252001211EDC00 (Pre-Collection Level-1) from
 Use of this data requires your agreement to the USGS regulations on 
 using Landsat data.
 }
-

@@ -24,11 +24,8 @@ NULL
 
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @return Satellite data layer names as character vector.
-#' 
 #' @rdname names
-#'
 setMethod("names", 
           signature(x = "Satellite"), 
           function(x){
@@ -39,9 +36,7 @@ setMethod("names",
 
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @rdname names
-#'
 setMethod('names<-', 
           signature(x = "Satellite"), 
           function(x, value){

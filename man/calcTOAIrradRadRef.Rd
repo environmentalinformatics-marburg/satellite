@@ -72,4 +72,3 @@ See \code{\link{calcEarthSunDist}} for calculating the earth-sun
 distance based on the day of the year which is called by this function if
 ESun should be corrected for actual earth-sun distance.
 }
-

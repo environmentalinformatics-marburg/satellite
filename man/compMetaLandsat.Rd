@@ -56,4 +56,3 @@ files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
 compMetaLandsat(files)
 
 }
-

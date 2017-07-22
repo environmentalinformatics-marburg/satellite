@@ -53,14 +53,11 @@ NULL
 
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @return If x is a Satellite object, a Satellite object with added converted 
 #' layers; \cr
 #' if x is a \code{raster::Raster*} object, a \code{raster::Raster*} object with
 #' converted layer(s).
-#' 
 #' @rdname convSC2Ref
-#'
 setMethod("convSC2Ref", 
           signature(x = "Satellite"), 
           function(x, szen_correction = "TRUE", subset = FALSE){
@@ -106,9 +103,7 @@ setMethod("convSC2Ref",
 
 
 # Function using raster::RasterStack object ------------------------------------
-#' 
 #' @rdname convSC2Ref
-#'
 setMethod("convSC2Ref", 
           signature(x = "RasterStack"), 
           function(x, mult, add, szen){
@@ -120,9 +115,7 @@ setMethod("convSC2Ref",
 
 
 # Function using raster::RasterLayer object ------------------------------------
-#' 
 #' @rdname convSC2Ref
-#'
 setMethod("convSC2Ref", 
           signature(x = "RasterLayer"), 
           function(x, mult, add, szen){

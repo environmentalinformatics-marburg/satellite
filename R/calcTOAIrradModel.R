@@ -77,13 +77,10 @@ NULL
 
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @return If x is a satellite object, a Satellite object with ESun information 
 #' added to the metadata; if x is a \code{data.frame}, a vector containing ESun
 #' for the respective band(s).
-#' 
 #' @rdname calcTOAIrradModel
-#'
 setMethod("calcTOAIrradModel", 
           signature(x = "Satellite"), 
           function(x, model = "MNewKur", normalize = TRUE, esd){
@@ -113,9 +110,7 @@ setMethod("calcTOAIrradModel",
 
 
 # Function using data frame ----------------------------------------------------
-#' 
 #' @rdname calcTOAIrradModel
-#'
 setMethod("calcTOAIrradModel", 
           signature(x = "data.frame"), 
           function(x, model = "MNewKur", normalize = TRUE, esd){

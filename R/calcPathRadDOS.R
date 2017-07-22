@@ -129,12 +129,9 @@ NULL
 
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @return Satellite object with path radiance for each band in the metadata
 #' (W m-2 micrometer-1)
-#' 
 #' @rdname calcPathRadDOS
-#'
 setMethod("calcPathRadDOS", 
           signature(x = "Satellite"), 
           function(x, model = c("DOS2", "DOS4"), esun_method = "RadRef") {
@@ -181,12 +178,9 @@ setMethod("calcPathRadDOS",
 
 
 # Function using numeric -------------------------------------------------------
-#' 
 #' @return Vector object with path radiance values for each band 
 #' (W m-2 micrometer-1)
-#' 
 #' @rdname calcPathRadDOS
-#'
 setMethod("calcPathRadDOS", 
           signature(x = "numeric"), 
           function(x, bnbr, band_wls, radm, rada, szen, esun,

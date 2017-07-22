@@ -3,9 +3,9 @@
 \docType{methods}
 \name{maskInvarFeatures}
 \alias{maskInvarFeatures}
-\alias{maskInvarFeatures,RasterLayer-method}
-\alias{maskInvarFeatures,RasterStack-method}
 \alias{maskInvarFeatures,Satellite-method}
+\alias{maskInvarFeatures,RasterStack-method}
+\alias{maskInvarFeatures,RasterLayer-method}
 \title{Identify pseudo-invariant features from a satellite scene}
 \usage{
 \S4method{maskInvarFeatures}{Satellite}(x)
@@ -74,4 +74,3 @@ features. Remote Sensing of Environment 26/1,
 doi:10.1016/0034-4257(88)90116-2, available online at
 \url{http://www.sciencedirect.com/science/article/pii/0034425788901162}.
 }
-

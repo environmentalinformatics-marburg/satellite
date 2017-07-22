@@ -33,13 +33,10 @@ NULL
 
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @return If x is a Satellite object, a Satellite object with added layer containing calculated 
 #' terrain information; if x is a \code{raster::RasterLayer} object, a 
 #' \code{raster::RasterLayer} object with calculated terrain information.
-#' 
 #' @rdname demTools
-#'
 setMethod("demTools", 
           signature(x  =  "Satellite"), 
           function(x,method = "hillShade",bcde = "DEM"){
@@ -65,14 +62,11 @@ setMethod("demTools",
 
 
 # Function using raster::RasterLayer object ------------------------------------
-#' 
 #' @param sunElev If \code{method = "hillShade"}, the elevation angle of the 
 #' sun in degrees. See parameter \code{angle} in \code{\link{hillShade}}. 
 #' @param sunAzim If \code{method = "hillShade"}, the sun azimuth angle in 
 #' degree. See parameter \code{direction} in \code{\link{hillShade}}.
-#' 
 #' @rdname demTools
-#'
 setMethod("demTools", 
           signature(x  =  "RasterLayer"), 
           function(x, sunElev, sunAzim, method = "hillShade"){

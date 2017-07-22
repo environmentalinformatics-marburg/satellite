@@ -28,4 +28,3 @@ stck <- stack(sat, c("B001n", "B002n", "B003n"))
 stck
 
 }
-

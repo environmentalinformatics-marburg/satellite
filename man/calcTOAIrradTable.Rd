@@ -4,8 +4,8 @@
 \name{calcTOAIrradTable}
 \alias{calcTOAIrradTable}
 \alias{calcTOAIrradTable,Satellite-method}
-\alias{calcTOAIrradTable,character-method}
 \alias{calcTOAIrradTable,factor-method}
+\alias{calcTOAIrradTable,character-method}
 \title{Get top of atmosphere solar irradiance using readily tabulated values}
 \usage{
 \S4method{calcTOAIrradTable}{Satellite}(x, normalize = TRUE, esd)
@@ -73,4 +73,3 @@ See \code{\link{calcEarthSunDist}} for calculating the earth-sun
 distance based on the day of the year which is called by this function if
 ESun should be corrected for actual earth-sun distance.
 }
-

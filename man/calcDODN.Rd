@@ -42,4 +42,3 @@ of Environment 24/3, doi:10.1016/0034-4257(88)90019-3, available online at
 The DN is used by \code{\link{calcPathRadDOS}} for computing the 
 path radiance based on the dark object method.
 }
-

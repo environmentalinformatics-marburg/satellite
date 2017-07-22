@@ -52,9 +52,7 @@ NULL
 
 
 # Function using vector of filenames -------------------------------------------
-#' 
 #' @rdname satellite
-#' 
 setMethod("satellite", 
           signature(x = "character"), 
           function(x, meta, log){
@@ -92,9 +90,7 @@ setMethod("satellite",
 
 
 # Function using readily existing raster layers --------------------------------
-#'
 #' @rdname satellite
-#' 
 setMethod("satellite", 
           signature(x = "Raster"), 
           function(x, meta, log){
@@ -111,9 +107,7 @@ setMethod("satellite",
 
 
 # Function using list of raster layers -----------------------------------------
-#' 
 #' @rdname satellite
-#' 
 setMethod("satellite", 
           signature(x = "list"), 
           function(x, meta, log){

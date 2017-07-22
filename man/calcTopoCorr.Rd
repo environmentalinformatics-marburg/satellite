@@ -3,9 +3,9 @@
 \docType{methods}
 \name{calcTopoCorr}
 \alias{calcTopoCorr}
-\alias{calcTopoCorr,RasterLayer-method}
-\alias{calcTopoCorr,RasterStackBrick-method}
 \alias{calcTopoCorr,Satellite-method}
+\alias{calcTopoCorr,RasterStackBrick-method}
+\alias{calcTopoCorr,RasterLayer-method}
 \title{Correct for topographic effects.}
 \usage{
 \S4method{calcTopoCorr}{Satellite}(x, mask = TRUE)
@@ -69,4 +69,3 @@ CIVCO, D.L. (1989): Topographic normalization of Landsat Thematic
 Mapper digitalimagery. \emph{Photogrammetric Engineering & Remote Sensing}, 
 55, 1303-1309.
 }
-

@@ -131,11 +131,8 @@ NULL
 
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @return Satellite object with added atmospheric corrected layers
-#' 
 #' @rdname calcAtmosCorr
-#'
 setMethod("calcAtmosCorr", 
           signature(x = "Satellite"), 
           function(x, model = c("DOS2", "DOS4"), esun_method = "RadRef"){
@@ -183,11 +180,8 @@ setMethod("calcAtmosCorr",
 
 
 # Function using raster::RasterStack object ------------------------------------
-#' 
 #' @return raster::RasterStack object with atmospheric corrected layers
-#' 
 #' @rdname calcAtmosCorr
-#'
 setMethod("calcAtmosCorr", 
           signature(x = "RasterStack"), 
           function(x, path_rad, esun, szen, model = c("DOS2", "DOS4")){
@@ -202,11 +196,8 @@ setMethod("calcAtmosCorr",
 
 
 # Function using raster::RasterLayer object ------------------------------------
-#' 
 #' @return raster::RasterLayer object with atmospheric corrected layer
-#' 
 #' @rdname calcAtmosCorr
-#'
 setMethod("calcAtmosCorr", 
           signature(x = "RasterLayer"), 
           function(x, path_rad, esun, szen, model = c("DOS2", "DOS4")){

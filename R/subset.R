@@ -33,11 +33,8 @@ NULL
 
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @return A Satellite object
-#' 
 #' @rdname subset
-#'
 setMethod('subset', signature(x = 'Satellite'), 
           function(x, sid, cid) {
             if(!missing(sid)){
@@ -87,11 +84,8 @@ setMethod('subset', signature(x = 'Satellite'),
 
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @return A Satellite object
-#' 
 #' @rdname subset
-#'
 setMethod("[[", signature(x = "Satellite"), 
           function(x, i) {
             subset(x, i)

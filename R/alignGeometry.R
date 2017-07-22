@@ -35,14 +35,11 @@ if ( !isGeneric("alignGeometry") ) {
 #' 
 #' alignGeometry(sat, template = getSatDataLayer(sat, "B008n"), 
 #'                band_codes = "B001n")
-
+NULL
 
 # Function using satellite object ----------------------------------------------
-#' 
-#' @return Satellite object with alligned geometries.
-#' 
+#' @return Satellite object with aligned geometries.
 #' @rdname alignGeometry
-#'
 setMethod("alignGeometry", 
           signature(x = "Satellite"), 
           function(x, template, band_codes, type, method = c("bilinear", "ngb")){
@@ -74,11 +71,8 @@ setMethod("alignGeometry",
 
 
 # Function using raster::RasterStack object ------------------------------------
-#' 
-#' @return raster::RasterStack object with alligned layers
-#' 
+#' @return raster::RasterStack object with aligned layers
 #' @rdname alignGeometry
-#'
 setMethod("alignGeometry", 
           signature(x = "RasterStack"), 
           function(x, template, method = c("bilinear", "ngb")){
@@ -91,11 +85,8 @@ setMethod("alignGeometry",
 
 
 # Function using raster::RasterLayer object ------------------------------------
-#' 
-#' @return raster::RasterLayer object with alligned layer
-#' 
+#' @return raster::RasterLayer object with aligned layer
 #' @rdname alignGeometry
-#'
 setMethod("alignGeometry", 
           signature(x = "RasterLayer"),
           function(x, template, method = c("bilinear", "ngb")){

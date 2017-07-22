@@ -3,9 +3,9 @@
 \docType{methods}
 \name{convSC2Ref}
 \alias{convSC2Ref}
-\alias{convSC2Ref,RasterLayer-method}
-\alias{convSC2Ref,RasterStack-method}
 \alias{convSC2Ref,Satellite-method}
+\alias{convSC2Ref,RasterStack-method}
+\alias{convSC2Ref,RasterLayer-method}
 \title{Convert a band's scaled counts or radiance values to reflectance}
 \usage{
 \S4method{convSC2Ref}{Satellite}(x, szen_correction = "TRUE",
@@ -70,4 +70,3 @@ convSC2Ref(x = getSatDataLayer(sat, bcde),
 \code{\link{calcAtmosCorr}} for conversions of scaled counts 
 to physical units including a scene-based atmospheric correction.
 }
-
