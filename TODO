@@ -6,12 +6,11 @@ R/compFilePathGLS.R
   sid (ln. 34) of specified files is "LC" (Landsat-8), whereas satellite:::lut$SENSORS indicates that this must be "L5" (also applies to R/compFilePathMODIS.R, R/compMetaGLS.R and R/compMetaMODIS.R)
 
 R/pck_lut.R
-* Verify band information (eg. QA layer) for different sensors
-R/satellite.R
-* Implement 'RasterStackBrick'-method
+* Verify band information (eg. QA layer, ESun) for different sensors
 
 Short-term
 * Cross-check vignettes
 
 Medium-term
 * Enable support for Global Land Survey, MODIS, WorldView-1, RapidEye, and PROBA-V (and SPOT) data.
+* How to handle sample data sets for various sensors?
