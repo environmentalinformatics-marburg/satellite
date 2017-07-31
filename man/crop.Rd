@@ -6,7 +6,7 @@
 \alias{crop,Satellite-method}
 \title{Crop satellite object}
 \usage{
-\S4method{crop}{Satellite}(x, y, subset = TRUE)
+\S4method{crop}{Satellite}(x, y, subset = TRUE, snap = "near")
 }
 \arguments{
 \item{x}{Satellite object.}
@@ -16,6 +16,10 @@
 \item{subset}{Logical; if \code{TRUE} (default), all layers but the cropped 
 ones are being dropped; if \code{FALSE}, cropped layers are appended to the 
 Satellite object.}
+
+\item{snap}{Direction towards which to align the extent as \code{character}. 
+Available options are \code{"near"} (default), \code{"in"} and \code{"out"} 
+(see \code{\link[raster]{alignExtent}}).}
 }
 \value{
 A Satellite object consisting of cropped layers only. If 
