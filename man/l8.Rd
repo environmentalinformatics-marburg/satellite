@@ -4,16 +4,20 @@
 \name{l8}
 \alias{l8}
 \title{Landsat 8 sample data}
-\format{\code{raster::RasterStack} with 10 bands of 41 by 41 pixels.}
+\format{\code{RasterStack} with bands 1-7, 9-11 (incl. QA) of 41 by 41 pixels.}
 \source{
 \url{https://earthexplorer.usgs.gov/}
 }
 \description{
 This dataset comes from the USGS. It contains part of the 
-Landsat 8 scene LC81950252013188LGN00 (Pre-Collection Level-1) from 
-2013-07-07 over Maburg, Germany.
+Landsat 8 scene LC08_L1TP_195025_20130707_20170503_01_T1 (Collection 1 
+Level-1) from 2013-07-07 over Maburg, Germany.
 }
 \details{
 Use of this data requires your agreement to the USGS regulations on 
 using Landsat data.
+}
+\examples{
+plotRGB(l8, r = 4, g = 3, b = 2, stretch = "hist") # true-color composite
+plotRGB(l8, r = 5, g = 4, b = 3, stretch = "hist") # false-color composite
 }
