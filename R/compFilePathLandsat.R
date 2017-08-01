@@ -77,9 +77,18 @@ compFilePathLandsat <- function(files){
 
 # Sort Landsat band files -----
 #' @describeIn compFilePathLandsat Sort Landsat band files in ascending order.
+#' @param id \code{logical}, defaults to \code{FALSE}. Determines whether to 
+#' return sorted band files (ie default) or sorting order.
+#' @return If \code{id = FALSE} (default), sorted band files as 
+#' \code{character}, else the corresponding sorting order as \code{integer}.
 #' @export sortFilesLandsat
-sortFilesLandsat <- function(files) {
+sortFilesLandsat <- function(files, id = FALSE) {
   cfp <- compFilePathLandsat(files)
   bid <- suppressWarnings(as.integer(cfp$BID))
-  files[order(bid)]
+  
+  if (id) {
+    order(bid)
+  } else {
+    files[order(bid)]
+  }
 }

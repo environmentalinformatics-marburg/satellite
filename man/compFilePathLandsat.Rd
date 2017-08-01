@@ -7,15 +7,21 @@
 \usage{
 compFilePathLandsat(files)
 
-sortFilesLandsat(files)
+sortFilesLandsat(files, id = FALSE)
 }
 \arguments{
 \item{files}{Path and filename(s) of one or more Landsat band files or, 
 alternatively, one or more Landsat metadata files.}
+
+\item{id}{\code{logical}, defaults to \code{FALSE}. Determines whether to 
+return sorted band files (ie default) or sorting order.}
 }
 \value{
 \code{data.frame} containing filepaths, band numbers and metadata 
 filepaths.
+
+If \code{id = FALSE} (default), sorted band files as 
+\code{character}, else the corresponding sorting order as \code{integer}.
 }
 \description{
 The function compiles the sensor, band, filename and metadata filename information
