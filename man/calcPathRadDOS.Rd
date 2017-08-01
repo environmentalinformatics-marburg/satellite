@@ -102,7 +102,7 @@ included. To retrieve a sensor, use \code{lutInfo()$<Sensor ID>_BANDS}.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 sat <- satellite(files)
 sat <- calcTOAIrradModel(sat)
 

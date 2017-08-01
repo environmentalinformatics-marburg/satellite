@@ -6,7 +6,7 @@ context("satellite")
 
 ## landsat 4, 5
 test_that("satellite works as expected for Landsat 4 and 5 files (C1L1)", {
-  path <- system.file("extdata/C1L1/LT05", package = "satellite")
+  path <- system.file("testdata/LT05", package = "satellite")
   files <- list.files(path, pattern = "^LT05.*.TIF$", full.names = TRUE)
   
   sat <- satellite(files)
@@ -14,7 +14,7 @@ test_that("satellite works as expected for Landsat 4 and 5 files (C1L1)", {
 
 ## landsat 7
 test_that("satellite works as expected for Landsat 7 files (C1L1)", {
-  path <- system.file("extdata/C1L1/LE07", package = "satellite")
+  path <- system.file("extdata", package = "satellite")
   files <- list.files(path, pattern = "^LE07.*.TIF$", full.names = TRUE)
   
   sat <- satellite(files)
@@ -22,7 +22,7 @@ test_that("satellite works as expected for Landsat 7 files (C1L1)", {
 
 ## landsat 8
 test_that("satellite works as expected for Landsat 8 files (C1L1)", {
-  path <- system.file("extdata/C1L1/LC08", package = "satellite")
+  path <- system.file("extdata", package = "satellite")
   files <- list.files(path, pattern = "^LC08.*.TIF$", full.names = TRUE)
   
   sat <- satellite(files)
@@ -30,14 +30,14 @@ test_that("satellite works as expected for Landsat 8 files (C1L1)", {
 
 ## other input methods
 test_that("satellite works as expected for 'Raster*' input (C1L1)", {
-  path <- system.file("extdata/C1L1/LC08", package = "satellite")
+  path <- system.file("extdata", package = "satellite")
   files <- list.files(path, pattern = "^LC08.*.TIF$", full.names = TRUE)
   l8 <- raster::stack(files[-grep("_B8.TIF$", files)])
   sat <- satellite(l8)
 })
 
 test_that("satellite works as expected for 'list' input (C1L1)", {
-  path <- system.file("extdata/C1L1/LC08", package = "satellite")
+  path <- system.file("extdata", package = "satellite")
   files <- list.files(path, pattern = "^LC08.*.TIF$", full.names = TRUE)
   files <- sortFilesLandsat(files)
   l8 <- lapply(files, raster)
@@ -51,7 +51,7 @@ test_that("satellite works as expected for 'list' input (C1L1)", {
 
 ## landsat 7
 test_that("satellite works as expected for Landsat 7 files (P1L1)", {
-  path <- system.file("extdata", 
+  path <- system.file("testdata/LE7", 
                       package = "satellite")
   files <- list.files(path, 
                       pattern = glob2rx("LE7*.TIF"), 
@@ -78,7 +78,7 @@ test_that("satellite works as expected for Landsat 7 files (P1L1)", {
 
 ## landsat 8 
 test_that("satellite works as expected for Landsat 8 files (P1L1)", {
-  path <- system.file("extdata", 
+  path <- system.file("testdata/LC8", 
                       package = "satellite")
   files <- list.files(path, 
                       pattern = glob2rx("LC8*.TIF"), 

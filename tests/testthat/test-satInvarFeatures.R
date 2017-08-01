@@ -1,7 +1,7 @@
 context("maskInvarFeatures")
 
 test_that("maskInvarFeatures works as expected", {
-  path <- system.file("extdata", 
+  path <- system.file("testdata/LC8", 
                       package = "satellite")
   files <- list.files(path, 
                       pattern = glob2rx("LC8*.TIF"), 

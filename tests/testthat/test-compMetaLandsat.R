@@ -1,7 +1,7 @@
 context("Landsat metadata")
 
 test_that("compFilePathLandsat works as expected for Landsat 7", {
-  path <- system.file("extdata", 
+  path <- system.file("testdata/LE7", 
                       package = "satellite")
   files <- list.files(path, 
                       pattern = glob2rx("LE7*.TIF"), 
@@ -25,7 +25,7 @@ test_that("compFilePathLandsat works as expected for Landsat 7", {
 })
 
 test_that("compFilePathLandsat works as expected for Landsat 8", {
-  path <- system.file("extdata", 
+  path <- system.file("testdata/LC8", 
                       package = "satellite")
   files <- list.files(path, 
                       pattern = glob2rx("LC8*.TIF"), 
@@ -50,7 +50,7 @@ test_that("compFilePathLandsat works as expected for Landsat 8", {
 
 
 test_that("compMetaLandsat works as expected for Landsat 7", {
-  path <- system.file("extdata", 
+  path <- system.file("testdata/LE7", 
                       package = "satellite")
   files <- list.files(path, 
                       pattern = glob2rx("LE7*.TIF"), 
@@ -74,7 +74,7 @@ test_that("compMetaLandsat works as expected for Landsat 7", {
 })
 
 test_that("compMetaLandsat works as expected for Landsat 8", {
-  path <- system.file("extdata", 
+  path <- system.file("testdata/LC8", 
                       package = "satellite")
   files <- list.files(path, 
                       pattern = glob2rx("LC8*.TIF"), 
@@ -98,7 +98,7 @@ test_that("compMetaLandsat works as expected for Landsat 8", {
 })
 
 test_that("compMetaLandsat works as expected for Landsat 8 metafile", {
-  path <- system.file("extdata",
+  path <- system.file("testdata/LC8",
                       package = "satellite")
   files <- list.files(path,
                       pattern = glob2rx("LC8*_MTL.txt"),

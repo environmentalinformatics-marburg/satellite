@@ -37,7 +37,7 @@ Crop layers of a Satellite object to the size of a given
 \dontrun{
 ## sample data
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 sat <- satellite(files)
 
 ## geographic extent of georg-gassmann-stadium (utm 32-n)

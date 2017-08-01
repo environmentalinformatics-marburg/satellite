@@ -21,10 +21,10 @@ test_that("calcTOAIrradModel for 'Satellite' objects works as expected", {
  
   ## loop over different collections (ie P1L1, C1L1)
   path <- c(system.file("extdata", package = "satellite"), 
-            system.file("extdata/C1L1/LC08", package = "satellite"))
+            system.file("testdata/LC8", package = "satellite"))
   
   lapply(1:length(path), function(i) {
-    sid <- ifelse(i == 1, "LC8", "LC08")
+    sid <- ifelse(i == 1, "LC08", "LC8")
     files <- list.files(path[i], pattern = glob2rx(paste0(sid, "*.TIF")), full.names = TRUE)
     sat <- satellite(files)  
     test <- calcTOAIrradModel(sat)

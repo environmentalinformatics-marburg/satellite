@@ -5,7 +5,7 @@ context("calcPathRadDOS")
 #-------------------------------------------------------------------------------
 test_that("calcPathRadDOS for numeric works as expected", {
   path <- system.file("extdata", package = "satellite")
-  files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+  files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
   sat <- satellite(files)
   sat <- calcTOAIrradModel(sat)
   
@@ -49,7 +49,7 @@ test_that("calcPathRadDOS for numeric works as expected", {
 test_that("calcPathRadDOS for Satellite works as expected", {
   ## precollection
   path <- system.file("extdata", package = "satellite")
-  files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+  files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
   sat <- satellite(files)
   
   sat_pathrad <- calcPathRadDOS(sat, model = "DOS2", esun_method = "RadRef")
@@ -58,12 +58,4 @@ test_that("calcPathRadDOS for Satellite works as expected", {
 #                round(c(B002n = 42.064), 3))
 #   expect_equal(round(getSatPRAD(sat_pathrad, bcde = "B009n"),3), 
 #                round(c(B009n = -0.185), 3))
-  
-  ## collection 1
-  sat <- tst_obj("LC08")
-  sat_pathrad2 <- calcPathRadDOS(sat, model = "DOS2", esun_method = "RadRef")
-  
-  sat <- tst_obj("LE07")
-  sat_pathrad3 <- calcPathRadDOS(sat, model = "DOS2", esun_method = "RadRef")
-  
 })

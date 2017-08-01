@@ -12,10 +12,12 @@
 #'
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
-#' files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+#' files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 #' 
 #' compFilePathLandsat(files)  
+#' 
 #' sortFilesLandsat(files)
+#' sortFilesLandsat(files, id = TRUE) # indices
 #' 
 #' @export compFilePathLandsat
 #' @name compFilePathLandsat

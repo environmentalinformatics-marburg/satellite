@@ -21,7 +21,7 @@ Convert selected layers of a Satellite object to a RasterBrick
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 sat <- satellite(files)
 
 brck <- brick(sat, c("B001n", "B002n", "B003n"))

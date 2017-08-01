@@ -26,7 +26,7 @@ To start a remote sensing alaysis workflow with `satellite` you simply use its w
 ```{r}
 library(satellite)
 path <- system.file("extdata", package = "satellite") 
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE) # Landsat 8 example data files
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE) # Landsat 8 example data files
 
 sat <- satellite(files)
 ```

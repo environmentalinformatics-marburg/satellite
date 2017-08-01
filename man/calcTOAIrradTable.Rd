@@ -50,7 +50,7 @@ necessary to convert digital numbers to radiance and reflectance (taken from
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LE7*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LE07*.TIF"), full.names = TRUE)
 sat <- satellite(files)
 calcTOAIrradTable(sat)
  

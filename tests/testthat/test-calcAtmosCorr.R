@@ -3,7 +3,7 @@ context("calcAtmosCorr")
 
 #-------------------------------------------------------------------------------
 test_that("calcAtmosCorr for RasterLayers works as expected", {
-  path <- system.file("extdata", package = "satellite")
+  path <- system.file("testdata/LC8", package = "satellite")
   files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
   sat <- satellite(files)
   sat <- calcTOAIrradRadRef(sat)
@@ -42,7 +42,7 @@ test_that("calcAtmosCorr for RasterLayers works as expected", {
 #-------------------------------------------------------------------------------
 test_that("calcAtmosCorr for Satellite works as expected", {
   path <- system.file("extdata", package = "satellite")
-  files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+  files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
   sat <- satellite(files)
   sat_atmos <- calcAtmosCorr(sat, model = "DOS2", esun_method = "RadRef")
   

@@ -4,7 +4,7 @@ context("Solar irradiation (ESun) using radiation vs. reflection")
 #-------------------------------------------------------------------------------
 test_that("calcTOAIrradRadRef for 'numeric' input works as expected", {
   path <- system.file("extdata", package = "satellite")
-  files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+  files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
   sat <- satellite(files)  
   test <- calcTOAIrradRadRef(x = getSatRadMax(sat, getSatBCDESolar(sat)), 
                              ref_max = getSatRefMax(sat, getSatBCDESolar(sat)), 
@@ -16,9 +16,9 @@ test_that("calcTOAIrradRadRef for 'numeric' input works as expected", {
 })
 
 #-------------------------------------------------------------------------------
-test_that("calcTOAIrradRadRef for 'numeric' input (C1L1) works as expected", {
-  path <- system.file("extdata/C1L1/LC08", package = "satellite")
-  files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
+test_that("calcTOAIrradRadRef for 'numeric' input (P1L1) works as expected", {
+  path <- system.file("testdata/LC8", package = "satellite")
+  files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
   sat <- satellite(files)  
   test <- calcTOAIrradRadRef(x = getSatRadMax(sat, getSatBCDESolar(sat)), 
                              ref_max = getSatRefMax(sat, getSatBCDESolar(sat)), 
@@ -29,7 +29,7 @@ test_that("calcTOAIrradRadRef for 'numeric' input (C1L1) works as expected", {
 #-------------------------------------------------------------------------------
 test_that("calcTOAIrradRadRef for 'Satellite' input works as expected", {
   path <- system.file("extdata", package = "satellite")
-  files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+  files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
   sat <- satellite(files)  
   test <- calcTOAIrradRadRef(sat)
   
@@ -48,9 +48,9 @@ test_that("calcTOAIrradRadRef for 'Satellite' input works as expected", {
 })
 
 #-------------------------------------------------------------------------------
-test_that("calcTOAIrradRadRef for 'Satellite' input (C1L1) works as expected", {
-  path <- system.file("extdata/C1L1/LC08", package = "satellite")
-  files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
+test_that("calcTOAIrradRadRef for 'Satellite' input (P1L1) works as expected", {
+  path <- system.file("testdata/LC8", package = "satellite")
+  files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
   sat <- satellite(files)  
   test <- calcTOAIrradRadRef(sat)
   

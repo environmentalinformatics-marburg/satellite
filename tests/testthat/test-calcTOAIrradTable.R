@@ -13,7 +13,7 @@ test_that("calcTOAIrradTable for 'character' input works as expected", {
 
 #-------------------------------------------------------------------------------
 test_that("calcTOAIrradTable for 'Satellite' input works as expected", {
-  path <- system.file("extdata", package = "satellite")
+  path <- system.file("testdata/LE7", package = "satellite")
   files <- list.files(path, pattern = glob2rx("LE7*.TIF"), full.names = TRUE)
   sat <- satellite(files)
   test <- calcTOAIrradTable(sat)
@@ -27,7 +27,7 @@ test_that("calcTOAIrradTable for 'Satellite' input works as expected", {
   expect_equal(as.character(getSatBID(test)[2]), "3")
   expect_equal(as.numeric(getSatESUN(test)[2]), 1547)
   
-  path <- system.file("extdata", package = "satellite")
+  path <- system.file("testdata/LC8", package = "satellite")
   files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
   sat <- satellite(files)  
   expect_error(calcTOAIrradTable(sat))

@@ -37,7 +37,7 @@ which is available online at
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 sat <- satellite(files)  
 sat <- convRad2BT(sat)
 

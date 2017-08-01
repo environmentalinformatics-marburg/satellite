@@ -51,10 +51,11 @@ channel and the mean value of the channel is added.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 sat <- satellite(files)
 
 ## dem
+
 files_dem <- list.files(path, pattern = "DEM", full.names = TRUE)
 DEM <- raster(files_dem)
 

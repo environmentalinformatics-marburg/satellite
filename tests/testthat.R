@@ -27,21 +27,21 @@ tst_obj <- function(type = c("LC08", "LC8", "LE07", "LE7", "LT05")) {
 
 ## landsat 8
 tst_obj_lc08 <- function() {
-  path <- system.file("extdata/C1L1/LC08", package = "satellite")
+  path <- system.file("extdata", package = "satellite")
   files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
   satellite(files)
 }
 
 ## landsat 7
 tst_obj_le07 <- function() {
-  path <- system.file("extdata/C1L1/LE07", package = "satellite")
+  path <- system.file("extdata", package = "satellite")
   files <- list.files(path, pattern = glob2rx("LE07*.TIF"), full.names = TRUE)
   satellite(files)
 }
 
 ## landsat 5
 tst_obj_lt05 <- function() {
-  path <- system.file("extdata/C1L1/LT05", package = "satellite")
+  path <- system.file("testdata/LT05", package = "satellite")
   files <- list.files(path, pattern = glob2rx("LT05*.TIF"), full.names = TRUE)
   satellite(files)
 }
@@ -51,14 +51,14 @@ tst_obj_lt05 <- function() {
 
 ## landsat 8
 tst_obj_lc8 <- function() {
-  path <- system.file("extdata", package = "satellite")
+  path <- system.file("testdata/LC8", package = "satellite")
   files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
   satellite(files)
 }
 
 ## landsat 7
 tst_obj_le7 <- function() {
-  path <- system.file("extdata", package = "satellite")
+  path <- system.file("testdata/LE7", package = "satellite")
   files <- list.files(path, pattern = glob2rx("LE7*.TIF"), full.names = TRUE)
   satellite(files)
 }
