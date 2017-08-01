@@ -144,7 +144,7 @@ lutInfoSIDfromFilename <- function(files){
   if(class(test) == "matrix"){
     return(colnames(test)[test[1, ]])
   } else {
-    return(colnames(test)[test])
+    return(names(test)[test])
   }
 }
 
