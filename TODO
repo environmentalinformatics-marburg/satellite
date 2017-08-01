@@ -1,9 +1,15 @@
 TODO
 =====
 
+R/calcTOAIrradTable
+* fails with x = "LE07" (or "LC08"): Error in .local(x, ...) : Satellite ID LE07 (or LC08) is not supported, yet. 
+
 R/compFilePathGLS.R
 * Error in lut[which(names(lut) == (lut$BANDS[which(names(lut$BANDS) ==  : subscript out of bounds; 
   sid (ln. 34) of specified files is "LC" (Landsat-8), whereas satellite:::lut$SENSORS indicates that this must be "L5" (also applies to R/compFilePathMODIS.R, R/compMetaGLS.R and R/compMetaMODIS.R)
+
+R/extend.R
+* In Examples, extent of newly created Raster* seems to be similar to initial 'Satellite' object
 
 R/pck_lut.R
 * Verify band information (eg. QA layer, ESun) for different sensors
@@ -12,5 +18,6 @@ Short-term
 * Cross-check vignettes
 
 Medium-term
+* Add Landsat Multispectral Scanner System (MSS) sensor.
 * Enable support for Global Land Survey, MODIS, WorldView-1, RapidEye, and PROBA-V (and SPOT) data.
-* How to handle sample data sets for various sensors?
+* Include collection (eg MODIS V005/006, Landsat Pre-Collection 1/Collection 1) in 'Satellite' class.
