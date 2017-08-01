@@ -2,14 +2,14 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 insertMinReqRem <- function(anHs, anHt) {
-    .Call('_satellite_insertMinReqRem', PACKAGE = 'satellite', anHs, anHt)
+    .Call(`_satellite_insertMinReqRem`, anHs, anHt)
 }
 
 seqC <- function(from_, to_, by_ = 1.0) {
-    .Call('_satellite_seqC', PACKAGE = 'satellite', from_, to_, by_)
+    .Call(`_satellite_seqC`, from_, to_, by_)
 }
 
 ScatteringModel <- function(mnBandWls, dScatCoef) {
-    .Call('_satellite_ScatteringModel', PACKAGE = 'satellite', mnBandWls, dScatCoef)
+    .Call(`_satellite_ScatteringModel`, mnBandWls, dScatCoef)
 }
 
