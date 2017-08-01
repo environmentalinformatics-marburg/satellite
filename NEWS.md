@@ -17,11 +17,12 @@ Changes:
 
   * `calcHistMatch` and `panSharp` moved to [**satelliteTools**](https://github.com/environmentalinformatics-marburg/satelliteTools).
   * Mandatory use of **Rcpp** functionality in `calcPathRadDOS`.
-  * Index entries for `pck_data` and `pck_lut` disabled.
+  * Added functions in R/pck_data.R and R/pck_lut.R to .Rbuildignore.
   * Revised sensor IDs for Landsat 4 (LT4 for 'Landsat Thematic Mapper') and 5 (LT5).
   * Updated [ESun values](https://landsat.usgs.gov/esun) for Landsat 4, 5 and 7.
   * Moved **Rcpp** from Depends to Imports.
   * Built-in data sets 'l7,l8' originate from Landsat Collection 1 Level-1.
+  * Removed deprecated `convDN2RU`; use `convSC2Rad`, `convSC2Ref` and `convRad2BT` instead.
 
 
 ## satellite 0.2.0
