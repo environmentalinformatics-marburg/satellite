@@ -1,4 +1,4 @@
-## satellite 1.0.0
+satellite 1.0.0
 
 New features:
 
@@ -27,11 +27,11 @@ Changes:
   * Removed deprecated convDN2RU(), users must switch to convSC2Rad(), convSC2Ref() and convRad2BT() instead.
 
 
-## satellite 0.2.0
+satellite 0.2.0
 
 * n/a
 
 
-## satellite 0.1.0
+satellite 0.1.0
 
 * Initial release
