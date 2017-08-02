@@ -97,7 +97,7 @@ pck_lut <- function(){
     SGRP = "Landsat",
     BID = c(seq(5), "6_VCID_1", "6_VCID_2", 7:8, "QA"),
     BCDE = c(sprintf("B%03dn", seq(5)), "B0061", "B0062", sprintf("B%03dn", 7:8), "B0QAn"),
-    LMIN = c(0.45, 0.52, 0.63, 0.77, 1.55, 10.40, 10.40, 2.09, 0.52, NA),
+    LMIN = c(0.45, 0.52, 0.63, 0.77, 1.55, 10.40, 10.40, 2.08, 0.52, NA),
     LMAX = c(0.52, 0.60, 0.69, 0.90, 1.75, 12.50, 12.50, 2.35, 0.90, NA),
     #SRES = c(30, 30, 30, 30, 30, 30, 30, 30, 15),
     TYPE = c("VIS", "VIS", "VIS", "NIR", "SWIR", "TIR", "TIR", "SWIR", "PCM", "QA"),
