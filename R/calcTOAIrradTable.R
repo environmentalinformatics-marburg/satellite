@@ -106,15 +106,15 @@ setMethod("calcTOAIrradTable",
 setMethod("calcTOAIrradTable", 
           signature(x = "character"),
           function(x, normalize = TRUE, esd){
-            if(x == "LE7") {
+            if(x %in% c("LE7", "LE07")) {
               eSun <- lut$L7_ESUN
-            } else if(x == "LT5") {
+            } else if(x %in% c("LT5", "LT05")) {
               eSun <- lut$L5_ESUN
-            } else if(x == "LT4") {
+            } else if(x %in% c("LT4", "LT04")) {
               eSun <- lut$L4_ESUN
             # } else if(x == "GLS5") {
             #   eSun <- lut$GLS5_ESUN
-            } else if(x == "LC8") {
+            } else if(x %in% c("LC8", "LC08")) {
               stop("ESun values are not provided for Landsat 8, see ?calcTOAIrradTable.")
             } else {
               stop(paste0("Satellite ID ", x, " is not supported, yet."))

@@ -3,11 +3,19 @@ context("Solar irradiation (ESun) using tabulated values")
 
 #-------------------------------------------------------------------------------
 test_that("calcTOAIrradTable for 'character' input works as expected", {
-  calcTOAIrradTable(x = "LT5")
-  calcTOAIrradTable(x = "LE7")
-  calcTOAIrradTable(x = "LE7", normalize = FALSE, 
-                    esd = calcEarthSunDist("2015-01-01"))
-  expect_error(calcTOAIrradTable(x = "GLS5"), "Satellite ID GLS5 is not supported, yet.")
+  for (sid in c("LT4", "LT04")) 
+    expect_equal(calcTOAIrradTable(x = sid), lut$L4_ESUN)
+  for (sid in c("LT5", "LT05")) 
+    expect_equal(calcTOAIrradTable(x = sid), lut$L5_ESUN)
+  for (sid in c("LE7", "LE07")) 
+    expect_equal(calcTOAIrradTable(x = sid), lut$L7_ESUN)
+  for (sid in c("LC8", "LC08"))
+    expect_error(calcTOAIrradTable(x = sid), "ESun values are not provided")
+  
+  expect_error(calcTOAIrradTable(x = "GLS5"), "GLS5 is not supported, yet.")
+  
+  expect_is(calcTOAIrradTable(x = "LE7", normalize = FALSE, 
+                              esd = calcEarthSunDist("2015-01-01")), "numeric")
 })
 
 
