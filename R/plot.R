@@ -33,11 +33,11 @@ if ( !isGeneric('plot') ) {
 #' 
 #' @export
 #' @name plot
-#' @rdname plot
-#' @aliases plot,Satellite,ANY-method
+NULL
 
 # set methods -------------------------------------------------------------
-
+#' @aliases plot,Satellite-method
+#' @rdname plot
 setMethod('plot', signature(x = 'Satellite'), 
           function(x,
                    bcde = NULL, 
