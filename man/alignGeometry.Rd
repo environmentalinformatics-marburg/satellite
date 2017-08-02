@@ -50,8 +50,8 @@ projection, the data set will be cropped and aggregated prior to resampling
 in order to reduce computation time.
 }
 \examples{
-path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
+path <- system.file("testdata/LC8", package = "satellite")
+files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
 sat <- satellite(files)
 
 alignGeometry(sat, template = getSatDataLayer(sat, "B008n"), 
