@@ -76,3 +76,20 @@ pck_data_extdata_DEM <- function(dsn = "E:/programming/r/satellite/data") {
   
   jnk <- file.rename(gsub(".TIF$", ".tif", nms), nms)
 }
+
+# Spatial extent of Georg-Gassmann-Stadion (used in Examples and during testing)
+ext_ggs <- function() {
+  ggs <- data.frame(y = 50.797761, x = 8.754611, loc = "Georg-Gassmann-Stadion")
+  coordinates(ggs) <- ~ x + y
+  proj4string(ggs) <- "+init=epsg:4326"
+  
+  ggs_utm <- spTransform(ggs, CRS("+init=epsg:32632"))
+  crd_utm <- coordinates(ggs_utm)
+  ext_utm <- extent(crd_utm[1] - 100, crd_utm[1] + 75, 
+                    crd_utm[2] - 125, crd_utm[2] + 125)
+  spy_utm <- as(ext_utm, "SpatialPolygons")
+  proj4string(spy_utm) <- proj4string(ggs_utm)
+  
+  return(extent(spy_utm))
+}
+  

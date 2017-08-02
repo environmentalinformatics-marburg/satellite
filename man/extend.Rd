@@ -4,30 +4,29 @@
 \name{extend}
 \alias{extend}
 \alias{extend,Satellite-method}
-\title{extend satellite object}
+\title{Extend a Satellite object}
 \usage{
-\S4method{extend}{Satellite}(x, y, subset = TRUE)
+\S4method{extend}{Satellite}(x, y, subset = TRUE, value = NA)
 }
 \arguments{
 \item{x}{Satellite object.}
 
-\item{y}{\code{\link{extent}} object.}
+\item{y}{Target \code{Extent}, see \code{\link[raster]{extent}}.}
 
-\item{subset}{Logical; if \code{TRUE} (default), all layers but the extendped 
-ones are being dropped; if \code{FALSE}, extendped layers are appended to the 
+\item{subset}{Logical. If \code{TRUE} (default), all layers but the extended 
+ones are being dropped, else the extended layers are appended to the initial
 Satellite object.}
+
+\item{value}{Fill value assigned to new cells passed to 
+\code{\link[raster]{extend}}, defaults to \code{NA}.}
 }
 \value{
-A Satellite object consisting of extended layers only. If 
-\code{subset = FALSE}, a Satellite object with the extendped layers appended.
+A Satellite object consisting of extended layers only or, if 
+\code{subset = FALSE}, a Satellite object with the extended layers appended.
 }
 \description{
-The function is a wrapper around the \code{\link{extend}} function to 
-easily extend a Satellite object by an \code{\link{extent}} object.
-}
-\details{
-extends layers of a Satellite object to the size of a given 
-\code{raster::extent} object.
+The function is a wrapper around \code{\link[raster]{extend}} to easily 
+extend a Satellite object to a larger spatial extent.
 }
 \examples{
 \dontrun{
@@ -37,7 +36,7 @@ files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 sat <- satellite(files)
 
 ## geographic extent of georg-gassmann-stadium (utm 32-n)
-ext_ggs <- raster::extent(484015, 484143, 5627835, 5628020)
+ext_ggs <- raster::extent(482606.4, 482781.4, 5627239, 5627489)
 
 ## extend satellite object by specified extent
 sat_ggs <- extend(sat, ext_ggs)
@@ -46,9 +45,6 @@ plot(sat)
 plot(sat_ggs)
 }
 }
-\references{
-Please refer to the respective functions for references.
-}
 \seealso{
-This function is a wrapper for \code{raster::extend}.
+This function is a wrapper around \code{\link[raster]{extend}}.
 }

@@ -4,7 +4,8 @@ New features:
 
   * `calcEarthSunDist` allows to calculate inverse squared relative earth-sun distance. 
   * `calcTopoCorr,Raster*` methods accept additional arguments (via '...') passed to `writeRaster`. 
-  * `crop,'Satellite'-method` takes a new argument 'snap' similar to `raster::crop`.
+  * `crop,Satellite-method` takes a new argument 'snap' similar to `raster::crop`.
+  * `extend,Satellite-method` takes a new argument 'value' which is assigned to new cells similar to `raster::extend`.
   * `satellite` is compatible with pre-collection Level-1 (L1) and Collection 1 L1 file naming.
   * Function `sortFilesLandsat` to automatically sort Landsat band files in ascending order.
 
