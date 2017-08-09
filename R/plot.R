@@ -1,5 +1,5 @@
 if ( !isGeneric('plot') ) {
-  setGeneric('plot', function(x, y, ...)
+  setGeneric('plot', function(x, ...)
     standardGeneric('plot'))
 }
 
@@ -20,33 +20,25 @@ if ( !isGeneric('plot') ) {
 #' @seealso \code{\link{plot.default}}, \code{\link{par}}.
 #' 
 #' @examples
+#' \dontrun{
 #' ## sample data
 #' path <- system.file("extdata", package = "satellite")
-#' files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+#' files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 #' sat <- satellite(files)
 #' 
-#' \dontrun{
-#' ## pan-sharpening
-#' sat_ps <- panSharp(sat)
-#' 
-#' ## draw initial 16 layers (raw and pan-sharpened)
-#' library(RColorBrewer)
-#' plot(sat_ps, col = brewer.pal(9, "Reds"))
-#' 
-#' ## draw first and second band incl. pan-sharpened versions only
-#' plot(sat_ps, bcde = c("B001n", "B001_PAN_sharpend", 
-#'                       "B002n", "B002_PAN_sharpend"))
+#' ## display data without quality flag layer
+#' bds <- getSatBCDE(sat)[1:11]
+#' plot(sat, bcde = bds)
 #' }
 #' 
 #' @export
 #' @name plot
-#' @rdname plot
-#' @aliases plot,Satellite,ANY-method
+NULL
 
 # set methods -------------------------------------------------------------
-
-setMethod('plot', signature(x = 'Satellite',
-                            y = 'ANY'), 
+#' @aliases plot,Satellite-method
+#' @rdname plot
+setMethod('plot', signature(x = 'Satellite'), 
           function(x,
                    bcde = NULL, 
                    col = grDevices::grey.colors(100), 

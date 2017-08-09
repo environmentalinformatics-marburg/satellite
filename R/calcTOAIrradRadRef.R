@@ -25,7 +25,7 @@ if ( !isGeneric("calcTOAIrradRadRef") ) {
 #' 
 #' @details The actual solar irradiance is computed using the following formula 
 #' taken from the GRASS GIS 
-#' \href{http://grass.osgeo.org/grass65/manuals/i.landsat.toar.html}{i.landsat.toar} module
+#' \href{https://grass.osgeo.org/grass64/manuals/i.landsat.toar.html}{i.landsat.toar} module
 #' \deqn{ESun = (pi d^2) RADIANCE_MAXIMUM / REFLECTANCE_MAXIMUM}
 #' where d is the earth-sun distance (in AU) and RADIANCE_MAXIMUM
 #' and REFLECTANCE_MAXIMUM are the maximum radiance and reflection values of the
@@ -47,7 +47,7 @@ if ( !isGeneric("calcTOAIrradRadRef") ) {
 #'  
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
-#' files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+#' files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 #' sat <- satellite(files)  
 #' sat <- calcTOAIrradModel(sat)
 #' getSatESUN(sat)
@@ -60,13 +60,10 @@ if ( !isGeneric("calcTOAIrradRadRef") ) {
 NULL
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @return If x is a Satellite object, a Satellite object with ESun information 
 #' added to the metadata; if x is numeric, a vector containing ESun for the 
 #' respective band(s).
-#' 
 #' @rdname calcTOAIrradRadRef
-#'
 setMethod("calcTOAIrradRadRef", 
           signature(x = "Satellite"), 
           function(x, normalize = TRUE, esd){
@@ -98,9 +95,7 @@ setMethod("calcTOAIrradRadRef",
 
 
 # Function using numeric -------------------------------------------------------
-#' 
 #' @rdname calcTOAIrradRadRef
-#'
 setMethod("calcTOAIrradRadRef", 
           signature(x = "numeric"), 
           function(x, ref_max, normalize = TRUE, esd){

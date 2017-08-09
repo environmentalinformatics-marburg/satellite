@@ -8,11 +8,11 @@
 \title{Compute path radiance based on the dark object method}
 \usage{
 \S4method{calcPathRadDOS}{Satellite}(x, model = c("DOS2", "DOS4"),
-  esun_method = "RadRef", use_cpp = TRUE)
+  esun_method = "RadRef")
 
 \S4method{calcPathRadDOS}{numeric}(x, bnbr, band_wls, radm, rada, szen, esun,
   model = c("DOS2", "DOS4"), scat_coef = c(-4, -2, -1, -0.7, -0.5),
-  dos_adjust = 0.01, use_cpp = TRUE)
+  dos_adjust = 0.01)
 }
 \arguments{
 \item{x}{A Satellite object or the value (scaled count) of a dark object in 
@@ -26,10 +26,6 @@ be the same as used by \code{\link{calcAtmosCorr}}).}
 to compute esun using one of \code{\link{calcTOAIrradRadRef}} ("RadRef"), 
 \code{\link{calcTOAIrradTable}} ("Table") or \code{\link{calcTOAIrradModel}}
 ("Model")}
-
-\item{use_cpp}{Logical. If \code{TRUE}, C++ functionality (via \strong{Rcpp}) 
-is enabled, which leads to a considerable reduction of both computation time
-and memory usage.}
 
 \item{bnbr}{Band number for which DNmin is valid.}
 
@@ -106,26 +102,22 @@ included. To retrieve a sensor, use \code{lutInfo()$<Sensor ID>_BANDS}.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 sat <- satellite(files)
 sat <- calcTOAIrradModel(sat)
 
-bcde <- "B002n"
-
-sat <- calcTOAIrradRadRef(sat, normalize = FALSE)
-
-## compute path radiances
- val1 <- calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bcde))),
-                bnbr = getSatLNBR(sat, bcde),
-                band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)), 
-                                      LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
-                radm = getSatRADM(sat, getSatBCDESolar(sat)),
-                rada = getSatRADA(sat, getSatBCDESolar(sat)),
-                szen = getSatSZEN(sat, getSatBCDESolar(sat)),
-                esun = getSatESUN(sat, getSatBCDESolar(sat)),
-                model = "DOS2",
-                scat_coef = -4, use_cpp = FALSE)
-
+bds <- "B002n"
+val <- calcPathRadDOS(x = min(getValues(getSatDataLayer(sat, bds))),
+                      bnbr = getSatLNBR(sat, bds),
+                      band_wls = data.frame(LMIN = getSatLMIN(sat, getSatBCDESolar(sat)),
+                                            LMAX = getSatLMAX(sat, getSatBCDESolar(sat))),
+                      radm = getSatRADM(sat, getSatBCDESolar(sat)),
+                      rada = getSatRADA(sat, getSatBCDESolar(sat)),
+                      szen = getSatSZEN(sat, getSatBCDESolar(sat)),
+                      esun = getSatESUN(sat, getSatBCDESolar(sat)),
+                      model = "DOS2",
+                      scat_coef = -4)
+val
 }
 \references{
 Chavez Jr PS (1988) An improved dark-object subtraction technique 
@@ -136,10 +128,10 @@ of Environment 24/3, doi:10.1016/0034-4257(88)90019-3, available online at
 Chavez Jr PS (1996) Image-based atmospheric corrections revisited and
 improved. Photogrammetric Engineering and Remote Sensing 62/9,
 available online at 
-\url{http://www.asprs.org/PE-RS-Journals-1996/PE-RS-September-1996.html}.
+\url{http://info.asprs.org/publications/pers/96journal/september/1996_sep_1025-1036.pdf}.
  
 Goslee SC (2011) Analyzing Remote Sensing Data in R: The landsat 
-Package. Journal of Statistical Software,43/4, 1-25, available online at 
+Package. Journal of Statistical Software, 43/4, 1-25, available online at 
 \url{http://www.jstatsoft.org/v43/i04/}.
 
 Moran MS, Jackson RD, Slater PN, Teillet PM (1992) Evlauation of simplified
@@ -160,4 +152,3 @@ If you refer to Sawyer and Stephen 2014, please note that eq. 5 is wrong.
 This function is used by \code{\link{calcAtmosCorr}} to 
 compute the path radiance.
 }
-

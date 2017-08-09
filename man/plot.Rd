@@ -4,6 +4,7 @@
 \name{plot}
 \alias{plot}
 \alias{plot,Satellite,ANY-method}
+\alias{plot,Satellite-method}
 \title{Plot a 'Satellite' object}
 \usage{
 \S4method{plot}{Satellite,ANY}(x, bcde = NULL,
@@ -26,26 +27,18 @@ drawn either from the start (default; limited to a maximum of 16 sub-plots)
 or according to the speficied band codes.
 }
 \examples{
+\dontrun{
 ## sample data
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 sat <- satellite(files)
 
-\dontrun{
-## pan-sharpening
-sat_ps <- panSharp(sat)
-
-## draw initial 16 layers (raw and pan-sharpened)
-library(RColorBrewer)
-plot(sat_ps, col = brewer.pal(9, "Reds"))
-
-## draw first and second band incl. pan-sharpened versions only
-plot(sat_ps, bcde = c("B001n", "B001_PAN_sharpend", 
-                      "B002n", "B002_PAN_sharpend"))
+## display data without quality flag layer
+bds <- getSatBCDE(sat)[1:11]
+plot(sat, bcde = bds)
 }
 
 }
 \seealso{
 \code{\link{plot.default}}, \code{\link{par}}.
 }
-

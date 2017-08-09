@@ -38,7 +38,7 @@ maximum radiation and reflection values within each band.
 \details{
 The actual solar irradiance is computed using the following formula 
 taken from the GRASS GIS 
-\href{http://grass.osgeo.org/grass65/manuals/i.landsat.toar.html}{i.landsat.toar} module
+\href{https://grass.osgeo.org/grass64/manuals/i.landsat.toar.html}{i.landsat.toar} module
 \deqn{ESun = (pi d^2) RADIANCE_MAXIMUM / REFLECTANCE_MAXIMUM}
 where d is the earth-sun distance (in AU) and RADIANCE_MAXIMUM
 and REFLECTANCE_MAXIMUM are the maximum radiance and reflection values of the
@@ -51,7 +51,7 @@ distance to be compatible with other default results from
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 sat <- satellite(files)  
 sat <- calcTOAIrradModel(sat)
 getSatESUN(sat)
@@ -72,4 +72,3 @@ See \code{\link{calcEarthSunDist}} for calculating the earth-sun
 distance based on the day of the year which is called by this function if
 ESun should be corrected for actual earth-sun distance.
 }
-

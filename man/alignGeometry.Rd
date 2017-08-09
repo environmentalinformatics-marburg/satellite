@@ -3,9 +3,10 @@
 \docType{methods}
 \name{alignGeometry}
 \alias{alignGeometry}
-\alias{alignGeometry,RasterLayer-method}
-\alias{alignGeometry,RasterStack-method}
 \alias{alignGeometry,Satellite-method}
+\alias{alignGeometry,Satellite-method}
+\alias{alignGeometry,RasterStack-method}
+\alias{alignGeometry,RasterLayer-method}
 \title{Align raster geometry between two data sets}
 \usage{
 \S4method{alignGeometry}{Satellite}(x, template, band_codes, type,
@@ -35,11 +36,11 @@ be defined by band_codes.}
 \code{\link{resample}}, \code{\link{projectRaster}}.}
 }
 \value{
-Satellite object with alligned geometries.
+Satellite object with aligned geometries.
 
-raster::RasterStack object with alligned layers
+raster::RasterStack object with aligned layers
 
-raster::RasterLayer object with alligned layer
+raster::RasterLayer object with aligned layer
 }
 \description{
 Align raster data by bringing it in the same geometry and extent.
@@ -49,12 +50,10 @@ projection, the data set will be cropped and aggregated prior to resampling
 in order to reduce computation time.
 }
 \examples{
-path <- system.file("extdata", package = "satellite")
+path <- system.file("testdata/LC8", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
 sat <- satellite(files)
 
 alignGeometry(sat, template = getSatDataLayer(sat, "B008n"), 
                band_codes = "B001n")
-
 }
-

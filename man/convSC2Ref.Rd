@@ -3,12 +3,13 @@
 \docType{methods}
 \name{convSC2Ref}
 \alias{convSC2Ref}
-\alias{convSC2Ref,RasterLayer-method}
-\alias{convSC2Ref,RasterStack-method}
 \alias{convSC2Ref,Satellite-method}
+\alias{convSC2Ref,RasterStack-method}
+\alias{convSC2Ref,RasterLayer-method}
 \title{Convert a band's scaled counts or radiance values to reflectance}
 \usage{
-\S4method{convSC2Ref}{Satellite}(x, szen_correction = "TRUE")
+\S4method{convSC2Ref}{Satellite}(x, szen_correction = "TRUE",
+  subset = FALSE)
 
 \S4method{convSC2Ref}{RasterStack}(x, mult, add, szen)
 
@@ -20,6 +21,10 @@ raster::RasterLayer providing scaled counts (DNs).}
 
 \item{szen_correction}{Logical; if \code{TRUE}, sun zenith correction is 
 being applied.}
+
+\item{subset}{Logical; if \code{TRUE}, all layers but the cropped 
+ones are being dropped; if \code{FALSE} (default), cropped layers are appended to the 
+Satellite object.}
 
 \item{mult}{Multiplicative coefficient for value transformation (i.e. slope).}
 
@@ -46,11 +51,11 @@ If the sensor does not provide linear conversion coefficients for reflectance
 computation, the reflectance is calculated using the solar irradiance 
 following the functions taken from USGS' Landsat 7 manual, chapter 11.3.2,
 which is available online at 
-\url{http://landsathandbook.gsfc.nasa.gov/data_prod/prog_sect11_3.html}.
+\url{https://landsat.gsfc.nasa.gov/wp-content/uploads/2016/08/Landsat7_Handbook.pdf}.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 sat <- satellite(files)  
 sat <- convSC2Ref(sat)
 
@@ -65,4 +70,3 @@ convSC2Ref(x = getSatDataLayer(sat, bcde),
 \code{\link{calcAtmosCorr}} for conversions of scaled counts 
 to physical units including a scene-based atmospheric correction.
 }
-

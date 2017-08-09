@@ -2,13 +2,13 @@
 % Please edit documentation in R/lutInfo.R
 \name{lutInfo}
 \alias{lutInfo}
+\alias{lutInfoBandsFromSID}
+\alias{lutInfoSensorFromSID}
 \alias{lutInfoBCDEFromBID}
 \alias{lutInfoBIDFromBCDE}
-\alias{lutInfoBandsFromSID}
 \alias{lutInfoRSRromSID}
-\alias{lutInfoSGRPfromFilename}
 \alias{lutInfoSIDfromFilename}
-\alias{lutInfoSensorFromSID}
+\alias{lutInfoSGRPfromFilename}
 \title{Get or access internal LUT values used by various functions}
 \usage{
 lutInfo()
@@ -81,17 +81,12 @@ of the USGS Landsat FAQ.}
 \href{http://rredc.nrel.gov/solar/spectra/am0/modtran.html}{National Renewable 
 Energy Laboratory}.}
 \item{l7_esun}{Tabulated ESun values from 
-\href{http://landsathandbook.gsfc.nasa.gov/pdfs/Landsat7_Handbook.pdf}{tab 11.3 (Thuillier spectrum)}
+\href{https://landsat.gsfc.nasa.gov/wp-content/uploads/2016/08/Landsat7_Handbook.pdf}{tab 11.3 (Thuillier spectrum)}
  of the Landsat7 handbook.}
-\item{l5_esun}{Tabulated ESun values from 
-\href{http://landsathandbook.gsfc.nasa.gov/pdfs/L5TMLUTIEEE2003.pdf}{Chander
+\item{l5_esun, l4_esun}{Tabulated ESun values from 
+\href{ftp://ftp.vt.tpu.ru/study/Tokareva/public/English_prof/GIS/L5TMLUTIEEE2003.pdf}{Chander
 G, Markham B (2003) Revised Landsat-5 TM radiometric calibration procedures 
-and postcalibration dynamic ranges.  IEEE Transaction on Geoscience and 
-Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285}.}
-\item{l4_esun}{Tabulated ESun values from 
-\href{http://landsathandbook.gsfc.nasa.gov/pdfs/L5TMLUTIEEE2003.pdf}{Chander
-G, Markham B (2003) Revised Landsat-5 TM radiometric calibration procedures 
-and postcalibration dynamic ranges.  IEEE Transaction on Geoscience and 
+and postcalibration dynamic ranges. IEEE Transaction on Geoscience and 
 Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285}.}
 }
 }
@@ -111,9 +106,9 @@ Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285}.}
 
 \item \code{lutInfoSGRPfromFilename}: 
 }}
+
 \examples{
 ls_li <- lutInfo()
-str(ls_li)
+# str(ls_li)
 
 }
-

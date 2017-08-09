@@ -1,0 +1,11 @@
+TODO
+=====
+
+Short-term
+* Cross-check vignettes
+* extent,Satellite-method?
+
+Medium-term
+* Add Landsat Multispectral Scanner System (MSS) sensor.
+* Enable support for Global Land Survey, MODIS, WorldView-1, RapidEye, and PROBA-V (and SPOT) data.
+* Include collection (eg MODIS V005/006, Landsat Pre-Collection 1/Collection 1), spatial resolution in 'Satellite' class.

@@ -4,6 +4,7 @@
 \name{names}
 \alias{names}
 \alias{names,Satellite-method}
+\alias{names,Satellite-method}
 \alias{names<-,Satellite-method}
 \title{Get/set Satellite data layer names}
 \usage{
@@ -24,10 +25,9 @@ Get/set Satellite data layer names, i.e. the BCDE id.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 sat <- satellite(files)
 names(sat)
 new_names <- paste0(names(sat), "_test")
 names(sat) <- new_names
 }
-

@@ -58,7 +58,7 @@ information [0...1].
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 sat <- satellite(files)
 sat <- calcTOAIrradModel(sat)
 getSatESUN(sat)
@@ -70,7 +70,7 @@ calcTOAIrradModel(lut$L8_RSR, model = "MNewKur", normalize = FALSE,
 }
 \references{
 Updike T, Comp C (2011) Radiometric use of WorldView-2 imagery. 
-Technical Note, available online at \url{https://goo.gl/np4Bwm}.
+Technical Note, available online at \url{http://www.pancroma.com/downloads/Radiometric_Use_of_WorldView-2_Imagery.pdf}.
 
 Tabulated relative spectral response functions (nm-1) are taken from taken from the
 \href{http://landsat.usgs.gov/instructions.php}{spectral viewer}
@@ -90,4 +90,3 @@ See \code{\link{calcEarthSunDist}} for calculating the earth-sun
 distance based on the day of the year which is called by this function if
 ESun should be corrected for actual earth-sun distance.
 }
-

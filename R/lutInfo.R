@@ -49,23 +49,18 @@
 #' \href{http://rredc.nrel.gov/solar/spectra/am0/modtran.html}{National Renewable 
 #' Energy Laboratory}.}
 #' \item{l7_esun}{Tabulated ESun values from 
-#' \href{http://landsathandbook.gsfc.nasa.gov/pdfs/Landsat7_Handbook.pdf}{tab 11.3 (Thuillier spectrum)}
+#' \href{https://landsat.gsfc.nasa.gov/wp-content/uploads/2016/08/Landsat7_Handbook.pdf}{tab 11.3 (Thuillier spectrum)}
 #'  of the Landsat7 handbook.}
-#' \item{l5_esun}{Tabulated ESun values from 
-#' \href{http://landsathandbook.gsfc.nasa.gov/pdfs/L5TMLUTIEEE2003.pdf}{Chander
+#' \item{l5_esun, l4_esun}{Tabulated ESun values from 
+#' \href{ftp://ftp.vt.tpu.ru/study/Tokareva/public/English_prof/GIS/L5TMLUTIEEE2003.pdf}{Chander
 #' G, Markham B (2003) Revised Landsat-5 TM radiometric calibration procedures 
-#' and postcalibration dynamic ranges.  IEEE Transaction on Geoscience and 
-#' Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285}.}
-#' \item{l4_esun}{Tabulated ESun values from 
-#' \href{http://landsathandbook.gsfc.nasa.gov/pdfs/L5TMLUTIEEE2003.pdf}{Chander
-#' G, Markham B (2003) Revised Landsat-5 TM radiometric calibration procedures 
-#' and postcalibration dynamic ranges.  IEEE Transaction on Geoscience and 
+#' and postcalibration dynamic ranges. IEEE Transaction on Geoscience and 
 #' Remote Sensing 41/11, doi:10.1109/LGRS.2007.898285}.}
 #' }
 #'  
 #' @examples
 #' ls_li <- lutInfo()
-#' str(ls_li)
+#' # str(ls_li)
 #' 
 lutInfo <- function(){
   return(lut)
@@ -134,11 +129,22 @@ lutInfoRSRromSID <- function(sid){
 #' @describeIn lutInfo
 #' 
 lutInfoSIDfromFilename <- function(files){
-  test <- sapply(lut$SENSOR_ID_PATTERN$PATTERN, function(x){grepl(x, files)})  
+  ## original sensor pattern
+  test <- sapply(lut$SENSOR_ID_PATTERN$PATTERN, function(x) {
+    grepl(x, basename(files))
+  })
+  
+  ## alternative sensor pattern
+  if (!any(test)) {
+    test <- sapply(lut$SENSOR_ID_PATTERN$PATTERN2, function(x) {
+      grepl(x, basename(files))
+    })
+  }
+  
   if(class(test) == "matrix"){
     return(colnames(test)[test[1, ]])
   } else {
-    return(colnames(test)[test])
+    return(names(test)[test])
   }
 }
 
@@ -150,5 +156,10 @@ lutInfoSIDfromFilename <- function(files){
 #' 
 lutInfoSGRPfromFilename <- function(file){
   sid <- lutInfoSIDfromFilename(file)
-  return(lut$SENSOR_ID_PATTERN$SGRP[lut$SENSOR_ID_PATTERN == sid][1])
+  if(length(sid) == 0){
+    return(FALSE)
+  } else {
+    rid <- apply(lut$SENSOR_ID_PATTERN == sid, 1, FUN = any)
+    return(lut$SENSOR_ID_PATTERN$SGRP[rid])  
+  }
 }

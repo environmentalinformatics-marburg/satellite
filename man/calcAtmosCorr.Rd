@@ -3,9 +3,9 @@
 \docType{methods}
 \name{calcAtmosCorr}
 \alias{calcAtmosCorr}
-\alias{calcAtmosCorr,RasterLayer-method}
-\alias{calcAtmosCorr,RasterStack-method}
 \alias{calcAtmosCorr,Satellite-method}
+\alias{calcAtmosCorr,RasterStack-method}
+\alias{calcAtmosCorr,RasterLayer-method}
 \title{Atmospheric correction of remote sensing data}
 \usage{
 \S4method{calcAtmosCorr}{Satellite}(x, model = c("DOS2", "DOS4"),
@@ -89,7 +89,7 @@ Equations are taken from Song et al. (2001).
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 sat <- satellite(files)
 sat_atmos <- calcAtmosCorr(sat, model = "DOS2", esun_method = "RadRef")
 
@@ -132,7 +132,7 @@ of Environment 24/3, doi:10.1016/0034-4257(88)90019-3, available online at
 Chavez Jr PS (1996) Image-based atmospheric corrections revisited and
 improved. Photogrammetric Engineering and Remote Sensing 62/9,
 available online at 
-\url{http://www.asprs.org/PE-RS-Journals-1996/PE-RS-September-1996.html}
+\url{http://info.asprs.org/publications/pers/96journal/september/1996_sep_1025-1036.pdf}
  
 Goslee SC (2011) Analyzing Remote Sensing Data in R: The landsat 
 Package. Journal of Statistical Software,43/4, 1-25. URL 
@@ -150,4 +150,3 @@ Atmospheric Effects? Remote Sensing of Environment 75/2,
 doi:10.1016/S0034-4257(00)00169-3, URL
 \url{http://www.sciencedirect.com/science/article/pii/S0034425700001693}
 }
-

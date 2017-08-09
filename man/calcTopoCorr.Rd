@@ -3,28 +3,30 @@
 \docType{methods}
 \name{calcTopoCorr}
 \alias{calcTopoCorr}
-\alias{calcTopoCorr,RasterLayer-method}
-\alias{calcTopoCorr,RasterStack-method}
 \alias{calcTopoCorr,Satellite-method}
+\alias{calcTopoCorr,RasterStackBrick-method}
+\alias{calcTopoCorr,RasterLayer-method}
 \title{Correct for topographic effects.}
 \usage{
 \S4method{calcTopoCorr}{Satellite}(x, mask = TRUE)
 
-\S4method{calcTopoCorr}{RasterStack}(x, hillsh, cloudmask = NULL)
+\S4method{calcTopoCorr}{RasterStackBrick}(x, hillsh, cloudmask = NULL, ...)
 
-\S4method{calcTopoCorr}{RasterLayer}(x, hillsh, cloudmask = NULL)
+\S4method{calcTopoCorr}{RasterLayer}(x, hillsh, cloudmask = NULL, ...)
 }
 \arguments{
-\item{x}{Satellite object.}
+\item{x}{\code{Satellite} or \code{Raster*} object.}
 
-\item{mask}{Logical. If \code{TRUE}, the cloudmask from the Satellite object 
-(if available) will be considered in the regression model.}
+\item{mask}{\code{logical}. If \code{TRUE}, the cloudmask from the 
+\code{Satellite} object (if available) will be considered in the regression 
+model.}
 
-\item{hillsh}{A \code{raster::RasterLayer} created with 
-\code{raster::hillShade}.}
+\item{hillsh}{A \code{RasterLayer} created with \code{\link{hillShade}}.}
 
-\item{cloudmask}{A \code{raster::RasterLayer} in which clouds are masked with 
-NA values.}
+\item{cloudmask}{A \code{RasterLayer} in which clouds are masked with 
+NA values, passed to \code{\link[raster]{mask}}.}
+
+\item{...}{Additional arguments passed to \code{\link{writeRaster}}.}
 }
 \value{
 If x is a Satellite object, a Satellite object with added, 
@@ -49,10 +51,11 @@ channel and the mean value of the channel is added.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 sat <- satellite(files)
 
 ## dem
+
 files_dem <- list.files(path, pattern = "DEM", full.names = TRUE)
 DEM <- raster(files_dem)
 
@@ -67,4 +70,3 @@ CIVCO, D.L. (1989): Topographic normalization of Landsat Thematic
 Mapper digitalimagery. \emph{Photogrammetric Engineering & Remote Sensing}, 
 55, 1303-1309.
 }
-

@@ -30,14 +30,14 @@ if (!isGeneric("convRad2Ref") ) {
 #' computation, the reflectance is calculated using the solar irradiance 
 #' following the functions taken from USGS' Landsat 7 manual, chapter 11.3.2,
 #' which is available online at 
-#' \url{http://landsathandbook.gsfc.nasa.gov/data_prod/prog_sect11_3.html}.
+#' \url{https://landsat.gsfc.nasa.gov/wp-content/uploads/2016/08/Landsat7_Handbook.pdf}.
 #' 
 #' @seealso \code{\link{calcAtmosCorr}} for conversions of scaled counts 
 #' to physical units including a scene-based atmospheric correction.
 #' 
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
-#' files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+#' files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 #' sat <- satellite(files)  
 #' sat <- convRad2Ref(sat)
 #' 
@@ -51,14 +51,11 @@ NULL
 
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @return If x is a Satellite object, a Satellite object with added converted 
 #' layers; \cr
 #' if x is a \code{raster::Raster*} object, a \code{raster::Raster*} object with 
 #' converted layer(s).
-#' 
 #' @rdname convRad2Ref
-#'
 setMethod("convRad2Ref", 
           signature(x = "Satellite"), 
           function(x, szen_correction = "TRUE"){
@@ -98,9 +95,7 @@ setMethod("convRad2Ref",
 
 
 # Function using raster::RasterStack object ------------------------------------
-#' 
 #' @rdname convRad2Ref
-#'
 setMethod("convRad2Ref", 
           signature(x = "RasterStack"), 
           function(x, mult, add, szen){
@@ -112,9 +107,7 @@ setMethod("convRad2Ref",
 
 
 # Function using raster::RasterLayer object ------------------------------------
-#' 
 #' @rdname convRad2Ref
-#'
 setMethod("convRad2Ref", 
           signature(x = "RasterLayer"), 
           function(x, mult, add, szen){

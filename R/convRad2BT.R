@@ -26,7 +26,7 @@ if (!isGeneric("convRad2BT") ) {
 #' 
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
-#' files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+#' files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 #' sat <- satellite(files)  
 #' sat <- convRad2BT(sat)
 #' 
@@ -34,14 +34,11 @@ NULL
 
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @return If x is a Satellite object, a Satellite object with added converted 
 #' layers; \cr
 #' if x is a \code{raster::Raster*} object, a \code{raster::Raster*} object with
 #' converted layer(s).
-#' 
 #' @rdname convRad2BT
-#'
 setMethod("convRad2BT", 
           signature(x = "Satellite"), 
           function(x){
@@ -71,9 +68,7 @@ setMethod("convRad2BT",
 
 
 # Function using raster::RasterStack object ------------------------------------
-#' 
 #' @rdname convRad2BT
-#'
 setMethod("convRad2BT", 
           signature(x = "RasterStack"), 
           function(x, k1, k2){
@@ -85,9 +80,7 @@ setMethod("convRad2BT",
 
 
 # Function using raster::RasterLayer object ------------------------------------
-#' 
 #' @rdname convRad2BT
-#'
 setMethod("convRad2BT", 
           signature(x = "RasterLayer"), 
           function(x, k1, k2){

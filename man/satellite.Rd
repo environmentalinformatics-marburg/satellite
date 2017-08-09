@@ -3,23 +3,25 @@
 \docType{methods}
 \name{satellite}
 \alias{satellite}
-\alias{satellite,RasterStack-method}
 \alias{satellite,character-method}
+\alias{satellite,Raster-method}
 \alias{satellite,list-method}
 \title{Create a Satellite object}
 \usage{
 \S4method{satellite}{character}(x, meta, log)
 
-\S4method{satellite}{RasterStack}(x, meta, log)
+\S4method{satellite}{Raster}(x, meta, log)
 
 \S4method{satellite}{list}(x, meta, log)
 }
 \arguments{
-\item{x}{A vector of filenames (see \code{raster::raster}) or a 
-\code{raster::RasterStack}.}
+\item{x}{A vector of filenames, a (multi-layered) \code{Raster*} object or a 
+\code{list} of single \code{RasterLayer} objects (see \code{\link{raster}}). 
+In the latter case, be aware that bands must be arranged in ascending order 
+(eg using \code{\link{sortFilesLandsat}}).}
 
 \item{meta}{Optional metadata object (e.g. returned from 
-\code{\link{compMetaLandsat}}). If x is a satellite dataset and recognised
+\code{\link{compMetaLandsat}}). If 'x' is a satellite dataset and recognised
 as "Landsat", then the metadata is automatically extracted from the 
 respective meta information file if both the satellite data and the metadata 
 file follow the USGS Earth Explorer's naming convention.}
@@ -27,7 +29,7 @@ file follow the USGS Earth Explorer's naming convention.}
 \item{log}{Optionally supply a log entry.}
 }
 \value{
-Satellite object
+A \code{Satellite} object.
 }
 \description{
 Method to create a Satellite object.
@@ -43,7 +45,7 @@ history of the entire dataset.
 \examples{
 ## 'character' input (i.e. filenames)
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 
 satellite(files)
 
@@ -52,7 +54,10 @@ satellite(l8)
 
 }
 \seealso{
-\code{\link{compMetaLandsat}} to get more information about the
-structure of the metadata component.
+(i) \code{\link{compMetaLandsat}} to get more information about the
+structure of the metadata component; (ii)
+\url{https://landsat.usgs.gov/what-are-naming-conventions-landsat-scene-identifiers} 
+for detailed information about the naming conventions for Landsat scene 
+identifiers; and (iii) \code{\link{sortFilesLandsat}} for automated 
+rearrangement of Landsat band files.
 }
-

@@ -1,7 +1,7 @@
 context("Landsat metadata")
 
 test_that("compFilePathLandsat works as expected for Landsat 7", {
-  path <- system.file("extdata", 
+  path <- system.file("testdata/LE7", 
                       package = "satellite")
   files <- list.files(path, 
                       pattern = glob2rx("LE7*.TIF"), 
@@ -25,32 +25,33 @@ test_that("compFilePathLandsat works as expected for Landsat 7", {
 })
 
 test_that("compFilePathLandsat works as expected for Landsat 8", {
-  path <- system.file("extdata", 
+  path <- system.file("testdata/LC8", 
                       package = "satellite")
   files <- list.files(path, 
                       pattern = glob2rx("LC8*.TIF"), 
                       full.names = TRUE)
+  files <- sortFilesLandsat(files)
   meta <- compFilePathLandsat(files)
   
-  expect_equal(as.character(meta$BID[2]), "10")
-  expect_equal(as.character(meta$BID[8]), "6")
+  expect_equal(as.character(meta$BID[2]), "2")
+  expect_equal(as.character(meta$BID[8]), "8")
   expect_equal(as.character(meta$BID[12]), "QA")
   
-  expect_equal(as.character(meta$BCDE[2]), "B010n")
-  expect_equal(as.character(meta$BCDE[8]), "B006n")
+  expect_equal(as.character(meta$BCDE[2]), "B002n")
+  expect_equal(as.character(meta$BCDE[8]), "B008n")
   expect_equal(as.character(meta$BCDE[12]), "B0QAn")
   
   expect_equal(basename(as.character(meta$FILE[2])), 
-               "LC81950252013188LGN00_B10.TIF")
+               "LC81950252013188LGN00_B2.TIF")
   expect_equal(basename(as.character(meta$FILE[8])), 
-               "LC81950252013188LGN00_B6.TIF")
+               "LC81950252013188LGN00_B8.TIF")
   expect_equal(basename(as.character(meta$FILE[12])), 
                "LC81950252013188LGN00_BQA.TIF")
 })
 
 
 test_that("compMetaLandsat works as expected for Landsat 7", {
-  path <- system.file("extdata", 
+  path <- system.file("testdata/LE7", 
                       package = "satellite")
   files <- list.files(path, 
                       pattern = glob2rx("LE7*.TIF"), 
@@ -74,7 +75,7 @@ test_that("compMetaLandsat works as expected for Landsat 7", {
 })
 
 test_that("compMetaLandsat works as expected for Landsat 8", {
-  path <- system.file("extdata", 
+  path <- system.file("testdata/LC8", 
                       package = "satellite")
   files <- list.files(path, 
                       pattern = glob2rx("LC8*.TIF"), 
@@ -98,7 +99,7 @@ test_that("compMetaLandsat works as expected for Landsat 8", {
 })
 
 test_that("compMetaLandsat works as expected for Landsat 8 metafile", {
-  path <- system.file("extdata",
+  path <- system.file("testdata/LC8",
                       package = "satellite")
   files <- list.files(path,
                       pattern = glob2rx("LC8*_MTL.txt"),

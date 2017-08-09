@@ -3,12 +3,13 @@
 \docType{methods}
 \name{convSC2Rad}
 \alias{convSC2Rad}
-\alias{convSC2Rad,RasterLayer-method}
-\alias{convSC2Rad,RasterStack-method}
 \alias{convSC2Rad,Satellite-method}
+\alias{convSC2Rad,RasterStack-method}
+\alias{convSC2Rad,RasterLayer-method}
 \title{Convert a band's scaled counts to radiance}
 \usage{
-\S4method{convSC2Rad}{Satellite}(x, szen_correction = "TRUE")
+\S4method{convSC2Rad}{Satellite}(x, szen_correction = "TRUE",
+  subset = FALSE)
 
 \S4method{convSC2Rad}{RasterStack}(x, mult, add, szen)
 
@@ -20,6 +21,10 @@ raster::RasterLayer providing scaled counts (DNs).}
 
 \item{szen_correction}{Logical; if \code{TRUE}, sun zenith correction is 
 being applied.}
+
+\item{subset}{Logical; if \code{TRUE}, all layers but the cropped 
+ones are being dropped; if \code{FALSE} (default), cropped layers are appended to the 
+Satellite object.}
 
 \item{mult}{Multiplicative coefficient for value transformation (i.e. slope).}
 
@@ -44,7 +49,7 @@ which is available online at
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 sat <- satellite(files)  
 sat <- convSC2Rad(sat)
 
@@ -59,4 +64,3 @@ convSC2Rad(x = getSatDataLayer(sat, bcde),
 \code{\link{calcAtmosCorr}} for conversions of scaled counts 
 to physical units including a scene-based atmospheric correction.
 }
-

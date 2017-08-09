@@ -73,7 +73,7 @@ if ( !isGeneric("calcAtmosCorr") ) {
 #' Chavez Jr PS (1996) Image-based atmospheric corrections revisited and
 #' improved. Photogrammetric Engineering and Remote Sensing 62/9,
 #' available online at 
-#' \url{http://www.asprs.org/PE-RS-Journals-1996/PE-RS-September-1996.html}
+#' \url{http://info.asprs.org/publications/pers/96journal/september/1996_sep_1025-1036.pdf}
 #'  
 #' Goslee SC (2011) Analyzing Remote Sensing Data in R: The landsat 
 #' Package. Journal of Statistical Software,43/4, 1-25. URL 
@@ -94,7 +94,7 @@ if ( !isGeneric("calcAtmosCorr") ) {
 #'
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
-#' files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+#' files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 #' sat <- satellite(files)
 #' sat_atmos <- calcAtmosCorr(sat, model = "DOS2", esun_method = "RadRef")
 #' 
@@ -131,11 +131,8 @@ NULL
 
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @return Satellite object with added atmospheric corrected layers
-#' 
 #' @rdname calcAtmosCorr
-#'
 setMethod("calcAtmosCorr", 
           signature(x = "Satellite"), 
           function(x, model = c("DOS2", "DOS4"), esun_method = "RadRef"){
@@ -183,11 +180,8 @@ setMethod("calcAtmosCorr",
 
 
 # Function using raster::RasterStack object ------------------------------------
-#' 
 #' @return raster::RasterStack object with atmospheric corrected layers
-#' 
 #' @rdname calcAtmosCorr
-#'
 setMethod("calcAtmosCorr", 
           signature(x = "RasterStack"), 
           function(x, path_rad, esun, szen, model = c("DOS2", "DOS4")){
@@ -202,11 +196,8 @@ setMethod("calcAtmosCorr",
 
 
 # Function using raster::RasterLayer object ------------------------------------
-#' 
 #' @return raster::RasterLayer object with atmospheric corrected layer
-#' 
 #' @rdname calcAtmosCorr
-#'
 setMethod("calcAtmosCorr", 
           signature(x = "RasterLayer"), 
           function(x, path_rad, esun, szen, model = c("DOS2", "DOS4")){

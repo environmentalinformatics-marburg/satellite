@@ -3,9 +3,9 @@
 \docType{methods}
 \name{convRad2Ref}
 \alias{convRad2Ref}
-\alias{convRad2Ref,RasterLayer-method}
-\alias{convRad2Ref,RasterStack-method}
 \alias{convRad2Ref,Satellite-method}
+\alias{convRad2Ref,RasterStack-method}
+\alias{convRad2Ref,RasterLayer-method}
 \title{Convert a band's scaled counts or radiance values to reflectance}
 \usage{
 \S4method{convRad2Ref}{Satellite}(x, szen_correction = "TRUE")
@@ -46,11 +46,11 @@ If the sensor does not provide linear conversion coefficients for reflectance
 computation, the reflectance is calculated using the solar irradiance 
 following the functions taken from USGS' Landsat 7 manual, chapter 11.3.2,
 which is available online at 
-\url{http://landsathandbook.gsfc.nasa.gov/data_prod/prog_sect11_3.html}.
+\url{https://landsat.gsfc.nasa.gov/wp-content/uploads/2016/08/Landsat7_Handbook.pdf}.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 sat <- satellite(files)  
 sat <- convRad2Ref(sat)
 
@@ -65,4 +65,3 @@ convRad2Ref(x = getSatDataLayer(sat, bcde),
 \code{\link{calcAtmosCorr}} for conversions of scaled counts 
 to physical units including a scene-based atmospheric correction.
 }
-

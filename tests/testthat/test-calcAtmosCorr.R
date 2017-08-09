@@ -3,7 +3,7 @@ context("calcAtmosCorr")
 
 #-------------------------------------------------------------------------------
 test_that("calcAtmosCorr for RasterLayers works as expected", {
-  path <- system.file("extdata", package = "satellite")
+  path <- system.file("testdata/LC8", package = "satellite")
   files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
   sat <- satellite(files)
   sat <- calcTOAIrradRadRef(sat)
@@ -42,23 +42,9 @@ test_that("calcAtmosCorr for RasterLayers works as expected", {
 #-------------------------------------------------------------------------------
 test_that("calcAtmosCorr for Satellite works as expected", {
   path <- system.file("extdata", package = "satellite")
-  files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+  files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
   sat <- satellite(files)
   sat_atmos <- calcAtmosCorr(sat, model = "DOS2", esun_method = "RadRef")
-  
-  expect_equal(
-    round(raster::getValues(
-      getSatDataLayer(sat_atmos, bcde = "B002n_REF_AtmosCorr"))[50],4), 
-    round(0.0441, 4))
-})
-
-
-#-------------------------------------------------------------------------------
-test_that("Depricated satAtmosCorr for Satellite works as expected", {
-  path <- system.file("extdata", package = "satellite")
-  files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
-  sat <- satellite(files)
-  sat_atmos <- satAtmosCorr(sat, atmos_model = "DOS2", esun_mode = "RadRef")
   
   expect_equal(
     round(raster::getValues(

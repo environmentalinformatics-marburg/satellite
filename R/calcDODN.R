@@ -1,3 +1,7 @@
+if ( !isGeneric("calcDODN") ) {
+  setGeneric("calcDODN", function(x, ...)
+    standardGeneric("calcDODN"))
+}
 #' Compile dark object DN for given sensor band
 #'
 #' @description
@@ -7,12 +11,11 @@
 #' and the value for which the first derivate has the absolute maximum is
 #' taken as the DN for a dark object.
 #'
-#' @param band raster::RasterLayer with sensor band data, e.g. returned by 
-#' \code{\link{getSatDataLayer}}. 
+#' @param x Satellite object or RasterLayer with sensor band data, e.g. returned 
+#' by \code{\link{getSatDataLayer}}. 
+#' @param bcde If 'x' is a Satellite object, a band code as character.
 #'
 #' @return Numeric value of the DN for the dark object.
-#'
-#' @export calcDODN
 #' 
 #' @details The DN for a dark object is extracted from a histogram similar to
 #' Chavez (1988).
@@ -27,22 +30,43 @@
 #' 
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
-#' files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+#' files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 #' sat <- satellite(files)
 #' 
+#' calcDODN(sat, bcde = "B002n")
 #' calcDODN(getSatDataLayer(sat, bcde = "B002n"))
 #' 
-calcDODN <- function(band){
+#' @export calcDODN
+#' @name calcDODN
+NULL
+
+# Function using Satellite object ----------------------------------------------
+#' @rdname calcDODN
+setMethod("calcDODN", 
+          signature(x = "Satellite"), 
+          function(x, bcde) {
+  calcDODN(getSatDataLayer(x, bcde))
+})
+
+
+# Function using Satellite object ----------------------------------------------
+#' @rdname calcDODN
+setMethod("calcDODN", 
+          signature(x = "RasterLayer"), 
+          function(x) {
   
   ## stop if a multi-layer raster is supplied
-  if (class(band) != "RasterLayer")
+  if (class(x) != "RasterLayer")
     stop("Please supply a single-layer object.")
   
-  vals <- raster::getValues(band)
+  vals <- raster::getValues(x)
   #use only values > 0 (if using whole satellite images e.g. landsat no data values
   #may be zero or negative, which will lead to a value of zero in calcDODN function)
-  freq <- plyr::count(vals[vals > 0])
-  q01 <- raster::quantile(band, probs = 0.01)
+#   freq <- plyr::count(vals[vals > 0])
+#   q01 <- raster::quantile(x, probs = 0.01)
+  vals <- vals[vals > 0]
+  freq <- plyr::count(vals)
+  q01 <- quantile(vals, probs = 0.01)
   freq_q01 <- freq[freq$x <= q01, ]
   return(freq_q01$x[which.max(diff(freq_q01$freq))])
-}
+})

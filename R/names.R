@@ -10,13 +10,12 @@ if ( !isGeneric("names") ) {
 #' @param x A Satellite object.
 #' @param value Band codes of the individual data layers.
 #'
-#' @export names
-#' 
 #' @name names
+#' @aliases names,Satellite-method
 #' 
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
-#' files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+#' files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 #' sat <- satellite(files)
 #' names(sat)
 #' new_names <- paste0(names(sat), "_test")
@@ -25,11 +24,8 @@ NULL
 
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @return Satellite data layer names as character vector.
-#' 
 #' @rdname names
-#'
 setMethod("names", 
           signature(x = "Satellite"), 
           function(x){
@@ -40,9 +36,7 @@ setMethod("names",
 
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @rdname names
-#'
 setMethod('names<-', 
           signature(x = "Satellite"), 
           function(x, value){

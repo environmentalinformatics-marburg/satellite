@@ -1,3 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-/data-raw
+^R/pck_data.R
+^R/pck_lut.R
+^TODO

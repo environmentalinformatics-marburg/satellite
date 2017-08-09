@@ -3,9 +3,9 @@
 \docType{methods}
 \name{convRad2BT}
 \alias{convRad2BT}
-\alias{convRad2BT,RasterLayer-method}
-\alias{convRad2BT,RasterStack-method}
 \alias{convRad2BT,Satellite-method}
+\alias{convRad2BT,RasterStack-method}
+\alias{convRad2BT,RasterLayer-method}
 \title{Convert a band's scaled counts to brightness temperature}
 \usage{
 \S4method{convRad2BT}{Satellite}(x)
@@ -37,7 +37,7 @@ which is available online at
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 sat <- satellite(files)  
 sat <- convRad2BT(sat)
 
@@ -46,4 +46,3 @@ sat <- convRad2BT(sat)
 \code{\link{calcAtmosCorr}} for converions of scaled counts 
 to physical units including a scene-based atmospheric correction.
 }
-

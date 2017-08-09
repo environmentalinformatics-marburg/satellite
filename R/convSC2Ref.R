@@ -15,7 +15,9 @@ if (!isGeneric("convSC2Ref") ) {
 #' @param szen Cosine of solar zenith angle.
 #' @param szen_correction Logical; if \code{TRUE}, sun zenith correction is 
 #' being applied. 
-#' 
+#' @param subset Logical; if \code{TRUE}, all layers but the cropped 
+#' ones are being dropped; if \code{FALSE} (default), cropped layers are appended to the 
+#' Satellite object.
 #'   
 #' @export convSC2Ref
 #' 
@@ -30,14 +32,14 @@ if (!isGeneric("convSC2Ref") ) {
 #' computation, the reflectance is calculated using the solar irradiance 
 #' following the functions taken from USGS' Landsat 7 manual, chapter 11.3.2,
 #' which is available online at 
-#' \url{http://landsathandbook.gsfc.nasa.gov/data_prod/prog_sect11_3.html}.
+#' \url{https://landsat.gsfc.nasa.gov/wp-content/uploads/2016/08/Landsat7_Handbook.pdf}.
 #' 
 #' @seealso \code{\link{calcAtmosCorr}} for conversions of scaled counts 
 #' to physical units including a scene-based atmospheric correction.
 #' 
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
-#' files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+#' files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 #' sat <- satellite(files)  
 #' sat <- convSC2Ref(sat)
 #' 
@@ -51,17 +53,14 @@ NULL
 
 
 # Function using satellite object ----------------------------------------------
-#' 
 #' @return If x is a Satellite object, a Satellite object with added converted 
 #' layers; \cr
 #' if x is a \code{raster::Raster*} object, a \code{raster::Raster*} object with
 #' converted layer(s).
-#' 
 #' @rdname convSC2Ref
-#'
 setMethod("convSC2Ref", 
           signature(x = "Satellite"), 
-          function(x, szen_correction = "TRUE"){
+          function(x, szen_correction = "TRUE", subset = FALSE){
             band_codes <- getSatBCDESolarCalib(x, calib = "SC")
             for(bcde in band_codes){
               if(!is.na(getSatREFM(x, bcde))){
@@ -93,14 +92,18 @@ setMethod("convSC2Ref",
                                      info = info, in_bcde = bcde)
               }
             }
+            
+            if(subset == TRUE){
+              x <- subset(x, cid = "REF")
+              #reset LNBR (dirty hack)
+              x@meta$LNBR <- rep(1:nrow(x@meta))
+            }
             return(x)
           })
 
 
 # Function using raster::RasterStack object ------------------------------------
-#' 
 #' @rdname convSC2Ref
-#'
 setMethod("convSC2Ref", 
           signature(x = "RasterStack"), 
           function(x, mult, add, szen){
@@ -112,15 +115,14 @@ setMethod("convSC2Ref",
 
 
 # Function using raster::RasterLayer object ------------------------------------
-#' 
 #' @rdname convSC2Ref
-#'
 setMethod("convSC2Ref", 
           signature(x = "RasterLayer"), 
           function(x, mult, add, szen){
-            x <- mult * x + add
             if(!missing(szen)){
-              x <- x / cos(szen * pi / 180.0)
+              x <- (mult * x + add) / cos(szen * pi / 180.0)
+            } else {
+              x <- mult * x + add
             }
             return(x)
           })

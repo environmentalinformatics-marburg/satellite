@@ -10,13 +10,19 @@
 #' @return \code{data.frame} containing filepaths, band numbers and metadata 
 #' filepaths. 
 #'
-#' @export compFilePathLandsat
-#'
 #' @examples
 #' path <- system.file("extdata", package = "satellite")
-#' files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+#' files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
+#' 
 #' compFilePathLandsat(files)  
 #' 
+#' sortFilesLandsat(files)
+#' sortFilesLandsat(files, id = TRUE) # indices
+#' 
+#' @export compFilePathLandsat
+#' @name compFilePathLandsat
+#' @rdname compFilePathLandsat
+#' @aliases compFilePathLandsat
 compFilePathLandsat <- function(files){
   if((length(files) == 1 & grepl("MTL", files[1])) == FALSE){
     info <- lapply(files, function(x){
@@ -26,6 +32,13 @@ compFilePathLandsat <- function(files){
                          nchar(layer))
       meta <- paste0(dirname(x), "/", substr(basename(x), 1, pos), "MTL.txt")
       sid <- substr(basename(x), 1, 3)
+      
+      ## alternative sensor pattern
+      if (sid %in% c("LC0", "LE0", "LT0")) {
+        pttrn <- substr(basename(x), 1, 4)
+        rid <- apply(lut$SENSOR_ID_PATTERN, 1, FUN = function(x) pttrn %in% x)
+        sid <- lut$SENSOR_ID_PATTERN$SID[rid]
+      }
       
       sensor <- lutInfoSensorFromSID(sid)
       band_code <- lutInfoBCDEFromBID(sid = sid, bid = band_ids)
@@ -60,5 +73,24 @@ compFilePathLandsat <- function(files){
     result <- (do.call("rbind", info))
     rownames(result) <- NULL
     return(result)
+  }
+}
+
+
+# Sort Landsat band files -----
+#' @describeIn compFilePathLandsat Sort Landsat band files in ascending order.
+#' @param id \code{logical}, defaults to \code{FALSE}. Determines whether to 
+#' return sorted band files (ie default) or sorting order.
+#' @return If \code{id = FALSE} (default), sorted band files as 
+#' \code{character}, else the corresponding sorting order as \code{integer}.
+#' @export sortFilesLandsat
+sortFilesLandsat <- function(files, id = FALSE) {
+  cfp <- compFilePathLandsat(files)
+  bid <- suppressWarnings(as.integer(cfp$BID))
+  
+  if (id) {
+    order(bid)
+  } else {
+    files[order(bid)]
   }
 }

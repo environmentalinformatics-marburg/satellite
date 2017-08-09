@@ -23,6 +23,7 @@ band/layer:
   \item TYPE type of the sensor band regarding wavelength (e.g. VIS)
   \item SPECTRUM spectral range regarding radiation source (e.g. solar)
   \item CALIB type of applied calibration (e.g. SC for scaled counts)
+  \item RID region id (e.g. R00001) for multi region satellite objects
   \item RADA addtition coefficient for radiance conversion
   \item RADM multiplication coefficient for radiance conversion
   \item REFA addtition coefficient for reflectance conversion
@@ -51,8 +52,7 @@ and orbit coefficients as well as some sensor specific data.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 compMetaLandsat(files)
 
 }
-

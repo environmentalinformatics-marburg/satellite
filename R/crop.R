@@ -14,6 +14,9 @@ if ( !isGeneric("crop") ) {
 #' @param subset Logical; if \code{TRUE} (default), all layers but the cropped 
 #' ones are being dropped; if \code{FALSE}, cropped layers are appended to the 
 #' Satellite object.
+#' @param snap Direction towards which to align the extent as \code{character}. 
+#' Available options are \code{"near"} (default), \code{"in"} and \code{"out"} 
+#' (see \code{\link[raster]{alignExtent}}).
 #'
 #' @return A Satellite object consisting of cropped layers only. If 
 #' \code{subset = FALSE}, a Satellite object with the cropped layers appended.
@@ -34,7 +37,7 @@ if ( !isGeneric("crop") ) {
 #' \dontrun{
 #' ## sample data
 #' path <- system.file("extdata", package = "satellite")
-#' files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+#' files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 #' sat <- satellite(files)
 #'
 #' ## geographic extent of georg-gassmann-stadium (utm 32-n)
@@ -48,10 +51,10 @@ if ( !isGeneric("crop") ) {
 #' }
 setMethod("crop", 
           signature(x = "Satellite"), 
-          function(x, y, subset = TRUE) {
+          function(x, y, subset = TRUE, snap = "near") {
             rad_bands <- getSatBCDE(x)
             for (bcde_rad in rad_bands) {
-              ref <- crop(getSatDataLayer(x, bcde_rad), y)
+              ref <- raster::crop(getSatDataLayer(x, bcde_rad), y, snap = snap[1])
               # keep all metadata except for file path since cropped 
               # layers are in memory and set calib column flag.
               meta_param <- getSatMeta(x, bcde_rad)

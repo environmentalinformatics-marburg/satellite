@@ -1,7 +1,7 @@
-# devtools::test(".", "calcEartSunDist")
-context("calcEartSunDist")
+# devtools::test(".", "calcEarthSunDist")
+context("calcEarthSunDist")
 
-test_that("calcEartSunDist works as expected", {
+test_that("calcEarthSunDist works as expected", {
   t1 <- calcEarthSunDist(date = "2015-01-01", formula = "Spencer")
   t2 <- calcEarthSunDist(date = "2015-01-01", formula = "Mather")
   t3 <- calcEarthSunDist(date = "2015-01-01", formula = "ESA")

@@ -6,7 +6,7 @@
 \alias{crop,Satellite-method}
 \title{Crop satellite object}
 \usage{
-\S4method{crop}{Satellite}(x, y, subset = TRUE)
+\S4method{crop}{Satellite}(x, y, subset = TRUE, snap = "near")
 }
 \arguments{
 \item{x}{Satellite object.}
@@ -16,6 +16,10 @@
 \item{subset}{Logical; if \code{TRUE} (default), all layers but the cropped 
 ones are being dropped; if \code{FALSE}, cropped layers are appended to the 
 Satellite object.}
+
+\item{snap}{Direction towards which to align the extent as \code{character}. 
+Available options are \code{"near"} (default), \code{"in"} and \code{"out"} 
+(see \code{\link[raster]{alignExtent}}).}
 }
 \value{
 A Satellite object consisting of cropped layers only. If 
@@ -33,7 +37,7 @@ Crop layers of a Satellite object to the size of a given
 \dontrun{
 ## sample data
 path <- system.file("extdata", package = "satellite")
-files <- list.files(path, pattern = glob2rx("LC8*.TIF"), full.names = TRUE)
+files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)
 sat <- satellite(files)
 
 ## geographic extent of georg-gassmann-stadium (utm 32-n)
@@ -52,4 +56,3 @@ Please refer to the respective functions for references.
 \seealso{
 This function is a wrapper for \code{raster::crop}.
 }
-
