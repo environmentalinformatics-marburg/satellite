@@ -16,7 +16,7 @@ band/layer:
   \item DATE date (e.g. 2013-07-07)
   \item SID sensor id (e.g. LC8)
   \item SENSOR sensor name (e.g. Landsat 8)
-  \item SGRP sensor group (e.g. Landast)
+  \item SGRP sensor group (e.g. Landsat)
   \item BID band id (e.g. 7)
   \item BCDE band code (5 digit standard name, e.g B001n)
   \item SRES spatial resolution of the sensor band (e.g. 30 for 30 m x 30m)
