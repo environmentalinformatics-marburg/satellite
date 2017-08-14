@@ -1,3 +1,9 @@
+## satellite 1.0.1
+
+Bugfixes:
+
+  * calcAtmosCorr() was not compatible with NA values, ie quantile() failed.
+
 ## satellite 1.0.0
 
 New features:
