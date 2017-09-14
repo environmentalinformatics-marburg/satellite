@@ -38,6 +38,31 @@ test_that("calcAtmosCorr for RasterLayers works as expected", {
 })
 
 
+test_that("calcAtmosCorr processes all solar bands", {
+  
+  ## landsat 8
+  path = system.file("extdata", package = "satellite")
+  files = list.files(path, pattern = "^LC08.*.TIF$", full.names = TRUE)
+  sat = satellite(files)
+  
+  sat = calcAtmosCorr(sat)
+  bds = getSatBCDE(sat)
+  bds = bds[grep("AtmosCorr", bds)]
+  
+  expect_equal(length(bds), sum(lut$L8_BANDS == "solar", na.rm = TRUE))
+  
+  ## landsat 7
+  path = system.file("extdata", package = "satellite")
+  files = list.files(path, pattern = "^LE07.*.TIF$", full.names = TRUE)
+  sat = satellite(files)
+  
+  sat = calcAtmosCorr(sat)
+  bds = getSatBCDE(sat)
+  bds = bds[grep("AtmosCorr", bds)]
+  
+  expect_equal(length(bds), sum(lut$L7_BANDS == "solar", na.rm = TRUE))
+})
+
 
 #-------------------------------------------------------------------------------
 test_that("calcAtmosCorr for Satellite works as expected", {

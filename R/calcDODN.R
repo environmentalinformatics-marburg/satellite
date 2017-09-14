@@ -62,11 +62,9 @@ setMethod("calcDODN",
   vals <- raster::getValues(x)
   #use only values > 0 (if using whole satellite images e.g. landsat no data values
   #may be zero or negative, which will lead to a value of zero in calcDODN function)
-#   freq <- plyr::count(vals[vals > 0])
-#   q01 <- raster::quantile(x, probs = 0.01)
   vals <- vals[vals > 0]
   freq <- plyr::count(vals)
-  q01 <- quantile(vals, probs = 0.01)
+  q01 <- quantile(vals, probs = 0.01, na.rm = TRUE)
   freq_q01 <- freq[freq$x <= q01, ]
   return(freq_q01$x[which.max(diff(freq_q01$freq))])
 })

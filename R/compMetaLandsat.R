@@ -52,32 +52,37 @@
 compMetaLandsat <- function(files){
   
   datafiles <- compFilePathLandsat(files)
-  
+
   bandinfo_all <- lutInfoBandsFromSID(datafiles$SID[1])
-  bandinfo_all <- merge(bandinfo_all, datafiles, by = "BCDE")
+  bandinfo_all <- merge(bandinfo_all, datafiles, by = c("BCDE", "SID", "BID"))
   
   metainformation <- lapply(seq(length(sort(unique(bandinfo_all$META)))), function(scn){
     bandinfo <- bandinfo_all[bandinfo_all$META == sort(unique(bandinfo_all$META))[scn], ]
-    # metadata <- utils::read.table(as.character(bandinfo$METAFILE[1]), header = FALSE, 
-    #                               sep = "=", fill = TRUE)
     metadata <- utils::read.table(as.character(bandinfo$METAFILE[1]), header = FALSE, 
                                   sep = "=", fill = TRUE)
     
     search_term_date <- "DATE_ACQUIRED"
     search_term_esd <- "EARTH_SUN_DISTANCE"
     
-    metainformation <- lapply(seq(nrow(bandinfo)), function(x){
-      search_term_rad_max <- paste0("RADIANCE_MAXIMUM_BAND_", x)
-      search_term_rad_min <- paste0("RADIANCE_MINIMUM_BAND_", x)
-      search_term_ref_max <- paste0("REFLECTANCE_MAXIMUM_BAND_", x)
-      search_term_ref_min <- paste0("REFLECTANCE_MINIMUM_BAND_", x)
+    ids = names(lut$BANDS) == unique(bandinfo$SID)
+    bds = sapply(bandinfo$BCDE, function(i) {
+      tmp = grep(i, lut[[lut$BANDS[ids]]][, "BCDE"])
+      row.names(lut[[lut$BANDS[ids]]])[tmp]
+    }); bds = toupper(bds)
+    
+    metainformation <- lapply(seq(bds), function(x){
+      bd = bds[x]
+      search_term_rad_max <- paste0("RADIANCE_MAXIMUM_", bd)
+      search_term_rad_min <- paste0("RADIANCE_MINIMUM_", bd)
+      search_term_ref_max <- paste0("REFLECTANCE_MAXIMUM_", bd)
+      search_term_ref_min <- paste0("REFLECTANCE_MINIMUM_", bd)
       
-      search_term_add_rad <- paste0("RADIANCE_ADD_BAND_", x)
-      search_term_mult_rad <- paste0("RADIANCE_MULT_BAND_", x)
-      search_term_add_ref <- paste0("REFLECTANCE_ADD_BAND_", x)
-      search_term_mult_ref <- paste0("REFLECTANCE_MULT_BAND_", x)
-      search_term_BTK1 <- paste0("K1_CONSTANT_BAND_", x)
-      search_term_BTK2 <- paste0("K2_CONSTANT_BAND_", x)
+      search_term_add_rad <- paste0("RADIANCE_ADD_", bd)
+      search_term_mult_rad <- paste0("RADIANCE_MULT_", bd)
+      search_term_add_ref <- paste0("REFLECTANCE_ADD_", bd)
+      search_term_mult_ref <- paste0("REFLECTANCE_MULT_", bd)
+      search_term_BTK1 <- paste0("K1_CONSTANT_", bd)
+      search_term_BTK2 <- paste0("K2_CONSTANT_", bd)
       
       cal_rad_max <- as.numeric(as.character(
         (subset(metadata$V2, gsub("\\s","", metadata$V1) == search_term_rad_max))))
@@ -125,10 +130,10 @@ compMetaLandsat <- function(files){
       
       result <- data.frame(SCENE = scn,
                            DATE = date, 
-                           SID = bandinfo$SID.x[x],
+                           SID = bandinfo$SID[x],
                            SENSOR = bandinfo$SENSOR[x],
                            SGRP = bandinfo$SGRP[x],
-                           BID = bandinfo$BID.x[x],
+                           BID = bandinfo$BID[x],
                            BCDE = bandinfo$BCDE[x],
                            #SRES = bandinfo$SRES[x],
                            TYPE = bandinfo$TYPE[x],

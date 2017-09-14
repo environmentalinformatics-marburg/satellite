@@ -1,3 +1,12 @@
+## satellite 1.0.1
+
+Bugfixes:
+
+  * calcAtmosCorr() was not compatible with NA values, ie quantile() failed.
+  * compFilePathLandsat() failed when specifying metadata files with new naming standard as input.
+  * compMetaLandsat() assigned Landsat 7 metadata information, eg parameters required for radiometric rescaling, to wrong bands.
+  
+
 ## satellite 1.0.0
 
 New features:

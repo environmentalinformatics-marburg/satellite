@@ -58,11 +58,26 @@ compFilePathLandsat <- function(files){
   } else {
     info <- lapply(files, function(x){
       sid <- substr(basename(x), 1, 3)
+      
+      ## alternative sensor pattern
+      if (sid %in% c("LC0", "LE0", "LT0")) {
+        pttrn <- substr(basename(x), 1, 4)
+        rid <- apply(lut$SENSOR_ID_PATTERN, 1, FUN = function(x) pttrn %in% x)
+        sid <- lut$SENSOR_ID_PATTERN$SID[rid]
+      }
+      
       sensor <- lutInfoSensorFromSID(sid)
       band_code <- lutInfoBCDEFromBID(sid = sid)
+      
+      ids = names(lut$BANDS) == sid
+      bid = sapply(band_code, function(i) {
+        tmp = grep(i, lut[[lut$BANDS[ids]]][, "BCDE"])
+        lut[[lut$BANDS[ids]]][tmp, "BID"]
+      })
+      
       data.frame(BCDE = as.character(band_code),SID = sid, 
                  SENSOR = sensor,
-                 BID = NA,
+                 BID = bid,
                  LAYER = NA,
                  FILE = NA,
                  CALIB = NA,
