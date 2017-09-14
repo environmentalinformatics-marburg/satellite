@@ -33,30 +33,36 @@ pck_lut <- function(){
     data.frame(SID = "L5",
                PATTERN = c("L5"),
                PATTERN2 = "N/A",
-               SGRP = "GLS",
+               SGRP = "Landsat",
                stringsAsFactors = FALSE),
     data.frame(SID = "MOD",
                PATTERN = c("MOD"),
                PATTERN2 = "N/A",
-               SGRP = "Terra-MODIS",
+               SGRP = "MODIS",
                stringsAsFactors = FALSE),
     data.frame(SID = "MYD",
                PATTERN = c("MYD"),
                PATTERN2 = "N/A",
-               SGRP = "Aqua-MODIS",
-               stringsAsFactors = FALSE)
+               SGRP = "MODIS",
+               stringsAsFactors = FALSE),
+    data.frame(SID = "PROBAV", 
+               PATTERN = "PROBAV", 
+               PATTERN2 = "N/A", 
+               SGRP = "PROBA")
   ))
   
   
   # Sensor names
   sensors <- c(LT4 = "Landsat 4", LT5 = "Landsat 5", LE7 = "Landsat 7", 
                LC8 = "Landsat 8", L5 = "Global Land Survey L5",
-               MOD = "Terra-MODIS", MYD = "Aqua-MODIS")
+               MOD = "Terra-MODIS", MYD = "Aqua-MODIS", 
+               PROBAV = "PROBA-V")
   
   # Sensor band variables
   bands <- c(LT4 = "L4_BANDS", LT5 = "L5_BANDS", LE7 = "L7_BANDS", 
              LC8 = "L8_BANDS", L5 = "GLS5_BANDS",
-             MOD = "MOD_BANDS", MYD = "MYD_BANDS")
+             MOD = "MOD_BANDS", MYD = "MYD_BANDS", 
+             PROBAV = "PROBAV_BANDS")
   
   # Sensor rsr
   rsr <- c(LE7 = "L7_RSR", LC8 = "L8_RSR")
@@ -198,6 +204,18 @@ pck_lut <- function(){
     SPECTRUM = c(rep("solar", 21), rep("thermal", 6), "solar", 
                  rep("thermal", 10)))
   rownames(myd_bands) <- paste0("Band_", myd_bands$BID)
+
+  probav_bands <- data.frame(
+    SID = "PROBAV",
+    SGRP = "PROBA",
+    BID = c(seq(4), "QA"),
+    BCDE = c(sprintf("B%03dn", seq(4)), "B0QAn"),
+    LMIN = c(0.44, 0.614, 0.772, 1.57, NA),
+    LMAX = c(0.487, 0.696, 0.902, 1.635, NA),
+    #SRES = c(30, 30, 30, 30, 30, 30, 30),
+    TYPE = c("VIS", "VIS", "NIR", "SWIR", "QA"),
+    SPECTRUM = c("solar", "solar", "solar", "solar", NA))
+  rownames(probav_bands) <- paste0("Band_", probav_bands$BID)
   
   # Landat 7 relative spectral response (units: nm-1)
   l7_rsr <- readRDS(system.file("extdata", "l7_rsr.rds", package = "satellite"))
@@ -244,13 +262,14 @@ pck_lut <- function(){
                SENSOR_ID_PATTERN = "Filename patter of sensor",
                BANDS = "Sensor ids and meta names for band information",
                RSR = "RSR ids and sensor names",
-               L4_BANDS = "Band information for Landsat 4 bands",
-               L5_BANDS = "Band information for Landsat 5 bands",
-               L7_BANDS = "Band information  for Landsat 7 bands",
-               L8_BANDS = "Band information  for Landsat 8 bands",
-               GLS5_BANDS = "Band information  for GLS with Landsat 5",
-               MOD_BANDS = "Band information  for Terra-MODIS bands",
-               MYD_BANDS = "Band information  for Aqua-MODIS bands",
+               L4_BANDS = "Band information for Landsat 4",
+               L5_BANDS = "Band information for Landsat 5",
+               L7_BANDS = "Band information for Landsat 7",
+               L8_BANDS = "Band information for Landsat 8",
+               GLS5_BANDS = "Band information for GLS with Landsat 5",
+               MOD_BANDS = "Band information for Terra-MODIS",
+               MYD_BANDS = "Band information for Aqua-MODIS",
+               PROBAV_BANDS = "Band information for PROBA-V",
                L7_SRS = "Landat 7 relative spectral response (nm-1) taken from http://landsat.usgs.gov/instructions.php",
                L8_SRS = "Landat 8 relative spectral response (nm-1) taken from http://landsat.usgs.gov/instructions.php",
                SOLAR = "Solar irradiance (units: W m-2 nm-1) from the National Renewable Energy Laboratory taken from http://rredc.nrel.gov/solar/spectra/am0/modtran.html",
@@ -270,6 +289,7 @@ pck_lut <- function(){
               L7_BANDS = l7_bands, L8_BANDS = l8_bands,
               GLS5_BANDS = gls5_bands,
               MOD_BANDS = mod_bands, MYD_BANDS = myd_bands,
+              PROBAV_BANDS = probav_bands,
               L7_RSR = l7_rsr, L8_RSR = l8_rsr, SOLAR = solar, 
               L4_ESUN = l4_esun, L5_ESUN = l5_esun, L7_ESUN = l7_esun,
               GLS5_ESUN = gls5_esun, 
