@@ -2,7 +2,7 @@ Package: satellite
 Type: Package
 Title: Various Functions for Handling and Manipulating Remote Sensing Data
 Version: 1.0.1
-Date: 2017-08-21
+Date: 2017-10-06
 Author: Thomas Nauss, Hanna Meyer, Tim Appelhans, Florian Detsch
 Maintainer: Florian Detsch <fdetsch@web.de>
 Description: This smorgasbord provides a variety of functions which are useful
@@ -25,7 +25,8 @@ Suggests:
     devtools,
     knitr,
     rgdal,
-    testthat
+    testthat,
+    rmarkdown
 LazyData: true
 VignetteBuilder: knitr
 LinkingTo: Rcpp

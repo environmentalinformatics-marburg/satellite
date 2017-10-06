@@ -6,7 +6,8 @@ output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Landsat-8 Calibration}
   %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+  %\VignetteEncoding{UTF-8}
+
 ---
 
 The following example shows how to read a Landsat-8 data set downloaded from the
