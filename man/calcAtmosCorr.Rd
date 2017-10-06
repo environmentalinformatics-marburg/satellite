@@ -132,7 +132,7 @@ of Environment 24/3, doi:10.1016/0034-4257(88)90019-3, available online at
 Chavez Jr PS (1996) Image-based atmospheric corrections revisited and
 improved. Photogrammetric Engineering and Remote Sensing 62/9,
 available online at 
-\url{http://info.asprs.org/publications/pers/96journal/september/1996_sep_1025-1036.pdf}
+\url{http://www.unc.edu/courses/2008spring/geog/577/001/www/Chavez96-PERS.pdf}
  
 Goslee SC (2011) Analyzing Remote Sensing Data in R: The landsat 
 Package. Journal of Statistical Software,43/4, 1-25. URL 
