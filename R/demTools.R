@@ -9,7 +9,7 @@ if ( !isGeneric("demTools") ) {
 #' \code{raster::terrain} or \code{raster::hillShade}.
 #' @param x A DEM provided as an object of class Satellite or RasterLayer.
 #' @param method Currently "slope", "aspect" and "hillshade" are implemented.
-#' @param bcde The name of the DEM layer in the satellite object. 
+#' @param bcde The name of the DEM layer in the Satellite object. 
 #' 
 #' @seealso 
 #' \code{raster::terrain}, \code{raster::hillShade}.

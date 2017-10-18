@@ -3,7 +3,7 @@ if ( !isGeneric('brick') ) {
     standardGeneric('brick'))
 }
 
-#' convert selected layers of a Satellite object to a RasterBrick
+#' Convert selected layers of a Satellite object to a RasterBrick
 #' 
 #' @description
 #' Convert selected layers of a Satellite object to a RasterBrick

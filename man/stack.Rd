@@ -4,7 +4,7 @@
 \name{stack}
 \alias{stack}
 \alias{stack,Satellite-method}
-\title{convert selected layers of a Satellite object to a RasterStack}
+\title{Convert selected layers of a Satellite object to a RasterStack}
 \usage{
 \S4method{stack}{Satellite}(x, layer = names(x), ...)
 }

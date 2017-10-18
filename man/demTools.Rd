@@ -16,7 +16,7 @@
 
 \item{method}{Currently "slope", "aspect" and "hillshade" are implemented.}
 
-\item{bcde}{The name of the DEM layer in the satellite object.}
+\item{bcde}{The name of the DEM layer in the Satellite object.}
 
 \item{sunElev}{If \code{method = "hillShade"}, the elevation angle of the 
 sun in degrees. See parameter \code{angle} in \code{\link{hillShade}}.}

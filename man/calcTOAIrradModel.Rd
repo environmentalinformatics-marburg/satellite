@@ -31,7 +31,7 @@ metadata, otherwise it is estimated by the day of the year using
 \code{\link{calcEarthSunDist}}.}
 }
 \value{
-If x is a satellite object, a Satellite object with ESun information 
+If x is a Satellite object, a Satellite object with ESun information 
 added to the metadata; if x is a \code{data.frame}, a vector containing ESun
 for the respective band(s).
 }

@@ -3,7 +3,7 @@
 #' @description
 #' Get information from class Satellite.
 #' 
-#' @param data Data layer of a satellite object
+#' @param data Data layer of a Satellite object
 #' @param type Type of the sensor band
 #' @param lnbr Layer number
 #' @param in_bcde BCDE of layer used as input dataset

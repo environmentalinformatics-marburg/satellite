@@ -208,7 +208,7 @@ information.}
 
 \item{out_bcde}{BCDE of layer used as output dataset}
 
-\item{data}{Data layer of a satellite object}
+\item{data}{Data layer of a Satellite object}
 
 \item{rst}{Input raster::Raster* object from which to extract metadata.}
 

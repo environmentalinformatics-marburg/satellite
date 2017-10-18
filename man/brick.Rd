@@ -4,7 +4,7 @@
 \name{brick}
 \alias{brick}
 \alias{brick,Satellite-method}
-\title{convert selected layers of a Satellite object to a RasterBrick}
+\title{Convert selected layers of a Satellite object to a RasterBrick}
 \usage{
 \S4method{brick}{Satellite}(x, layer = names(x), ...)
 }

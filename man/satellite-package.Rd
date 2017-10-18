@@ -6,7 +6,7 @@
 \alias{satellitepackage}
 \title{Smorgasboard for remote sensing functions.}
 \description{
-Smorgasboard for remote sensing functions
+Smorgasbord for remote sensing functions
 }
 \details{
 The package provides a variety of functions which are useful for 

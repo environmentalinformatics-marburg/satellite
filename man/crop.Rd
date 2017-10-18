@@ -4,7 +4,7 @@
 \name{crop}
 \alias{crop}
 \alias{crop,Satellite-method}
-\title{Crop satellite object}
+\title{Crop Satellite object}
 \usage{
 \S4method{crop}{Satellite}(x, y, subset = TRUE, snap = "near")
 }

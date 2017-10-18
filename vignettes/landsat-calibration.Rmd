@@ -34,7 +34,7 @@ is in accordance with the USGS conventions.
 
 ## Converting Landsat-8 scaled counts to physical units
 
-In order to convert scaled counts of a satellite object to radiance, reflectance
+In order to convert scaled counts of a Satellite object to radiance, reflectance
 and/or temperature, just supply it to the `convSC2Rad`, `convSC2Ref` or
 `convRad2BT` function.
 ```{r}

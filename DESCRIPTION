@@ -1,12 +1,22 @@
 Package: satellite
 Type: Package
-Title: Various Functions for Handling and Manipulating Remote Sensing Data
+Title: Handling and Manipulating Remote Sensing Data
 Version: 1.0.1
-Date: 2017-10-06
+Date: 2017-10-18
 Author: Thomas Nauss, Hanna Meyer, Tim Appelhans, Florian Detsch
 Maintainer: Florian Detsch <fdetsch@web.de>
-Description: This smorgasbord provides a variety of functions which are useful
-    for handling, manipulating and visualizing remote sensing data.
+Description: Herein, we provide a broad variety of functions which are useful
+    for handling, manipulating, and visualizing satellite-based remote sensing 
+    data. These operations range from mere data import and layer handling (eg 
+    subsetting), over Raster* typical data wrangling (eg crop, extend), to more 
+    sophisticated (pre-)processing tasks typically applied to satellite imagery 
+    (eg atmospheric and topographic correction). This functionality is 
+    complemented by a full access to the satellite layers' metadata at any 
+    stage and the documentation of performed actions in a separate log file. 
+    Currently available sensors include Landsat 4-5 (TM), 7 (ETM), and 8 (OLI), 
+    and additional compatibility is ensured for Landsat's Global Land Survey 
+    data set. Moreover, support for Terra and Aqua-MODIS as well as PROBA-V  
+    is expected to arrive shortly.
 Depends:
     R (>= 2.10),
     raster,

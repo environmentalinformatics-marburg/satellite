@@ -6,15 +6,14 @@
 \alias{subset,Satellite-method}
 \alias{subset,Satellite-method}
 \alias{[[,Satellite,ANY,ANY-method}
-\title{Subset Satellite object data layers}
+\title{Subset of Satellite object data layers}
 \usage{
 \S4method{subset}{Satellite}(x, sid, cid)
 
 \S4method{[[}{Satellite,ANY,ANY}(x, i)
 }
 \arguments{
-\item{x}{Satellite or raster::Raster* object providing the source band(s) to 
-be adjusted.}
+\item{x}{Satellite object providing the source band(s) to be adjusted.}
 
 \item{sid}{Band numbers or bcde which should be extracted}
 
@@ -31,8 +30,8 @@ A Satellite object
 A Satellite object
 }
 \description{
-This function subsets a Satellite object and returns the extracted dataset
-as Satellite object.
+Create a subset of data layers from a \code{Satellite} object and return it 
+as a standalone \code{Satellite} object.
 }
 \examples{
 ## sample data

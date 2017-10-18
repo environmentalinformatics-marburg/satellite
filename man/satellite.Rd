@@ -35,7 +35,7 @@ A \code{Satellite} object.
 Method to create a Satellite object.
 }
 \details{
-A satellite object consists of three data sections:
+A Satellite object consists of three data sections:
 (i) a raster data section which holds the actual data values of the 
 respective sensor bands, (ii) a metadata grid which holds meta information
 for each sensor band (e.g. calibration coefficients, type of sensor band 

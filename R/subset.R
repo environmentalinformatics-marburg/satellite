@@ -2,14 +2,13 @@ if ( !isGeneric("subset") ) {
   setGeneric("subset", function(x, ...)
     standardGeneric("subset"))
 }
-#' Subset Satellite object data layers
+#' Subset of Satellite object data layers
 #'
 #' @description
-#' This function subsets a Satellite object and returns the extracted dataset
-#' as Satellite object.
+#' Create a subset of data layers from a \code{Satellite} object and return it 
+#' as a standalone \code{Satellite} object.
 #'
-#' @param x Satellite or raster::Raster* object providing the source band(s) to 
-#' be adjusted.
+#' @param x Satellite object providing the source band(s) to be adjusted.
 #' @param sid Band numbers or bcde which should be extracted
 #' @param cid Calibration information used for subsetting (only works if sid is
 #' not supplied to the function)
@@ -60,7 +59,7 @@ setMethod('subset', signature(x = 'Satellite'),
               } else {
                 # cidting by row/list numbers makes only sense for multiples of 
                 # channel numbers in case all channels are submitted to the 
-                # satellite object in the first place. Therefore maybe checking 
+                # Satellite object in the first place. Therefore maybe checking 
                 # for correct selection would need to be implemented for user 
                 # friendlyness. Maybe defining sat object as list of obejcts, 
                 # where each object is an instance of the sat object as it is 

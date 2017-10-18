@@ -3,7 +3,7 @@ if ( !isGeneric('plot') ) {
     standardGeneric('plot'))
 }
 
-#' Plot a 'Satellite' object
+#' Plot a Satellite object
 #' 
 #' @description
 #' This is the standard plotting routine for the 'Satellite' class. Layers are 

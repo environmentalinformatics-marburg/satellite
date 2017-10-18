@@ -1,4 +1,4 @@
-#' Smorgasboard for remote sensing functions
+#' Smorgasbord for remote sensing functions
 #'
 #' The package provides a variety of functions which are useful for 
 #' handling, manipulating and visualizing remote sensing data.

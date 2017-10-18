@@ -5,7 +5,7 @@
 \alias{plot}
 \alias{plot,Satellite,ANY-method}
 \alias{plot,Satellite-method}
-\title{Plot a 'Satellite' object}
+\title{Plot a Satellite object}
 \usage{
 \S4method{plot}{Satellite,ANY}(x, bcde = NULL,
   col = grDevices::grey.colors(100), ...)

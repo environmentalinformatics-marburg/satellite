@@ -59,7 +59,7 @@ setMethod("calcTopoCorr",
           function(x, mask=TRUE){
             if (is.null(getSatDataLayer(x, "hillShade"))){
               if (is.null(getSatDataLayer(x, "DEM"))){stop(
-                "please provide a DEM in the satellite object")}
+                "Please provide a DEM in the Satellite object")}
               x <- demTools(x, method = "hillShade")
             }
             

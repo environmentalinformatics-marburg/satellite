@@ -3,7 +3,7 @@ if ( !isGeneric('stack') ) {
     standardGeneric('stack'))
 }
 
-#' convert selected layers of a Satellite object to a RasterStack
+#' Convert selected layers of a Satellite object to a RasterStack
 #' 
 #' @description
 #' Convert selected layers of a Satellite object to a RasterStack

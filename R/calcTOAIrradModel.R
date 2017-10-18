@@ -77,7 +77,7 @@ NULL
 
 
 # Function using satellite object ----------------------------------------------
-#' @return If x is a satellite object, a Satellite object with ESun information 
+#' @return If x is a Satellite object, a Satellite object with ESun information 
 #' added to the metadata; if x is a \code{data.frame}, a vector containing ESun
 #' for the respective band(s).
 #' @rdname calcTOAIrradModel

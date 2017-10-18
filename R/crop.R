@@ -3,7 +3,7 @@ if ( !isGeneric("crop") ) {
     standardGeneric("crop"))
 }
 
-#' Crop satellite object
+#' Crop Satellite object
 #'
 #' @description
 #' The function is a wrapper around the \code{\link{crop}} function to 
