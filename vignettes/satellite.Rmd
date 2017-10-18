@@ -1,6 +1,6 @@
 ---
 title: "satellite - Classes and Methods for Satellite Data"
-author: "Thomas Nauss"
+author: "Thomas Nauss, Florian Detsch"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -84,7 +84,7 @@ Everytime the user performs some calculation on some or all of the layers, this 
 
 ```{r}
 ## add digital elevation model to existing 'Satellite' object
-dem <- raster(system.file("extdata/DEM.tif", package = "satellite"))
+dem <- raster(system.file("extdata/DEM.TIF", package = "satellite"))
 sat <- addSatDataLayer(sat, data = dem, info = NULL, bcde = "DEM", in_bcde = "DEM")
 
 ## perform topographic correction
