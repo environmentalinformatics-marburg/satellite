@@ -13,9 +13,9 @@ vignette: >
 
 We are happy to introduce `satellite`, an R package designed to facilitate satellite remote sensing analysis in a structured and user-friendly manner.
 
-The main purpose of `satellite` is to provide standard classes and methods to stream-line remote sensing analysis workflow in R. It provides its own `satellite-class` along with standard methods for basic image transformations such as atmospheric and topgraphic corrections, among others.
+The main purpose of `satellite` is to provide standard classes and methods to stream-line remote sensing analysis workflow in R. It provides its own `satellite-class` along with standard methods for basic image transformations such as atmospheric and topographic corrections, among others.
 
-The package is desinged with both flexibility and user-friendliness in mind. Think of it as the `sp-package` for remote sensing analysis. It provides core functionality and can be easily extended via packages to suit your own analysis needs. Furthermore, the fact that image bands are stored as `Raster*` objects means, that all functionality currently available for these classes will also work nicely with `satellite`.
+The package is designed with both flexibility and user-friendliness in mind. Think of it as the `sp-package` for remote sensing analysis. It provides core functionality and can be easily extended via packages to suit your own analysis needs. Furthermore, the fact that image bands are stored as `Raster*` objects means that all functionality currently available for these classes will also work nicely with `satellite`.
 
 In the following, we would like to highlight some of the functionality provided by `satellite`.
 
@@ -41,7 +41,7 @@ For supported satellite platforms all of this is done automatically. At the mome
 
 ### The @layers slot
 
-As mentioned above, `@layers` contains a list of `RasterLayers` of all available bands. The reason for storing the individual bands as `RasterLayers` rather than a `RasterStack` is that most satellite platforms provide at least one layer of different spatial resolution that the rest. 
+As mentioned above, `@layers` contains a list of `RasterLayers` of all available bands. The reason for storing the individual bands as `RasterLayers` rather than a `RasterStack` is that most satellite platforms provide at least one layer of different spatial resolution than the rest.
 
 ```{r}
 str(sat@layers, 1)
@@ -72,7 +72,7 @@ The `@meta` slot provides meta information for each of the layers of the `satell
 * SPECTRUM   - the broad spectrum classification according to shart-wave vs. long-wave radiation (i.e. solar vs thermal)
 * CALIB      - the calibration level of the layer ("SC" means source calibration, i.e. as provided by the raw data)
 
-In addition to these, several calibration coefficients (such as the sun zenith and azimuth angles , sun elevation, earth-sun distance etc.), information on spatial resolution and projection as well as information about file names and paths is also stored.
+In addition to these, several calibration coefficients (such as the sun zenith and azimuth angles, sun elevation, earth-sun distance etc.), information on spatial resolution and projection as well as information about file names and paths is also stored.
 
 For the Landsat 8 example data shipped with the package the meta data looks like this:
 
