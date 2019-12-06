@@ -213,7 +213,7 @@ addSatLog <- function(sat, info = NA_character_, in_bcde = NA_character_,
 addSatDataLayer <- function(sat, bcde, data, meta_param, info, in_bcde){
   names(data) <- bcde
   
-  if(class(data) == "RasterLayer"){
+  if (inherits(data, "RasterLayer")) {
     sat@layers[[length(sat@layers) + 1]] <- data
   } else {
     entry <- length(sat@layers)

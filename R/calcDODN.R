@@ -56,7 +56,7 @@ setMethod("calcDODN",
           function(x) {
   
   ## stop if a multi-layer raster is supplied
-  if (class(x) != "RasterLayer")
+  if (!inherits(x, "RasterLayer"))
     stop("Please supply a single-layer object.")
   
   vals <- raster::getValues(x)

@@ -93,7 +93,7 @@ setMethod("alignGeometry",
             method <- method[1]
             if(raster::projection(x) == raster::projection(template)){
               x <- raster::crop(x, template, snap = "out")
-              if(class(template) == "RasterLayer"){
+              if (inherits(template, "RasterLayer")) {
                 if(x@ncols / template@ncols >= 2){
                   factor <- floor(x@ncols/template@ncols)
                   x <- raster::aggregate(x, fact = factor, fun = mean, 
