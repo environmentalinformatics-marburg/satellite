@@ -16,9 +16,9 @@
 #'
 #' @export convRef2RadLinear
 #' 
-#' @details The conversion functions are taken from USGS' Landsat 8 manual
-#' which is available online at 
-#' \url{http://landsat.usgs.gov/Landsat8_Using_Product.php}.
+#' @details The conversion functions are taken from USGS' Landsat 8 Data Users
+#' Handbook which is available online at 
+#' \url{https://www.usgs.gov/land-resources/nli/landsat/landsat-8-data-users-handbook}.
 #'
 convRef2RadLinear <- function(band, refm, refa, radm, rada, szen){
   if(!missing(szen)){

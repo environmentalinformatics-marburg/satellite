@@ -17,9 +17,9 @@ if (!isGeneric("convRad2BT") ) {
 #' @name convRad2BT
 #'
 #' @details 
-#' The conversion functions are taken from USGS' Landsat 8 manual
+#' The conversion functions are taken from USGS' Landsat 8 Data Users Handbook
 #' which is available online at 
-#' \url{http://landsat.usgs.gov/Landsat8_Using_Product.php}.
+#' \url{https://www.usgs.gov/land-resources/nli/landsat/landsat-8-data-users-handbook}.
 #' 
 #' @seealso \code{\link{calcAtmosCorr}} for converions of scaled counts 
 #' to physical units including a scene-based atmospheric correction.
