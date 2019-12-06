@@ -1,8 +1,8 @@
 Package: satellite
 Type: Package
 Title: Handling and Manipulating Remote Sensing Data
-Version: 1.0.1
-Date: 2017-10-18
+Version: 1.0.2
+Date: 2019-12-06
 Author: Thomas Nauss, Hanna Meyer, Tim Appelhans, Florian Detsch
 Maintainer: Florian Detsch <fdetsch@web.de>
 Description: Herein, we provide a broad variety of functions which are useful
@@ -15,8 +15,7 @@ Description: Herein, we provide a broad variety of functions which are useful
     stage and the documentation of performed actions in a separate log file. 
     Currently available sensors include Landsat 4-5 (TM), 7 (ETM+), and 8 
     (OLI/TIRS Combined), and additional compatibility is ensured for the Landsat 
-    Global Land Survey data set. Moreover, support for Terra and Aqua-MODIS as 
-    well as PROBA-V is expected to arrive shortly.
+    Global Land Survey data set. 
 Depends:
     R (>= 2.10),
     raster,
@@ -40,4 +39,5 @@ Suggests:
 LazyData: true
 VignetteBuilder: knitr
 LinkingTo: Rcpp
-RoxygenNote: 6.0.1
+RoxygenNote: 7.0.2
+Encoding: UTF-8
