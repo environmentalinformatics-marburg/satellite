@@ -83,8 +83,12 @@ addSatMetaParam(sat, meta_param)
 
 addSatMetaEntry(sat, meta_param)
 
-addSatLog(sat, info = NA_character_, in_bcde = NA_character_,
-  out_bcde = NA_character_)
+addSatLog(
+  sat,
+  info = NA_character_,
+  in_bcde = NA_character_,
+  out_bcde = NA_character_
+)
 
 addSatDataLayer(sat, bcde, data, meta_param, info, in_bcde)
 
