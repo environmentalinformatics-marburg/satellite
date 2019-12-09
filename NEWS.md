@@ -4,6 +4,7 @@ Changes:
 
   * Replaced all class() calls with inherits(). Starting with R version 4.0.0, "matrix" objects also inherit from class "array", which invalidates code assuming that length(class(obj)) == 1.
   * Fixed broken links.
+  * Switched to MIT license.
   * Roxygen2 update.
 
 
