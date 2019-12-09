@@ -29,10 +29,10 @@ if ( !isGeneric("calcTOAIrradTable") ) {
 #' Please note that ESun values are not required for converting Landsat 8 data 
 #' to reflectance as the corresponding metadata files provide coefficients 
 #' necessary to convert digital numbers to radiance and reflectance (taken from 
-#' \url{https://landsat.usgs.gov/where-can-i-find-solar-exoatmospheric-spectral-irradiances-esun-values-landsat-8-oli-data}.
+#' \url{http://www.gisagmaps.com/landsat-8-atco/}.
 #' 
 #' @references  Tabulated values of the solar irradiance for all Landsat sensors 
-#' are taken from \url{https://landsat.usgs.gov/esun}. 
+#' are taken from \url{https://www.usgs.gov/land-resources/nli/landsat/using-usgs-landsat-level-1-data-product}. 
 #' 
 #' @seealso \code{\link{calcTOAIrradRadRef}} for the computation of the solar 
 #' irradiance based on maximum radiation and reflection values of the dataset or

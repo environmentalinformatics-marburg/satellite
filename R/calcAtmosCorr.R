@@ -73,7 +73,7 @@ if ( !isGeneric("calcAtmosCorr") ) {
 #' Chavez Jr PS (1996) Image-based atmospheric corrections revisited and
 #' improved. Photogrammetric Engineering and Remote Sensing 62/9,
 #' available online at 
-#' \url{http://www.unc.edu/courses/2008spring/geog/577/001/www/Chavez96-PERS.pdf}
+#' \url{https://www.researchgate.net/publication/236769129_Image-Based_Atmospheric_Corrections_-_Revisited_and_Improved}
 #'  
 #' Goslee SC (2011) Analyzing Remote Sensing Data in R: The landsat 
 #' Package. Journal of Statistical Software,43/4, 1-25. URL 

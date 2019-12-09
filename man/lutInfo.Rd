@@ -57,25 +57,19 @@ The functions above return the following information:
   \item \code{lutInfoSensorFromSID} returns the sensor name.
 }
 
-The LUT contains the following information:
+The LUT contains the following band information taken, if not specified
+otherwise, from the
+\href{https://www.usgs.gov/faqs/what-are-band-designations-landsat-satellites?qt-news_science_products=0#qt-news_science_products}{USGS Landsat FAQ}:
 \describe{
-  \item{l4_band_wl}{Minimum/maximum wavelength for Landsat 4 bands taken from the
-\href{http://landsat.usgs.gov/band_designations_landsat_satellites.php}{band info}
+  \item{l4_band_wl}{Minimum/maximum wavelength for Landsat 4 bands.}
+  \item{l5_band_wl}{Minimum/maximum wavelength for Landsat 5 bands.}
+  \item{l7_band_wl}{Minimum/maximum wavelength for Landsat 7 bands.}
+\item{l8_band_wl}{Minimum/maximum wavelength for Landsat 8 bands.}
+\item{l7_rsr}{Landat 7 rsr (nm-1) taken from the
+\href{https://landsat.usgs.gov/spectral-characteristics-viewer}{spectral viewer}
 of the USGS Landsat FAQ.}
-  \item{l5_band_wl}{Minimum/maximum wavelength for Landsat 5 bands taken from the
-\href{http://landsat.usgs.gov/band_designations_landsat_satellites.php}{band info}
-of the USGS Landsat FAQ.}
-  \item{l7_band_wl}{Minimum/maximum wavelength for Landsat 7 bands taken from the
-\href{http://landsat.usgs.gov/band_designations_landsat_satellites.php}{band info}
-of the USGS Landsat FAQ.}
-\item{l8_band_wl}{Minimum/maximum wavelength for Landsat 8 bands taken from the
-\href{http://landsat.usgs.gov/band_designations_landsat_satellites.php}{band info}
-of the USGS Landsat FAQ.}
-\item{l7_rsr}{Landat 7 rsr (nm-1) taken from taken from the
-\href{http://landsat.usgs.gov/instructions.php}{spectral viewer}
-of the USGS Landsat FAQ.}
-\item{l8_rsr}{Landat 8 rsr (nm-1) taken from taken from the
-\href{http://landsat.usgs.gov/instructions.php}{spectral viewer}
+\item{l8_rsr}{Landat 8 rsr (nm-1) taken from the
+\href{https://landsat.usgs.gov/spectral-characteristics-viewer}{spectral viewer}
 of the USGS Landsat FAQ.}
 \item{solar}{Solar irradiance (W m-2 nm-1) taken from the 
 \href{http://rredc.nrel.gov/solar/spectra/am0/modtran.html}{National Renewable 

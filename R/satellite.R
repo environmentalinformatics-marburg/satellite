@@ -31,7 +31,7 @@ if ( !isGeneric("satellite") ) {
 #' 
 #' @seealso (i) \code{\link{compMetaLandsat}} to get more information about the
 #' structure of the metadata component; (ii)
-#' \url{https://landsat.usgs.gov/what-are-naming-conventions-landsat-scene-identifiers} 
+#' \url{https://www.usgs.gov/faqs/what-naming-convention-landsat-collections-level-1-scenes?qt-news_science_products=0#qt-news_science_products} 
 #' for detailed information about the naming conventions for Landsat scene 
 #' identifiers; and (iii) \code{\link{sortFilesLandsat}} for automated 
 #' rearrangement of Landsat band files.

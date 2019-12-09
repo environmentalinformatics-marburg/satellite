@@ -37,9 +37,9 @@ Convert a band's scaled counts to reflectance using a simple linear
 conversion without any kind of atmospheric correction etc.
 }
 \details{
-The conversion functions are taken from USGS' Landsat 8 manual
+The conversion functions are taken from USGS' Landsat 8 Data Users Handbook
 which is available online at 
-\url{http://landsat.usgs.gov/Landsat8_Using_Product.php}.
+\url{https://www.usgs.gov/land-resources/nli/landsat/landsat-8-data-users-handbook}.
 
 If the sensor does not provide linear conversion coefficients for reflectance
 computation, the reflectance is calculated using the solar irradiance 

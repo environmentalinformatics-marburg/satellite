@@ -45,8 +45,8 @@ if ( !isGeneric("calcTOAIrradModel") ) {
 #' Updike T, Comp C (2011) Radiometric use of WorldView-2 imagery. 
 #' Technical Note, available online at \url{http://www.pancroma.com/downloads/Radiometric_Use_of_WorldView-2_Imagery.pdf}.
 #' 
-#' Tabulated relative spectral response functions (nm-1) are taken from taken from the
-#' \href{http://landsat.usgs.gov/instructions.php}{spectral viewer}
+#' Tabulated relative spectral response functions (nm-1) are taken from the
+#' \href{https://landsat.usgs.gov/spectral-characteristics-viewer}{spectral viewer}
 #' of the USGS Landsat FAQ.
 #' 
 #' Tabulated solar irradiance (W m-2 nm-1) is taken from the 

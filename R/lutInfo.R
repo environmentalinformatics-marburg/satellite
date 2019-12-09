@@ -34,10 +34,10 @@
 #'   \item{l7_band_wl}{Minimum/maximum wavelength for Landsat 7 bands.}
 #' \item{l8_band_wl}{Minimum/maximum wavelength for Landsat 8 bands.}
 #' \item{l7_rsr}{Landat 7 rsr (nm-1) taken from the
-#' \href{http://landsat.usgs.gov/instructions.php}{spectral viewer}
+#' \href{https://landsat.usgs.gov/spectral-characteristics-viewer}{spectral viewer}
 #' of the USGS Landsat FAQ.}
 #' \item{l8_rsr}{Landat 8 rsr (nm-1) taken from the
-#' \href{http://landsat.usgs.gov/instructions.php}{spectral viewer}
+#' \href{https://landsat.usgs.gov/spectral-characteristics-viewer}{spectral viewer}
 #' of the USGS Landsat FAQ.}
 #' \item{solar}{Solar irradiance (W m-2 nm-1) taken from the 
 #' \href{http://rredc.nrel.gov/solar/spectra/am0/modtran.html}{National Renewable 
