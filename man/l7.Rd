@@ -4,7 +4,9 @@
 \name{l7}
 \alias{l7}
 \title{Landsat 7 sample data}
-\format{\code{RasterStack} with bands 1-8 (incl. QA) of 41 by 41 pixels.}
+\format{
+\code{RasterStack} with bands 1-8 (incl. QA) of 41 by 41 pixels.
+}
 \source{
 \url{https://earthexplorer.usgs.gov/}
 }
