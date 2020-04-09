@@ -9,8 +9,8 @@ if ( !isGeneric("calcAtmosCorr") ) {
 #' the sensors digital numbers to reflectances using
 #' \itemize{
 #'   \item absolute radiance correction
-#'   \item DOS2: a dark object substraction model by Chavez (1996)
-#'   \item DOS4: a dark object substratcion model by Moran et al. (1992)
+#'   \item DOS2: a dark object subtraction model by Chavez (1996)
+#'   \item DOS4: a dark object subtraction model by Moran et al. (1992)
 #' }
 #'
 #' @param x Satellite or Raster* object providing the radiance at the sensor.
@@ -161,7 +161,8 @@ setMethod("calcAtmosCorr",
                                   path_rad = getSatPRAD(x, bcde_rad),
                                   esun = getSatESUN(x, bcde_rad),
                                   szen = getSatSZEN(x, bcde_rad), 
-                                  model = "DOS2")
+                                  model = model)
+              
               layer_bcde <- paste0(substr(bcde_rad, 1, nchar(bcde_rad) - 4),
                                    "_REF_AtmosCorr")
               meta_param <- data.frame(getSatSensorInfo(x),
