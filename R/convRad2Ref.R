@@ -24,13 +24,13 @@ if (!isGeneric("convRad2Ref") ) {
 #' @details 
 #' The conversion functions are taken from USGS' Landsat 8 Data Users Handbook
 #' which is available online at 
-#' \url{https://www.usgs.gov/land-resources/nli/landsat/landsat-8-data-users-handbook}.
+#' \url{https://www.usgs.gov/core-science-systems/nli/landsat/landsat-8-data-users-handbook}.
 #' 
 #' If the sensor does not provide linear conversion coefficients for reflectance
 #' computation, the reflectance is calculated using the solar irradiance 
 #' following the functions taken from USGS' Landsat 7 manual, chapter 11.3.2,
 #' which is available online at 
-#' \url{https://landsat.gsfc.nasa.gov/wp-content/uploads/2016/08/Landsat7_Handbook.pdf}.
+#' \url{https://www.usgs.gov/media/files/landsat-7-data-users-handbook}.
 #' 
 #' @seealso \code{\link{calcAtmosCorr}} for conversions of scaled counts 
 #' to physical units including a scene-based atmospheric correction.

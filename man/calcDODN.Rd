@@ -42,8 +42,7 @@ calcDODN(getSatDataLayer(sat, bcde = "B002n"))
 \references{
 Chavez Jr PS (1988) An improved dark-object subtraction technique 
 for atmospheric scattering correction of multispectral data. Remote Sensing 
-of Environment 24/3, doi:10.1016/0034-4257(88)90019-3, available online at
- \url{http://www.sciencedirect.com/science/article/pii/0034425788900193}
+of Environment 24/3, \doi{10.1016/0034-4257(88)90019-3}.
 }
 \seealso{
 The DN is used by \code{\link{calcPathRadDOS}} for computing the 
