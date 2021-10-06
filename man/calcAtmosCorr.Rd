@@ -131,8 +131,8 @@ available online at
 \url{https://www.researchgate.net/publication/236769129_Image-Based_Atmospheric_Corrections_-_Revisited_and_Improved}
  
 Goslee SC (2011) Analyzing Remote Sensing Data in R: The landsat 
-Package. Journal of Statistical Software,43/4, 1-25. URL 
-\url{http://www.jstatsoft.org/v43/i04/}.
+Package. Journal of Statistical Software,43/4, 1-25, 
+\doi{10.18637/jss.v043.i04}.
 
 Moran MS, Jackson RD, Slater PN, Teillet PM (1992) Evaluation of simplified
 procedures for retrieval of land surface reflectance factors from satellite
