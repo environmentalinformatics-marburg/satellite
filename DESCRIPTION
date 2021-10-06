@@ -1,6 +1,6 @@
 Package: satellite
 Title: Handling and Manipulating Remote Sensing Data
-Version: 1.0.2
+Version: 1.0.2.9000
 Author: Thomas Nauss, Hanna Meyer, Tim Appelhans, Florian Detsch
 Maintainer: Florian Detsch <fdetsch@web.de>
 Description: Herein, we provide a broad variety of functions which are useful
