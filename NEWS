@@ -1,9 +1,17 @@
+satellite 1.0.2.9002 (2021-10-06)
+
+Changes:
+
+  * Revised JSS (and other) links (#40).
+
+
 satellite 1.0.2
 
 Changes:
 
   * Replaced all class() calls with inherits(). Starting with R version 4.0.0, "matrix" objects also inherit from class "array", which invalidates code assuming that length(class(obj)) == 1.
   * Fixed broken links.
+  * Switched to MIT license.
   * Roxygen2 update.
 
 
@@ -14,14 +22,14 @@ Bugfixes:
   * calcAtmosCorr() was not compatible with NA values, ie quantile() failed.
   * compFilePathLandsat() failed when specifying metadata files with new naming standard as input.
   * compMetaLandsat() assigned Landsat 7 metadata information, eg parameters required for radiometric rescaling, to wrong bands.
-  
+
 
 satellite 1.0.0
 
 New features:
 
-  * Inverse squared relative earth-sun distance from calcEarthSunDist(). 
-  * calcTopoCorr,Raster*() methods accept additional arguments (via '...') passed to writeRaster(). 
+  * Inverse squared relative earth-sun distance from calcEarthSunDist().
+  * calcTopoCorr,Raster*() methods accept additional arguments (via '...') passed to writeRaster().
   * crop,Satellite-method takes a new argument 'snap' similar to raster::crop().
   * extend,Satellite-method takes a new argument 'value' which is assigned to new cells similar to raster::extend().
   * satellite is compatible with pre-collection Level-1 and Collection 1 Level-1 file naming.

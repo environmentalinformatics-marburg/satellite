@@ -1,3 +1,10 @@
+# satellite 1.0.2.9002 (2021-10-06)
+
+Changes:
+
+  * Revised JSS (and other) links (#40).
+
+
 ## satellite 1.0.2
 
 Changes:

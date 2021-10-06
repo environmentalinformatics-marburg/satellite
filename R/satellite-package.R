@@ -19,8 +19,7 @@
 #' 
 #' @references Some functions are taken and/or adopted from Sarah C. Goslee 
 #' (2011). Analyzing Remote Sensing Data in R: The landsat Package. Journal of 
-#' Statistical Software, 43(4), 1-25. Online available at 
-#' \url{http://www.jstatsoft.org/v43/i04/}.
+#' Statistical Software, 43(4), 1-25, \doi{10.18637/jss.v043.i04}.
 #' 
 #' @keywords package
 #'

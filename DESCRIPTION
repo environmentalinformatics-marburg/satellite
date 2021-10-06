@@ -1,8 +1,6 @@
 Package: satellite
-Type: Package
 Title: Handling and Manipulating Remote Sensing Data
-Version: 1.0.2
-Date: 2019-12-06
+Version: 1.0.2.9002
 Author: Thomas Nauss, Hanna Meyer, Tim Appelhans, Florian Detsch
 Maintainer: Florian Detsch <fdetsch@web.de>
 Description: Herein, we provide a broad variety of functions which are useful
@@ -39,5 +37,5 @@ Suggests:
 LazyData: true
 VignetteBuilder: knitr
 LinkingTo: Rcpp
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.2
 Encoding: UTF-8

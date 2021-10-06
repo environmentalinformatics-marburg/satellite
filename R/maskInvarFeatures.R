@@ -26,14 +26,13 @@ if ( !isGeneric("maskInvarFeatures") ) {
 #' 
 #' @references This function is taken and only slightly modified from the PIF
 #' function by Sarah C. Goslee (2011). Analyzing Remote Sensing Data in R: The 
-#' landsat Package. Journal of Statistical Software,43(4), 1-25. URL 
-#' \url{http://www.jstatsoft.org/v43/i04/}.
+#' landsat Package. Journal of Statistical Software,43(4), 1-25, 
+#' \doi{10.18637/jss.v043.i04}.
 #' 
 #' The underlying theory has been published by Schott RJ, Salvaggio C and 
 #' Volchok WJ (1988) Radiometric scene normalization using pseudoinvariant 
 #' features. Remote Sensing of Environment 26/1, 
-#' doi:10.1016/0034-4257(88)90116-2, available online at
-#' \url{http://www.sciencedirect.com/science/article/pii/0034425788901162}.
+#' \doi{10.1016/0034-4257(88)90116-2}.
 #'
 #' @examples
 #' path <- system.file("extdata", package = "satellite")

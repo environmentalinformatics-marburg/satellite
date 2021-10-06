@@ -45,7 +45,7 @@ actual earth-sun distance is approximated by the day of the year using
 Please note that ESun values are not required for converting Landsat 8 data 
 to reflectance as the corresponding metadata files provide coefficients 
 necessary to convert digital numbers to radiance and reflectance (taken from 
-\url{http://www.gisagmaps.com/landsat-8-atco/}.
+\url{https://www.gisagmaps.com/landsat-8-atco/}.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
@@ -59,7 +59,7 @@ calcTOAIrradTable(x = "LE7", normalize = FALSE,
 }
 \references{
 Tabulated values of the solar irradiance for all Landsat sensors 
-are taken from \url{https://www.usgs.gov/land-resources/nli/landsat/using-usgs-landsat-level-1-data-product}.
+are taken from \url{https://www.usgs.gov/core-science-systems/nli/landsat/using-usgs-landsat-level-1-data-product}.
 }
 \seealso{
 \code{\link{calcTOAIrradRadRef}} for the computation of the solar 
