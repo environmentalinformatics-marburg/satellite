@@ -4,13 +4,13 @@ Changes:
 
   * Included **terra** imports of `crop()`, `extend()` conditional on **raster** version (#42).
 
-## satellite 1.0.3 <small>2021-10-06</small>
+# satellite 1.0.3 <small>2021-10-06</small>
 
 Changes:
 
   * Revised JSS (and other) links (#40).
 
-## satellite 1.0.2
+# satellite 1.0.2
 
 Changes:
 
@@ -19,7 +19,7 @@ Changes:
   * Switched to MIT license.
   * Roxygen2 update.
 
-## satellite 1.0.1
+# satellite 1.0.1
 
 Bugfixes:
 
@@ -27,7 +27,7 @@ Bugfixes:
   * compFilePathLandsat() failed when specifying metadata files with new naming standard as input.
   * compMetaLandsat() assigned Landsat 7 metadata information, eg parameters required for radiometric rescaling, to wrong bands.
 
-## satellite 1.0.0
+# satellite 1.0.0
 
 New features:
 
@@ -55,10 +55,10 @@ Changes:
   * Built-in data sets l7, l8 now originate from Landsat Collection 1 Level-1 instead of previous Pre-Collection 1 Level-1.
   * Removed deprecated convDN2RU(), users must switch to convSC2Rad(), convSC2Ref() and convRad2BT() instead.
 
-## satellite 0.2.0
+# satellite 0.2.0
 
 * n/a
 
-## satellite 0.1.0
+# satellite 0.1.0
 
 * Initial release
