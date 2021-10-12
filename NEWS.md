@@ -1,4 +1,4 @@
-## satellite 1.0.3.9000 (2021-10-12)
+# satellite 1.0.3.9001 <small>2021-10-12</small>
 
 Changes:
 
