@@ -16,6 +16,7 @@
 #' @importFrom stats4 plot
 #' 
 #' @rawNamespace useDynLib(satellite, .registration = TRUE)
+#' @rawNamespace if (packageVersion("raster") >= "3.5.2") importFrom(terra,crop,extend)
 #' 
 #' @references Some functions are taken and/or adopted from Sarah C. Goslee 
 #' (2011). Analyzing Remote Sensing Data in R: The landsat Package. Journal of 

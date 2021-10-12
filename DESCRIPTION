@@ -25,6 +25,7 @@ Depends:
 Imports:
     plyr,
     Rcpp (>= 0.10.3),
+    terra,
     tools,
     stats4
 License: MIT + file LICENSE
