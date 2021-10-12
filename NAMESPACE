@@ -100,10 +100,11 @@ exportClasses(SatelliteLog)
 exportClasses(SatelliteMetaData)
 exportMethods(brick)
 exportMethods(stack)
+if (packageVersion("raster") >= "3.5.2") importFrom(terra,crop,extend)
+
 import(Rcpp)
 import(methods)
 import(raster)
 importFrom(stats,mvfft)
 importFrom(stats4,plot)
 useDynLib(satellite, .registration = TRUE)
-

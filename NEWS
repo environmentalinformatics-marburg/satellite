@@ -1,3 +1,9 @@
+satellite 1.0.3.9001 2021-10-12
+
+Changes:
+
+  * Included terra imports of crop(), extend() conditional on raster version (#42).
+
 satellite 1.0.3 2021-10-06
 
 Changes:

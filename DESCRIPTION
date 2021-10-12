@@ -1,6 +1,6 @@
 Package: satellite
 Title: Handling and Manipulating Remote Sensing Data
-Version: 1.0.3
+Version: 1.0.3.9001
 Author: Thomas Nauss, Hanna Meyer, Tim Appelhans, Florian Detsch
 Maintainer: Florian Detsch <fdetsch@web.de>
 Description: Herein, we provide a broad variety of functions which are useful
@@ -25,6 +25,7 @@ Depends:
 Imports:
     plyr,
     Rcpp (>= 0.10.3),
+    terra,
     tools,
     stats4
 License: MIT + file LICENSE
