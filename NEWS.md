@@ -1,3 +1,14 @@
+# satellite 1.0.3.9000 (2021-10-12)
+
+#### ✨ features and improvements
+
+#### 🐛 bug fixes
+
+#### 💬 documentation etc
+
+#### 🍬 miscellaneous
+
+
 # satellite 1.0.3 <small>2021-10-06</small>
 
 Changes:
