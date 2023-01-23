@@ -37,7 +37,7 @@ maximum radiation and reflection values within each band.
 \details{
 The actual solar irradiance is computed using the following formula 
 taken from the GRASS GIS 
-\href{https://grass.osgeo.org/grass74/manuals/i.landsat.toar.html}{i.landsat.toar} module
+\href{https://grass.osgeo.org/grass78/manuals/i.landsat.toar.html}{i.landsat.toar} module
 \deqn{ESun = (pi d^2) RADIANCE_MAXIMUM / REFLECTANCE_MAXIMUM}
 where d is the earth-sun distance (in AU) and RADIANCE_MAXIMUM
 and REFLECTANCE_MAXIMUM are the maximum radiance and reflection values of the

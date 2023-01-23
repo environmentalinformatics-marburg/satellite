@@ -19,7 +19,7 @@ if (!isGeneric("convRad2BT") ) {
 #' @details 
 #' The conversion functions are taken from USGS' Landsat 8 Data Users Handbook
 #' which is available online at 
-#' \url{https://www.usgs.gov/core-science-systems/nli/landsat/landsat-8-data-users-handbook}.
+#' \url{https://www.usgs.gov/landsat-missions/landsat-8-data-users-handbook}.
 #' 
 #' @seealso \code{\link{calcAtmosCorr}} for converions of scaled counts 
 #' to physical units including a scene-based atmospheric correction.

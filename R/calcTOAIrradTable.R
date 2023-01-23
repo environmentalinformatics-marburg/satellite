@@ -32,7 +32,7 @@ if ( !isGeneric("calcTOAIrradTable") ) {
 #' \url{https://www.gisagmaps.com/landsat-8-atco/}.
 #' 
 #' @references  Tabulated values of the solar irradiance for all Landsat sensors 
-#' are taken from \url{https://www.usgs.gov/core-science-systems/nli/landsat/using-usgs-landsat-level-1-data-product}. 
+#' are taken from \url{https://www.usgs.gov/landsat-missions/using-usgs-landsat-level-1-data-product}. 
 #' 
 #' @seealso \code{\link{calcTOAIrradRadRef}} for the computation of the solar 
 #' irradiance based on maximum radiation and reflection values of the dataset or
