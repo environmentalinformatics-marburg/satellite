@@ -85,21 +85,21 @@ Sensing 41/11, \doi{10.1109/LGRS.2007.898285}.}
 }
 \section{Functions}{
 \itemize{
-\item \code{lutInfoBandsFromSID}: 
+\item \code{lutInfoBandsFromSID()}: 
 
-\item \code{lutInfoSensorFromSID}: 
+\item \code{lutInfoSensorFromSID()}: 
 
-\item \code{lutInfoBCDEFromBID}: 
+\item \code{lutInfoBCDEFromBID()}: 
 
-\item \code{lutInfoBIDFromBCDE}: 
+\item \code{lutInfoBIDFromBCDE()}: 
 
-\item \code{lutInfoRSRromSID}: 
+\item \code{lutInfoRSRromSID()}: 
 
-\item \code{lutInfoSIDfromFilename}: 
+\item \code{lutInfoSIDfromFilename()}: 
 
-\item \code{lutInfoSGRPfromFilename}: 
+\item \code{lutInfoSGRPfromFilename()}: 
+
 }}
-
 \examples{
 ls_li <- lutInfo()
 # str(ls_li)

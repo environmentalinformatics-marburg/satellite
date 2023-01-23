@@ -40,5 +40,5 @@ Suggests:
 LazyData: true
 VignetteBuilder: knitr
 LinkingTo: Rcpp
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Encoding: UTF-8

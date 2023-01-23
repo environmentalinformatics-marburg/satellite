@@ -247,127 +247,127 @@ respective information from/in the Satellite object.
 }
 \section{Functions}{
 \itemize{
-\item \code{getSatDataLayers}: Return Satellite data layers
+\item \code{getSatDataLayers()}: Return Satellite data layers
 
-\item \code{getSatDataLayer}: Return Satellite data layer i
+\item \code{getSatDataLayer()}: Return Satellite data layer i
 
-\item \code{getSatMeta}: Return Satellite object metadata
+\item \code{getSatMeta()}: Return Satellite object metadata
 
-\item \code{getSatMetaBCDETemplate}: Return template for Satellite object metadata which is based on existing band
+\item \code{getSatMetaBCDETemplate()}: Return template for Satellite object metadata which is based on existing band
 
-\item \code{getSatLog}: Return Satellite object log info
+\item \code{getSatLog()}: Return Satellite object log info
 
-\item \code{setSatBCDE}: Set BCDE/data layer names of a Satellite object
+\item \code{setSatBCDE()}: Set BCDE/data layer names of a Satellite object
 
-\item \code{createSatBCDE}: If not supplied, automatically create BCDE names of a Satellite object
+\item \code{createSatBCDE()}: If not supplied, automatically create BCDE names of a Satellite object
 
-\item \code{addSatMetaParam}: Add additional or overwrite metainformation parameter to Satellite object
+\item \code{addSatMetaParam()}: Add additional or overwrite metainformation parameter to Satellite object
 
-\item \code{addSatMetaEntry}: Add metainformation for an additional layer to Satellite object
+\item \code{addSatMetaEntry()}: Add metainformation for an additional layer to Satellite object
 
-\item \code{addSatLog}: Add new log entry to Satellite object
+\item \code{addSatLog()}: Add new log entry to Satellite object
 
-\item \code{addSatDataLayer}: Add new Satellite data layer
+\item \code{addSatDataLayer()}: Add new Satellite data layer
 
-\item \code{addRasterMeta2Sat}: Add raster meta data to Satellite object meta data
+\item \code{addRasterMeta2Sat()}: Add raster meta data to Satellite object meta data
 
-\item \code{createRasterMetaData}: Create raster meta data
+\item \code{createRasterMetaData()}: Create raster meta data
 
-\item \code{updateRasterMetaData}: Create raster meta data
+\item \code{updateRasterMetaData()}: Create raster meta data
 
-\item \code{countSatDataLayers}: Return number of Satellite data layers
+\item \code{countSatDataLayers()}: Return number of Satellite data layers
 
-\item \code{getSatParam}: Return parameter (general method implemented by the specific functions below)
+\item \code{getSatParam()}: Return parameter (general method implemented by the specific functions below)
 
-\item \code{getSatBCDE}: Return Band code
+\item \code{getSatBCDE()}: Return Band code
 
-\item \code{getSatBID}: Return Band IDs
+\item \code{getSatBID()}: Return Band IDs
 
-\item \code{getSatSID}: Return sensor ID
+\item \code{getSatSID()}: Return sensor ID
 
-\item \code{getSatSensor}: Return sensor
+\item \code{getSatSensor()}: Return sensor
 
-\item \code{getSatSensorGroup}: Return sensor group
+\item \code{getSatSensorGroup()}: Return sensor group
 
-\item \code{getSatSensorInfo}: Return sensor information
+\item \code{getSatSensorInfo()}: Return sensor information
 
-\item \code{getSatSpectrum}: Return spectrum
+\item \code{getSatSpectrum()}: Return spectrum
 
-\item \code{getSatBCDESolar}: Return solar band codes
+\item \code{getSatBCDESolar()}: Return solar band codes
 
-\item \code{getSatBCDEThermal}: Return thermal band codes
+\item \code{getSatBCDEThermal()}: Return thermal band codes
 
-\item \code{getSatXRes}: Return sensor x resolution
+\item \code{getSatXRes()}: Return sensor x resolution
 
-\item \code{getSatYRes}: Return sensor y resolution
+\item \code{getSatYRes()}: Return sensor y resolution
 
-\item \code{getSatRes}: Return mean sensor resolution (mean of x and y res)
+\item \code{getSatRes()}: Return mean sensor resolution (mean of x and y res)
 
-\item \code{getSatType}: Return sensor type
+\item \code{getSatType()}: Return sensor type
 
-\item \code{getSatCalib}: Return calibration level
+\item \code{getSatCalib()}: Return calibration level
 
-\item \code{getSatBCDEType}: Return TYPE band codes
+\item \code{getSatBCDEType()}: Return TYPE band codes
 
-\item \code{getSatBCDEFromType}: Return BCDE matching TYPE
+\item \code{getSatBCDEFromType()}: Return BCDE matching TYPE
 
-\item \code{getSatBCDEFromSpectrum}: Return BCDE matching TYPE
+\item \code{getSatBCDEFromSpectrum()}: Return BCDE matching TYPE
 
-\item \code{getSatBCDESres}: Return the mean of x and y resolution for band codes matching type
+\item \code{getSatBCDESres()}: Return the mean of x and y resolution for band codes matching type
 
-\item \code{getSatBCDECalib}: Return calibration level for band codes matching type
+\item \code{getSatBCDECalib()}: Return calibration level for band codes matching type
 
-\item \code{getSatBCDESolarCalib}: Return calibration level for band codes machting type and are solar bands
+\item \code{getSatBCDESolarCalib()}: Return calibration level for band codes machting type and are solar bands
 
-\item \code{getSatBCDEThermalCalib}: Return calibration level for band codes machting type and are thermal bands
+\item \code{getSatBCDEThermalCalib()}: Return calibration level for band codes machting type and are thermal bands
 
-\item \code{getSatBandInfo}: Return band information
+\item \code{getSatBandInfo()}: Return band information
 
-\item \code{getSatRadMax}: Return maximum radiance for bcde
+\item \code{getSatRadMax()}: Return maximum radiance for bcde
 
-\item \code{getSatRadMin}: Return minimum radiance for bcde
+\item \code{getSatRadMin()}: Return minimum radiance for bcde
 
-\item \code{getSatRefMax}: Return maximum reflectance for bcde
+\item \code{getSatRefMax()}: Return maximum reflectance for bcde
 
-\item \code{getSatRefMin}: Return minimum reflectance for bcde
+\item \code{getSatRefMin()}: Return minimum reflectance for bcde
 
-\item \code{getSatESD}: Return earth-sun distance
+\item \code{getSatESD()}: Return earth-sun distance
 
-\item \code{getSatESUN}: Return actual solar TOA irradiance
+\item \code{getSatESUN()}: Return actual solar TOA irradiance
 
-\item \code{getSatSZEN}: Return sun zenith angle
+\item \code{getSatSZEN()}: Return sun zenith angle
 
-\item \code{getSatSAZM}: Return sun azimuth angle
+\item \code{getSatSAZM()}: Return sun azimuth angle
 
-\item \code{getSatSELV}: Return Sun elevation
+\item \code{getSatSELV()}: Return Sun elevation
 
-\item \code{getSatMetaLayer}: Return Layer name from metadata
+\item \code{getSatMetaLayer()}: Return Layer name from metadata
 
-\item \code{getSatLayerfromData}: Return Layer name from data layer
+\item \code{getSatLayerfromData()}: Return Layer name from data layer
 
-\item \code{getSatLNBR}: Return Layer number
+\item \code{getSatLNBR()}: Return Layer number
 
-\item \code{getSatLMIN}: Return minimum wavelength of the sensor band
+\item \code{getSatLMIN()}: Return minimum wavelength of the sensor band
 
-\item \code{getSatLMAX}: Return maximum wavelength of the sensor band
+\item \code{getSatLMAX()}: Return maximum wavelength of the sensor band
 
-\item \code{getSatRADA}: Return addition coefficient for SC to radiance conversion
+\item \code{getSatRADA()}: Return addition coefficient for SC to radiance conversion
 
-\item \code{getSatRADM}: Return multiplicative coefficient for SC to radiance conversion
+\item \code{getSatRADM()}: Return multiplicative coefficient for SC to radiance conversion
 
-\item \code{getSatREFA}: Return addition coefficient for SC to reflectance
+\item \code{getSatREFA()}: Return addition coefficient for SC to reflectance
 
-\item \code{getSatREFM}: Return multiplicative coefficient for SC to reflectance
+\item \code{getSatREFM()}: Return multiplicative coefficient for SC to reflectance
 
-\item \code{getSatBTK1}: Return calibration coefficent to convert SC to brightness temperature
+\item \code{getSatBTK1()}: Return calibration coefficent to convert SC to brightness temperature
 
-\item \code{getSatBTK2}: Return calibration coefficent to convert SC to brightness temperature
+\item \code{getSatBTK2()}: Return calibration coefficent to convert SC to brightness temperature
 
-\item \code{getSatDATE}: Return DATE
+\item \code{getSatDATE()}: Return DATE
 
-\item \code{getSatProjection}: Return projection
+\item \code{getSatProjection()}: Return projection
+
 }}
-
 \examples{
 # List of input files
 path <- system.file("extdata", package = "satellite")
