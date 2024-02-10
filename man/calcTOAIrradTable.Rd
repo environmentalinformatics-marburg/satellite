@@ -45,7 +45,7 @@ actual earth-sun distance is approximated by the day of the year using
 Please note that ESun values are not required for converting Landsat 8 data 
 to reflectance as the corresponding metadata files provide coefficients 
 necessary to convert digital numbers to radiance and reflectance (taken from 
-\url{https://www.gisagmaps.com/landsat-8-atco/}.
+\url{https://www.gisagmaps.org/landsat-8-atco-guide/}.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
