@@ -42,16 +42,16 @@ The formulas are taken from the following sources:
 
   \item Mather: Mather PM (2005) Computer Processing of Remotely-Sensed 
   Images: An Introduction. Wiley: Chichester, ISBN: 978-0-470-02101-9, 
-  \url{https://eu.wiley.com/WileyCDA/WileyTitle/productCd-0470021012.html}.
+  \url{https://www.wiley.com/en-us/Computer+Processing+of+Remotely-Sensed+Images\%3A+An+Introduction\%2C+3rd+Edition-p-9780470021019}.
 
   \item ESA: ESA Earth Observation Quality Control: Landsat frequently asked questions. 
   
   \item Duffie: Duffie JA, Beckman WA (2013) Solar Engineering of Thermal 
   Processes. Wiley: Hoboken, New Jersey, ISBN: 978-0-470-87366-3,
-  \url{https://eu.wiley.com/WileyCDA/WileyTitle/productCd-0470873663.html}.
+  \url{https://www.wiley.com/en-us/Solar+Engineering+of+Thermal+Processes\%2C+4th+Edition-p-9780470873663}.
 }
 See also: Bird R, Riordan C (1984) Simple solar spectral model for direct and 
 diffuse irradiance on horizontal and tilted planes at the Earth's surface for
 cloudless atmospheres. Task No. 3434.10, Solar Energy Research Institute: 
-Golden, Colorado, \url{http://www.nrel.gov/docs/legosti/old/2436.pdf}.
+Golden, Colorado, \url{https://docs.nrel.gov/docs/legosti/old/2436.pdf}.
 }
