@@ -6,6 +6,8 @@
 
 #### 💬 documentation etc
 
+  * Provides package anchors for `\link{}` targets (#45)
+
 #### 🍬 miscellaneous
 
 

@@ -28,7 +28,7 @@ be defined by band_codes.}
 
 \item{method}{Method for resampling; "bilinear" for bilinear interpolation 
 (default) or "ngb" for nearest neighbor interpolation. See e.g. 
-\code{\link{resample}}, \code{\link{projectRaster}}.}
+\code{\link[raster]{resample}}, \code{\link[raster]{projectRaster}}.}
 }
 \value{
 Satellite object with aligned geometries.

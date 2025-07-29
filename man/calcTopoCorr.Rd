@@ -20,12 +20,12 @@
 \code{Satellite} object (if available) will be considered in the regression 
 model.}
 
-\item{hillsh}{A \code{RasterLayer} created with \code{\link{hillShade}}.}
+\item{hillsh}{A \code{RasterLayer} created with \code{\link[raster]{hillShade}}.}
 
 \item{cloudmask}{A \code{RasterLayer} in which clouds are masked with 
 NA values, passed to \code{\link[raster]{mask}}.}
 
-\item{...}{Additional arguments passed to \code{\link{writeRaster}}.}
+\item{...}{Additional arguments passed to \code{\link[raster]{writeRaster}}.}
 }
 \value{
 If x is a Satellite object, a Satellite object with added, 

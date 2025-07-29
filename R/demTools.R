@@ -6,13 +6,13 @@ if ( !isGeneric("demTools") ) {
 #'
 #' @description
 #' Compute terrain characteristics from digital elevation models (DEM) using 
-#' \code{raster::terrain} or \code{raster::hillShade}.
+#' \code{\link[raster]{terrain}} or \code{\link[raster]{hillShade}}.
 #' @param x A DEM provided as an object of class Satellite or RasterLayer.
 #' @param method Currently "slope", "aspect" and "hillshade" are implemented.
 #' @param bcde The name of the DEM layer in the Satellite object. 
 #' 
 #' @seealso 
-#' \code{raster::terrain}, \code{raster::hillShade}.
+#' \code{\link[raster]{terrain}}, \code{\link[raster]{hillShade}}.
 #' 
 #' @export demTools
 #' @name demTools
@@ -63,9 +63,9 @@ setMethod("demTools",
 
 # Function using raster::RasterLayer object ------------------------------------
 #' @param sunElev If \code{method = "hillShade"}, the elevation angle of the 
-#' sun in degrees. See parameter \code{angle} in \code{\link{hillShade}}. 
+#' sun in degrees. See parameter \code{angle} in \code{\link[raster]{hillShade}}. 
 #' @param sunAzim If \code{method = "hillShade"}, the sun azimuth angle in 
-#' degree. See parameter \code{direction} in \code{\link{hillShade}}.
+#' degree. See parameter \code{direction} in \code{\link[raster]{hillShade}}.
 #' @rdname demTools
 setMethod("demTools", 
           signature(x  =  "RasterLayer"), 

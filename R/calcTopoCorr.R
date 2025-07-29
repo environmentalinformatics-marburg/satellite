@@ -118,10 +118,10 @@ setMethod("calcTopoCorr",
 
 
 # Function using raster::RasterLayer object ------------------------------------
-#' @param hillsh A \code{RasterLayer} created with \code{\link{hillShade}}. 
+#' @param hillsh A \code{RasterLayer} created with \code{\link[raster]{hillShade}}. 
 #' @param cloudmask A \code{RasterLayer} in which clouds are masked with 
 #' NA values, passed to \code{\link[raster]{mask}}. 
-#' @param ... Additional arguments passed to \code{\link{writeRaster}}.
+#' @param ... Additional arguments passed to \code{\link[raster]{writeRaster}}.
 #' @rdname calcTopoCorr
 setMethod("calcTopoCorr", 
           signature(x = "RasterLayer"), 

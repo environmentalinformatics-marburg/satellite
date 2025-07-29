@@ -15,7 +15,7 @@
 }
 \arguments{
 \item{x}{A vector of filenames, a (multi-layered) \code{Raster*} object or a 
-\code{list} of single \code{RasterLayer} objects (see \code{\link{raster}}). 
+\code{list} of single \code{RasterLayer} objects (see \code{\link[raster]{raster}}). 
 In the latter case, be aware that bands must be arranged in ascending order 
 (eg using \code{\link{sortFilesLandsat}}).}
 
