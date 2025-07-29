@@ -5,7 +5,6 @@
 #'
 #' @name satellite-package
 #' @aliases satellitepackage
-#' @docType package
 #' @title Smorgasboard for remote sensing functions.
 #' @author Thomas Nauss, Hanna Meyer, Florian Detsch, Tim Appelhans \cr
 #' \cr
@@ -24,7 +23,8 @@
 #' 
 #' @keywords package
 #'
-NULL
+"_PACKAGE"
+
 #' 
 #' @docType data
 #' @name l7
