@@ -78,8 +78,7 @@ if ( !isGeneric("calcPathRadDOS") ) {
 #' 
 #' @references Chavez Jr PS (1988) An improved dark-object subtraction technique 
 #' for atmospheric scattering correction of multispectral data. Remote Sensing 
-#' of Environment 24/3, doi:10.1016/0034-4257(88)90019-3, available online at
-#'  \url{http://www.sciencedirect.com/science/article/pii/0034425788900193}.
+#' of Environment 24/3, \doi{10.1016/0034-4257(88)90019-3}.
 #'  
 #' Chavez Jr PS (1996) Image-based atmospheric corrections revisited and
 #' improved. Photogrammetric Engineering and Remote Sensing 62/9,
@@ -87,20 +86,18 @@ if ( !isGeneric("calcPathRadDOS") ) {
 #' \url{https://www.researchgate.net/publication/236769129_Image-Based_Atmospheric_Corrections_-_Revisited_and_Improved}.
 #'  
 #' Goslee SC (2011) Analyzing Remote Sensing Data in R: The landsat 
-#' Package. Journal of Statistical Software, 43/4, 1-25, available online at 
-#' \url{http://www.jstatsoft.org/v43/i04/}.
+#' Package. Journal of Statistical Software, 43/4, 1-25, 
+#' \doi{10.18637/jss.v043.i04}.
 #' 
 #' Moran MS, Jackson RD, Slater PN, Teillet PM (1992) Evlauation of simplified
 #' procedures for rretrieval of land surface reflectane factors from satellite
 #' sensor output.Remote Sensing of Environment 41/2-3, 169-184, 
-#' doi:10.1016/0034-4257(92)90076-V, available online at
-#' \url{http://www.sciencedirect.com/science/article/pii/003442579290076V}.
+#' \doi{10.1016/0034-4257(92)90076-V}.
 #' 
 #' Song C, Woodcock CE, Seto KC, Lenney MP, Macomber SA (2001) Classification 
 #' and Change Detection Using Landsat TM Data: When and How to Correct 
 #' Atmospheric Effects? Remote Sensing of Environment 75/2, 
-#' doi:10.1016/S0034-4257(00)00169-3, available online at
-#' \url{http://www.sciencedirect.com/science/article/pii/S0034425700001693}
+#' \doi{10.1016/S0034-4257(00)00169-3}.
 #'
 #' If you refer to Sawyer and Stephen 2014, please note that eq. 5 is wrong.
 #' 

@@ -9,3 +9,8 @@
 .Rproj.user/
 .Rproj.user
 inst/doc
+
+# Rcpp files
+src/*.so
+src/*.o
+src/*.dll

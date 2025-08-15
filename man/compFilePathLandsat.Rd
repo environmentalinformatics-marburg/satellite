@@ -29,9 +29,9 @@ for standard level 1B/T Landsat files.
 }
 \section{Functions}{
 \itemize{
-\item \code{sortFilesLandsat}: Sort Landsat band files in ascending order.
-}}
+\item \code{sortFilesLandsat()}: Sort Landsat band files in ascending order.
 
+}}
 \examples{
 path <- system.file("extdata", package = "satellite")
 files <- list.files(path, pattern = glob2rx("LC08*.TIF"), full.names = TRUE)

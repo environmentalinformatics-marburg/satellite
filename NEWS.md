@@ -1,4 +1,18 @@
-## satellite 1.0.2
+# satellite 1.0.5 (2024-02-10)
+
+Changes:
+
+  * Included **terra** imports of `crop()`, `extend()` conditional on **raster** version (#42).
+
+
+# satellite 1.0.3 <small>2021-10-06</small>
+
+Changes:
+
+  * Revised JSS (and other) links (#40).
+
+
+# satellite 1.0.2
 
 Changes:
 
@@ -8,21 +22,21 @@ Changes:
   * Roxygen2 update.
 
 
-## satellite 1.0.1
+# satellite 1.0.1
 
 Bugfixes:
 
   * calcAtmosCorr() was not compatible with NA values, ie quantile() failed.
   * compFilePathLandsat() failed when specifying metadata files with new naming standard as input.
   * compMetaLandsat() assigned Landsat 7 metadata information, eg parameters required for radiometric rescaling, to wrong bands.
-  
 
-## satellite 1.0.0
+
+# satellite 1.0.0
 
 New features:
 
-  * Inverse squared relative earth-sun distance from calcEarthSunDist(). 
-  * calcTopoCorr,Raster*() methods accept additional arguments (via '...') passed to writeRaster(). 
+  * Inverse squared relative earth-sun distance from calcEarthSunDist().
+  * calcTopoCorr,Raster*() methods accept additional arguments (via '...') passed to writeRaster().
   * crop,Satellite-method takes a new argument 'snap' similar to raster::crop().
   * extend,Satellite-method takes a new argument 'value' which is assigned to new cells similar to raster::extend().
   * satellite is compatible with pre-collection Level-1 and Collection 1 Level-1 file naming.
@@ -46,11 +60,11 @@ Changes:
   * Removed deprecated convDN2RU(), users must switch to convSC2Rad(), convSC2Ref() and convRad2BT() instead.
 
 
-## satellite 0.2.0
+# satellite 0.2.0
 
 * n/a
 
 
-## satellite 0.1.0
+# satellite 0.1.0
 
 * Initial release
