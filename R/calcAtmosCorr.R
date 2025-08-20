@@ -9,8 +9,8 @@ if ( !isGeneric("calcAtmosCorr") ) {
 #' the sensors digital numbers to reflectances using
 #' \itemize{
 #'   \item absolute radiance correction
-#'   \item DOS2: a dark object subtraction model by Chavez (1996)
-#'   \item DOS4: a dark object subtraction model by Moran et al. (1992)
+#'   \item DOS2: a dark object substraction model by Chavez (1996)
+#'   \item DOS4: a dark object substraction model by Moran et al. (1992)
 #' }
 #'
 #' @param x Satellite or Raster* object providing the radiance at the sensor.
