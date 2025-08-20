@@ -18,10 +18,10 @@
 \item{bcde}{The name of the DEM layer in the Satellite object.}
 
 \item{sunElev}{If \code{method = "hillShade"}, the elevation angle of the 
-sun in degrees. See parameter \code{angle} in \code{\link{hillShade}}.}
+sun in degrees. See parameter \code{angle} in \code{\link[raster]{hillShade}}.}
 
 \item{sunAzim}{If \code{method = "hillShade"}, the sun azimuth angle in 
-degree. See parameter \code{direction} in \code{\link{hillShade}}.}
+degree. See parameter \code{direction} in \code{\link[raster]{hillShade}}.}
 }
 \value{
 If x is a Satellite object, a Satellite object with added layer containing calculated 
@@ -30,7 +30,7 @@ terrain information; if x is a \code{raster::RasterLayer} object, a
 }
 \description{
 Compute terrain characteristics from digital elevation models (DEM) using 
-\code{raster::terrain} or \code{raster::hillShade}.
+\code{\link[raster]{terrain}} or \code{\link[raster]{hillShade}}.
 }
 \examples{
 path <- system.file("extdata", package = "satellite")
@@ -45,5 +45,5 @@ sat <- addSatDataLayer(sat, data = DEM, info = NULL, bcde = "DEM", in_bcde="DEM"
 sat <- demTools(sat)
 }
 \seealso{
-\code{raster::terrain}, \code{raster::hillShade}.
+\code{\link[raster]{terrain}}, \code{\link[raster]{hillShade}}.
 }

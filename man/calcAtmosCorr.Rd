@@ -33,11 +33,8 @@ or \code{\link{calcTOAIrradModel}}.}
 \item{szen}{Sun zenith angle.}
 }
 \value{
-Satellite object with added atmospheric corrected layers
-
-raster::RasterStack object with atmospheric corrected layers
-
-raster::RasterLayer object with atmospheric corrected layer
+Depending on 'x', a Satellite or Raster* object with added 
+  atmospheric corrected layers.
 }
 \description{
 The function computes an atmospheric scattering correction and converts

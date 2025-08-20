@@ -21,7 +21,7 @@ if ( !isGeneric("alignGeometry") ) {
 #' not given, too, all bands will be considered for resampling.
 #' @param method Method for resampling; "bilinear" for bilinear interpolation 
 #' (default) or "ngb" for nearest neighbor interpolation. See e.g. 
-#' \code{\link{resample}}, \code{\link{projectRaster}}.
+#' \code{\link[raster]{resample}}, \code{\link[raster]{projectRaster}}.
 #'  
 #' @export alignGeometry
 #' 

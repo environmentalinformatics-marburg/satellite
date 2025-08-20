@@ -25,7 +25,10 @@ if ( !isGeneric("calcAtmosCorr") ) {
 #' from \code{\link{calcTOAIrradRadRef}}, \code{\link{calcTOAIrradTable}} 
 #' or \code{\link{calcTOAIrradModel}}.
 #' @param szen Sun zenith angle.
-#'
+#' 
+#' @return Depending on 'x', a Satellite or Raster* object with added 
+#'   atmospheric corrected layers.
+#' 
 #' @export calcAtmosCorr
 #' 
 #' @name calcAtmosCorr
@@ -128,7 +131,6 @@ NULL
 
 
 # Function using satellite object ----------------------------------------------
-#' @return Satellite object with added atmospheric corrected layers
 #' @rdname calcAtmosCorr
 setMethod("calcAtmosCorr", 
           signature(x = "Satellite"), 
@@ -178,7 +180,6 @@ setMethod("calcAtmosCorr",
 
 
 # Function using raster::RasterStack object ------------------------------------
-#' @return raster::RasterStack object with atmospheric corrected layers
 #' @rdname calcAtmosCorr
 setMethod("calcAtmosCorr", 
           signature(x = "RasterStack"), 
@@ -194,7 +195,6 @@ setMethod("calcAtmosCorr",
 
 
 # Function using raster::RasterLayer object ------------------------------------
-#' @return raster::RasterLayer object with atmospheric corrected layer
 #' @rdname calcAtmosCorr
 setMethod("calcAtmosCorr", 
           signature(x = "RasterLayer"), 
