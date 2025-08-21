@@ -1,14 +1,8 @@
-# satellite 1.0.5.9002 (2025-08-20)
-
-#### ✨ features and improvements
-
-#### 🐛 bug fixes
+# satellite 1.0.6 (2025-08-21)
 
 #### 💬 documentation etc
 
   * Provides package anchors for `\link{}` targets (#45)
-
-#### 🍬 miscellaneous
 
 
 # satellite 1.0.5 (2024-02-10)
