@@ -2,4 +2,5 @@
 ^\.Rproj\.user$
 ^R/pck_data.R
 ^R/pck_lut.R
+^revdep$
 ^TODO
