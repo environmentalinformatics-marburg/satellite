@@ -10,7 +10,7 @@
 \arguments{
 \item{x}{Satellite object.}
 
-\item{y}{\code{\link{extent}} object.}
+\item{y}{`Extent` object.}
 
 \item{subset}{Logical; if \code{TRUE} (default), all layers but the cropped 
 ones are being dropped; if \code{FALSE}, cropped layers are appended to the 
@@ -25,8 +25,8 @@ A Satellite object consisting of cropped layers only. If
 \code{subset = FALSE}, a Satellite object with the cropped layers appended.
 }
 \description{
-The function is a wrapper around the \code{\link{crop}} function to 
-easily crop a Satellite object by an \code{\link{extent}} object.
+The function is a wrapper around the \code{\link[raster]{crop}} function to easily crop
+  a Satellite object by an [raster::extent()] object.
 }
 \details{
 Crop layers of a Satellite object to the size of a given 

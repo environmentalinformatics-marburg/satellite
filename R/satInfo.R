@@ -523,9 +523,9 @@ getSatBCDECalib <- function(sat, bcde, calib){
 }
 
 
-# Return CALIB band codes machting type and are solare bands ---------------------
+# Return CALIB band codes matching type and are solar bands ---------------------
 #' @export getSatBCDESolarCalib
-#' @describeIn satInfo Return calibration level for band codes machting type and are solar bands
+#' @describeIn satInfo Return calibration level for band codes matching type and are solar bands
 getSatBCDESolarCalib <- function(sat, bcde, calib){
   calib_val <- getSatBCDECalib(sat, bcde, calib)
   result <- getSatBCDESolar(sat)[getSatBCDESolar(sat) %in% calib_val]
@@ -536,9 +536,9 @@ getSatBCDESolarCalib <- function(sat, bcde, calib){
 }
 
 
-# Return CALIB band codes machting type and are thermal bands --------------------
+# Return CALIB band codes matching type and are thermal bands --------------------
 #' @export getSatBCDEThermalCalib
-#' @describeIn satInfo Return calibration level for band codes machting type and are thermal bands
+#' @describeIn satInfo Return calibration level for band codes matching type and are thermal bands
 getSatBCDEThermalCalib <- function(sat, bcde, calib){
   calib_val <- getSatBCDECalib(sat, bcde, calib)
   return(getSatBCDEThermal(sat)[getSatBCDEThermal(sat) %in% calib_val])

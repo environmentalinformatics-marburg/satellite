@@ -317,9 +317,9 @@ respective information from/in the Satellite object.
 
 \item \code{getSatBCDECalib()}: Return calibration level for band codes matching type
 
-\item \code{getSatBCDESolarCalib()}: Return calibration level for band codes machting type and are solar bands
+\item \code{getSatBCDESolarCalib()}: Return calibration level for band codes matching type and are solar bands
 
-\item \code{getSatBCDEThermalCalib()}: Return calibration level for band codes machting type and are thermal bands
+\item \code{getSatBCDEThermalCalib()}: Return calibration level for band codes matching type and are thermal bands
 
 \item \code{getSatBandInfo()}: Return band information
 

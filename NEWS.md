@@ -1,3 +1,10 @@
+# satellite 1.0.6 (2025-08-21)
+
+#### 💬 documentation etc
+
+  * Provides package anchors for `\link{}` targets (#45)
+
+
 # satellite 1.0.5 (2024-02-10)
 
 Changes:

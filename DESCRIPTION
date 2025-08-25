@@ -1,8 +1,20 @@
 Package: satellite
 Title: Handling and Manipulating Remote Sensing Data
-Version: 1.0.5
-Author: Thomas Nauss, Hanna Meyer, Tim Appelhans, Florian Detsch
-Maintainer: Florian Detsch <fdetsch@web.de>
+Version: 1.0.6
+Authors@R: c(
+        person(given = "Thomas",
+               family = "Nauss",
+               role = "aut"),
+        person(given = "Hanna",
+               family = "Meyer",
+               role = "aut"),
+        person(given = "Tim",
+               family = "Appelhans",
+               role = "aut"),
+        person(given = "Florian",
+               family = "Detsch",
+               role = c("aut", "cre"),
+               email = "fdetsch@web.de"))
 Description: Herein, we provide a broad variety of functions which are useful
     for handling, manipulating, and visualizing satellite-based remote sensing 
     data. These operations range from mere data import and layer handling (eg 
@@ -39,5 +51,5 @@ Suggests:
 LazyData: true
 VignetteBuilder: knitr
 LinkingTo: Rcpp
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Encoding: UTF-8

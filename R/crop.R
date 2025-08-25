@@ -6,11 +6,11 @@ if ( !isGeneric("crop") ) {
 #' Crop Satellite object
 #'
 #' @description
-#' The function is a wrapper around the \code{\link{crop}} function to 
-#' easily crop a Satellite object by an \code{\link{extent}} object.
+#' The function is a wrapper around the \code{\link[raster]{crop}} function to easily crop
+#'   a Satellite object by an [raster::extent()] object.
 #'
 #' @param x Satellite object.
-#' @param y \code{\link{extent}} object. 
+#' @param y `Extent` object. 
 #' @param subset Logical; if \code{TRUE} (default), all layers but the cropped 
 #' ones are being dropped; if \code{FALSE}, cropped layers are appended to the 
 #' Satellite object.
